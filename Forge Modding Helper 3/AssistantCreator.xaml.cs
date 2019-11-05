@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
-using System.Text;
-using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
@@ -186,6 +183,18 @@ namespace Forge_Modding_Helper_3
 
                         break;
                     }
+                case 5:
+                    {
+                        // UI components
+                        generation_grid.Visibility = Visibility.Hidden;
+                        finish_grid.Visibility = Visibility.Visible;
+                        next_button.IsEnabled = false;
+                        cancel_button.IsEnabled = false;
+                        cancel_button.Visibility = Visibility.Hidden;
+                        finish_button.Visibility = Visibility.Visible;
+
+                        break;
+                    }
             }
         }
         #endregion
@@ -253,6 +262,7 @@ namespace Forge_Modding_Helper_3
             generate_files();
 
             update_progress(100, "Création de l'espace de travail terminé.");
+            this.next_button.IsEnabled = true;
         }
 
         private void generate_folders()
@@ -318,6 +328,21 @@ namespace Forge_Modding_Helper_3
                 ModToml mod_toml = new ModToml(this.mod_infos, this.folder);
                 mod_toml.generateFile();
             }
+
+            if(!string.IsNullOrEmpty(this.mod_infos["mod_logo"]))
+            {
+                update_progress(0, "Copie du logo du mod...");
+
+                if (File.Exists(this.mod_infos["mod_logo"]))
+                {
+                    File.Copy(this.mod_infos["mod_logo"], this.folder + @"\src\main\resources\logo.png");
+                }
+                else
+                {
+                    update_progress(0, "ERREUR : Le logo du mod n'a pas pu être copié : \"Fichier inaccessible ou supprimé.\"");
+                }
+            }
+
         }
 
         private void update_progress(int progress, string statut)
@@ -344,8 +369,6 @@ namespace Forge_Modding_Helper_3
             if (textBox != null)
             {
                 textBox.Text = textBox.Text.RemoveSpecialCharacters();
-                textBox.SelectionStart = textBox.Text.Length;
-                textBox.SelectionLength = 0;
 
                 this.mod_infos[textBox.Tag.ToString()] = textBox.Text;
                 Image img = (Image)this.FindName(textBox.Tag + "_image");
@@ -367,10 +390,6 @@ namespace Forge_Modding_Helper_3
         private void Optional_TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
            TextBox textBox = sender as TextBox;
-
-            textBox.Text = textBox.Text.RemoveSpecialCharacters();
-            textBox.SelectionStart = textBox.Text.Length;
-            textBox.SelectionLength = 0;
 
             if (textBox != null)
             {
@@ -439,8 +458,13 @@ namespace Forge_Modding_Helper_3
                 this.mod_logo_image.Source = null;
             }
 
-            this.mod_infos["mod_logo"] = fileDialog.FileName;
+            this.mod_infos["mod_logo"] = this.logo_path_textbox.Text;
         }
         #endregion
+
+        private void finish_button_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
     }
 }

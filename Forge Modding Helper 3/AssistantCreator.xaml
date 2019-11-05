@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:Forge_Modding_Helper_3"
         mc:Ignorable="d" Height="548.361" Width="520.902" ResizeMode="CanMinimize" Icon="Resources/Pictures/icon.png" WindowStartupLocation="CenterScreen" Title="Assistant Creator - Forge Modding Helper">
     <Grid Background="#FF252526">
+        <Grid x:Name="finish_grid" Height="399" Margin="0,57,0.4,0" VerticalAlignment="Top" Background="#FF2D2D30">
+            <Label x:Name="label10" Content="Nous avons terminé de créer votre espace de travail !&#xA;Il ne vous reste plus qu'à importer le projet gradle dans votre IDE favori !&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Si vous rencontrez des bugs en liens avec l'utilisation de ce présent assistant de création,&#xA;ou bien si vous avez des suggestions d'améliorations ou d'ajouts, vous pouvez les poster &#xA;sur le bugtracker du logiciel disponible à cette adresse :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Height="356" Width="494"/>
+            <Label x:Name="label11" Content="Cliquez sur &quot;Terminer&quot; pour fermer l'assistant." HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Foreground="White"/>
+            <TextBlock Margin="14,290,162.6,81"><Hyperlink NavigateUri="https://github.com/JeremTech/Forge-Modding-Helper/issues"><Run Text="https://github.com/JeremTech/Forge-Modding-Helper/issues"/></Hyperlink></TextBlock>
+        </Grid>
         <Grid x:Name="generation_grid" Height="399" Margin="0,57,0.4,0" VerticalAlignment="Top" Background="#FF2D2D30">
             <ProgressBar x:Name="progress_progressbar" HorizontalAlignment="Left" Height="17" Margin="10,36,0,0" VerticalAlignment="Top" Width="485"/>
             <Label x:Name="progress_label" Content="Statut : ..." HorizontalAlignment="Left" Margin="6,8,0,0" VerticalAlignment="Top" Foreground="White" Width="481"/>
@@ -105,7 +110,7 @@
         </Grid>
 
         <Button x:Name="next_button" Content="Suivant &gt;" HorizontalAlignment="Left" Margin="322,470,0,0" VerticalAlignment="Top" Width="89" Height="25" Click="Next_button_Click"/>
-        <Button x:Name="cancel_button" Content="Annuler" Margin="430,470,10,0" VerticalAlignment="Top" Height="25" Click="Cancel_button_Click"/>
+        <Button x:Name="cancel_button" Content="Annuler" Margin="430,470,10,0" VerticalAlignment="Top" Height="25" Click="Cancel_button_Click" IsCancel="True"/>
         <Button x:Name="previous_button" Content="&lt; Précédent" HorizontalAlignment="Left" Margin="228,470,0,0" VerticalAlignment="Top" Width="89" Height="25" Click="Previous_button_Click" IsEnabled="False"/>
         <Separator HorizontalAlignment="Left" Height="17" Margin="0,38,0,0" VerticalAlignment="Top" Width="515"/>
         <ProgressBar x:Name="step_progressbar" HorizontalAlignment="Left" Height="10" Margin="0,44,0,0" VerticalAlignment="Top" Width="514" Foreground="#FF3E60D4"/>
@@ -114,6 +119,7 @@
         <Label x:Name="step_label" Content="Etape X sur X" HorizontalAlignment="Left" Margin="421,11,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Label x:Name="missing_infos_label" Content="Informations manquantes" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Foreground="#FFFF7777" Height="31" Width="146" Background="{x:Null}" Visibility="Hidden"/>
         <Separator HorizontalAlignment="Left" Height="16" Margin="0,447,-0.6,0" VerticalAlignment="Top" Width="515"/>
+        <Button x:Name="finish_button" Content="Terminer" Margin="430,470,10,0" VerticalAlignment="Top" Height="25" Click="finish_button_Click" Visibility="Hidden"/>
 
     </Grid>
 </Window>
