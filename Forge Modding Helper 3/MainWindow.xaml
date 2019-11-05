@@ -1,0 +1,26 @@
+﻿<Window x:Class="Forge_Modding_Helper_3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Forge_Modding_Helper_3"
+        mc:Ignorable="d"
+        Title="Forge Modding Helper" Height="200.578" Width="429.259" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" Icon="Resources/Pictures/icon.png">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="80*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/Pictures/background.png" Stretch="None"/>
+        </Grid.Background>
+        <ProgressBar x:Name="loading_progressbar" Height="10" Margin="10,181,206,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+        <Image HorizontalAlignment="Left" Height="71" Margin="24,24,0,0" VerticalAlignment="Top" Width="71" Source="Resources/Pictures/icon.png"/>
+        <Label x:Name="loading_label" Content="Chargement..." HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="213" Foreground="White"/>
+        <Label Content="Forge Modding Helper" HorizontalAlignment="Left" Margin="100,24,0,0" VerticalAlignment="Top" Foreground="White" FontSize="28" Grid.ColumnSpan="3" Width="301"/>
+        <Label x:Name="version_label" Content="v0.0.0.0" Margin="153,61,28,0" VerticalAlignment="Top" Foreground="White" Grid.Column="2" FontSize="14"/>
+        <Label Content="© 2017 - 2019 Jerem'Tech" HorizontalAlignment="Left" Margin="89,173,0,0" VerticalAlignment="Top" Width="149" Foreground="White" Grid.Column="2"/>
+
+    </Grid>
+</Window>
