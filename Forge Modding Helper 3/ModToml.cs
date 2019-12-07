@@ -59,17 +59,17 @@ namespace Forge_Modding_Helper_3
             modToml += Environment.NewLine + Environment.NewLine;
 
             modToml += @"[[dependencies." + this.mod_infos["mod_id"] + @"]]
-    modId=""forge""
-    mandatory = true
-    versionRange = ""[" + this.mod_infos["forge_version"].Split('.')[0] + @",)"" 
-    ordering = ""NONE""
-    side = ""BOTH""
+modId=""forge""
+mandatory = true
+versionRange = ""[" + this.mod_infos["forge_version"].Split('.')[0] + @",)"" 
+ordering = ""NONE""
+side = ""BOTH""
 [[dependencies." + this.mod_infos["mod_id"] + @"]]
-    modId = ""minecraft""
-    mandatory = true
-    versionRange = ""[" + this.mod_infos["minecraft_version"] + @"]""
-    ordering = ""NONE""
-    side = ""BOTH""";
+modId = ""minecraft""
+mandatory = true
+versionRange = ""[" + this.mod_infos["minecraft_version"] + @"]""
+ordering = ""NONE""
+side = ""BOTH""";
 
             File.Delete(this.folder + @"\src\main\resources\META-INF\mods.toml");
             File.WriteAllText(this.folder + @"\src\main\resources\META-INF\mods.toml", modToml);

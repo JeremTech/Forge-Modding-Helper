@@ -6,6 +6,8 @@ namespace Forge_Modding_Helper_3
 {
     public partial class MainWindow : Window
     {
+        private string execution_folder = Environment.CurrentDirectory;
+
         public MainWindow()
         {
             // Initialization
@@ -36,14 +38,14 @@ namespace Forge_Modding_Helper_3
         public bool checkFolder()
         {
             bool isForgeWorkspace = true;
-            String[] filesToCheck = { @"\build.gradle" };
-            String[] foldersToCheck = { @"\src\", @"\src\main\", @"\src\main\resources\", @"\src\main\java\", @"\src\main\resources\assets\", @"\src\main\resources\META-INF\" };
+            String[] filesToCheck = { @"build.gradle" };
+            String[] foldersToCheck = { @"src", @"src\main", @"src\main\resources", @"src\main\java", @"src\main\resources\assets", @"src\main\resources\META-INF" };
 
             int id = 0;
             while (isForgeWorkspace && id < filesToCheck.Length)
             {
                 updateLoadingStatut("Vérification du fichier : " + filesToCheck[id], (int) loading_progressbar.Value + 3);
-                isForgeWorkspace = File.Exists(System.Reflection.Assembly.GetExecutingAssembly().Location + filesToCheck[id]);
+                isForgeWorkspace = File.Exists(Path.Combine(execution_folder, filesToCheck[id]));
                 id++;
             }
 
@@ -51,7 +53,7 @@ namespace Forge_Modding_Helper_3
             while (isForgeWorkspace && id < foldersToCheck.Length)
             {
                 updateLoadingStatut("Vérification du dossier : " + foldersToCheck[id], (int)loading_progressbar.Value + 3);
-                isForgeWorkspace = File.Exists(System.Reflection.Assembly.GetExecutingAssembly().Location + foldersToCheck[id]);
+                isForgeWorkspace = Directory.Exists(Path.Combine(execution_folder, foldersToCheck[id]));
                 id++;
             }
 
