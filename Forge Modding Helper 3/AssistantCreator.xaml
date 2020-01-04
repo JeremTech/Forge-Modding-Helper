@@ -58,6 +58,7 @@
             <Label x:Name="mineraft_version_label" Content="Version de Minecraft :" HorizontalAlignment="Left" Margin="6,196,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="134"/>
             <Image x:Name="minecraft_version_image" HorizontalAlignment="Left" Height="26" Margin="471,197,0,0" VerticalAlignment="Top" Width="26" Source="Resources/Pictures/uncheck.png"/>
             <ComboBox x:Name="forge_version_comboBox" HorizontalAlignment="Left" Margin="145,199,0,0" VerticalAlignment="Top" Width="119" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="1.15.1"/>
                 <ComboBoxItem Content="1.14.4" Background="#FFFFCF00"/>
                 <ComboBoxItem Content="1.14.3"/>
                 <ComboBoxItem Content="1.14.2"/>
@@ -105,7 +106,7 @@
         </Grid>
 
         <Grid x:Name="first_grid" Height="399" Margin="0,57,0.4,0" VerticalAlignment="Top" Background="#FF2D2D30">
-            <Label x:Name="label1" Content="Bienvenue dans l'assistant de création d'espace de travail Minecraft Forge !&#xA;Nous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant.&#xA;&#xA;Version de Minecraft supportées :&#xA;Minecraft 1.13 : 1.13.2&#xA;Minecraft 1.14 : 1.14.2 - 1.14.3 - 1.14.4&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Vous devrez être connecté à Internet durant tout le processus de création de l'espace &#xA;de travail." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Height="356" Width="494"/>
+            <Label x:Name="label1" Content="Bienvenue dans l'assistant de création d'espace de travail Minecraft Forge !&#xA;Nous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant.&#xA;&#xA;Version de Minecraft supportées :&#xA;Minecraft 1.13 : 1.13.2&#xA;Minecraft 1.14 : 1.14.2 - 1.14.3 - 1.14.4&#xA;Minecraft 1.15 : 1.15.1&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Vous devrez être connecté à Internet durant tout le processus de création de l'espace &#xA;de travail." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Height="356" Width="494"/>
             <Label x:Name="label2" Content="Cliquez sur &quot;Suivant&quot; pour continuer." HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Foreground="White"/>
         </Grid>
 
