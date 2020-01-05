@@ -25,7 +25,8 @@ namespace Forge_Modding_Helper_3
             }
             else
             {
-
+                new WorkspaceManager().Show();
+                this.Close();
             }
         }
 

@@ -80,8 +80,12 @@
     </ApplicationDefinition>
     <Compile Include="BuildGradle.cs" />
     <Compile Include="ForgeVersionsUtils.cs" />
+    <Compile Include="GradleTasks.cs" />
     <Compile Include="ModToml.cs" />
     <Compile Include="StringUtils.cs" />
+    <Compile Include="WorkspaceManager.xaml.cs">
+      <DependentUpon>WorkspaceManager.xaml</DependentUpon>
+    </Compile>
     <Page Include="AssistantCreator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -101,6 +105,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="WorkspaceManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

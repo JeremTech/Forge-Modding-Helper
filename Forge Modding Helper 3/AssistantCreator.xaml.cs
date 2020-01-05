@@ -464,7 +464,8 @@ namespace Forge_Modding_Helper_3
 
         private void finish_button_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            new WorkspaceManager().Show();
+            this.Close();
         }
     }
 }
