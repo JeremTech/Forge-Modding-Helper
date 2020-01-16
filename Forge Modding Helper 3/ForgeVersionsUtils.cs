@@ -3,7 +3,7 @@ using System.Web.Script.Serialization;
 
 namespace Forge_Modding_Helper_3
 {
-    class ForgeVersionsUtils
+    public class ForgeVersionsUtils
     {
         public string homepage { get; set; }
         public JObject promos { get; set; }

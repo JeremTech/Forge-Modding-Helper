@@ -24,12 +24,6 @@ namespace Forge_Modding_Helper_3
             InitializeComponent();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            GradleTasks tasks = new GradleTasks(this.textBox);
-            tasks.genIntelljRuns();
-        }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Application.Current.Shutdown();

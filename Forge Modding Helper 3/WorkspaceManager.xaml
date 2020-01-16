@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="Gestion de l'espace de travail - Forge Modding Helper" Height="450" Width="800" Icon="Resources/Pictures/icon.png" ResizeMode="NoResize" Closing="Window_Closing">
     <Grid Background="#FF3F3F46">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="421" VerticalAlignment="Top" Width="794" Background="#FF3F3F46">
             <TabItem Header="Console">
                 <Grid Background="#FF252526">
@@ -14,14 +17,34 @@
                         <ColumnDefinition Width="159*"/>
                         <ColumnDefinition Width="629*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="textBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="373" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="768" Background="Black" Foreground="White" IsReadOnly="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto"/>
-                    <Button x:Name="button" Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="522,349,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+                    <TextBox x:Name="textBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="373" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="756" Background="Black" Foreground="White" IsReadOnly="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Tâches gradle">
+                <Grid Background="#FF252526">
+                    <Button x:Name="execute_button_genIJRuns" Content="Executer" HorizontalAlignment="Left" Margin="685,24,0,0" VerticalAlignment="Top" Width="71" Height="28"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="21,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="100" FontWeight="Bold" FontSize="13"><Run Text="genIntell"/><Run Text="i"/><Run Text="JRuns"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="37,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="520"><Run Text="Génère les fichiers et paramètres nécessaires au développement dans Intell"/><Run Text="i"/><Run Text="J Idea"/></TextBlock>
+                    <Separator HorizontalAlignment="Left" Height="13" Margin="37,61,0,0" VerticalAlignment="Top" Width="705"/>
+                    <Button x:Name="execute_button_genEcRuns" Content="Executer" HorizontalAlignment="Left" Margin="685,89,0,0" VerticalAlignment="Top" Width="71" Height="28"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="21,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="100" FontWeight="Bold" FontSize="13"><Run Text="gen"/><Run Text="Eclipse"/><Run Text="Runs"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Margin="37,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="520"><Run Text="Génère les fichiers et paramètres nécessaires au développement dans "/><Run Text="Eclipse"/><LineBreak/><Run/></TextBlock>
+                    <Separator HorizontalAlignment="Left" Height="13" Margin="37,126,0,0" VerticalAlignment="Top" Width="705"/>
+                    <Button x:Name="execute_button_build" Content="Executer" HorizontalAlignment="Left" Margin="685,154,0,0" VerticalAlignment="Top" Width="71" Height="28"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="21,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="100" FontWeight="Bold" FontSize="13" Text="build"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="37,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="520"><Run Text="Compile le mod"/><LineBreak/><Run/></TextBlock>
+                    <Separator HorizontalAlignment="Left" Height="13" Margin="37,191,0,0" VerticalAlignment="Top" Width="705"/>
+                    <Button x:Name="execute_button_runClient" Content="Executer" HorizontalAlignment="Left" Margin="685,217,0,0" VerticalAlignment="Top" Width="71" Height="28"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="21,209,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="100" FontWeight="Bold" FontSize="13" Text="runClient"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="37,228,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="520" Text="Lance le jeu avec le mod en cours de développement"/>
+                    <Separator HorizontalAlignment="Left" Height="13" Margin="37,254,0,0" VerticalAlignment="Top" Width="705"/>
+                    <Button x:Name="execute_button_runServer" Content="Executer" HorizontalAlignment="Left" Margin="685,280,0,0" VerticalAlignment="Top" Width="71" Height="28"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="21,272,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="100" FontWeight="Bold" FontSize="13" Text="runServer"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="37,291,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="520" Text="Lance un serveur local avec le mod en cours de développement"/>
+                    <Separator HorizontalAlignment="Left" Height="13" Margin="37,317,0,0" VerticalAlignment="Top" Width="705"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Informations générales">
-                <Grid Background="#FF252526"/>
-            </TabItem>
-            <TabItem Header="Tâches gradle">
                 <Grid Background="#FF252526"/>
             </TabItem>
         </TabControl>

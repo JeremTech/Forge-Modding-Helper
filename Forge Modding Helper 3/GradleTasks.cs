@@ -71,6 +71,111 @@ namespace Forge_Modding_Helper_3
 
             }));
 
+            // Launch thread / gradle task
+            thread.Start();
+        }
+
+        // genEclipserRuns task
+        public void genEclipseRuns()
+        {
+            // Create thread
+            var thread = new Thread(new ThreadStart(() =>
+            {
+                process.Start();
+                process.StandardInput.WriteLine("gradlew genEclipseRuns");
+
+                var reader = process.StandardOutput;
+                while (!reader.EndOfStream)
+                {
+                    var nextLine = reader.ReadLine();
+
+                    outputTextbox.Dispatcher.Invoke(new SetTextCallback(this.SetText), nextLine);
+                }
+
+                process.WaitForExit();
+                process.Kill();
+
+            }));
+
+            // Launch thread / gradle task
+            thread.Start();
+        }
+
+        // runClient task
+        public void runClient()
+        {
+            // Create thread
+            var thread = new Thread(new ThreadStart(() =>
+            {
+                process.Start();
+                process.StandardInput.WriteLine("gradlew runClient");
+
+                var reader = process.StandardOutput;
+                while (!reader.EndOfStream)
+                {
+                    var nextLine = reader.ReadLine();
+
+                    outputTextbox.Dispatcher.Invoke(new SetTextCallback(this.SetText), nextLine);
+                }
+
+                process.WaitForExit();
+                process.Kill();
+
+            }));
+
+            // Launch thread / gradle task
+            thread.Start();
+        }
+
+        // runServer task
+        public void runServer()
+        {
+            // Create thread
+            var thread = new Thread(new ThreadStart(() =>
+            {
+                process.Start();
+                process.StandardInput.WriteLine("gradlew runServer");
+
+                var reader = process.StandardOutput;
+                while (!reader.EndOfStream)
+                {
+                    var nextLine = reader.ReadLine();
+
+                    outputTextbox.Dispatcher.Invoke(new SetTextCallback(this.SetText), nextLine);
+                }
+
+                process.WaitForExit();
+                process.Kill();
+
+            }));
+
+            // Launch thread / gradle task
+            thread.Start();
+        }
+
+        // build task
+        public void build()
+        {
+            // Create thread
+            var thread = new Thread(new ThreadStart(() =>
+            {
+                process.Start();
+                process.StandardInput.WriteLine("gradlew build");
+
+                var reader = process.StandardOutput;
+                while (!reader.EndOfStream)
+                {
+                    var nextLine = reader.ReadLine();
+
+                    outputTextbox.Dispatcher.Invoke(new SetTextCallback(this.SetText), nextLine);
+                }
+
+                process.WaitForExit();
+                process.Kill();
+
+            }));
+
+            // Launch thread / gradle task
             thread.Start();
         }
     }
