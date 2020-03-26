@@ -5,12 +5,12 @@ It is still in developpment, and for now no release are available.
 ## Features
 
 - [x] Workspace creation wizard
-- [] Manage Forge gradle tasks in some clicks *(W.I.P)*
-- [] Easy mod publication
-- [] Manage Forge version after creation
-- [] Easy language file editing 
-- [] Manage assets
-- [] Dependencies manager
+- [ ] Manage Forge gradle tasks in some clicks *(W.I.P)*
+- [ ] Easy mod publication
+- [ ] Manage Forge version after creation
+- [ ] Easy language file editing 
+- [ ] Manage assets
+- [ ] Dependencies manager
 
 ## Supported Minecraft Forge Version *(only in the workspace creation wizard for now)*
 
