@@ -16,8 +16,8 @@ It is still in developpment, and for now no release are available.
 
 - [x] Minecraft Forge 1.15.2 (latest and recommended)
 - [x] Minecraft Forge 1.14.4 (latest and recommended)
-- [x] Minecraft Forge 1.14.3 (latest and recommended)
-- [x] Minecraft Forge 1.14.2 (latest and recommended)
+- [x] Minecraft Forge 1.14.3 (latest)
+- [x] Minecraft Forge 1.14.2 (latest)
 - [x] Minecraft Forge 1.13.2 (latest)
 
 © JeremTech - 2020
