@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Forge_Modding_Helper_3
@@ -31,6 +32,8 @@ namespace Forge_Modding_Helper_3
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
                 RedirectStandardError = true,
+                Arguments = String.Format("/c \"{0}\"", "gradlew genIntellJRuns"),
+
             };
 
             process = new Process { StartInfo = startinfo };
@@ -55,20 +58,13 @@ namespace Forge_Modding_Helper_3
             // Create thread
             var thread = new Thread(new ThreadStart(() =>
             {
+                process.OutputDataReceived += (s, e) => outputTextbox.Dispatcher.Invoke(new SetTextCallback(this.SetText), e.Data);
                 process.Start();
-                process.StandardInput.WriteLine("gradlew genIntellJRuns");
+                process.BeginOutputReadLine();
 
-                var reader = process.StandardOutput;
-                while (!reader.EndOfStream)
-                {
-                    var nextLine = reader.ReadLine();
-
-                    outputTextbox.Dispatcher.Invoke(new SetTextCallback(this.SetText), nextLine);
-                }
 
                 process.WaitForExit();
-                process.Kill();
-
+                outputTextbox.Dispatcher.Invoke(new SetTextCallback(this.SetText), "YEP");
             }));
 
             // Launch thread / gradle task

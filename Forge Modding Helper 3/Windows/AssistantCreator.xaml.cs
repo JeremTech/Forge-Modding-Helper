@@ -43,6 +43,15 @@ namespace Forge_Modding_Helper_3
             updateStep(0.0);
             background_thread.DoWork += Background_thread_DoWork;
             background_thread.RunWorkerCompleted += Background_thread_RunWorkerCompleted;
+
+            // Hiding all grids except the first one
+            first_grid.Visibility = Visibility.Visible;
+            second_grid.Visibility = Visibility.Hidden;
+            third_grid.Visibility = Visibility.Hidden;
+            fourth_grid.Visibility = Visibility.Hidden;
+            fith_grid.Visibility = Visibility.Hidden;
+            generation_grid.Visibility = Visibility.Hidden;
+            finish_grid.Visibility = Visibility.Hidden;
         }
 
         public void updateStep(double stepIn)
@@ -126,6 +135,7 @@ namespace Forge_Modding_Helper_3
                         {
                             missing_infos_label.Visibility = Visibility.Hidden;
                             second_grid.Visibility = Visibility.Hidden;
+                            third_grid.Visibility = Visibility.Visible;
                             missing_infos_label.Visibility = Visibility.Hidden;
                             this.step++;
                             this.updateStep(this.step);

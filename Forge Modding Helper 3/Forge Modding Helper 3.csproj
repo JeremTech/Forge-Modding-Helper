@@ -50,7 +50,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>forge modding helper 3.0 logo.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Pictures\logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Forge_Modding_Helper_3.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -78,19 +81,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BuildGradle.cs" />
-    <Compile Include="ForgeVersionsUtils.cs" />
-    <Compile Include="GradleTasks.cs" />
-    <Compile Include="ModToml.cs" />
-    <Compile Include="StringUtils.cs" />
-    <Compile Include="WorkspaceManager.xaml.cs">
+    <Compile Include="Utils\BuildGradle.cs" />
+    <Compile Include="Utils\ForgeVersionsUtils.cs" />
+    <Compile Include="Console\GradleTasks.cs" />
+    <Compile Include="Utils\ModToml.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Windows\WorkspaceManager.xaml.cs">
       <DependentUpon>WorkspaceManager.xaml</DependentUpon>
     </Compile>
-    <Page Include="AssistantCreator.xaml">
+    <Page Include="Windows\AssistantCreator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -98,14 +101,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="AssistantCreator.xaml.cs">
+    <Compile Include="Windows\AssistantCreator.xaml.cs">
       <DependentUpon>AssistantCreator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="WorkspaceManager.xaml">
+    <Page Include="Windows\WorkspaceManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,7 +147,7 @@
     <Resource Include="Resources\Pictures\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="forge modding helper 3.0 logo.ico" />
+    <Resource Include="Resources\Pictures\logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -172,5 +175,6 @@
   <ItemGroup>
     <Resource Include="Resources\Pictures\cancel.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
