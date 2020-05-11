@@ -1,11 +1,11 @@
 # Forge Modding Helper
 Forge Modding Helper is an utility software to manage Forge's Workspace.
-It is still in developpment, and for now no release are available.
+It is still in developpment, so it's not stable and only pre-releases are available.
 
 ## Features
 
 - [x] Workspace creation wizard
-- [ ] Manage Forge gradle tasks in some clicks *(W.I.P)*
+- [ ] Manage Forge gradle tasks in some clicks 
 - [ ] Easy mod publication
 - [ ] Manage Forge version after creation
 - [ ] Easy language file editing 
