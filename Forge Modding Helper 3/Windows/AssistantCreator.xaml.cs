@@ -16,7 +16,7 @@ namespace Forge_Modding_Helper_3
     {
         private double total_step = 5.0;
         private double step = 0.0;
-        private string folder = Environment.CurrentDirectory;
+        private string folder = "";
         private string versions_url = "https://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.json";
         private readonly BackgroundWorker background_thread = new BackgroundWorker();
         private ForgeVersionsUtils versions = new ForgeVersionsUtils();
@@ -121,12 +121,19 @@ namespace Forge_Modding_Helper_3
             {
                 case 0:
                     {
-                        first_grid.Visibility = Visibility.Hidden;
-                        missing_infos_label.Visibility = Visibility.Hidden;
-                        second_grid.Visibility = Visibility.Visible;
-                        previous_button.IsEnabled = true;
-                        this.step++;
-                        this.updateStep(this.step);
+                        if (!string.IsNullOrWhiteSpace(this.folder))
+                        {
+                            first_grid.Visibility = Visibility.Hidden;
+                            missing_infos_label.Visibility = Visibility.Hidden;
+                            second_grid.Visibility = Visibility.Visible;
+                            previous_button.IsEnabled = true;
+                            this.step++;
+                            this.updateStep(this.step);
+                        }
+                        else
+                        {
+                            missing_infos_label.Visibility = Visibility.Visible;
+                        }
                         break;
                     }
                 case 1:
@@ -476,6 +483,26 @@ namespace Forge_Modding_Helper_3
         {
             new WorkspaceManager().Show();
             this.Close();
+        }
+
+        private void button_browse_directory_Click(object sender, RoutedEventArgs e)
+        {
+            // Allow user to select workspace directory
+            using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = fbd.ShowDialog();
+
+                if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    this.folder = fbd.SelectedPath;
+                    this.textbox_directory.Text = fbd.SelectedPath;
+                }
+                else
+                {
+                    this.folder = "";
+                    this.textbox_directory.Text = "";
+                }
+            }
         }
     }
 }

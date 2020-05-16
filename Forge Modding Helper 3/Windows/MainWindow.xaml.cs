@@ -37,6 +37,7 @@ namespace Forge_Modding_Helper_3
             }
 
             welcomeWindow.Show();
+            new AssistantCreator().Show();
             this.Close();
         }
 

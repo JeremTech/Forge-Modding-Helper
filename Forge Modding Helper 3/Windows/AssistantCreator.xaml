@@ -117,8 +117,12 @@
             <TextBox x:Name="mod_description_textbox" HorizontalAlignment="Left" Height="81" Margin="10,65.4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="484" AcceptsReturn="True" Background="#FF3E3E42" Foreground="White" Tag="mod_description" TextChanged="Optional_TextBox_TextChanged" Grid.Row="1"/>
         </Grid>
         <Grid x:Name="first_grid" Height="399" Margin="0,57,0.4,0" VerticalAlignment="Top" Background="#FF2D2D30">
-            <Label x:Name="label1" Content="Bienvenue dans l'assistant de création d'espace de travail Minecraft Forge !&#xA;Nous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant.&#xA;&#xA;Version de Minecraft supportées :&#xA;Minecraft 1.13 : 1.13.2&#xA;Minecraft 1.14 : 1.14.2 - 1.14.3 - 1.14.4&#xA;Minecraft 1.15 : 1.15.2&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;Vous devrez être connecté à Internet durant tout le processus de création de l'espace &#xA;de travail." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Height="356" Width="494"/>
-            <Label x:Name="label2" Content="Cliquez sur &quot;Suivant&quot; pour continuer." HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Foreground="White"/>
+            <Label x:Name="label1" Content="Bienvenue dans l'assistant de création d'espace de travail Minecraft Forge !&#xA;Nous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant.&#xA;&#xA;Version de Minecraft supportées :&#xA;Minecraft 1.13 : 1.13.2&#xA;Minecraft 1.14 : 1.14.2 - 1.14.3 - 1.14.4&#xA;Minecraft 1.15 : 1.15.2&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xA;&#xA;Vous devrez être connecté à Internet durant tout le processus de création de l'espace &#xA;de travail." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Height="257" Width="494"/>
+            <Label x:Name="label2" Content="Choisissez un répertoire de destination puis cliquez sur &quot;Suivant&quot; pour continuer." HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Foreground="White"/>
+            <GroupBox x:Name="groupBox" Header="Répertoire de destination" HorizontalAlignment="Left" Height="56" Margin="10,288,0,0" VerticalAlignment="Top" Width="495" Foreground="White">
+                <TextBox x:Name="textbox_directory" HorizontalAlignment="Left" Height="23" Margin="5,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="441" Background="#FF252526" Foreground="White" IsReadOnly="True"/>
+            </GroupBox>
+            <Button x:Name="button_browse_directory" Content="..." HorizontalAlignment="Left" Margin="467,310,0,0" VerticalAlignment="Top" Width="28" Height="24" Click="button_browse_directory_Click"/>
         </Grid>
 
     </Grid>
