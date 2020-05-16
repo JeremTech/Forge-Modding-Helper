@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Windows;
 
 namespace Forge_Modding_Helper_3
 {
@@ -14,20 +16,28 @@ namespace Forge_Modding_Helper_3
             InitializeComponent();
             version_label.Content = "v" + System.Reflection.Assembly.GetEntryAssembly().GetName().Version;
 
-            // Checking current folder
-            updateLoadingStatut("Vérification du dossier courant...", 20);
-            bool checkFiles = checkFolder();
+            // Checking app folders
+            updateLoadingStatut("Vérification des dossiers d'application...", 20);
 
-            if(!checkFiles)
+            if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Data")))
+                Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Data"));
+
+            // Load last workspaces
+            updateLoadingStatut("Récupération des espaces de travail récents...", 40);
+            WelcomeWindow welcomeWindow = new WelcomeWindow();
+
+            if (RecentWorkspaces.ReadDataFile())
             {
-                new AssistantCreator().Show();
-                this.Close();
+                welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
+                welcomeWindow.listbox_recent_workspaces.ItemsSource = RecentWorkspaces.GetRecentWorkspaces();
             }
             else
             {
-                new WorkspaceManager().Show();
-                this.Close();
+                welcomeWindow.label_no_workspace_found.Visibility = Visibility.Visible;
             }
+
+            welcomeWindow.Show();
+            this.Close();
         }
 
         public void updateLoadingStatut(string statut_text, int progress_value)
