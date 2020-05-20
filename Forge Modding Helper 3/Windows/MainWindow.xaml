@@ -19,7 +19,7 @@
         <Image HorizontalAlignment="Left" Height="71" Margin="24,24,0,0" VerticalAlignment="Top" Width="71" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
         <Label x:Name="loading_label" Content="Chargement..." HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="409" Foreground="White"/>
         <Label Content="Forge Modding Helper" HorizontalAlignment="Left" Margin="100,24,0,0" VerticalAlignment="Top" Foreground="White" FontSize="28" Grid.ColumnSpan="3" Width="301"/>
-        <Label x:Name="version_label" Content="v0.0.0.0" Margin="153,61,28,0" VerticalAlignment="Top" Foreground="White" Grid.Column="2" FontSize="14"/>
+        <Label x:Name="version_label" Content="v0.0.0.0" Margin="25,61,28,0" VerticalAlignment="Top" Foreground="White" Grid.Column="2" FontSize="14" HorizontalContentAlignment="Right"/>
         <Label Content="© 2017 - 2020 Jerem'Tech" HorizontalAlignment="Left" Margin="89,173,0,0" VerticalAlignment="Top" Width="149" Foreground="White" Grid.Column="2"/>
 
     </Grid>

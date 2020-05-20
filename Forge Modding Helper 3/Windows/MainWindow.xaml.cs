@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows;
 
 namespace Forge_Modding_Helper_3
@@ -14,7 +15,7 @@ namespace Forge_Modding_Helper_3
         {
             // Initialization
             InitializeComponent();
-            version_label.Content = "v" + System.Reflection.Assembly.GetEntryAssembly().GetName().Version;
+            version_label.Content = AppInfos.GetApplicationVersionString();
 
             // Checking app folders
             updateLoadingStatut("Vérification des dossiers d'application...", 20);

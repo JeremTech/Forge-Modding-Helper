@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Utils;
 
 namespace Forge_Modding_Helper_3.Windows
 {
@@ -27,7 +28,7 @@ namespace Forge_Modding_Helper_3.Windows
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            version_label.Content = "v" + System.Reflection.Assembly.GetEntryAssembly().GetName().Version;
+            version_label.Content = AppInfos.GetApplicationVersionString();
         }
 
         #region Buttons
