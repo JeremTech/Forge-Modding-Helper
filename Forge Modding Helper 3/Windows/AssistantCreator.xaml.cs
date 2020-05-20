@@ -9,6 +9,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Objects;
 
 namespace Forge_Modding_Helper_3
 {
@@ -180,6 +182,10 @@ namespace Forge_Modding_Helper_3
                     }
                 case 4:
                     {
+                        // Saving in recent workspaces
+                        RecentWorkspaces.RecentWorkspacesList.Add(new Workspace(this.mod_infos["mod_name"], this.mod_infos["minecraft_version"], this.folder, this.mod_infos["mod_description"]));
+                        RecentWorkspaces.WriteDataFile();
+
                         // UI components
                         fith_grid.Visibility = Visibility.Hidden;
                         generation_grid.Visibility = Visibility.Visible;
@@ -479,12 +485,7 @@ namespace Forge_Modding_Helper_3
         }
         #endregion
 
-        private void finish_button_Click(object sender, RoutedEventArgs e)
-        {
-            new WorkspaceManager().Show();
-            this.Close();
-        }
-
+        #region Browse directory button
         private void button_browse_directory_Click(object sender, RoutedEventArgs e)
         {
             // Allow user to select workspace directory
@@ -503,6 +504,13 @@ namespace Forge_Modding_Helper_3
                     this.textbox_directory.Text = "";
                 }
             }
+        }
+        #endregion
+
+        private void finish_button_Click(object sender, RoutedEventArgs e)
+        {
+            new WorkspaceManager().Show();
+            this.Close();
         }
     }
 }

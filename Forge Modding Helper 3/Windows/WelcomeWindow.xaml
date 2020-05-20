@@ -1,0 +1,38 @@
+﻿<Window x:Class="Forge_Modding_Helper_3.Windows.WelcomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows"
+        mc:Ignorable="d"
+        Title="Forge Modding Helper - Bienvenue" Height="487.5" Width="433.438" ResizeMode="CanMinimize" Initialized="Window_Initialized">
+    <Grid Background="#FF2D2D30">
+        <Image HorizontalAlignment="Left" Height="71" Margin="14,14,0,0" VerticalAlignment="Top" Width="70" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
+        <Label Content="Forge Modding Helper" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="28" Width="300"/>
+        <Label x:Name="version_label" Content="v0.0.0.0" Margin="328,47,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14" HorizontalAlignment="Left" Width="72"/>
+        <Button x:Name="new_mod_button" Content="Nouveau" HorizontalAlignment="Left" Margin="325,90,0,0" VerticalAlignment="Top" Width="75" Height="24"/>
+        <Button x:Name="import_mod_button" Content="Importer" HorizontalAlignment="Left" Margin="245,90,0,0" VerticalAlignment="Top" Width="75" Height="24" IsEnabled="False"/>
+        <Label x:Name="label" Content="Espaces de travail récents" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Foreground="White" Width="226" FontSize="16"/>
+        <Separator HorizontalAlignment="Left" Height="13" Margin="11,116,0,0" VerticalAlignment="Top" Width="394" Background="White"/>
+        
+        <ListBox x:Name="listbox_recent_workspaces" Height="300" HorizontalAlignment="Stretch" Margin="11,134,0,0" Width="394" Background="#FF3E3E42">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="[" Foreground="White"/>
+                            <Label Content="{Binding minecraft_version}" HorizontalAlignment="Left" Foreground="White" Margin="-9, 0, -9, 0"/>
+                            <Label Content="]" Foreground="White"/>
+                            <Label Content="{Binding mod_name}" Foreground="White" FontWeight="Bold" Margin="-5, 0, 0, 0"/>
+                        </StackPanel>
+                        <Label Content="{Binding description}" HorizontalContentAlignment="Left" FontStyle="Italic" Foreground="White" Margin="0, -5, 0, 0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <Label Content="© 2017 - 2020 Jerem'Tech" HorizontalAlignment="Left" Margin="90,50,0,0" VerticalAlignment="Top" Width="149" Foreground="White"/>
+        <Label x:Name="label_no_workspace_found" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Aucun espace de travail récent n'a été trouvé." Margin="14,134,0,0" VerticalAlignment="Top" Foreground="#FFC9C9C9" HorizontalAlignment="Left" Width="391" Height="300"/>
+
+    </Grid>
+</Window>

@@ -29,7 +29,7 @@ namespace Forge_Modding_Helper_3
             if (RecentWorkspaces.ReadDataFile())
             {
                 welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
-                welcomeWindow.listbox_recent_workspaces.ItemsSource = RecentWorkspaces.GetRecentWorkspaces();
+                welcomeWindow.listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
             }
             else
             {
