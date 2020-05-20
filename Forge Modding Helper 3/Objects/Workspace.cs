@@ -13,13 +13,15 @@ namespace Forge_Modding_Helper_3.Objects
         public string description { get; set; }
         public string minecraft_version { get; set; }
         public string path { get; set; }
+        public DateTime last_updated { get; set; }
 
-        public Workspace(string modName, string minecraftVersion, string path, string description)
+        public Workspace(string modName, string minecraftVersion, string path, string description, DateTime lastUpdated)
         {
             this.mod_name = modName;
             this.minecraft_version = minecraftVersion;
             this.path = path;
             this.description = description;
+            this.last_updated = lastUpdated;
         }
 
         public string GetModName()

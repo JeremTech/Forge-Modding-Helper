@@ -86,6 +86,7 @@
     <Compile Include="Objects\Workspace.cs" />
     <Compile Include="Files\BuildGradle.cs" />
     <Compile Include="Utils\AppInfos.cs" />
+    <Compile Include="Utils\DirectoryUtils.cs" />
     <Compile Include="Utils\ForgeVersionsUtils.cs" />
     <Compile Include="Console\GradleTasks.cs" />
     <Compile Include="Files\ModToml.cs" />

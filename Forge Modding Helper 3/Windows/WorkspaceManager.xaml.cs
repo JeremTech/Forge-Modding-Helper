@@ -37,8 +37,8 @@ namespace Forge_Modding_Helper_3
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            MessageBox.Show("Nous avons détecté un espace de travail Forge déjà configuré. Le gestionnaire d'espace de travail n'étant pas encore prêt, il n'y a rien de plus pour le moment !" + Environment.NewLine + Environment.NewLine + "L'application va se fermer.", "Informations", MessageBoxButton.OK, MessageBoxImage.Information);
-            Environment.Exit(0);
+            MessageBox.Show("Le gestionnaire d'espace de travail n'est pas encore prêt ! Il n'y a donc rien de plus pour le moment !", "Informations", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
         }
     }
 }

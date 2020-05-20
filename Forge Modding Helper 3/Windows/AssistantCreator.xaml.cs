@@ -178,7 +178,7 @@ namespace Forge_Modding_Helper_3
                 case 4:
                     {
                         // Saving in recent workspaces
-                        RecentWorkspaces.RecentWorkspacesList.Add(new Workspace(this.mod_infos["mod_name"], this.mod_infos["minecraft_version"], this.folder, this.mod_infos["mod_description"]));
+                        RecentWorkspaces.RecentWorkspacesList.Add(new Workspace(this.mod_infos["mod_name"], this.mod_infos["minecraft_version"], this.folder, this.mod_infos["mod_description"], DateTime.Now));
                         RecentWorkspaces.WriteDataFile();
 
                         // UI components
@@ -502,12 +502,15 @@ namespace Forge_Modding_Helper_3
         }
         #endregion
 
+        #region Finish button
         private void finish_button_Click(object sender, RoutedEventArgs e)
         {
             new WorkspaceManager().Show();
             this.Close();
         }
+        #endregion
 
+        #region Prevent Window closing
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             if (step < total_step)
@@ -520,5 +523,7 @@ namespace Forge_Modding_Helper_3
                 }
             }
         }
+        #endregion
+
     }
 }
