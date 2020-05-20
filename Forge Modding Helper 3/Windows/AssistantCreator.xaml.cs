@@ -107,12 +107,7 @@ namespace Forge_Modding_Helper_3
         #region Cancel button
         private void Cancel_button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult action = MessageBox.Show("Souhaitez-vous vraiment annuler la création de l'espace de travail ?\nL'application se fermera.", "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (action == MessageBoxResult.Yes)
-            {
-                System.Windows.Application.Current.Shutdown();
-            }
+            this.Close();
         }
         #endregion
 
@@ -511,6 +506,19 @@ namespace Forge_Modding_Helper_3
         {
             new WorkspaceManager().Show();
             this.Close();
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (step < total_step)
+            {
+                MessageBoxResult action = MessageBox.Show(this, "Souhaitez-vous vraiment annuler la création de l'espace de travail ?", "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (action == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }

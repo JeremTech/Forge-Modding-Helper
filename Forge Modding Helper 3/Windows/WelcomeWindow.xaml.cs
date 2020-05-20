@@ -28,8 +28,14 @@ namespace Forge_Modding_Helper_3.Windows
         private void Window_Initialized(object sender, EventArgs e)
         {
             version_label.Content = "v" + System.Reflection.Assembly.GetEntryAssembly().GetName().Version;
-
-            
         }
+
+        #region Buttons
+        private void new_mod_button_Click(object sender, RoutedEventArgs e)
+        {
+            AssistantCreator creator = new AssistantCreator();
+            creator.ShowDialog();
+        }
+        #endregion
     }
 }

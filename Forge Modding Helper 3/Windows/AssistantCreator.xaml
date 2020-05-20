@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3"
-        mc:Ignorable="d" Height="548.361" Width="520.902" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Title="Assistant Creator - Forge Modding Helper">
+        mc:Ignorable="d" Height="548.361" Width="520.902" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Title="Assistant Creator - Forge Modding Helper" Closing="Window_Closing">
     <Grid Background="#FF252526">
 
         <Grid x:Name="finish_grid" Height="399" Margin="0,57,0.4,0" VerticalAlignment="Top" Background="#FF2D2D30">
@@ -87,7 +87,7 @@
         </Grid>
 
         <Button x:Name="next_button" Content="Suivant &gt;" HorizontalAlignment="Left" Margin="322,470,0,0" VerticalAlignment="Top" Width="89" Height="25" Click="Next_button_Click"/>
-        <Button x:Name="cancel_button" Content="Annuler" Margin="430,470,10,0" VerticalAlignment="Top" Height="25" Click="Cancel_button_Click" IsCancel="True"/>
+        <Button x:Name="cancel_button" Content="Annuler" Margin="430,470,10,0" VerticalAlignment="Top" Height="25" Click="Cancel_button_Click"/>
         <Button x:Name="previous_button" Content="&lt; Précédent" HorizontalAlignment="Left" Margin="228,470,0,0" VerticalAlignment="Top" Width="89" Height="25" Click="Previous_button_Click" IsEnabled="False"/>
         <Separator HorizontalAlignment="Left" Height="17" Margin="0,38,0,0" VerticalAlignment="Top" Width="515"/>
         <ProgressBar x:Name="step_progressbar" HorizontalAlignment="Left" Height="10" Margin="0,44,0,0" VerticalAlignment="Top" Width="514" Foreground="#FF3E60D4"/>
