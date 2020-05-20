@@ -34,6 +34,7 @@ namespace Forge_Modding_Helper_3.Files
                 if (jsonContentFormatted.Count > 0)
                 {
                     RecentWorkspacesList = jsonContentFormatted;
+                    RecentWorkspacesList.Reverse();
                     success = true;
                 }
             }
