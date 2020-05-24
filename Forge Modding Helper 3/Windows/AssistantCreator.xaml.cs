@@ -11,6 +11,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Objects;
+using Forge_Modding_Helper_3.Utils;
 
 namespace Forge_Modding_Helper_3
 {
@@ -483,18 +484,29 @@ namespace Forge_Modding_Helper_3
         #region Browse directory button
         private void button_browse_directory_Click(object sender, RoutedEventArgs e)
         {
-            // Allow user to select workspace directory
+            // Allow user to select workspace output directory
             using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
             {
                 System.Windows.Forms.DialogResult result = fbd.ShowDialog();
 
                 if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    this.folder = fbd.SelectedPath;
                     this.textbox_directory.Text = fbd.SelectedPath;
+
+                    if (!DirectoryUtils.CheckFolderIsForgeWorkspace(fbd.SelectedPath))
+                    {
+                        this.folder = fbd.SelectedPath;
+                        this.label_invalid_workspace_folder.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        this.folder = "";
+                        this.label_invalid_workspace_folder.Visibility = Visibility.Visible;
+                    }
                 }
-                else
+                else if(string.IsNullOrWhiteSpace(fbd.SelectedPath) && string.IsNullOrWhiteSpace(this.folder))
                 {
+                    this.label_invalid_workspace_folder.Visibility = Visibility.Hidden;
                     this.folder = "";
                     this.textbox_directory.Text = "";
                 }

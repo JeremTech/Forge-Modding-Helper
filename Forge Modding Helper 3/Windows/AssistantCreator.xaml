@@ -123,6 +123,7 @@
                 <TextBox x:Name="textbox_directory" HorizontalAlignment="Left" Height="23" Margin="5,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="441" Background="#FF252526" Foreground="White" IsReadOnly="True"/>
             </GroupBox>
             <Button x:Name="button_browse_directory" Content="..." HorizontalAlignment="Left" Margin="467,310,0,0" VerticalAlignment="Top" Width="28" Height="24" Click="button_browse_directory_Click"/>
+            <Label x:Name="label_invalid_workspace_folder" Content="Ce dossier contient déjà un espace de travail Forge !" HorizontalAlignment="Left" Margin="211,283,0,0" VerticalAlignment="Top" Background="#FF2D2D30" Foreground="Red" Height="26" Visibility="Hidden"/>
         </Grid>
 
     </Grid>
