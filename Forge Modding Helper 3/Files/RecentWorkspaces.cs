@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 namespace Forge_Modding_Helper_3.Files
 {
+    // This class allwo to manage recent workspace
     public class RecentWorkspaces
     {
         // Recent Workspaces list

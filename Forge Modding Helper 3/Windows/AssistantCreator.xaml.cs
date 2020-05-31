@@ -17,12 +17,19 @@ namespace Forge_Modding_Helper_3
 {
     public partial class AssistantCreator : Window
     {
+        // Number of step of the Assistant Creator
         private double total_step = 5.0;
+        // Current step
         private double step = 0.0;
+        // Output folder
         private string folder = "";
+        // Url to json to check last forge versions
         private string versions_url = "https://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.json";
+        // Background Worker to retrieve forge versions
         private readonly BackgroundWorker background_thread = new BackgroundWorker();
+        // Forge Version manager
         private ForgeVersionsUtils versions = new ForgeVersionsUtils();
+        // Mod infos storage
         private Dictionary<string, string> mod_infos = new Dictionary<string, string>
         {
             {"mod_name", ""},
@@ -43,7 +50,11 @@ namespace Forge_Modding_Helper_3
         public AssistantCreator()
         {
             InitializeComponent();
+
+            // Reset step display
             updateStep(0.0);
+
+            // Initialize background thread
             background_thread.DoWork += Background_thread_DoWork;
             background_thread.RunWorkerCompleted += Background_thread_RunWorkerCompleted;
 
@@ -57,6 +68,10 @@ namespace Forge_Modding_Helper_3
             finish_grid.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Update step display
+        /// </summary>
+        /// <param name="stepIn">New step number</param>
         public void updateStep(double stepIn)
         {
             step_progressbar.Value = (stepIn / this.total_step) * 100;
@@ -64,12 +79,17 @@ namespace Forge_Modding_Helper_3
         }
 
         #region Background Worker
+        /// <summary>
+        /// Function executed when the forge version retrieval background thread finished his tasks
+        /// </summary>
         private void Background_thread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            // Update Forge version selection UI
             forge_versions_grid.ClearValue(EffectProperty);
             loading_label.Visibility = Visibility.Hidden;
             loading_progressbar.Visibility = Visibility.Hidden;
 
+            // Check if a latest version is found
             if (!string.IsNullOrWhiteSpace(versions.getLatestForgeVersion(mod_infos["minecraft_version"])))
             {
                 this.latest_forge_version_label.Content = versions.getLatestForgeVersion(mod_infos["minecraft_version"]);
@@ -80,6 +100,7 @@ namespace Forge_Modding_Helper_3
                 this.latest_forge_version_grid.Visibility = Visibility.Hidden;
             }
 
+            // Check if a recommended version is found
             if (!string.IsNullOrWhiteSpace(versions.getRecommendedForgeVersion(mod_infos["minecraft_version"])))
             {
                 this.recommended_forge_version_label.Content = versions.getRecommendedForgeVersion(mod_infos["minecraft_version"]);
@@ -90,22 +111,32 @@ namespace Forge_Modding_Helper_3
                 this.recommended_forge_version_grid.Visibility = Visibility.Hidden;
             }
 
+            // Set selected version to the latest version
             this.mod_infos["forge_version"] = versions.getLatestForgeVersion(mod_infos["minecraft_version"]);
         }
 
+        /// <summary>
+        /// Function executed when the forge version retrieval background thread is call
+        /// </summary>
         private void Background_thread_DoWork(object sender, DoWorkEventArgs e)
         {
             string content = "";
+
             using (WebClient client = new WebClient())
             {
+                // Retrieve forge versions json content
                 content = client.DownloadString(versions_url);
             }
 
+            // Convert content to ForgeVersionsUtils object
             versions = JsonConvert.DeserializeObject<ForgeVersionsUtils>(content);
         }
         #endregion
 
         #region Cancel button
+        /// <summary>
+        /// Function called when the user click on the cancel button
+        /// </summary>
         private void Cancel_button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -113,67 +144,89 @@ namespace Forge_Modding_Helper_3
         #endregion
 
         #region Next Button
+        /// <summary>
+        /// Function called when the user click on the next button
+        /// </summary>
         private void Next_button_Click(object sender, RoutedEventArgs e)
         {
+            // Depending on the step number
             switch (this.step)
             {
                 case 0:
                     {
+                        // Check if mandatory step's infos are completed
                         if (!string.IsNullOrWhiteSpace(this.folder))
                         {
+                            // Update UI components
                             first_grid.Visibility = Visibility.Hidden;
                             missing_infos_label.Visibility = Visibility.Hidden;
                             second_grid.Visibility = Visibility.Visible;
                             previous_button.IsEnabled = true;
+
+                            // Increase and update step number
                             this.step++;
                             this.updateStep(this.step);
                         }
                         else
                         {
+                            // Display missing infos message
                             missing_infos_label.Visibility = Visibility.Visible;
                         }
                         break;
                     }
                 case 1:
                     {
+                        // Check if mandatory step's infos are completed
                         if (!String.IsNullOrEmpty(this.mod_infos["mod_name"]) && !String.IsNullOrEmpty(this.mod_infos["mod_authors"]) && !String.IsNullOrEmpty(this.mod_infos["mod_version"]))
                         {
+                            // Update UI components
                             missing_infos_label.Visibility = Visibility.Hidden;
                             second_grid.Visibility = Visibility.Hidden;
                             third_grid.Visibility = Visibility.Visible;
                             missing_infos_label.Visibility = Visibility.Hidden;
+
+                            // Increase and update step number
                             this.step++;
                             this.updateStep(this.step);
                         }
                         else
                         {
+                            // Display missing infos message
                             missing_infos_label.Visibility = Visibility.Visible;
                         }
                         break;
                     }
                 case 2:
                     {
+                        // Check if mandatory step's infos are completed
                         if (!String.IsNullOrWhiteSpace(this.mod_infos["mod_id"]) && !String.IsNullOrWhiteSpace(this.mod_infos["mod_group"]) && !String.IsNullOrWhiteSpace(this.mod_infos["minecraft_version"]) && !String.IsNullOrWhiteSpace(this.mod_infos["forge_version"]))
                         {
+                            // Update UI components
                             missing_infos_label.Visibility = Visibility.Hidden;
                             third_grid.Visibility = Visibility.Hidden;
                             fourth_grid.Visibility = Visibility.Visible;
+
+                            // Increase and update step number
                             this.step++;
                             this.updateStep(this.step);
                         }
                         else
                         {
+                            // Display missing infos message
                             missing_infos_label.Visibility = Visibility.Visible;
                         }
                         break;
                     }
                 case 3:
                     {
+                        // Update UI components
                         fourth_grid.Visibility = Visibility.Hidden;
                         fith_grid.Visibility = Visibility.Visible;
+                        missing_infos_label.Visibility = Visibility.Hidden;
+
+                        // Increase and update step number
                         this.step++;
                         this.updateStep(this.step);
-                        missing_infos_label.Visibility = Visibility.Hidden;
                         break;
                     }
                 case 4:
@@ -182,15 +235,17 @@ namespace Forge_Modding_Helper_3
                         RecentWorkspaces.RecentWorkspacesList.Add(new Workspace(this.mod_infos["mod_name"], this.mod_infos["minecraft_version"], this.folder, this.mod_infos["mod_description"], DateTime.Now));
                         RecentWorkspaces.WriteDataFile();
 
-                        // UI components
+                        // Update UI components
                         fith_grid.Visibility = Visibility.Hidden;
                         generation_grid.Visibility = Visibility.Visible;
-                        this.step++;
-                        this.updateStep(this.step);
                         missing_infos_label.Visibility = Visibility.Hidden;
                         next_button.IsEnabled = false;
                         previous_button.IsEnabled = false;
                         step_label.Visibility = Visibility.Hidden;
+
+                        // Increase and update step number
+                        this.step++;
+                        this.updateStep(this.step);
 
                         // Forge download
                         update_progress(0, "Téléchargement de Forge " + this.mod_infos["minecraft_version"] + " - " + this.mod_infos["forge_version"] + " en cours...");
@@ -204,7 +259,7 @@ namespace Forge_Modding_Helper_3
                     }
                 case 5:
                     {
-                        // UI components
+                        // Update UI components
                         generation_grid.Visibility = Visibility.Hidden;
                         finish_grid.Visibility = Visibility.Visible;
                         next_button.IsEnabled = false;
@@ -219,73 +274,115 @@ namespace Forge_Modding_Helper_3
         #endregion
 
         #region Previous button
+        /// <summary>
+        /// Function called when the user click on the previous button
+        /// </summary>
         private void Previous_button_Click(object sender, RoutedEventArgs e)
         {
+            // Depending on the step number
             switch (step)
             {
                 case 1:
+                {
+                    // Update UI components
                     previous_button.IsEnabled = false;
                     first_grid.Visibility = Visibility.Visible;
                     second_grid.Visibility = Visibility.Hidden;
                     missing_infos_label.Visibility = Visibility.Hidden;
+
+                    // Decrease and update step number
                     this.step--;
                     this.updateStep(this.step);
                     break;
+                }
                 case 2:
+                {
+                    // Update UI components
                     second_grid.Visibility = Visibility.Visible;
                     third_grid.Visibility = Visibility.Hidden;
                     missing_infos_label.Visibility = Visibility.Hidden;
+
+                    // Decrease and update step number
                     this.step--;
                     this.updateStep(this.step);
                     break;
+                }
                 case 3:
+                {
+                    // Update UI components
                     third_grid.Visibility = Visibility.Visible;
                     fourth_grid.Visibility = Visibility.Hidden;
                     missing_infos_label.Visibility = Visibility.Hidden;
+
+                    // Decrease and update step number
                     this.step--;
                     this.updateStep(this.step);
                     break;
+                }
                 case 4:
+                {
+                    // Update UI components
                     fourth_grid.Visibility = Visibility.Visible;
                     fith_grid.Visibility = Visibility.Hidden;
                     missing_infos_label.Visibility = Visibility.Hidden;
+
+                    // Decrease and update step number
                     this.step--;
                     this.updateStep(this.step);
                     break;
+                }
             }
         }
         #endregion
 
         #region Generation
+        /// <summary>
+        /// Function called when the forge download progress change
+        /// </summary>
         private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             double bytesIn = double.Parse(e.BytesReceived.ToString());
             double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
             double percentage = bytesIn / totalBytes * 100;
 
+            // Update progressbar value with the download percentage
             progress_progressbar.Value = int.Parse(Math.Truncate(percentage).ToString());
         }
 
+        /// <summary>
+        /// Function called when the forge download is completed
+        /// </summary>
         private void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
+            // Extract the downloaded archive
             update_progress(0, "Extraction de l'archive...");
             ZipFile.ExtractToDirectory(this.folder + @"\mdk.zip", this.folder);
 
+            // Check if the mdk.zip is always in the directory
             if (File.Exists(this.folder + @"\mdk.zip"))
             {
+                // Delete mdk.zip file
                 update_progress(0, "Supression de l'archive...");
                 File.Delete(this.folder + @"\mdk.zip");
             }
 
+            // Creation of workspaces/assets folders
             generate_folders();
+
+            // Creation of files
             generate_files();
 
+            // End actions
             update_progress(100, "Création de l'espace de travail terminé.");
             this.next_button.IsEnabled = true;
         }
 
+        /// <summary>
+        /// This function generate all mod folders depend of the user choices
+        /// </summary>
         private void generate_folders()
         {
+            // Generate code directories
             if(code_packages_checkBox.IsChecked == true)
             {
                 update_progress(0, "Supression des packages exemple dans \"" + this.folder + @"\src\main\java" + "\"...");
@@ -299,7 +396,8 @@ namespace Forge_Modding_Helper_3
                 Directory.CreateDirectory(this.folder + @"\src\main\java\" + this.mod_infos["mod_group"].Replace(".", @"\"));
             }
 
-            if(assets_packages_checkBox.IsChecked == true)
+            // Generate assets directories
+            if (assets_packages_checkBox.IsChecked == true)
             {
                 update_progress(0, "Création des dossiers de textures dans \"" + this.folder + @"\src\main\assets" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\textures\block");
@@ -320,9 +418,13 @@ namespace Forge_Modding_Helper_3
             }
         }
 
+        /// <summary>
+        /// This function generate all mod files depend of the user choices
+        /// </summary>
         private void generate_files()
         {
-            if(fr_lang_file_checkBox.IsChecked == true)
+            // Generate blank fr language file
+            if (fr_lang_file_checkBox.IsChecked == true)
             {
                 if(!Directory.Exists(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\lang"))
                 {
@@ -334,21 +436,24 @@ namespace Forge_Modding_Helper_3
                 File.WriteAllText(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\lang\fr_fr.json", "{" + Environment.NewLine + Environment.NewLine + "}");
             }
 
-            if(build_gradle_checkBox.IsChecked == true)
+            // Generate build.gradle file
+            if (build_gradle_checkBox.IsChecked == true)
             {
                 update_progress(0, "Configuration du fichier \"build.gradle\" dans \"" + this.folder + "\"...");
                 BuildGradle build_gradle = new BuildGradle(this.mod_infos, this.folder);
                 build_gradle.generateFile();
             }
 
-            if(mod_toml_checkBox.IsChecked == true)
+            // Generate mod.toml file
+            if (mod_toml_checkBox.IsChecked == true)
             {
                 update_progress(0, "Configuration du fichier \"mods.toml\" dans \"" + this.folder + @"\src\main\resources\META-INF\""...");
                 ModToml mod_toml = new ModToml(this.mod_infos, this.folder);
                 mod_toml.generateFile();
             }
 
-            if(!string.IsNullOrEmpty(this.mod_infos["mod_logo"]))
+            // Copy mod logo (if gave by the user)
+            if (!string.IsNullOrEmpty(this.mod_infos["mod_logo"]))
             {
                 update_progress(0, "Copie du logo du mod...");
 
@@ -364,6 +469,11 @@ namespace Forge_Modding_Helper_3
 
         }
 
+        /// <summary>
+        /// Update the generation progress
+        /// </summary>
+        /// <param name="progress">Value to display in the generation progressbar</param>
+        /// <param name="statut">Text to display under the progressbar and in the history list</param>
         private void update_progress(int progress, string statut)
         {
             progress_progressbar.Value = progress;
@@ -373,6 +483,10 @@ namespace Forge_Modding_Helper_3
         #endregion
 
         #region Messages
+        /// <summary>
+        /// Show an error message 
+        /// </summary>
+        /// <param name="error">Error message</param>
         public void showErrorMessageAndShutdown(string error)
         {
             MessageBox.Show("Une erreur est survenue.\n\"" + error + "\"\nL'application va se fermer.", "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -426,20 +540,30 @@ namespace Forge_Modding_Helper_3
         #endregion
 
         #region ComboBox Forge Version
+        /// <summary>
+        /// Function called when the selected minecraft version change
+        /// </summary>
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Update UI component
             BlurEffect effect = new BlurEffect();
             effect.Radius = 20;
             forge_versions_grid.Effect = effect;
             loading_label.Visibility = Visibility.Visible;
             loading_progressbar.Visibility = Visibility.Visible;
             mod_infos["minecraft_version"] = (string) ((ComboBoxItem)forge_version_comboBox.SelectedItem).Content;
-            Console.WriteLine(mod_infos["minecraft_version"]);
+
+            // Starting forge version checker
             background_thread.RunWorkerAsync();
         }
         #endregion
 
         #region Radiobutton Forge version
+        /// <summary>
+        /// Function called when the user change the forge version selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void forge_version_radiobutton_Checked(object sender, RoutedEventArgs e)
         {
             if(latest_radiobutton.IsChecked == true)
@@ -455,8 +579,12 @@ namespace Forge_Modding_Helper_3
         #endregion
 
         #region Browse logo
+        /// <summary>
+        /// Function called when the user click on the browse button for the mod logo
+        /// </summary>
         private void Browse_logo_button_Click(object sender, RoutedEventArgs e)
         {
+            // Create and configure FileDialog
             Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
             fileDialog.RestoreDirectory = true;
             fileDialog.Title = "Choisissez un logo pour votre mod";
@@ -464,8 +592,10 @@ namespace Forge_Modding_Helper_3
             fileDialog.Filter = "png files (*.png)|*.png";
             fileDialog.CheckFileExists = true;
             fileDialog.CheckPathExists = true;
+            // Display the FileDialog
             fileDialog.ShowDialog();
 
+            // Check the user selection
             if(!String.IsNullOrWhiteSpace(fileDialog.FileName))
             {
                 this.logo_path_textbox.Text = fileDialog.FileName;
@@ -477,22 +607,29 @@ namespace Forge_Modding_Helper_3
                 this.mod_logo_image.Source = null;
             }
 
+            // Update logo path
             this.mod_infos["mod_logo"] = this.logo_path_textbox.Text;
         }
         #endregion
 
         #region Browse directory button
+        /// <summary>
+        /// Function called when the user click on the browse button for the output directory
+        /// </summary>
         private void button_browse_directory_Click(object sender, RoutedEventArgs e)
         {
             // Allow user to select workspace output directory
             using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
             {
+                // Display FolderDialog
                 System.Windows.Forms.DialogResult result = fbd.ShowDialog();
 
+                // Check the user selection
                 if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     this.textbox_directory.Text = fbd.SelectedPath;
 
+                    // Check if the selected output directory is not a Forge Workspace
                     if (!DirectoryUtils.CheckFolderIsForgeWorkspace(fbd.SelectedPath))
                     {
                         this.folder = fbd.SelectedPath;
@@ -504,7 +641,8 @@ namespace Forge_Modding_Helper_3
                         this.label_invalid_workspace_folder.Visibility = Visibility.Visible;
                     }
                 }
-                else if(string.IsNullOrWhiteSpace(fbd.SelectedPath) && string.IsNullOrWhiteSpace(this.folder))
+                // If the selected path is null and the current folder too
+                else if (string.IsNullOrWhiteSpace(fbd.SelectedPath) && string.IsNullOrWhiteSpace(this.folder))
                 {
                     this.label_invalid_workspace_folder.Visibility = Visibility.Hidden;
                     this.folder = "";
@@ -515,6 +653,9 @@ namespace Forge_Modding_Helper_3
         #endregion
 
         #region Finish button
+        /// <summary>
+        /// Function called when the user click on the finish button
+        /// </summary>
         private void finish_button_Click(object sender, RoutedEventArgs e)
         {
             new WorkspaceManager().Show();
@@ -523,14 +664,21 @@ namespace Forge_Modding_Helper_3
         #endregion
 
         #region Prevent Window closing
+        /// <summary>
+        /// Function called before window closing
+        /// </summary>
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            // If the current step is not the final step
             if (step < total_step)
             {
+                // Display a closing confirmation
                 MessageBoxResult action = MessageBox.Show(this, "Souhaitez-vous vraiment annuler la création de l'espace de travail ?", "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
+                // If the user refuse
                 if (action == MessageBoxResult.No)
                 {
+                    // We cancel the event / the window closing
                     e.Cancel = true;
                 }
             }

@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace Forge_Modding_Helper_3
 {
+    // This class allow to generate mod.toml file
     public class ModToml
     {
         private Dictionary<string, string> mod_infos = new Dictionary<string, string> { };
         private string folder = "";
 
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="mod_infos">Dictionnary with all mod infos</param>
+        /// <param name="generation_foler">Output folder</param>
         public ModToml(Dictionary<string, string> mod_infos, string generation_foler)
         {
             this.mod_infos = mod_infos;

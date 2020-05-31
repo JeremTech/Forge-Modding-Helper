@@ -4,13 +4,20 @@ using System.IO;
 
 namespace Forge_Modding_Helper_3
 {
+    // This class allow to configure build.gradle file
     public class BuildGradle
     {
         private Dictionary<string, string> mod_infos = new Dictionary<string, string> { };
         private string folder = "";
 
+        /// <summary>
+        /// Constructor 
+        /// </summary>
+        /// <param name="mod_infos">Dictionnary with all mod infos</param>
+        /// <param name="generation_foler">Output folder</param>
         public BuildGradle(Dictionary<string, string> mod_infos, string generation_foler)
         {
+            // Checking correct values
             foreach(KeyValuePair<string, string> entry in mod_infos)
             {
                 if(entry.Value.isTextValid())
@@ -22,6 +29,9 @@ namespace Forge_Modding_Helper_3
             this.folder = generation_foler;
         }
 
+        /// <summary>
+        /// Generate the build.gradle file
+        /// </summary>
         public void generateFile()
         {
             string[] lines = File.ReadAllLines(this.folder + @"\build.gradle");

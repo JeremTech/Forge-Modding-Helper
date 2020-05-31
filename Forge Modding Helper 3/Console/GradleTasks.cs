@@ -11,6 +11,7 @@ using System.Windows.Controls;
 
 namespace Forge_Modding_Helper_3
 {
+    // This class allow to execute forge gradle tasks
     public class GradleTasks
     {
         private TextBox outputTextbox;

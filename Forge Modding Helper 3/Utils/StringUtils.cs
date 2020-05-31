@@ -6,13 +6,24 @@ using System.Threading.Tasks;
 
 namespace Forge_Modding_Helper_3
 {
+    // This class add useful string actions
     public static class StringUtils
     {
+        /// <summary>
+        /// Delete start and end spaces from a string
+        /// </summary>
+        /// <param name="text">Input string</param>
+        /// <returns>String without start and end spaces</returns>
         public static string deleteStartEndSpaces(this string text)
         {
             return text.Trim(' ');
         }
 
+        /// <summary>
+        /// Format text to lower, remove spaces and special characters
+        /// </summary>
+        /// <param name="text">Input string</param>
+        /// <returns>Formatted string</returns>
         public static string formatTextToLower(this string text)
         {
             string output = deleteStartEndSpaces(text);
@@ -23,6 +34,11 @@ namespace Forge_Modding_Helper_3
             return output;
         }
 
+        /// <summary>
+        /// Remove special character from a string
+        /// </summary>
+        /// <param name="str">Input string</param>
+        /// <returns>Formatted string</returns>
         public static string RemoveSpecialCharacters(this string str)
         {
             StringBuilder sb = new StringBuilder();
@@ -37,6 +53,11 @@ namespace Forge_Modding_Helper_3
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Check if a string is a valid value
+        /// </summary>
+        /// <param name="text">Input string</param>
+        /// <returns><code>true</code> if valid value, <code>false</code> else</returns>
         public static bool isTextValid(this string text)
         {
             bool output = false;

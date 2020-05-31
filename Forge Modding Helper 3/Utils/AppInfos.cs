@@ -21,9 +21,10 @@ namespace Forge_Modding_Helper_3.Utils
         /// <returns>Formatted string with the version and, if needed, the pre-release number</returns>
         public static String GetApplicationVersionString()
         {
-            if(isStable)
-                return "v" + System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
-            
+            // If the version is stable, we display only the version number
+            if(isStable) return "v" + System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
+
+            // Else we display the version number and the pre-release number
             return "v" + System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString() + " - " + "Pre-Release " + pre_release_number;
         }
     }

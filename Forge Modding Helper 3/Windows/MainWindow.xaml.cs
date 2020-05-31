@@ -25,6 +25,7 @@ namespace Forge_Modding_Helper_3
             updateLoadingStatut("Récupération des espaces de travail récents...", 40);
             WelcomeWindow welcomeWindow = new WelcomeWindow();
 
+            // Update welcome UI depending on the presence of recent projects or not
             if (RecentWorkspaces.ReadDataFile())
             {
                 welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
@@ -35,10 +36,16 @@ namespace Forge_Modding_Helper_3
                 welcomeWindow.label_no_workspace_found.Visibility = Visibility.Visible;
             }
 
+            // Windows management
             welcomeWindow.Show();
             this.Close();
         }
 
+        /// <summary>
+        /// Update the loading status
+        /// </summary>
+        /// <param name="statut_text">Text to display over the progressBar</param>
+        /// <param name="progress_value">New progressBar value</param>
         public void updateLoadingStatut(string statut_text, int progress_value)
         {
             loading_label.Content = statut_text;

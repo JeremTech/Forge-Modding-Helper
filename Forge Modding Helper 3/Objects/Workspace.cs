@@ -7,6 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace Forge_Modding_Helper_3.Objects
 {
+    // This class represent a workspace
     public class Workspace
     {
         public string mod_name { get; set; }
@@ -15,6 +16,7 @@ namespace Forge_Modding_Helper_3.Objects
         public string path { get; set; }
         public DateTime last_updated { get; set; }
 
+        // Constructor
         public Workspace(string modName, string minecraftVersion, string path, string description, DateTime lastUpdated)
         {
             this.mod_name = modName;
