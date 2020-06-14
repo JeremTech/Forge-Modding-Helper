@@ -535,7 +535,7 @@ namespace Forge_Modding_Helper_3
         {
             TextBox textBox = sender as TextBox;
 
-            textBox.Text = textBox.Text.deleteStartEndSpaces();
+            textBox.Text = textBox.Text.Trim(' ');
         }
         #endregion
 

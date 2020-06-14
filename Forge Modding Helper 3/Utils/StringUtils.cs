@@ -10,31 +10,6 @@ namespace Forge_Modding_Helper_3
     public static class StringUtils
     {
         /// <summary>
-        /// Delete start and end spaces from a string
-        /// </summary>
-        /// <param name="text">Input string</param>
-        /// <returns>String without start and end spaces</returns>
-        public static string deleteStartEndSpaces(this string text)
-        {
-            return text.Trim(' ');
-        }
-
-        /// <summary>
-        /// Format text to lower, remove spaces and special characters
-        /// </summary>
-        /// <param name="text">Input string</param>
-        /// <returns>Formatted string</returns>
-        public static string formatTextToLower(this string text)
-        {
-            string output = deleteStartEndSpaces(text);
-            output = output.Replace(" ", "");
-            output = output.ToLower();
-            output = RemoveSpecialCharacters(output);
-
-            return output;
-        }
-
-        /// <summary>
         /// Remove special character from a string
         /// </summary>
         /// <param name="str">Input string</param>
