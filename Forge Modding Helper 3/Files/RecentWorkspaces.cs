@@ -6,6 +6,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using Forge_Modding_Helper_3.Objects;
+using Forge_Modding_Helper_3.Utils;
 using Newtonsoft.Json;
 
 namespace Forge_Modding_Helper_3.Files
@@ -17,7 +18,7 @@ namespace Forge_Modding_Helper_3.Files
         public static List<Workspace> RecentWorkspacesList = new List<Workspace>();
 
         // Data-file path
-        private static string FilePath = Path.Combine(Environment.CurrentDirectory, "Data", "workspaces.json");
+        private static string FilePath = Path.Combine(AppInfos.getApplicationDataDirectory(), "workspaces.json");
 
         /// <summary>
         /// Read the data file 
