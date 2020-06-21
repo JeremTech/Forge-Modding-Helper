@@ -68,6 +68,13 @@ namespace Forge_Modding_Helper_3
             finish_grid.Visibility = Visibility.Hidden;
         }
 
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            // Loadings translations
+            UITextTranslator.LoadTranslationFile("french");
+            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+        }
+
         /// <summary>
         /// Update step display
         /// </summary>
@@ -75,7 +82,7 @@ namespace Forge_Modding_Helper_3
         public void updateStep(double stepIn)
         {
             step_progressbar.Value = (stepIn / this.total_step) * 100;
-            step_label.Content = "Etape " + stepIn + " sur " + this.total_step;
+            step_label.Content = UITextTranslator.getTranslation("assistant_creator.step") + " " + stepIn + " / " + this.total_step;
         }
 
         #region Background Worker
@@ -355,14 +362,14 @@ namespace Forge_Modding_Helper_3
         private void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             // Extract the downloaded archive
-            update_progress(0, "Extraction de l'archive...");
+            update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.extract_archive"));
             ZipFile.ExtractToDirectory(this.folder + @"\mdk.zip", this.folder);
 
             // Check if the mdk.zip is always in the directory
             if (File.Exists(this.folder + @"\mdk.zip"))
             {
                 // Delete mdk.zip file
-                update_progress(0, "Supression de l'archive...");
+                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.delete_archive"));
                 File.Delete(this.folder + @"\mdk.zip");
             }
 
@@ -373,7 +380,7 @@ namespace Forge_Modding_Helper_3
             generate_files();
 
             // End actions
-            update_progress(100, "Création de l'espace de travail terminé.");
+            update_progress(100, UITextTranslator.getTranslation("assistant_creator.progress.finish"));
             this.next_button.IsEnabled = true;
         }
 
@@ -385,35 +392,35 @@ namespace Forge_Modding_Helper_3
             // Generate code directories
             if(code_packages_checkBox.IsChecked == true)
             {
-                update_progress(0, "Supression des packages exemple dans \"" + this.folder + @"\src\main\java" + "\"...");
+                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.deleting_example") + " \"" + this.folder + @"\src\main\java" + "\"...");
                 
                 File.Delete(this.folder + @"\src\main\java\com\example\examplemod\ExampleMod.java");
                 Directory.Delete(this.folder + @"\src\main\java\com\example\examplemod");
                 Directory.Delete(this.folder + @"\src\main\java\com\example");
                 Directory.Delete(this.folder + @"\src\main\java\com");
 
-                update_progress(0, "Création des packages de code dans \"" + this.folder + @"\src\main\java" + "\"...");
+                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_code_package") + " \"" + this.folder + @"\src\main\java" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\java\" + this.mod_infos["mod_group"].Replace(".", @"\"));
             }
 
             // Generate assets directories
             if (assets_packages_checkBox.IsChecked == true)
             {
-                update_progress(0, "Création des dossiers de textures dans \"" + this.folder + @"\src\main\assets" + "\"...");
+                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_textures_folders") + " \"" + this.folder + @"\src\main\assets" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\textures\block");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\textures\item");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\textures\gui");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\textures\entity");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\textures\models");
 
-                update_progress(0, "Création des dossiers de modèles dans \"" + this.folder + @"\src\main\assets" + "\"...");
+                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_models_folders") + " \"" + this.folder + @"\src\main\assets" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\models\block");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\models\item");
 
-                update_progress(0, "Création du dossier de blockstates dans \"" + this.folder + @"\src\main\assets" + "\"...");
+                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_blockstates_folder") + " \"" + this.folder + @"\src\main\assets" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\blockstates");
 
-                update_progress(0, "Création du dossier de fichiers de traduction dans \"" + this.folder + @"\src\main\assets" + "\"...");
+                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_lang_folder") + " \"" + this.folder + @"\src\main\assets" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\lang");
             }
         }
@@ -428,18 +435,18 @@ namespace Forge_Modding_Helper_3
             {
                 if(!Directory.Exists(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\lang"))
                 {
-                    update_progress(0, "Création du dossier de fichiers de traduction dans \"" + this.folder + @"\src\main\assets" + "\"...");
+                    update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_lang_folder") + " \"" + this.folder + @"\src\main\assets" + "\"...");
                     Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\lang");
                 }
 
-                update_progress(0, "Création du dossier du fichier de traduction \"fr_fr.json\"...");
+                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_lang_file"));
                 File.WriteAllText(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\lang\fr_fr.json", "{" + Environment.NewLine + Environment.NewLine + "}");
             }
 
             // Generate build.gradle file
             if (build_gradle_checkBox.IsChecked == true)
             {
-                update_progress(0, "Configuration du fichier \"build.gradle\" dans \"" + this.folder + "\"...");
+                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.configurate_build_gradle_file") + " \"" + this.folder + "\"...");
                 BuildGradle build_gradle = new BuildGradle(this.mod_infos, this.folder);
                 build_gradle.generateFile();
             }
@@ -447,7 +454,7 @@ namespace Forge_Modding_Helper_3
             // Generate mod.toml file
             if (mod_toml_checkBox.IsChecked == true)
             {
-                update_progress(0, "Configuration du fichier \"mods.toml\" dans \"" + this.folder + @"\src\main\resources\META-INF\""...");
+                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.configurate_toml_file") + " \"" + this.folder + @"\src\main\resources\META-INF\""...");
                 ModToml mod_toml = new ModToml(this.mod_infos, this.folder);
                 mod_toml.generateFile();
             }
@@ -455,7 +462,7 @@ namespace Forge_Modding_Helper_3
             // Copy mod logo (if gave by the user)
             if (!string.IsNullOrEmpty(this.mod_infos["mod_logo"]))
             {
-                update_progress(0, "Copie du logo du mod...");
+                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.copy_mod_logo"));
 
                 if (File.Exists(this.mod_infos["mod_logo"]))
                 {
@@ -463,10 +470,9 @@ namespace Forge_Modding_Helper_3
                 }
                 else
                 {
-                    update_progress(0, "ERREUR : Le logo du mod n'a pas pu être copié : \"Fichier inaccessible ou supprimé.\"");
+                    update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.copy_mod_logo_error"));
                 }
             }
-
         }
 
         /// <summary>
@@ -673,7 +679,7 @@ namespace Forge_Modding_Helper_3
             if (step < total_step)
             {
                 // Display a closing confirmation
-                MessageBoxResult action = MessageBox.Show(this, "Souhaitez-vous vraiment annuler la création de l'espace de travail ?", "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult action = MessageBox.Show(this, UITextTranslator.getTranslation("assistant_creator.close_message"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 // If the user refuse
                 if (action == MessageBoxResult.No)
@@ -685,5 +691,6 @@ namespace Forge_Modding_Helper_3
         }
         #endregion
 
+        
     }
 }

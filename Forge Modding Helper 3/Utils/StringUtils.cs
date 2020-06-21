@@ -28,6 +28,14 @@ namespace Forge_Modding_Helper_3
             return sb.ToString();
         }
 
+        public static String FormateTranslationText(this string str)
+        {
+            String output = str;
+            output.Replace("\n", Environment.NewLine);
+
+            return output;
+        }
+
         /// <summary>
         /// Check if a string is a valid value
         /// </summary>

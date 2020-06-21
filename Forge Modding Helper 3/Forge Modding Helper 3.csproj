@@ -91,6 +91,8 @@
     <Compile Include="Console\GradleTasks.cs" />
     <Compile Include="Files\ModToml.cs" />
     <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Utils\UITextTranslator.cs" />
+    <Compile Include="Utils\UIUtils.cs" />
     <Compile Include="Windows\WelcomeWindow.xaml.cs">
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
     </Compile>
@@ -148,6 +150,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <EmbeddedResource Include="Resources\Languages\french.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -189,4 +192,5 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions />
 </Project>

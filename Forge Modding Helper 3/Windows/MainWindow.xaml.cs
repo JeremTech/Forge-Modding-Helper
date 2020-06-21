@@ -15,6 +15,10 @@ namespace Forge_Modding_Helper_3
             InitializeComponent();
             version_label.Content = AppInfos.GetApplicationVersionString();
 
+            // Loadings translations
+            UITextTranslator.LoadTranslationFile("french");
+            UITextTranslator.UpdateComponentsTranslations(this);
+
             // Checking app folders
             updateLoadingStatut("Vérification des dossiers d'application...", 20);
 

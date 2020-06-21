@@ -32,6 +32,8 @@ namespace Forge_Modding_Helper_3.Windows
         private void Window_Initialized(object sender, EventArgs e)
         {
             version_label.Content = AppInfos.GetApplicationVersionString();
+
+            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
         }
 
         #region Buttons
