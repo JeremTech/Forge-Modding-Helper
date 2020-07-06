@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Newtonsoft.Json;
+using Path = System.Windows.Shapes.Path;
 
 namespace Forge_Modding_Helper_3
 {
@@ -19,9 +21,76 @@ namespace Forge_Modding_Helper_3
     /// </summary>
     public partial class WorkspaceManager : Window
     {
-        public WorkspaceManager()
+        // Project path
+        private string path = "";
+
+        // Mod infos storage
+        private Dictionary<string, string> modInfos = new Dictionary<string, string>
         {
+            {"mod_name", ""},
+            {"mod_authors", ""},
+            {"mod_version", ""},
+            {"mod_description", ""},
+            {"mod_id", ""},
+            {"mod_group", ""},
+            {"mod_logo", ""},
+            {"mod_credits", ""},
+            {"display_url", ""},
+            {"issue_tracker", ""},
+            {"update_json", ""},
+            {"minecraft_version", ""},
+            {"forge_version", ""},
+            {"mappings_version", ""}
+        };
+
+        // Textures list storage
+        private List<String> texturesList = new List<string>();
+
+        // Models list storage
+        private List<String> modelsList = new List<string>();
+
+        // java file list storage
+        private List<String> javaFileList = new List<string>();
+
+        public WorkspaceManager(string path)
+        {
+            this.path = path;
             InitializeComponent();
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            // Read mod_infos.json file
+            string jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "mod_infos.json"));
+            modInfos = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonContent);
+
+            // Read textures_list.json file
+            jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "textures_list.json"));
+            texturesList = JsonConvert.DeserializeObject<List<string>>(jsonContent);
+
+            // Read models_list.json file
+            jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "models_list.json"));
+            modelsList = JsonConvert.DeserializeObject<List<string>>(jsonContent);
+
+            // Read java_files_list.json file
+            jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "java_files_list.json"));
+            javaFileList = JsonConvert.DeserializeObject<List<string>>(jsonContent);
+
+            #region Updating UI
+
+            // Mod infos
+            this.label_mod_name.Content = modInfos["mod_name"];
+            this.label_mod_description.Content = modInfos["mod_description"];
+            this.label_home_minecraft_version.Content = modInfos["minecraft_version"];
+            this.label_minecraft_version.Content = "Minecraft " + modInfos["minecraft_version"];
+            this.label_home_forge_version.Content = modInfos["forge_version"];
+            this.label_forge_version.Content = "Forge " + modInfos["forge_version"];
+            this.label_home_mappings_version.Content = modInfos["mappings_version"];
+            this.label_home_textures_number.Content = texturesList.Count;
+            this.label_home_models_number.Content = modelsList.Count;
+            this.label_home_javafiles_number.Content = javaFileList.Count;
+
+            #endregion
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -29,16 +98,9 @@ namespace Forge_Modding_Helper_3
             Environment.Exit(0);
         }
 
-        private void execute_button_genIJRuns_Click(object sender, RoutedEventArgs e)
+        private void mod_toml_button_Click(object sender, RoutedEventArgs e)
         {
-            GradleTasks tasks = new GradleTasks(this.textBox);
-            tasks.genIntelljRuns();
-        }
 
-        private void Window_Initialized(object sender, EventArgs e)
-        {
-            MessageBox.Show("Le gestionnaire d'espace de travail n'est pas encore prêt ! Il n'y a donc rien de plus pour le moment !", "Informations", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.Close();
         }
     }
 }

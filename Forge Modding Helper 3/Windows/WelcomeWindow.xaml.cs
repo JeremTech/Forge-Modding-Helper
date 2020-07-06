@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 
 namespace Forge_Modding_Helper_3.Windows
@@ -21,6 +22,9 @@ namespace Forge_Modding_Helper_3.Windows
     /// </summary>
     public partial class WelcomeWindow : Window
     {
+        // Selected project path
+        private string selectedProjectPath = "";
+
         public WelcomeWindow()
         {
             InitializeComponent();
@@ -47,5 +51,37 @@ namespace Forge_Modding_Helper_3.Windows
             creator.ShowDialog();
         }
         #endregion
+
+        private void open_mod_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(this.selectedProjectPath))
+            {
+                new ProjectScanWindow(this.selectedProjectPath).Show();
+                this.Close();
+            }
+        }
+
+        private void listbox_recent_workspaces_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listbox_recent_workspaces.SelectedItem != null)
+            {
+                Workspace workspace = listbox_recent_workspaces.SelectedItem as Workspace;
+
+                if (workspace != null)
+                    this.selectedProjectPath = workspace.path;
+                else
+                    this.selectedProjectPath = "";
+
+            }
+            else
+            {
+                this.selectedProjectPath = "";
+            }
+
+            if (!string.IsNullOrWhiteSpace(this.selectedProjectPath))
+                open_mod_button.IsEnabled = true;
+            else
+                open_mod_button.IsEnabled = false;
+        }
     }
 }

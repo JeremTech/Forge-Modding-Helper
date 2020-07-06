@@ -5,49 +5,229 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3"
         mc:Ignorable="d"
-        Title="Gestion de l'espace de travail - Forge Modding Helper" Height="450" Width="800" ResizeMode="NoResize" Closing="Window_Closing" Initialized="Window_Initialized">
-    <Grid Background="#FF3F3F46">
+        Title="Gestion de l'espace de travail - Forge Modding Helper" Height="526" Width="1018" ResizeMode="NoResize" Closing="Window_Closing" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="button_menu_model" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background)" Storyboard.TargetName="border">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <SolidColorBrush Color="#FF2D2D30"/>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush)" Storyboard.TargetName="border">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <SolidColorBrush Color="#FF2D2D30"/>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background)" Storyboard.TargetName="border">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <SolidColorBrush Color="Gray"/>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderBrush)" Storyboard.TargetName="border">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <SolidColorBrush Color="#FF2D2D30"/>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FF2D2D30">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="421" VerticalAlignment="Top" Width="794" Background="#FF3F3F46">
-            <TabItem Header="Console">
-                <Grid Background="#FF252526">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="159*"/>
-                        <ColumnDefinition Width="629*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="textBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="373" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="756" Background="Black" Foreground="White" IsReadOnly="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Tâches gradle">
-                <Grid Background="#FF252526">
-                    <Button x:Name="execute_button_genIJRuns" Content="Executer" HorizontalAlignment="Left" Margin="685,24,0,0" VerticalAlignment="Top" Width="71" Height="28" Click="execute_button_genIJRuns_Click" IsEnabled="False"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="21,16,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="100" FontWeight="Bold" FontSize="13"><Run Text="genIntell"/><Run Text="i"/><Run Text="JRuns"/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="37,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="520"><Run Text="Génère les fichiers et paramètres nécessaires au développement dans Intell"/><Run Text="i"/><Run Text="J Idea"/></TextBlock>
-                    <Separator HorizontalAlignment="Left" Height="13" Margin="37,61,0,0" VerticalAlignment="Top" Width="705"/>
-                    <Button x:Name="execute_button_genEcRuns" Content="Executer" HorizontalAlignment="Left" Margin="685,89,0,0" VerticalAlignment="Top" Width="71" Height="28" IsEnabled="False"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="21,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="100" FontWeight="Bold" FontSize="13"><Run Text="gen"/><Run Text="Eclipse"/><Run Text="Runs"/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Margin="37,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="520"><Run Text="Génère les fichiers et paramètres nécessaires au développement dans "/><Run Text="Eclipse"/><LineBreak/><Run/></TextBlock>
-                    <Separator HorizontalAlignment="Left" Height="13" Margin="37,126,0,0" VerticalAlignment="Top" Width="705"/>
-                    <Button x:Name="execute_button_build" Content="Executer" HorizontalAlignment="Left" Margin="685,154,0,0" VerticalAlignment="Top" Width="71" Height="28" IsEnabled="False"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="21,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="100" FontWeight="Bold" FontSize="13" Text="build"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="37,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="520"><Run Text="Compile le mod"/><LineBreak/><Run/></TextBlock>
-                    <Separator HorizontalAlignment="Left" Height="13" Margin="37,191,0,0" VerticalAlignment="Top" Width="705"/>
-                    <Button x:Name="execute_button_runClient" Content="Executer" HorizontalAlignment="Left" Margin="685,217,0,0" VerticalAlignment="Top" Width="71" Height="28" IsEnabled="False"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="21,209,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="100" FontWeight="Bold" FontSize="13" Text="runClient"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="37,228,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="520" Text="Lance le jeu avec le mod en cours de développement"/>
-                    <Separator HorizontalAlignment="Left" Height="13" Margin="37,254,0,0" VerticalAlignment="Top" Width="705"/>
-                    <Button x:Name="execute_button_runServer" Content="Executer" HorizontalAlignment="Left" Margin="685,280,0,0" VerticalAlignment="Top" Width="71" Height="28" IsEnabled="False"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="21,272,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="100" FontWeight="Bold" FontSize="13" Text="runServer"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="37,291,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Height="17" Width="520" Text="Lance un serveur local avec le mod en cours de développement"/>
-                    <Separator HorizontalAlignment="Left" Height="13" Margin="37,317,0,0" VerticalAlignment="Top" Width="705"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Informations générales">
-                <Grid Background="#FF252526"/>
-            </TabItem>
-        </TabControl>
+        <Image x:Name="image_mod_logo" HorizontalAlignment="Left" Height="56" Margin="10,10,0,0" VerticalAlignment="Top" Width="56" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
+        <Label x:Name="label_mod_name" Content="Nom du mod" HorizontalAlignment="Left" Margin="71,6,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" Width="444" Height="40"/>
+        <Label x:Name="label_mod_description" Content="Description du mod" HorizontalAlignment="Left" Margin="71,35,0,0" VerticalAlignment="Top" Width="444" Foreground="#FFD1D1D1" FontSize="15"/>
+        <ProgressBar x:Name="progressbar_status" HorizontalAlignment="Left" Height="11" Margin="0,74,0,0" VerticalAlignment="Top" Width="1012"/>
+        <Label x:Name="label_forge_version" Content="Forge --" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="802,10,0,0" VerticalAlignment="Top" Width="187" Foreground="#FFD1D1D1" FontSize="15"/>
+        <Label x:Name="label_minecraft_version" Content="Minecraft --" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="802,35,0,0" VerticalAlignment="Top" Width="187" Foreground="#FFD1D1D1" FontSize="15"/>
+        <Separator HorizontalAlignment="Left" Height="40" Margin="-53,270,0,0" VerticalAlignment="Top" Width="410" RenderTransformOrigin="0.5,0.5">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Button x:Name="home_button" Content="Accueil" HorizontalAlignment="Left" Margin="0,85,0,0" VerticalAlignment="Top" Width="150.875" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Tag="workspace_manager.button.home"/>
+        <Separator x:Name="home_button_border" HorizontalAlignment="Left" Height="4" Margin="127,108,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="#FF0074FF">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Button x:Name="mod_toml_button" Content="Paramètres du mod" HorizontalAlignment="Left" Margin="0,135,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.mod_settings"/>
+        <Separator x:Name="mod_toml_button_border" HorizontalAlignment="Left" Height="4" Margin="127,158,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Button x:Name="blockstates_button" Content="Blockstates" HorizontalAlignment="Left" Margin="0,185,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.blockstates"/>
+        <Separator x:Name="blockstates_button_border" HorizontalAlignment="Left" Height="4" Margin="127,208,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Button x:Name="models_button" Content="Modèles" HorizontalAlignment="Left" Margin="0,235,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.models"/>
+        <Separator x:Name="models_button_border" HorizontalAlignment="Left" Height="4" Margin="127,258,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Button x:Name="textures_button" Content="Textures" HorizontalAlignment="Left" Margin="0,285,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.textures"/>
+        <Separator x:Name="textures_button_border" HorizontalAlignment="Left" Height="4" Margin="127,308,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Button x:Name="build_button" Content="Exportation" HorizontalAlignment="Left" Margin="0,385,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.export"/>
+        <Separator x:Name="build_button_border" HorizontalAlignment="Left" Height="4" Margin="127,408,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Grid x:Name="home_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840">
+            <Rectangle Fill="#FF3D552D" HorizontalAlignment="Left" Height="85" Margin="10,10,0,0" VerticalAlignment="Top" Width="255"/>
+            <Rectangle Fill="#FF36404B" HorizontalAlignment="Left" Height="85" Margin="294,10,0,0" VerticalAlignment="Top" Width="255"/>
+            <Rectangle Fill="#FF3A0000" HorizontalAlignment="Left" Height="85" Margin="573,10,0,0" VerticalAlignment="Top" Width="255" RenderTransformOrigin="2.271,1.529"/>
+            <Image HorizontalAlignment="Left" Height="70" Margin="22,17,0,0" VerticalAlignment="Top" Width="65" Source="/Forge Modding Helper 3;component/Resources/Pictures/minecraft_logo.png" Stretch="UniformToFill"/>
+            <Label Content="Minecraft" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="89,21,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18"/>
+            <Label x:Name="label_home_minecraft_version" Content="---" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="89,45,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18"/>
+            <Image HorizontalAlignment="Left" Height="54" Margin="315,25,0,0" VerticalAlignment="Top" Width="52" Source="/Forge Modding Helper 3;component/Resources/Pictures/forge_logo.png" Stretch="UniformToFill"/>
+            <Label Content="Forge" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="372,21,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18"/>
+            <Label x:Name="label_home_forge_version" Content="---" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="372,45,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18"/>
+            <Image HorizontalAlignment="Left" Height="54" Margin="595,25,0,0" VerticalAlignment="Top" Width="52" Source="/Forge Modding Helper 3;component/Resources/Pictures/code_icon.png" Stretch="UniformToFill"/>
+            <Label Content="Mappings" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="648,21,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18"/>
+            <Label x:Name="label_home_mappings_version" Content="---" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="648,45,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18"/>
+            <Rectangle Fill="#FF257066" HorizontalAlignment="Left" Height="85" Margin="10,120,0,0" VerticalAlignment="Top" Width="255"/>
+            <Rectangle Fill="#FF434446" HorizontalAlignment="Left" Height="85" Margin="294,120,0,0" VerticalAlignment="Top" Width="255"/>
+            <Rectangle Fill="#FF573B0B" HorizontalAlignment="Left" Height="85" Margin="573,120,0,0" VerticalAlignment="Top" Width="255" RenderTransformOrigin="2.271,1.529"/>
+            <Image HorizontalAlignment="Left" Height="52" Margin="28,137,0,0" VerticalAlignment="Top" Width="52" Source="/Forge Modding Helper 3;component/Resources/Pictures/picture_icon.png" Stretch="UniformToFill"/>
+            <Label x:Name="label_home_textures_number" Content="---" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="89,134,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18"/>
+            <Label x:Name="label_home_textures_desc" Content="Textures" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="89,158,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18" Tag="workspace_manager.label.textures"/>
+            <Image HorizontalAlignment="Left" Height="58" Margin="316,134,0,0" VerticalAlignment="Top" Width="52" Source="/Forge Modding Helper 3;component/Resources/Pictures/models_icon.png" Stretch="UniformToFill"/>
+            <Label x:Name="label_home_models_number" Content="---" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="372,134,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18"/>
+            <Label x:Name="label_home_models_desc" Content="Modèles" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="372,158,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18" Tag="workspace_manager.label.models"/>
+            <Image HorizontalAlignment="Left" Height="58" Margin="601,134,0,0" VerticalAlignment="Top" Width="42" Source="/Forge Modding Helper 3;component/Resources/Pictures/java_icon.png" Stretch="UniformToFill"/>
+            <Label x:Name="label_home_javafiles_number" Content="---" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="648,134,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18"/>
+            <Label x:Name="label_home_javafiles_desc" Content="Fichiers .java" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="648,158,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18" Tag="workspace_manager.label.java_files"/>
+        </Grid>
+        <Button x:Name="lang_button" Content="Traductions" HorizontalAlignment="Left" Margin="0,335,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.translations"/>
+        <Separator x:Name="lang_button_border" HorizontalAlignment="Left" Height="4" Margin="127,358,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
 
     </Grid>
 </Window>

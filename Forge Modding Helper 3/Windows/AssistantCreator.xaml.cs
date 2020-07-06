@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
+using Forge_Modding_Helper_3.Windows;
 
 namespace Forge_Modding_Helper_3
 {
@@ -664,7 +665,7 @@ namespace Forge_Modding_Helper_3
         /// </summary>
         private void finish_button_Click(object sender, RoutedEventArgs e)
         {
-            new WorkspaceManager().Show();
+            new ProjectScanWindow(this.folder).Show();
             this.Close();
         }
         #endregion

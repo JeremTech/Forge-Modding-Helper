@@ -28,10 +28,25 @@ namespace Forge_Modding_Helper_3
             return sb.ToString();
         }
 
+        public static string getBetween(this string strSource, string strStart, string strEnd)
+        {
+            if (strSource.Contains(strStart) && strSource.Contains(strEnd))
+            {
+                int Start, End;
+                Start = strSource.IndexOf(strStart, 0) + strStart.Length;
+                End = strSource.IndexOf(strEnd, Start);
+                return strSource.Substring(Start, End - Start);
+            }
+
+            return "";
+        }
+
         public static String FormateTranslationText(this string str)
         {
             String output = str;
-            output.Replace("\n", Environment.NewLine);
+
+            if(!string.IsNullOrWhiteSpace(output))
+                output.Replace("\n", Environment.NewLine);
 
             return output;
         }

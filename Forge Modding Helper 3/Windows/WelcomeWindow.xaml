@@ -14,7 +14,7 @@
         <Label x:Name="label" Content="Espaces de travail récents" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Foreground="White" Width="226" FontSize="16" Tag="welcome.label.recents_workspaces"/>
         <Separator HorizontalAlignment="Left" Height="13" Margin="11,116,0,0" VerticalAlignment="Top" Width="394" Background="White"/>
 
-        <ListBox x:Name="listbox_recent_workspaces" HorizontalAlignment="Left" Height="300" Margin="11,134,0,0" VerticalAlignment="Top" Width="394" Background="#FF3E3E42">
+        <ListBox x:Name="listbox_recent_workspaces" HorizontalAlignment="Left" Height="300" Margin="11,134,0,0" VerticalAlignment="Top" Width="394" Background="#FF3E3E42" SelectionChanged="listbox_recent_workspaces_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
@@ -32,6 +32,7 @@
 
         <Label Content="© 2017 - 2020 Jerem'Tech" HorizontalAlignment="Left" Margin="90,50,0,0" VerticalAlignment="Top" Width="149" Foreground="White"/>
         <Label x:Name="label_no_workspace_found" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Aucun espace de travail récent n'a été trouvé" Margin="14,134,0,0" VerticalAlignment="Top" Foreground="#FFC9C9C9" HorizontalAlignment="Left" Width="391" Height="300"/>
+        <Button x:Name="open_mod_button" Content="Ouvrir" HorizontalAlignment="Left" Margin="245,90,0,0" VerticalAlignment="Top" Width="75" Height="24" Tag="welcome.button.open" Click="open_mod_button_Click" IsEnabled="False"/>
 
     </Grid>
 </Window>
