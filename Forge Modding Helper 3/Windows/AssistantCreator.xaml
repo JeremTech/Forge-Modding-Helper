@@ -56,6 +56,7 @@
             <Label x:Name="mineraft_version_label" Content="Version de Minecraft :" HorizontalAlignment="Left" Margin="6,196,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="134" Tag="assistant_creator.label.step3.minecraft_version"/>
             <Image x:Name="minecraft_version_image" HorizontalAlignment="Left" Height="26" Margin="471,197,0,0" VerticalAlignment="Top" Width="26"/>
             <ComboBox x:Name="forge_version_comboBox" HorizontalAlignment="Left" Margin="145,199,0,0" VerticalAlignment="Top" Width="119" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="1.16.1"/>
                 <ComboBoxItem Content="1.15.2" Background="#FFFFCF00"/>
                 <ComboBoxItem Content="1.14.4"/>
                 <ComboBoxItem Content="1.14.3"/>
