@@ -7,6 +7,13 @@
         mc:Ignorable="d" Height="548.361" Width="520.902" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Title="Assistant Creator - Forge Modding Helper" Closing="Window_Closing" Initialized="Window_Initialized">
     <Grid x:Name="main_grid" Background="#FF252526">
 
+        <Grid x:Name="finish_grid" Height="399" Margin="0,57,0.4,0" VerticalAlignment="Top" Background="#FF2D2D30">
+            <Label x:Name="label_bug" Content="Si vous rencontrez des bugs en liens avec l'utilisation de ce présent assistant de création,&#xA;ou bien si vous avez des suggestions d'améliorations ou d'ajouts, vous pouvez les poster &#xA;sur le bugtracker du logiciel disponible à cette adresse :" HorizontalAlignment="Left" Margin="10,232,0,0" VerticalAlignment="Top" Foreground="White" Height="60" Width="494" Tag="assistant_creator.label.finish.bug_info"/>
+            <Label x:Name="label_finish_close" Content="Cliquez sur &quot;Terminer&quot; pour fermer l'assistant." HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Foreground="White" Width="480" Tag="assistant_creator.label.finish.close"/>
+            <TextBlock Margin="14,290,139.6,81"><Hyperlink NavigateUri="https://github.com/JeremTech/Forge-Modding-Helper/issues"><Run Text="https://github.com/JeremTech/Forge-Modding-Helper/issues"/></Hyperlink></TextBlock>
+            <Label x:Name="label_finish" Content="Nous avons terminé de créer votre espace de travail !&#xA;Il ne vous reste plus qu'à importer le projet gradle dans votre IDE favori !" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Height="43" Width="494" Tag="assistant_creator.label.finish.description"/>
+        </Grid>
+
         <Grid x:Name="generation_grid" Height="399" Margin="0,57,0,0" VerticalAlignment="Top" Background="#FF2D2D30">
             <ProgressBar x:Name="progress_progressbar" HorizontalAlignment="Left" Height="17" Margin="10,36,0,0" VerticalAlignment="Top" Width="485"/>
             <Label x:Name="progress_label" Content="Statut : ..." HorizontalAlignment="Left" Margin="6,8,0,0" VerticalAlignment="Top" Foreground="White" Width="481"/>
@@ -105,7 +112,7 @@
         </Grid>
 
         <Grid x:Name="first_grid" Height="399" Margin="0,57,0.4,0" VerticalAlignment="Top" Background="#FF2D2D30">
-            <Label x:Name="label_versions" Content="Minecraft 1.13 : 1.13.2&#xA;Minecraft 1.14 : 1.14.2 - 1.14.3 - 1.14.4&#xA;Minecraft 1.15 : 1.15.2" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Foreground="White" Height="142" Width="494"/>
+            <Label x:Name="label_versions" Content="Minecraft 1.13 : 1.13.2&#xA;Minecraft 1.14 : 1.14.2 - 1.14.3 - 1.14.4&#xA;Minecraft 1.15 : 1.15.2&#xD;&#xA;Minecraft 1.16 : 1.16.1" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Foreground="White" Height="142" Width="494"/>
             <Label x:Name="label_welcome_next" Content="Choisissez un répertoire de destination puis cliquez sur &quot;Suivant&quot; pour continuer." HorizontalAlignment="Left" Margin="10,361,0,0" VerticalAlignment="Top" Foreground="White" Tag="assistant_creator.label.welcome.next_message"/>
             <GroupBox x:Name="groupBox" Header="Répertoire de destination" HorizontalAlignment="Left" Height="56" Margin="10,288,0,0" VerticalAlignment="Top" Width="495" Foreground="White" Tag="assistant_creator.group.welcome.output_directory">
                 <TextBox x:Name="textbox_directory" HorizontalAlignment="Left" Height="23" Margin="5,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="441" Background="#FF252526" Foreground="White" IsReadOnly="True"/>
@@ -115,13 +122,6 @@
             <Label x:Name="label_welcome" Content="Bienvenue dans l'assistant de création d'espace de travail Minecraft Forge !&#xA;Nous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant.&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Height="61" Width="494" Tag="assistant_creator.label.welcome"/>
             <Label x:Name="label1_supported_mc_versions" Content="Version de Minecraft supportées :" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="494" Tag="assistant_creator.label.welcome.supported_mc_versions"/>
             <Label x:Name="label_internet_required" Content="Vous devrez être connecté à Internet durant tout le processus de création de l'espace &#xA;de travail." HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Foreground="White" Height="45" Width="494" Tag="assistant_creator.label.welcome.internet"/>
-        </Grid>
-
-        <Grid x:Name="finish_grid" Height="399" Margin="0,57,0.4,0" VerticalAlignment="Top" Background="#FF2D2D30">
-            <Label x:Name="label_bug" Content="Si vous rencontrez des bugs en liens avec l'utilisation de ce présent assistant de création,&#xA;ou bien si vous avez des suggestions d'améliorations ou d'ajouts, vous pouvez les poster &#xA;sur le bugtracker du logiciel disponible à cette adresse :" HorizontalAlignment="Left" Margin="10,232,0,0" VerticalAlignment="Top" Foreground="White" Height="60" Width="494" Tag="assistant_creator.label.finish.bug_info"/>
-            <Label x:Name="label_finish_close" Content="Cliquez sur &quot;Terminer&quot; pour fermer l'assistant." HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Foreground="White" Width="480" Tag="assistant_creator.label.finish.close"/>
-            <TextBlock Margin="14,290,139.6,81"><Hyperlink NavigateUri="https://github.com/JeremTech/Forge-Modding-Helper/issues"><Run Text="https://github.com/JeremTech/Forge-Modding-Helper/issues"/></Hyperlink></TextBlock>
-            <Label x:Name="label_finish" Content="Nous avons terminé de créer votre espace de travail !&#xA;Il ne vous reste plus qu'à importer le projet gradle dans votre IDE favori !" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Height="43" Width="494" Tag="assistant_creator.label.finish.description"/>
         </Grid>
 
         <Button x:Name="next_button" Content="Suivant &gt;" HorizontalAlignment="Left" Margin="322,470,0,0" VerticalAlignment="Top" Width="89" Height="25" Click="Next_button_Click" Tag="assistant_creator.button.next"/>
