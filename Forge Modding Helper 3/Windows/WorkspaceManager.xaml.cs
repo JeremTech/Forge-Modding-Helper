@@ -98,9 +98,54 @@ namespace Forge_Modding_Helper_3
             Environment.Exit(0);
         }
 
-        private void mod_toml_button_Click(object sender, RoutedEventArgs e)
+        private void button_menu_click(object sender, RoutedEventArgs e)
         {
+            if (sender is Button senderButton)
+            {
+                // Update menu border
+                this.home_button_border.Background = null;
+                this.mod_toml_button_border.Background = null;
+                this.blockstates_button_border.Background = null;
+                this.models_button_border.Background = null;
+                this.textures_button_border.Background = null;
+                this.lang_button_border.Background = null;
+                this.build_button_border.Background = null;
 
+                // Update grids
+                this.home_grid.Visibility = Visibility.Hidden;
+
+                String tag = senderButton.Tag.ToString();
+
+                if (tag.Contains("home"))
+                {
+                    this.home_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                    this.home_grid.Visibility = Visibility.Visible;
+                }
+                else if (tag.Contains("mod_settings"))
+                {
+                    this.mod_toml_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                }
+                else if (tag.Contains("blockstates"))
+                {
+                    this.blockstates_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                }
+                else if (tag.Contains("models"))
+                {
+                    this.models_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                }
+                else if (tag.Contains("textures"))
+                {
+                    this.textures_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                }
+                else if (tag.Contains("translations"))
+                {
+                    this.lang_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                }
+                else if (tag.Contains("export"))
+                {
+                    this.build_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                }
+            }
         }
     }
 }

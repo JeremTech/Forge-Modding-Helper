@@ -125,7 +125,7 @@
                 </TransformGroup>
             </Separator.RenderTransform>
         </Separator>
-        <Button x:Name="home_button" Content="Accueil" HorizontalAlignment="Left" Margin="0,85,0,0" VerticalAlignment="Top" Width="150.875" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Tag="workspace_manager.button.home"/>
+        <Button x:Name="home_button" Content="Accueil" HorizontalAlignment="Left" Margin="0,85,0,0" VerticalAlignment="Top" Width="150.875" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Tag="workspace_manager.button.home" Click="button_menu_click"/>
         <Separator x:Name="home_button_border" HorizontalAlignment="Left" Height="4" Margin="127,108,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="#FF0074FF">
             <Separator.RenderTransform>
                 <TransformGroup>
@@ -136,61 +136,11 @@
                 </TransformGroup>
             </Separator.RenderTransform>
         </Separator>
-        <Button x:Name="mod_toml_button" Content="Paramètres du mod" HorizontalAlignment="Left" Margin="0,135,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.mod_settings"/>
-        <Separator x:Name="mod_toml_button_border" HorizontalAlignment="Left" Height="4" Margin="127,158,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
-            <Separator.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="3"/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Separator.RenderTransform>
-        </Separator>
-        <Button x:Name="blockstates_button" Content="Blockstates" HorizontalAlignment="Left" Margin="0,185,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.blockstates"/>
-        <Separator x:Name="blockstates_button_border" HorizontalAlignment="Left" Height="4" Margin="127,208,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
-            <Separator.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="3"/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Separator.RenderTransform>
-        </Separator>
-        <Button x:Name="models_button" Content="Modèles" HorizontalAlignment="Left" Margin="0,235,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.models"/>
-        <Separator x:Name="models_button_border" HorizontalAlignment="Left" Height="4" Margin="127,258,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
-            <Separator.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="3"/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Separator.RenderTransform>
-        </Separator>
-        <Button x:Name="textures_button" Content="Textures" HorizontalAlignment="Left" Margin="0,285,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.textures"/>
-        <Separator x:Name="textures_button_border" HorizontalAlignment="Left" Height="4" Margin="127,308,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
-            <Separator.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="3"/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Separator.RenderTransform>
-        </Separator>
-        <Button x:Name="build_button" Content="Exportation" HorizontalAlignment="Left" Margin="0,385,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.export"/>
-        <Separator x:Name="build_button_border" HorizontalAlignment="Left" Height="4" Margin="127,408,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
-            <Separator.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="3"/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Separator.RenderTransform>
-        </Separator>
+        <Button x:Name="mod_toml_button" Content="Paramètres du mod" HorizontalAlignment="Left" Margin="0,135,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="button_menu_click" Tag="workspace_manager.button.mod_settings"/>
+        <Button x:Name="blockstates_button" Content="Blockstates" HorizontalAlignment="Left" Margin="0,185,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="button_menu_click" Tag="workspace_manager.button.blockstates"/>
+        <Button x:Name="models_button" Content="Modèles" HorizontalAlignment="Left" Margin="0,235,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="button_menu_click" Tag="workspace_manager.button.models"/>
+        <Button x:Name="textures_button" Content="Textures" HorizontalAlignment="Left" Margin="0,285,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="button_menu_click" Tag="workspace_manager.button.textures"/>
+        <Button x:Name="build_button" Content="Exportation" HorizontalAlignment="Left" Margin="0,385,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="button_menu_click" Tag="workspace_manager.button.export"/>
         <Grid x:Name="home_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840">
             <Rectangle Fill="#FF3D552D" HorizontalAlignment="Left" Height="85" Margin="10,10,0,0" VerticalAlignment="Top" Width="255"/>
             <Rectangle Fill="#FF36404B" HorizontalAlignment="Left" Height="85" Margin="294,10,0,0" VerticalAlignment="Top" Width="255"/>
@@ -217,8 +167,58 @@
             <Label x:Name="label_home_javafiles_number" Content="---" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="648,134,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18"/>
             <Label x:Name="label_home_javafiles_desc" Content="Fichiers .java" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="648,158,0,0" VerticalAlignment="Top" Foreground="White" Width="165" FontSize="18" Tag="workspace_manager.label.java_files"/>
         </Grid>
-        <Button x:Name="lang_button" Content="Traductions" HorizontalAlignment="Left" Margin="0,335,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="mod_toml_button_Click" Tag="workspace_manager.button.translations"/>
+        <Button x:Name="lang_button" Content="Traductions" HorizontalAlignment="Left" Margin="0,335,0,0" VerticalAlignment="Top" Width="151" Height="50" FontSize="16" FontFamily="Corbel" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Style="{DynamicResource button_menu_model}" Click="button_menu_click" Tag="workspace_manager.button.translations"/>
+        <Separator x:Name="mod_toml_button_border" HorizontalAlignment="Left" Height="4" Margin="127,158,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Separator x:Name="blockstates_button_border" HorizontalAlignment="Left" Height="4" Margin="127,208,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Separator x:Name="models_button_border" HorizontalAlignment="Left" Height="4" Margin="127,258,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Separator x:Name="textures_button_border" HorizontalAlignment="Left" Height="4" Margin="127,308,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
         <Separator x:Name="lang_button_border" HorizontalAlignment="Left" Height="4" Margin="127,358,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
+            <Separator.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="3"/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Separator.RenderTransform>
+        </Separator>
+        <Separator x:Name="build_button_border" HorizontalAlignment="Left" Height="4" Margin="127,408,0,0" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.5,0.5" Background="{x:Null}">
             <Separator.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="3"/>
