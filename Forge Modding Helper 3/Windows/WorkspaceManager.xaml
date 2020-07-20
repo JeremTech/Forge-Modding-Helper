@@ -105,7 +105,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Background="#FF2D2D30">
+    <Grid Background="#FF2D2D30" x:Name="main_grid">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -228,6 +228,9 @@
                 </TransformGroup>
             </Separator.RenderTransform>
         </Separator>
+        <Grid x:Name="mod_settings_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
+            <Label Content="Cette fonctionnalité n'est pas encore disponible" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="#FFBFBFBF" Height="397" Width="830" Tag="feature.not_available"/>
+        </Grid>
 
     </Grid>
 </Window>

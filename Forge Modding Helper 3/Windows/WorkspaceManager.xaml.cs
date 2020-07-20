@@ -11,6 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Forge_Modding_Helper_3.Utils;
 using Newtonsoft.Json;
 using Path = System.Windows.Shapes.Path;
 
@@ -56,6 +57,8 @@ namespace Forge_Modding_Helper_3
         {
             this.path = path;
             InitializeComponent();
+            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+
         }
 
         private void Window_Initialized(object sender, EventArgs e)
@@ -113,6 +116,7 @@ namespace Forge_Modding_Helper_3
 
                 // Update grids
                 this.home_grid.Visibility = Visibility.Hidden;
+                this.mod_settings_grid.Visibility = Visibility.Hidden;
 
                 String tag = senderButton.Tag.ToString();
 
@@ -124,6 +128,7 @@ namespace Forge_Modding_Helper_3
                 else if (tag.Contains("mod_settings"))
                 {
                     this.mod_toml_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                    this.mod_settings_grid.Visibility = Visibility.Visible;
                 }
                 else if (tag.Contains("blockstates"))
                 {

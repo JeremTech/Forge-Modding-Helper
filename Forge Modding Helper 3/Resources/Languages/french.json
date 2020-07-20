@@ -90,6 +90,8 @@
         "workspace_manager.button.models": "Modèles",
         "workspace_manager.button.textures": "Textures",
         "workspace_manager.button.translations": "Traductions",
-        "workspace_manager.button.export": "Exportation"
+        "workspace_manager.button.export": "Exportation",
+
+        "feature.not_available" :  "Cette fonctionnalité n'est pas encore disponible." 
     } 
 }
