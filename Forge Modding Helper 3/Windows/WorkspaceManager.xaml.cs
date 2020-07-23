@@ -44,11 +44,14 @@ namespace Forge_Modding_Helper_3
             {"mappings_version", ""}
         };
 
+        // Blockstates list storage
+        private List<BlockStates> blockstatesList = new List<BlockStates>();
+
         // Textures list storage
         private List<String> texturesList = new List<string>();
 
         // Models list storage
-        private List<String> modelsList = new List<string>();
+        private List<String> modelsList = new List<String>();
 
         // java file list storage
         private List<String> javaFileList = new List<string>();
@@ -66,6 +69,10 @@ namespace Forge_Modding_Helper_3
             // Read mod_infos.json file
             string jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "mod_infos.json"));
             modInfos = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonContent);
+
+            // Read textures_list.json file
+            jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "blockstates_list.json"));
+            JsonConvert.DeserializeObject<List<String>>(jsonContent).ForEach(element => blockstatesList.Add(new BlockStates(element)));
 
             // Read textures_list.json file
             jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "textures_list.json"));
@@ -117,6 +124,7 @@ namespace Forge_Modding_Helper_3
                 // Update grids
                 this.home_grid.Visibility = Visibility.Hidden;
                 this.mod_settings_grid.Visibility = Visibility.Hidden;
+                this.blockstates_grid.Visibility = Visibility.Hidden;
 
                 String tag = senderButton.Tag.ToString();
 
@@ -133,6 +141,8 @@ namespace Forge_Modding_Helper_3
                 else if (tag.Contains("blockstates"))
                 {
                     this.blockstates_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                    this.blockstates_grid.Visibility = Visibility.Visible;
+                    listView_blockstates.ItemsSource = blockstatesList;
                 }
                 else if (tag.Contains("models"))
                 {
@@ -151,6 +161,26 @@ namespace Forge_Modding_Helper_3
                     this.build_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
                 }
             }
+        }
+
+        private void blockstates_search_textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(!string.IsNullOrWhiteSpace(blockstates_search_textBox.Text))
+                listView_blockstates.ItemsSource = blockstatesList.Where(item => item.FileName.Contains(blockstates_search_textBox.Text));
+            else
+                listView_blockstates.ItemsSource = blockstatesList;
+        }
+    }
+
+    public class BlockStates
+    {
+        public string FileName { get; set; }
+        public string FilePath { get; set; }
+
+        public BlockStates(string filePath)
+        {
+            this.FilePath = filePath;
+            this.FileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
         }
     }
 }

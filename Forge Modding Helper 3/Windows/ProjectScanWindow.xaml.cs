@@ -43,6 +43,9 @@ namespace Forge_Modding_Helper_3.Windows
             {"mappings_version", ""}
         };
 
+        // Blockstates list storage
+        private List<String> blockstatesList = new List<string>();
+
         // Textures list storage
         private List<String> texturesList = new List<string>();
 
@@ -153,8 +156,19 @@ namespace Forge_Modding_Helper_3.Windows
             updateSecondaryStatus("project_scan.textures.writing_file", 100);
             #endregion
 
+            #region Scan blockstates
+            updateMainStatus("project_scan.blockstates", 50);
+
+            // Scan blockstates directory
+            DirectoryFileListing((Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "blockstates")));
+
+            updateSecondaryStatus("project_scan.blockstates.writing_file", 0);
+            WriteBlockstatesList();
+            updateSecondaryStatus("project_scan.blockstates.writing_file", 100);
+            #endregion
+
             #region Scan models
-            updateMainStatus("project_scan.models", 50);
+            updateMainStatus("project_scan.models", 75);
 
             // Scan models directory
             DirectoryFileListing(Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "models"));
@@ -165,9 +179,9 @@ namespace Forge_Modding_Helper_3.Windows
             #endregion
 
             #region Scan java files
-            updateMainStatus("project_scan.java_files", 75);
+            updateMainStatus("project_scan.java_files", 95);
 
-            // Scan models directory
+            // Scan java directory
             DirectoryFileListing(Path.Combine(path, "src\\main\\java"));
 
             updateSecondaryStatus("project_scan.java_files.writing_file", 0);
@@ -180,6 +194,12 @@ namespace Forge_Modding_Helper_3.Windows
         {
             string jsonContent = JsonConvert.SerializeObject(modInfos, Formatting.Indented);
             File.WriteAllText(Path.Combine(path, "fmh", "mod_infos.json"), jsonContent);
+        }
+
+        public void WriteBlockstatesList()
+        {
+            string jsonContent = JsonConvert.SerializeObject(blockstatesList, Formatting.Indented);
+            File.WriteAllText(Path.Combine(path, "fmh", "blockstates_list.json"), jsonContent);
         }
 
         public void WriteTexturesList()
@@ -209,6 +229,8 @@ namespace Forge_Modding_Helper_3.Windows
                     updateSecondaryStatus(Path.GetFileName(f), 0);
                     if(path.Contains("textures"))
                         texturesList.Add(f);
+                    else if (path.Contains("blockstates"))
+                        blockstatesList.Add(f);
                     else if(path.Contains("models"))
                         modelsList.Add(f);
                     else if (path.Contains("java"))

@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="Gestion de l'espace de travail - Forge Modding Helper" Height="526" Width="1018" ResizeMode="NoResize" Closing="Window_Closing" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen">
     <Window.Resources>
+        <Style x:Key="hideListViewHeader" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -231,6 +234,25 @@
         <Grid x:Name="mod_settings_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
             <Label Content="Cette fonctionnalité n'est pas encore disponible" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="#FFBFBFBF" Height="397" Width="830" Tag="feature.not_available"/>
         </Grid>
-
+        <Grid x:Name="blockstates_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
+            <ListView x:Name="listView_blockstates" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="347" Margin="10,40,0,0" VerticalAlignment="Top" Width="820" Background="{x:Null}" Foreground="White" BorderBrush="White">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="0, 10, 0, 0">
+                            <Image Source="/Forge Modding Helper 3;component/Resources/Pictures/code_file_icon.png" HorizontalAlignment="Center" VerticalAlignment="Top" Width="64" Height="64"/>
+                            <TextBlock Margin="0, 7, 0, 0" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="5" VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+            <Rectangle Fill="#FF222223" HorizontalAlignment="Left" Height="29" Margin="10,6,0,0" VerticalAlignment="Top" Width="820" Stroke="#FFABADB3"/>
+            <Image HorizontalAlignment="Left" Height="29" Margin="13,6,0,0" VerticalAlignment="Top" Width="29" Source="/Forge Modding Helper 3;component/Resources/Pictures/search_icon.png"/>
+            <TextBox x:Name="blockstates_search_textBox" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5, 0, 5, 0" HorizontalAlignment="Left" Height="29" Margin="44,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="786" Foreground="White" Background="#FF454549" FontSize="14" TextChanged="blockstates_search_textBox_TextChanged"/>
+        </Grid>
     </Grid>
 </Window>

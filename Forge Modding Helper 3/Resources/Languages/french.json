@@ -76,6 +76,8 @@
         "project_scan.mod_info.writing_file": "Ecriture du fichier d'informations du mod...",
         "project_scan.textures": "Analyse des textures...",
         "project_scan.textures.writing_file": "Ecriture de la liste des textures...",
+        "project_scan.blockstates": "Analyse des blockstates...",
+        "project_scan.blockstates.writing_file": "Ecriture de la liste des blockstates...",
         "project_scan.models": "Analyse des modèles...",
         "project_scan.models.writing_file": "Ecriture de la liste des modèles...",
         "project_scan.java_files": "Analyse des fichiers java...",
@@ -92,6 +94,6 @@
         "workspace_manager.button.translations": "Traductions",
         "workspace_manager.button.export": "Exportation",
 
-        "feature.not_available" :  "Cette fonctionnalité n'est pas encore disponible." 
+        "feature.not_available": "Cette fonctionnalité n'est pas encore disponible."
     } 
 }

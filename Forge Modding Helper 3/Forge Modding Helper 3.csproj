@@ -220,6 +220,12 @@
   <ItemGroup>
     <Resource Include="Resources\Pictures\java_icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Pictures\code_file_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Pictures\search_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
 </Project>
