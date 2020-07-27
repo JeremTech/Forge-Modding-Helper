@@ -24,6 +24,9 @@ namespace Forge_Modding_Helper_3.Windows
         // Project path
         private string path = "";
 
+        // Show project window after scan
+        private bool showProjectWindow = true;
+
         // Mod infos storage
         private Dictionary<string, string> modInfos = new Dictionary<string, string>
         {
@@ -55,10 +58,11 @@ namespace Forge_Modding_Helper_3.Windows
         // java file list storage
         private List<String> javaFileList = new List<string>();
 
-        public ProjectScanWindow(string path)
+        public ProjectScanWindow(string path, bool showProjectWindow = true)
         {
             InitializeComponent();
             this.path = path;
+            this.showProjectWindow = showProjectWindow;
 
             // Loadings translations
             UITextTranslator.LoadTranslationFile("french");
@@ -78,7 +82,9 @@ namespace Forge_Modding_Helper_3.Windows
             await Task.Factory.StartNew(ScanProject);
 
             // Once scan finished
-            new WorkspaceManager(this.path).Show();
+            if(this.showProjectWindow)
+                new WorkspaceManager(this.path).Show();
+
             this.Close();
         }
 

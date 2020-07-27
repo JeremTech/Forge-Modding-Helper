@@ -234,7 +234,7 @@
         <Grid x:Name="mod_settings_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
             <Label Content="Cette fonctionnalité n'est pas encore disponible" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="#FFBFBFBF" Height="397" Width="830" Tag="feature.not_available"/>
         </Grid>
-        <Grid x:Name="blockstates_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Visible">
+        <Grid x:Name="blockstates_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
             <ListView x:Name="listView_blockstates" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="347" Margin="10,40,0,0" VerticalAlignment="Top" Width="820" Background="{x:Null}" Foreground="White" BorderBrush="White" SelectionMode="Extended" SelectionChanged="listView_blockstates_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -252,9 +252,10 @@
             </ListView>
             <Rectangle Fill="#FF222223" HorizontalAlignment="Left" Height="29" Margin="10,6,0,0" VerticalAlignment="Top" Width="820" Stroke="#FFABADB3"/>
             <Image HorizontalAlignment="Left" Height="29" Margin="13,6,0,0" VerticalAlignment="Top" Width="29" Source="/Forge Modding Helper 3;component/Resources/Pictures/search_icon.png"/>
-            <TextBox x:Name="blockstates_search_textBox" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5, 0, 5, 0" HorizontalAlignment="Left" Height="29" Margin="44,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="731" Foreground="White" Background="#FF454549" FontSize="14" TextChanged="blockstates_search_textBox_TextChanged"/>
+            <TextBox x:Name="blockstates_search_textBox" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5, 0, 5, 0" HorizontalAlignment="Left" Height="29" Margin="44,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="704" Foreground="White" Background="#FF454549" FontSize="14" TextChanged="blockstates_search_textBox_TextChanged"/>
             <Button x:Name="blockstates_delete_button" Content="X" HorizontalAlignment="Left" Margin="802,7,0,0" VerticalAlignment="Top" Width="27" Height="27" Click="blockstates_delete_button_Click" FontWeight="Bold" FontSize="18" Foreground="#FF9E0000" IsEnabled="False" FontFamily="Tahoma"/>
             <Button x:Name="blockstates_rename_button" Content="I" HorizontalAlignment="Left" Margin="775,7,0,0" VerticalAlignment="Top" Width="27" Height="27" Click="blockstates_rename_button_Click" FontWeight="Bold" FontSize="18" Foreground="#FF00659E" IsEnabled="False" FontFamily="Tahoma"/>
+            <Button x:Name="blockstates_reload_button" Content="⟳" HorizontalAlignment="Left" Margin="748,7,0,0" VerticalAlignment="Top" Width="27" Height="27" Click="blockstates_reload_button_Click" FontWeight="Bold" FontSize="18" Foreground="#FF177613" FontFamily="Tahoma"/>
         </Grid>
     </Grid>
 </Window>

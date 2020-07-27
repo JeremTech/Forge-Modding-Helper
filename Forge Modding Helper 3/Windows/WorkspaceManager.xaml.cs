@@ -72,7 +72,7 @@ namespace Forge_Modding_Helper_3
             string jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "mod_infos.json"));
             modInfos = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonContent);
 
-            // Read textures_list.json file
+            // Read blockstates_list.json file
             jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "blockstates_list.json"));
             JsonConvert.DeserializeObject<List<String>>(jsonContent).ForEach(element => blockstatesList.Add(new BlockStates(element)));
 
@@ -165,7 +165,7 @@ namespace Forge_Modding_Helper_3
             }
         }
 
-        #region Basics controls events
+        #region Blockstates section controls events
 
         private void listView_blockstates_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -203,14 +203,10 @@ namespace Forge_Modding_Helper_3
                     {
                         // Move the file to the recycle bin
                         FileSystem.DeleteFile(element.FilePath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
-                        // Update blockstates list
-                        blockstatesList.Remove(element);
                     }
                 }
 
-                // Update UI
-                listView_blockstates.ItemsSource = null;
-                listView_blockstates.ItemsSource = blockstatesList;
+                RefreshBlockStatesList();
             }
         }
 
@@ -218,8 +214,28 @@ namespace Forge_Modding_Helper_3
         {
             if (listView_blockstates.SelectedItems.Count == 1)
             {
-                new RenameDialog(((BlockStates)listView_blockstates.SelectedItem).FilePath).Show();
+                new RenameDialog(((BlockStates) listView_blockstates.SelectedItem).FilePath).ShowDialog();
+                RefreshBlockStatesList();
             }
+        }
+
+        private void blockstates_reload_button_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshBlockStatesList();
+        }
+        #endregion
+
+        #region Integrated Project Scan
+        private void RefreshBlockStatesList()
+        {
+            new ProjectScanWindow(this.path, false).ShowDialog();
+
+            string jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "blockstates_list.json"));
+            blockstatesList.Clear();
+            JsonConvert.DeserializeObject<List<String>>(jsonContent).ForEach(element => blockstatesList.Add(new BlockStates(element)));
+
+            listView_blockstates.ItemsSource = null;
+            listView_blockstates.ItemsSource = blockstatesList;
         }
         #endregion
     }
