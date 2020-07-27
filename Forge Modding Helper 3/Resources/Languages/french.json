@@ -93,6 +93,7 @@
         "workspace_manager.button.textures": "Textures",
         "workspace_manager.button.translations": "Traductions",
         "workspace_manager.button.export": "Exportation",
+        "workspace_manager.alert.delete": "Etes-vous sûr de vouloir déplacer %N élément(s) vers la corbeille ?",
 
         "feature.not_available": "Cette fonctionnalité n'est pas encore disponible."
     } 

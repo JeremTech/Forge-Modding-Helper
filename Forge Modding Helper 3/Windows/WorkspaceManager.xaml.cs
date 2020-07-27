@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Forge_Modding_Helper_3.Utils;
+using Forge_Modding_Helper_3.Windows;
+using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using Path = System.Windows.Shapes.Path;
 
@@ -163,13 +165,63 @@ namespace Forge_Modding_Helper_3
             }
         }
 
+        #region Basics controls events
+
+        private void listView_blockstates_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            blockstates_delete_button.IsEnabled = false;
+            blockstates_rename_button.IsEnabled = false;
+
+            if (listView_blockstates.SelectedItems.Count > 0)
+            {
+                blockstates_delete_button.IsEnabled = true;
+
+                if (listView_blockstates.SelectedItems.Count == 1)
+                {
+                    blockstates_rename_button.IsEnabled = true;
+                }
+            }
+        }
+
         private void blockstates_search_textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(!string.IsNullOrWhiteSpace(blockstates_search_textBox.Text))
+            if (!string.IsNullOrWhiteSpace(blockstates_search_textBox.Text))
                 listView_blockstates.ItemsSource = blockstatesList.Where(item => item.FileName.Contains(blockstates_search_textBox.Text));
             else
                 listView_blockstates.ItemsSource = blockstatesList;
         }
+
+        private void blockstates_delete_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (listView_blockstates.SelectedItems.Count > 0)
+            {
+                MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.getTranslation("workspace_manager.alert.delete").Replace("%N", listView_blockstates.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (msgResult == MessageBoxResult.Yes)
+                {
+                    foreach (BlockStates element in listView_blockstates.SelectedItems)
+                    {
+                        // Move the file to the recycle bin
+                        FileSystem.DeleteFile(element.FilePath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                        // Update blockstates list
+                        blockstatesList.Remove(element);
+                    }
+                }
+
+                // Update UI
+                listView_blockstates.ItemsSource = null;
+                listView_blockstates.ItemsSource = blockstatesList;
+            }
+        }
+
+        private void blockstates_rename_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (listView_blockstates.SelectedItems.Count == 1)
+            {
+                new RenameDialog(((BlockStates)listView_blockstates.SelectedItem).FilePath).Show();
+            }
+        }
+        #endregion
     }
 
     public class BlockStates
