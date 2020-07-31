@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,8 +60,15 @@ namespace Forge_Modding_Helper_3.Windows
         {
             if (!string.IsNullOrWhiteSpace(this.selectedProjectPath))
             {
-                new ProjectScanWindow(this.selectedProjectPath).Show();
-                this.Close();
+                if (Directory.Exists(this.selectedProjectPath))
+                {
+                    new ProjectScanWindow(this.selectedProjectPath).Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.open.error"), "Forge Modding Helper 3", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
@@ -75,14 +83,29 @@ namespace Forge_Modding_Helper_3.Windows
 
                 if (msgResult == MessageBoxResult.Yes)
                 {
-                    Workspace workspace = listbox_recent_workspaces.SelectedItem as Workspace;
-                    FileSystem.DeleteDirectory(this.selectedProjectPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
-                    RecentWorkspaces.RecentWorkspacesList.Remove(workspace);
-                    RecentWorkspaces.WriteDataFile();
-                    listbox_recent_workspaces.ItemsSource = null;
-                    listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+                    if (Directory.Exists(this.selectedProjectPath))
+                    {
+                        Workspace workspace = listbox_recent_workspaces.SelectedItem as Workspace;
+                        FileSystem.DeleteDirectory(this.selectedProjectPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                        RecentWorkspaces.RecentWorkspacesList.Remove(workspace);
+                        RecentWorkspaces.WriteDataFile();
+                        listbox_recent_workspaces.ItemsSource = null;
+                        listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+                    }
+                    else
+                    {
+                        MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.delete.error"), "Forge Modding Helper 3", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
+        }
+
+        /// <summary>
+        /// Function called when the user click on the "refresh" button
+        /// </summary>
+        private void refresh_mod_list_button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
         #endregion
 

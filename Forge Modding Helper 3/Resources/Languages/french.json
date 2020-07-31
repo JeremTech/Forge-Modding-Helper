@@ -11,6 +11,8 @@
         "welcome.button.delete": "Supprimer",
         "welcome.button.refresh": "Actualiser la liste",
         "welcome.alert.delete": "Etes-vous sûr de vouloir déplacer cet espace de travail vers la corbeille ?",
+        "welcome.alert.delete.error": "Erreur : l'espace de travail sélectionné n'existe plus ou est inaccessible.",
+        "welcome.alert.open.error": "Erreur : l'espace de travail sélectionné n'existe plus ou est inaccessible.",
 
         "assistant_creator.label.welcome": "Bienvenue dans l'assistant de création d'espace de travail Minecraft Forge !\nNous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant.",
         "assistant_creator.label.welcome.supported_mc_versions": "Version de Minecraft supportées :",
