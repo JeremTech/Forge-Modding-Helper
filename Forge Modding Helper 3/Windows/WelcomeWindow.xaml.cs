@@ -67,7 +67,7 @@ namespace Forge_Modding_Helper_3.Windows
                 }
                 else
                 {
-                    MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.open.error"), "Forge Modding Helper 3", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.open.error"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -94,7 +94,7 @@ namespace Forge_Modding_Helper_3.Windows
                     }
                     else
                     {
-                        MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.delete.error"), "Forge Modding Helper 3", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.delete.error"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -105,7 +105,26 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private void refresh_mod_list_button_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.refresh"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
 
+            if (msgResult == MessageBoxResult.Yes)
+            {
+                int lenght = RecentWorkspaces.RecentWorkspacesList.Count;
+                Workspace[] workspaces = new Workspace[lenght];
+                RecentWorkspaces.RecentWorkspacesList.CopyTo(workspaces, 0);
+
+                foreach (Workspace workspace in workspaces)
+                {
+                    if (!Directory.Exists(workspace.path))
+                    {
+                        RecentWorkspaces.RecentWorkspacesList.Remove(workspace);
+                    }
+                }
+
+                RecentWorkspaces.WriteDataFile();
+                listbox_recent_workspaces.ItemsSource = null;
+                listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+            }
         }
         #endregion
 

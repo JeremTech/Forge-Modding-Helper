@@ -13,6 +13,7 @@
         "welcome.alert.delete": "Etes-vous sûr de vouloir déplacer cet espace de travail vers la corbeille ?",
         "welcome.alert.delete.error": "Erreur : l'espace de travail sélectionné n'existe plus ou est inaccessible.",
         "welcome.alert.open.error": "Erreur : l'espace de travail sélectionné n'existe plus ou est inaccessible.",
+        "welcome.alert.refresh": "Vous êtes sur le point de mettre à jour la liste des projets récents.\nTous les projets dont le dossier est introuvable ou inaccessible seront supprimés de la liste.\nCette action est irréversible. Continuer ?",
 
         "assistant_creator.label.welcome": "Bienvenue dans l'assistant de création d'espace de travail Minecraft Forge !\nNous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant.",
         "assistant_creator.label.welcome.supported_mc_versions": "Version de Minecraft supportées :",
