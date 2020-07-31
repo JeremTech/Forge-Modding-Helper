@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -16,6 +18,7 @@ using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows;
 using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
+using Image = System.Drawing.Image;
 using Path = System.Windows.Shapes.Path;
 
 namespace Forge_Modding_Helper_3
@@ -51,7 +54,7 @@ namespace Forge_Modding_Helper_3
         private List<BlockStates> blockstatesList = new List<BlockStates>();
 
         // Textures list storage
-        private List<String> texturesList = new List<string>();
+        private List<Texture> texturesList = new List<Texture>();
 
         // Models list storage
         private List<Model> modelsList = new List<Model>();
@@ -79,7 +82,7 @@ namespace Forge_Modding_Helper_3
 
             // Read textures_list.json file
             jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "textures_list.json"));
-            texturesList = JsonConvert.DeserializeObject<List<string>>(jsonContent);
+            JsonConvert.DeserializeObject<List<String>>(jsonContent).ForEach(element => texturesList.Add(new Texture(element)));
 
             // Read models_list.json file
             jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "models_list.json"));
@@ -129,28 +132,29 @@ namespace Forge_Modding_Helper_3
                 this.mod_settings_grid.Visibility = Visibility.Hidden;
                 this.blockstates_grid.Visibility = Visibility.Hidden;
                 this.models_grid.Visibility = Visibility.Hidden;
+                this.textures_grid.Visibility = Visibility.Hidden;
 
                 String tag = senderButton.Tag.ToString();
 
                 if (tag.Contains("home"))
                 {
-                    this.home_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                    this.home_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
                     this.home_grid.Visibility = Visibility.Visible;
                 }
                 else if (tag.Contains("mod_settings"))
                 {
-                    this.mod_toml_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                    this.mod_toml_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
                     this.mod_settings_grid.Visibility = Visibility.Visible;
                 }
                 else if (tag.Contains("blockstates"))
                 {
-                    this.blockstates_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                    this.blockstates_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
                     this.blockstates_grid.Visibility = Visibility.Visible;
                     listView_blockstates.ItemsSource = blockstatesList;
                 }
                 else if (tag.Contains("models"))
                 {
-                    this.models_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                    this.models_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
                     this.models_grid.Visibility = Visibility.Visible;
                     listView_models.ItemsSource = modelsList;
 
@@ -165,15 +169,26 @@ namespace Forge_Modding_Helper_3
                 }
                 else if (tag.Contains("textures"))
                 {
-                    this.textures_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                    this.textures_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
+                    this.textures_grid.Visibility = Visibility.Visible;
+                    listView_textures.ItemsSource = texturesList;
+
+                    List<string> textures_folders = new List<string>();
+                    textures_folders.Add("--");
+                    foreach (string texturesFolder in Directory.GetDirectories(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "textures")))
+                    {
+                        textures_folders.Add(System.IO.Path.GetFileName(texturesFolder));
+                    }
+                    textures_folder_comboBox.ItemsSource = textures_folders;
+                    textures_folder_comboBox.SelectedIndex = 0;
                 }
                 else if (tag.Contains("translations"))
                 {
-                    this.lang_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                    this.lang_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
                 }
                 else if (tag.Contains("export"))
                 {
-                    this.build_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                    this.build_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
                 }
             }
         }
@@ -269,7 +284,12 @@ namespace Forge_Modding_Helper_3
                     listView_models.ItemsSource = modelsList.Where(item => item.FileName.Contains(models_search_textBox.Text));
             }
             else
-                listView_models.ItemsSource = modelsList;
+            {
+                if (models_folder_comboBox.SelectedIndex != 0)
+                    listView_models.ItemsSource = modelsList.Where(item => System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)models_folder_comboBox.SelectedItem));
+                else
+                    listView_models.ItemsSource = modelsList;
+            }
         }
 
         private void listView_models_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -322,7 +342,99 @@ namespace Forge_Modding_Helper_3
         }
         #endregion
 
+        #region Textures section controls events
+        private void textures_folder_comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            listView_textures.ItemsSource = null;
+
+            if (!string.IsNullOrWhiteSpace(textures_search_textBox.Text))
+            {
+                if (textures_folder_comboBox.SelectedIndex == 0)
+                    listView_textures.ItemsSource = texturesList.Where(item => item.FileName.Contains(textures_search_textBox.Text));
+                else
+                    listView_textures.ItemsSource = texturesList.Where(item => item.FileName.Contains(textures_search_textBox.Text) && System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)textures_folder_comboBox.SelectedItem));
+            }
+            else
+            {
+                if (textures_folder_comboBox.SelectedIndex == 0)
+                    listView_textures.ItemsSource = texturesList;
+                else
+                    listView_textures.ItemsSource = texturesList.Where(item => System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)textures_folder_comboBox.SelectedItem));
+            }
+        }
+
+        private void textures_search_textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(textures_search_textBox.Text))
+            {
+                if (textures_folder_comboBox.SelectedIndex != 0)
+                    listView_textures.ItemsSource = texturesList.Where(item => item.FileName.Contains(textures_search_textBox.Text) && System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)textures_folder_comboBox.SelectedItem));
+                else
+                    listView_textures.ItemsSource = texturesList.Where(item => item.FileName.Contains(textures_search_textBox.Text));
+            }
+            else
+            {
+                if (textures_folder_comboBox.SelectedIndex != 0)
+                    listView_textures.ItemsSource = texturesList.Where(item => System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)textures_folder_comboBox.SelectedItem));
+                else
+                    listView_textures.ItemsSource = texturesList;
+            }
+        }
+
+        private void listView_textures_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            textures_delete_button.IsEnabled = false;
+            textures_rename_button.IsEnabled = false;
+
+            if (listView_textures.SelectedItems.Count > 0)
+            {
+                textures_delete_button.IsEnabled = true;
+
+                if (listView_textures.SelectedItems.Count == 1)
+                {
+                    textures_rename_button.IsEnabled = true;
+                }
+            }
+        }
+
+        private void textures_rename_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (listView_textures.SelectedItems.Count == 1)
+            {
+                new RenameDialog(((Texture)listView_textures.SelectedItem).FilePath).ShowDialog();
+                RefreshTexturesList();
+            }
+        }
+
+        private void textures_delete_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (listView_textures.SelectedItems.Count > 0)
+            {
+                MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.getTranslation("workspace_manager.alert.delete").Replace("%N", listView_textures.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (msgResult == MessageBoxResult.Yes)
+                {
+                    foreach (Texture element in listView_textures.SelectedItems)
+                    {
+                        // Move the file to the recycle bin
+                        FileSystem.DeleteFile(element.FilePath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                    }
+                }
+
+                RefreshTexturesList();
+            }
+        }
+
+        private void textures_reload_button_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshTexturesList();
+        }
+        #endregion
+
         #region Integrated Project Scan
+        /// <summary>
+        /// Refresh blockstates section by reload blockstates files list
+        /// </summary>
         private void RefreshBlockStatesList()
         {
             new ProjectScanWindow(this.path, false).ShowDialog();
@@ -339,6 +451,9 @@ namespace Forge_Modding_Helper_3
                 listView_blockstates.ItemsSource = blockstatesList;
         }
 
+        /// <summary>
+        /// Refresh models section by reload models files list
+        /// </summary>
         private void RefreshModelsList()
         {
             new ProjectScanWindow(this.path, false).ShowDialog();
@@ -351,7 +466,7 @@ namespace Forge_Modding_Helper_3
             if (!string.IsNullOrWhiteSpace(models_search_textBox.Text))
             {
                 if (models_folder_comboBox.SelectedIndex == 0)
-                    listView_models.ItemsSource = modelsList.Where(item => item.FileName.Contains(models_search_textBox.Text) && item.FileName.Contains(models_search_textBox.Text));
+                    listView_models.ItemsSource = modelsList.Where(item => item.FileName.Contains(models_search_textBox.Text));
                 else
                     listView_models.ItemsSource = modelsList.Where(item => item.FileName.Contains(models_search_textBox.Text) && System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)models_folder_comboBox.SelectedItem));
             }
@@ -363,9 +478,40 @@ namespace Forge_Modding_Helper_3
                     listView_models.ItemsSource = modelsList.Where(item => System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)models_folder_comboBox.SelectedItem));
             }
         }
+
+        /// <summary>
+        /// Refresh texture section by reload textures files list
+        /// </summary>
+        private void RefreshTexturesList()
+        {
+            new ProjectScanWindow(this.path, false).ShowDialog();
+
+            string jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "textures_list.json"));
+            texturesList.Clear();
+            JsonConvert.DeserializeObject<List<string>>(jsonContent).ForEach(element => texturesList.Add(new Texture(element)));
+
+            listView_textures.ItemsSource = null;
+            if (!string.IsNullOrWhiteSpace(textures_search_textBox.Text))
+            {
+                if (textures_folder_comboBox.SelectedIndex == 0)
+                    listView_textures.ItemsSource = texturesList.Where(item => item.FileName.Contains(textures_search_textBox.Text));
+                else
+                    listView_textures.ItemsSource = texturesList.Where(item => item.FileName.Contains(textures_search_textBox.Text) && System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)textures_folder_comboBox.SelectedItem));
+            }
+            else
+            {
+                if (models_folder_comboBox.SelectedIndex == 0)
+                    listView_textures.ItemsSource = texturesList;
+                else
+                    listView_textures.ItemsSource = texturesList.Where(item => System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)textures_folder_comboBox.SelectedItem));
+            }
+        }
         #endregion
     }
 
+    ///// <summary>
+    ///// Class representing blockstates file
+    ///// </summary>
     public class BlockStates
     {
         public string FileName { get; set; }
@@ -378,6 +524,9 @@ namespace Forge_Modding_Helper_3
         }
     }
 
+    ///// <summary>
+    ///// Class representing model file
+    ///// </summary>
     public class Model
     {
         public string FileName { get; set; }
@@ -401,6 +550,64 @@ namespace Forge_Modding_Helper_3
             logo.EndInit();
             imgStream.Close();
             this.Icon = logo;
+        }
+    }
+
+    /// <summary>
+    /// Class representing texture file
+    /// </summary>
+    public class Texture
+    {
+        public string FileName { get; set; }
+        public string FilePath { get; set; }
+
+        public string FileImagePath { get; set; }
+
+        public Texture(string filePath)
+        {
+            this.FilePath = filePath;
+            this.FileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+
+            if (FileName.Contains(".png"))
+                FileImagePath = @"/Forge Modding Helper 3;component/Resources/Pictures/code_file_icon.png";
+            else
+                FileImagePath = FilePath;
+        }
+    }
+
+    /// <summary>
+    /// Class used to not lock opened external pictures in a listview
+    /// Only for WPF binding converter
+    /// </summary>
+    public class StringToImageConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            object result = null;
+            var path = value as string;
+
+            if (!string.IsNullOrEmpty(path) && path.Contains("/Forge Modding Helper 3;component"))
+                result = path;
+
+            else if (!string.IsNullOrEmpty(path) && File.Exists(path))
+            {
+                using (var stream = File.OpenRead(path))
+                {
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = stream;
+                    image.EndInit();
+                    result = image;
+                }
+            }
+
+            return result;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
         }
     }
 }
