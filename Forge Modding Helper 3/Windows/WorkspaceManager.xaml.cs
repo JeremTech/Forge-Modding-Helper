@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -53,7 +54,7 @@ namespace Forge_Modding_Helper_3
         private List<String> texturesList = new List<string>();
 
         // Models list storage
-        private List<String> modelsList = new List<String>();
+        private List<Model> modelsList = new List<Model>();
 
         // java file list storage
         private List<String> javaFileList = new List<string>();
@@ -82,7 +83,7 @@ namespace Forge_Modding_Helper_3
 
             // Read models_list.json file
             jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "models_list.json"));
-            modelsList = JsonConvert.DeserializeObject<List<string>>(jsonContent);
+            JsonConvert.DeserializeObject<List<string>>(jsonContent).ForEach(element => modelsList.Add(new Model(element)));
 
             // Read java_files_list.json file
             jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "java_files_list.json"));
@@ -127,6 +128,7 @@ namespace Forge_Modding_Helper_3
                 this.home_grid.Visibility = Visibility.Hidden;
                 this.mod_settings_grid.Visibility = Visibility.Hidden;
                 this.blockstates_grid.Visibility = Visibility.Hidden;
+                this.models_grid.Visibility = Visibility.Hidden;
 
                 String tag = senderButton.Tag.ToString();
 
@@ -149,6 +151,17 @@ namespace Forge_Modding_Helper_3
                 else if (tag.Contains("models"))
                 {
                     this.models_button_border.Background = new SolidColorBrush(Color.FromRgb(0, 116, 255));
+                    this.models_grid.Visibility = Visibility.Visible;
+                    listView_models.ItemsSource = modelsList;
+
+                    List<string> models_folders = new List<string>();
+                    models_folders.Add("--");
+                    foreach (string modelsFolder in Directory.GetDirectories(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "models")))
+                    {
+                        models_folders.Add(System.IO.Path.GetFileName(modelsFolder));
+                    }
+                    models_folder_comboBox.ItemsSource = models_folders;
+                    models_folder_comboBox.SelectedIndex = 0;
                 }
                 else if (tag.Contains("textures"))
                 {
@@ -225,6 +238,90 @@ namespace Forge_Modding_Helper_3
         }
         #endregion
 
+        #region Models section controls events
+        private void models_folder_comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            listView_models.ItemsSource = null;
+
+            if (!string.IsNullOrWhiteSpace(models_search_textBox.Text))
+            {
+                if (models_folder_comboBox.SelectedIndex == 0)
+                    listView_models.ItemsSource = modelsList.Where(item => item.FileName.Contains(models_search_textBox.Text) && item.FileName.Contains(models_search_textBox.Text));
+                else
+                    listView_models.ItemsSource = modelsList.Where(item => item.FileName.Contains(models_search_textBox.Text) && System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)models_folder_comboBox.SelectedItem));
+            }
+            else
+            {
+                if (models_folder_comboBox.SelectedIndex == 0)
+                    listView_models.ItemsSource = modelsList;
+                else
+                    listView_models.ItemsSource = modelsList.Where(item => System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)models_folder_comboBox.SelectedItem));
+            }
+        }
+
+        private void models_search_textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(models_search_textBox.Text))
+            {
+                if (models_folder_comboBox.SelectedIndex != 0)
+                    listView_models.ItemsSource = modelsList.Where(item => item.FileName.Contains(models_search_textBox.Text) && System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)models_folder_comboBox.SelectedItem));
+                else
+                    listView_models.ItemsSource = modelsList.Where(item => item.FileName.Contains(models_search_textBox.Text));
+            }
+            else
+                listView_models.ItemsSource = modelsList;
+        }
+
+        private void listView_models_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            models_delete_button.IsEnabled = false;
+            models_rename_button.IsEnabled = false;
+
+            if (listView_models.SelectedItems.Count > 0)
+            {
+                models_delete_button.IsEnabled = true;
+
+                if (listView_models.SelectedItems.Count == 1)
+                {
+                    models_rename_button.IsEnabled = true;
+                }
+            }
+        }
+
+        private void models_rename_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (listView_models.SelectedItems.Count == 1)
+            {
+                new RenameDialog(((Model)listView_models.SelectedItem).FilePath).ShowDialog();
+                RefreshModelsList();
+            }
+        }
+
+        private void models_delete_button_Click(object sender, RoutedEventArgs e)
+        {
+            if (listView_models.SelectedItems.Count > 0)
+            {
+                MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.getTranslation("workspace_manager.alert.delete").Replace("%N", listView_models.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (msgResult == MessageBoxResult.Yes)
+                {
+                    foreach (Model element in listView_models.SelectedItems)
+                    {
+                        // Move the file to the recycle bin
+                        FileSystem.DeleteFile(element.FilePath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                    }
+                }
+
+                RefreshModelsList();
+            }
+        }
+
+        private void models_reload_button_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshModelsList();
+        }
+        #endregion
+
         #region Integrated Project Scan
         private void RefreshBlockStatesList()
         {
@@ -235,7 +332,36 @@ namespace Forge_Modding_Helper_3
             JsonConvert.DeserializeObject<List<String>>(jsonContent).ForEach(element => blockstatesList.Add(new BlockStates(element)));
 
             listView_blockstates.ItemsSource = null;
-            listView_blockstates.ItemsSource = blockstatesList;
+
+            if (!string.IsNullOrWhiteSpace(blockstates_search_textBox.Text))
+                listView_blockstates.ItemsSource = blockstatesList.Where(item => item.FileName.Contains(blockstates_search_textBox.Text));
+            else
+                listView_blockstates.ItemsSource = blockstatesList;
+        }
+
+        private void RefreshModelsList()
+        {
+            new ProjectScanWindow(this.path, false).ShowDialog();
+
+            string jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "models_list.json"));
+            modelsList.Clear();
+            JsonConvert.DeserializeObject<List<string>>(jsonContent).ForEach(element => modelsList.Add(new Model(element)));
+
+            listView_models.ItemsSource = null;
+            if (!string.IsNullOrWhiteSpace(models_search_textBox.Text))
+            {
+                if (models_folder_comboBox.SelectedIndex == 0)
+                    listView_models.ItemsSource = modelsList.Where(item => item.FileName.Contains(models_search_textBox.Text) && item.FileName.Contains(models_search_textBox.Text));
+                else
+                    listView_models.ItemsSource = modelsList.Where(item => item.FileName.Contains(models_search_textBox.Text) && System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)models_folder_comboBox.SelectedItem));
+            }
+            else
+            {
+                if (models_folder_comboBox.SelectedIndex == 0)
+                    listView_models.ItemsSource = modelsList;
+                else
+                    listView_models.ItemsSource = modelsList.Where(item => System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)models_folder_comboBox.SelectedItem));
+            }
         }
         #endregion
     }
@@ -249,6 +375,32 @@ namespace Forge_Modding_Helper_3
         {
             this.FilePath = filePath;
             this.FileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+        }
+    }
+
+    public class Model
+    {
+        public string FileName { get; set; }
+        public string FilePath { get; set; }
+        public BitmapImage Icon { get; set; }
+
+        public Model(string filePath)
+        {
+            this.FilePath = filePath;
+            this.FileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+            Stream imgStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Forge_Modding_Helper_3.Resources.Pictures.models_icon.png");
+
+            if (FilePath.Contains("item"))
+                imgStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Forge_Modding_Helper_3.Resources.Pictures.item_icon.png");
+            else if (FilePath.Contains("block"))
+                imgStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Forge_Modding_Helper_3.Resources.Pictures.block_icon.png");
+
+            BitmapImage logo = new BitmapImage();
+            logo.BeginInit();
+            logo.StreamSource = imgStream;
+            logo.EndInit();
+            imgStream.Close();
+            this.Icon = logo;
         }
     }
 }

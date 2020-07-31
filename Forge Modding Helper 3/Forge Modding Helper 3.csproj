@@ -234,6 +234,10 @@
   <ItemGroup>
     <Resource Include="Resources\Pictures\search_icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Pictures\block_icon.png" />
+    <EmbeddedResource Include="Resources\Pictures\item_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
 </Project>

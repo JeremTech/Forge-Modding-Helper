@@ -257,5 +257,29 @@
             <Button x:Name="blockstates_rename_button" Content="I" HorizontalAlignment="Left" Margin="775,7,0,0" VerticalAlignment="Top" Width="27" Height="27" Click="blockstates_rename_button_Click" FontWeight="Bold" FontSize="18" Foreground="#FF00659E" IsEnabled="False" FontFamily="Tahoma"/>
             <Button x:Name="blockstates_reload_button" Content="⟳" HorizontalAlignment="Left" Margin="748,7,0,0" VerticalAlignment="Top" Width="27" Height="27" Click="blockstates_reload_button_Click" FontWeight="Bold" FontSize="18" Foreground="#FF177613" FontFamily="Tahoma"/>
         </Grid>
+        <Grid x:Name="models_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
+            <ListView x:Name="listView_models" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="347" Margin="10,40,0,0" VerticalAlignment="Top" Width="820" Background="{x:Null}" Foreground="White" BorderBrush="White" SelectionMode="Extended" SelectionChanged="listView_models_SelectionChanged">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Center" Margin="0, 10, 0, 0">
+                            <Image Source="{Binding Icon}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="64" Height="64"/>
+                            <TextBlock Margin="0, 7, 0, 0" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="5" VerticalAlignment="Top"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+            <Rectangle Fill="#FF222223" HorizontalAlignment="Left" Height="29" Margin="10,6,0,0" VerticalAlignment="Top" Width="820" Stroke="#FFABADB3"/>
+            <Image HorizontalAlignment="Left" Height="29" Margin="13,6,0,0" VerticalAlignment="Top" Width="29" Source="/Forge Modding Helper 3;component/Resources/Pictures/search_icon.png"/>
+            <TextBox x:Name="models_search_textBox" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="5, 0, 5, 0" HorizontalAlignment="Left" Height="29" Margin="44,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" Foreground="White" Background="#FF454549" FontSize="14" TextChanged="models_search_textBox_TextChanged"/>
+            <Button x:Name="models_delete_button" Content="X" HorizontalAlignment="Left" Margin="802,7,0,0" VerticalAlignment="Top" Width="27" Height="27" FontWeight="Bold" FontSize="18" Foreground="#FF9E0000" IsEnabled="False" FontFamily="Tahoma" Click="models_delete_button_Click"/>
+            <Button x:Name="models_rename_button" Content="I" HorizontalAlignment="Left" Margin="775,7,0,0" VerticalAlignment="Top" Width="27" Height="27" FontWeight="Bold" FontSize="18" Foreground="#FF00659E" IsEnabled="False" FontFamily="Tahoma" Click="models_rename_button_Click"/>
+            <Button x:Name="models_reload_button" Content="⟳" HorizontalAlignment="Left" Margin="748,7,0,0" VerticalAlignment="Top" Width="27" Height="27" FontWeight="Bold" FontSize="18" Foreground="#FF177613" FontFamily="Tahoma" Click="models_reload_button_Click"/>
+            <ComboBox x:Name="models_folder_comboBox" HorizontalAlignment="Left" Margin="644,7,0,0" VerticalAlignment="Top" Width="104" Height="27" SelectionChanged="models_folder_comboBox_SelectionChanged"/>
+        </Grid>
     </Grid>
 </Window>
