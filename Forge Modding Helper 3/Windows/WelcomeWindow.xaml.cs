@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,6 +17,7 @@ using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Microsoft.VisualBasic.FileIO;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Forge_Modding_Helper_3.Windows
 {
@@ -124,6 +126,37 @@ namespace Forge_Modding_Helper_3.Windows
                 RecentWorkspaces.WriteDataFile();
                 listbox_recent_workspaces.ItemsSource = null;
                 listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+            }
+        }
+
+        private void import_mod_button_Click(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.ShowNewFolderButton = false;
+            dialog.ShowDialog();
+
+            if (Directory.Exists(dialog.SelectedPath))
+            {
+                if (DirectoryUtils.CheckFolderIsForgeWorkspace(dialog.SelectedPath))
+                {
+                    string buildGradle = File.ReadAllText(System.IO.Path.Combine(dialog.SelectedPath, "build.gradle"));
+                    string forge_version = buildGradle.getBetween("minecraft 'net.minecraftforge:forge:", "'");
+                    string minecraft_version = forge_version.getBetween("", "-");
+
+                    if (!AppInfos.getSupportedMinecraftVersions().Contains(minecraft_version))
+                    {
+                        MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.import.error.unsupported"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        new ProjectScanWindow(dialog.SelectedPath).Show();
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.import.error.invalid"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
         #endregion

@@ -21,6 +21,30 @@ namespace Forge_Modding_Helper_3.Files
         private static string FilePath = Path.Combine(AppInfos.getApplicationDataDirectory(), "workspaces.json");
 
         /// <summary>
+        /// Add a workspace to the recent workspaces list. If it already exist, it's updated
+        /// </summary>
+        /// <param name="workspace">Workspace to add</param>
+        public static void AddRecentWorkspace(Workspace workspace)
+        {
+            int lenght = RecentWorkspacesList.Count;
+            Workspace[] workspaces = new Workspace[lenght];
+            RecentWorkspacesList.CopyTo(workspaces, 0);
+
+
+            foreach (Workspace work in workspaces)
+            {
+                if (work.path == workspace.path)
+                {
+                    RecentWorkspacesList.Remove(work);
+                    break;
+                }
+            }
+
+            RecentWorkspacesList.Add(workspace);
+            WriteDataFile();
+        }
+
+        /// <summary>
         /// Read the data file 
         /// </summary>
         /// <returns><code>true</code> if success, <code>false</code> if fail</returns>

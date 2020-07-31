@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Newtonsoft.Json;
 using Path = System.IO.Path;
@@ -82,8 +84,11 @@ namespace Forge_Modding_Helper_3.Windows
             await Task.Factory.StartNew(ScanProject);
 
             // Once scan finished
-            if(this.showProjectWindow)
+            if (this.showProjectWindow)
+            {
+                RecentWorkspaces.AddRecentWorkspace(new Workspace(modInfos["mod_name"], modInfos["minecraft_version"], path, modInfos["mod_description"], DateTime.Now));
                 new WorkspaceManager(this.path).Show();
+            }
 
             this.Close();
         }

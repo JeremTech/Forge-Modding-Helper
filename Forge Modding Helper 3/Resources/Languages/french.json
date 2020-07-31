@@ -10,10 +10,13 @@
         "welcome.button.open": "Ouvrir",
         "welcome.button.delete": "Supprimer",
         "welcome.button.refresh": "Actualiser la liste",
+        "welcome.button.import": "Importer",
         "welcome.alert.delete": "Etes-vous sûr de vouloir déplacer cet espace de travail vers la corbeille ?",
         "welcome.alert.delete.error": "Erreur : l'espace de travail sélectionné n'existe plus ou est inaccessible.",
         "welcome.alert.open.error": "Erreur : l'espace de travail sélectionné n'existe plus ou est inaccessible.",
         "welcome.alert.refresh": "Vous êtes sur le point de mettre à jour la liste des projets récents.\nTous les projets dont le dossier est introuvable ou inaccessible seront supprimés de la liste.\nCette action est irréversible. Continuer ?",
+        "welcome.alert.import.error.unsupported": "Erreur : la version de Minecraft de l'espace de travail que vous souhaitez importer n'est pas supporté par Forge Modding Helper.",
+        "welcome.alert.import.error.invalid": "Erreur : le dossier sélectionné est invalide.",
 
         "assistant_creator.label.welcome": "Bienvenue dans l'assistant de création d'espace de travail Minecraft Forge !\nNous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant.",
         "assistant_creator.label.welcome.supported_mc_versions": "Version de Minecraft supportées :",
