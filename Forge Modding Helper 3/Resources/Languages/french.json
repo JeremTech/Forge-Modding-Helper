@@ -8,6 +8,9 @@
         "welcome.label.no_workspaces": "Aucun espace de travail récent n'a été trouvé",
         "welcome.button.new": "Nouveau",
         "welcome.button.open": "Ouvrir",
+        "welcome.button.delete": "Supprimer",
+        "welcome.button.refresh": "Actualiser la liste",
+        "welcome.alert.delete": "Etes-vous sûr de vouloir déplacer cet espace de travail vers la corbeille ?",
 
         "assistant_creator.label.welcome": "Bienvenue dans l'assistant de création d'espace de travail Minecraft Forge !\nNous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant.",
         "assistant_creator.label.welcome.supported_mc_versions": "Version de Minecraft supportées :",
