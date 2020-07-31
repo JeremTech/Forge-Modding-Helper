@@ -22,9 +22,6 @@ namespace Forge_Modding_Helper_3
             // Checking app folders
             updateLoadingStatut("Vérification des dossiers d'application...", 20);
 
-            if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Data")))
-                Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Data"));
-
             // Load last workspaces
             updateLoadingStatut("Récupération des espaces de travail récents...", 40);
             WelcomeWindow welcomeWindow = new WelcomeWindow();
