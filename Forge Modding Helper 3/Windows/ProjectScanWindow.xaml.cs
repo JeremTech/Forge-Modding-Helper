@@ -67,8 +67,8 @@ namespace Forge_Modding_Helper_3.Windows
             this.showProjectWindow = showProjectWindow;
 
             // Loadings translations
-            UITextTranslator.LoadTranslationFile("french");
-            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.UpdateComponentsTranslations(this);
 
             this.main_status_label.Content = UITextTranslator.getTranslation("project_scan.initialization");
             this.secondary_status_label.Content = UITextTranslator.getTranslation("project_scan.initialization");

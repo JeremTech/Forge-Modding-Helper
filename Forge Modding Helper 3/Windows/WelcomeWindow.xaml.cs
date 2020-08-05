@@ -159,6 +159,14 @@ namespace Forge_Modding_Helper_3.Windows
                 }
             }
         }
+
+        private void options_mod_button_Click(object sender, RoutedEventArgs e)
+        {
+            new OptionWindow().ShowDialog();
+
+            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.UpdateComponentsTranslations(this);
+        }
         #endregion
 
         /// <summary>

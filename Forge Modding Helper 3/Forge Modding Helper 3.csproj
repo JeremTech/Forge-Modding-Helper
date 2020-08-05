@@ -89,6 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Files\OptionsFile.cs" />
     <Compile Include="Files\RecentWorkspaces.cs" />
     <Compile Include="Objects\Workspace.cs" />
     <Compile Include="Files\BuildGradle.cs" />
@@ -100,6 +101,9 @@
     <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Utils\UITextTranslator.cs" />
     <Compile Include="Utils\UIUtils.cs" />
+    <Compile Include="Windows\OptionWindow.xaml.cs">
+      <DependentUpon>OptionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ProjectScanWindow.xaml.cs">
       <DependentUpon>ProjectScanWindow.xaml</DependentUpon>
     </Compile>
@@ -131,6 +135,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\OptionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\ProjectScanWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

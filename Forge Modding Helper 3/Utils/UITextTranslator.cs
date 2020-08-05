@@ -22,17 +22,22 @@ namespace Forge_Modding_Helper_3.Utils
         /// <summary>
         /// Reading translation file
         /// </summary>
-        /// <param name="localization">Name of the target language file (without <c>.json</c> extension)</param>
+        /// <param name="localization">Name of the language in the file</param>
         public static void LoadTranslationFile(String localization)
         {
+            string directoryName = "Forge_Modding_Helper_3.Resources.Languages";
+            List<string> languagesFilesList = Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(element => element.StartsWith(directoryName) && element.EndsWith(".json")).ToList();
 
-            string resourceName = "Forge_Modding_Helper_3.Resources.Languages." + localization + ".json";
-            Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
-
-            using (StreamReader reader = new StreamReader(stream))
+            foreach (string filePath in languagesFilesList)
             {
-                string fileContent = reader.ReadToEnd();
-                translationFile = JsonConvert.DeserializeObject<TranslationFile>(fileContent);
+                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(filePath);
+
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string fileContent = reader.ReadToEnd();
+                    if(JsonConvert.DeserializeObject<TranslationFile>(fileContent).name == localization)
+                        translationFile = JsonConvert.DeserializeObject<TranslationFile>(fileContent);
+                }
             }
         }
 
@@ -90,6 +95,27 @@ namespace Forge_Modding_Helper_3.Utils
                 Debug.Print(e.Message);
                 return translationKey;
             }
+        }
+
+        public static List<String> getAvailableLanguagesList()
+        {
+            List<String> languagesList = new List<string>();
+
+            string directoryName = "Forge_Modding_Helper_3.Resources.Languages";
+            List<string> languagesFilesList = Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(element => element.StartsWith(directoryName) && element.EndsWith(".json")).ToList();
+
+            foreach (string filePath in languagesFilesList)
+            {
+                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(filePath);
+
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    string fileContent = reader.ReadToEnd();
+                    languagesList.Add(JsonConvert.DeserializeObject<TranslationFile>(fileContent).name);
+                }
+            }
+
+            return languagesList;
         }
     }
 

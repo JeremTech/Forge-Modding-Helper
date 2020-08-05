@@ -72,8 +72,8 @@ namespace Forge_Modding_Helper_3
         private void Window_Initialized(object sender, EventArgs e)
         {
             // Loadings translations
-            UITextTranslator.LoadTranslationFile("french");
-            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.UpdateComponentsTranslations(this);
         }
 
         /// <summary>

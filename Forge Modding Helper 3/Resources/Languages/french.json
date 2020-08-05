@@ -11,6 +11,7 @@
         "welcome.button.delete": "Supprimer",
         "welcome.button.refresh": "Actualiser la liste",
         "welcome.button.import": "Importer",
+        "welcome.button.options": "Options",
         "welcome.alert.delete": "Etes-vous sûr de vouloir déplacer cet espace de travail vers la corbeille ?",
         "welcome.alert.delete.error": "Erreur : l'espace de travail sélectionné n'existe plus ou est inaccessible.",
         "welcome.alert.open.error": "Erreur : l'espace de travail sélectionné n'existe plus ou est inaccessible.",
@@ -95,7 +96,7 @@
         "workspace_manager.label.textures": "Textures",
         "workspace_manager.label.models": "Modèles",
         "workspace_manager.label.java_files": "Fichiers .java",
-        "workspace_manager.button.home": "Acceuil",
+        "workspace_manager.button.home": "Accueil",
         "workspace_manager.button.mod_settings": "Paramètres du mod",
         "workspace_manager.button.blockstates": "Blockstates",
         "workspace_manager.button.models": "Modèles",
@@ -103,6 +104,10 @@
         "workspace_manager.button.translations": "Traductions",
         "workspace_manager.button.export": "Exportation",
         "workspace_manager.alert.delete": "Etes-vous sûr de vouloir déplacer %N élément(s) vers la corbeille ?",
+
+        "options.label.ui_language": "Langue de l'interface",
+        "options.button.about": "A propos",
+        "options.button.report_bug": "Signaler un bug",
 
         "feature.not_available": "Cette fonctionnalité n'est pas encore disponible."
     } 

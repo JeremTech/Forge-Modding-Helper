@@ -15,8 +15,15 @@ namespace Forge_Modding_Helper_3
             InitializeComponent();
             version_label.Content = AppInfos.GetApplicationVersionString();
 
+            // Checking files
+            if(!File.Exists(Path.Combine(AppInfos.getApplicationDataDirectory(), "options.json")))
+                OptionsFile.WriteDataFile();
+
+            // Load options
+            OptionsFile.ReadDataFile();
+
             // Loadings translations
-            UITextTranslator.LoadTranslationFile("french");
+            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this);
 
             // Checking app folders

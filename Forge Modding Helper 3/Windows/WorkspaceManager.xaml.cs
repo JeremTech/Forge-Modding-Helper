@@ -14,6 +14,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows;
 using Microsoft.VisualBasic.FileIO;
@@ -66,8 +67,9 @@ namespace Forge_Modding_Helper_3
         {
             this.path = path;
             InitializeComponent();
-            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
 
+            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.UpdateComponentsTranslations(this);
         }
 
         private void Window_Initialized(object sender, EventArgs e)
