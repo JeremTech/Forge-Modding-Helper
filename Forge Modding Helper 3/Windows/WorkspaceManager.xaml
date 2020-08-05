@@ -306,5 +306,11 @@
             <Button x:Name="textures_reload_button" Content="⟳" HorizontalAlignment="Left" Margin="748,7,0,0" VerticalAlignment="Top" Width="27" Height="27" FontWeight="Bold" FontSize="18" Foreground="#FF177613" FontFamily="Tahoma" Click="textures_reload_button_Click"/>
             <ComboBox x:Name="textures_folder_comboBox" HorizontalAlignment="Left" Margin="644,7,0,0" VerticalAlignment="Top" Width="104" Height="27" SelectionChanged="textures_folder_comboBox_SelectionChanged"/>
         </Grid>
+        <Grid x:Name="language_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
+            <Label Content="Cette fonctionnalité n'est pas encore disponible" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="#FFBFBFBF" Height="397" Width="830" Tag="feature.not_available"/>
+        </Grid>
+        <Grid x:Name="exportation_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
+            <Label Content="Cette fonctionnalité n'est pas encore disponible" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="#FFBFBFBF" Height="397" Width="830" Tag="feature.not_available"/>
+        </Grid>
     </Grid>
 </Window>

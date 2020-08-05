@@ -135,6 +135,8 @@ namespace Forge_Modding_Helper_3
                 this.blockstates_grid.Visibility = Visibility.Hidden;
                 this.models_grid.Visibility = Visibility.Hidden;
                 this.textures_grid.Visibility = Visibility.Hidden;
+                this.language_grid.Visibility = Visibility.Hidden;
+                this.exportation_grid.Visibility = Visibility.Hidden;
 
                 String tag = senderButton.Tag.ToString();
 
@@ -187,10 +189,12 @@ namespace Forge_Modding_Helper_3
                 else if (tag.Contains("translations"))
                 {
                     this.lang_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
+                    this.language_grid.Visibility = Visibility.Visible;
                 }
                 else if (tag.Contains("export"))
                 {
                     this.build_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
+                    this.exportation_grid.Visibility = Visibility.Visible;
                 }
             }
         }
