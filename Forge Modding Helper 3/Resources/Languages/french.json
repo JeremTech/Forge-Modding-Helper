@@ -109,6 +109,11 @@
         "options.button.about": "A propos",
         "options.button.report_bug": "Signaler un bug",
 
+        "about.label.version": "Version :",
+        "about.label.contributors": "Contributeurs :",
+        "about.label.repository": "GitHub :",
+        "about.label.librairies": "Bibliothèques utilisées :",
+
         "feature.not_available": "Cette fonctionnalité n'est pas encore disponible."
     } 
 }

@@ -50,5 +50,15 @@ namespace Forge_Modding_Helper_3.Windows
         {
             OptionsFile.WriteDataFile();
         }
+
+        private void about_button_Click(object sender, RoutedEventArgs e)
+        {
+            new AboutWindow().ShowDialog();
+        }
+
+        private void report_bug_button_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/JeremTech/Forge-Modding-Helper/issues/new?assignees=&labels=&template=bug_report.md&title=");
+        }
     }
 }

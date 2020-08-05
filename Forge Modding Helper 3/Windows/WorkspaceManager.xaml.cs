@@ -69,7 +69,7 @@ namespace Forge_Modding_Helper_3
             InitializeComponent();
 
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
-            UITextTranslator.UpdateComponentsTranslations(this);
+            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
         }
 
         private void Window_Initialized(object sender, EventArgs e)

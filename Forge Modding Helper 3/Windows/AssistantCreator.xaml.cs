@@ -73,7 +73,7 @@ namespace Forge_Modding_Helper_3
         {
             // Loadings translations
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
-            UITextTranslator.UpdateComponentsTranslations(this);
+            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
         }
 
         /// <summary>

@@ -10,8 +10,8 @@
         <Label x:Name="ui_language_label" Content="Langue de l'interface :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Width="282" Tag="options.label.ui_language"/>
         <ComboBox x:Name="ui_language_comboBox" HorizontalAlignment="Left" Margin="13,42,0,0" VerticalAlignment="Top" Width="279" SelectionChanged="ui_language_comboBox_SelectionChanged"/>
         <Separator HorizontalAlignment="Left" Height="22" Margin="0,74,0,0" VerticalAlignment="Top" Width="337"/>
-        <Button x:Name="button" Content="A propos" HorizontalAlignment="Left" Margin="13,107,0,0" VerticalAlignment="Top" Width="279" Height="28" Tag="options.button.about"/>
-        <Button x:Name="button_Copy" Content="Signaler un bug" HorizontalAlignment="Left" Margin="13,147,0,0" VerticalAlignment="Top" Width="279" Height="28" Tag="options.button.report_bug"/>
+        <Button x:Name="about_button" Content="A propos" HorizontalAlignment="Left" Margin="13,107,0,0" VerticalAlignment="Top" Width="279" Height="28" Tag="options.button.about" Click="about_button_Click"/>
+        <Button x:Name="report_bug_button" Content="Signaler un bug" HorizontalAlignment="Left" Margin="13,147,0,0" VerticalAlignment="Top" Width="279" Height="28" Tag="options.button.report_bug" Click="report_bug_button_Click"/>
 
     </Grid>
 </Window>

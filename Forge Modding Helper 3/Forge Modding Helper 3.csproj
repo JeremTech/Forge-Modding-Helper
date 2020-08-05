@@ -101,6 +101,9 @@
     <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Utils\UITextTranslator.cs" />
     <Compile Include="Utils\UIUtils.cs" />
+    <Compile Include="Windows\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\OptionWindow.xaml.cs">
       <DependentUpon>OptionWindow.xaml</DependentUpon>
     </Compile>
@@ -116,6 +119,10 @@
     <Compile Include="Windows\WorkspaceManager.xaml.cs">
       <DependentUpon>WorkspaceManager.xaml</DependentUpon>
     </Compile>
+    <Page Include="Windows\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AssistantCreator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
