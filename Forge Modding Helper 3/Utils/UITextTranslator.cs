@@ -48,7 +48,7 @@ namespace Forge_Modding_Helper_3.Utils
 
             foreach (Label label in labels)
             {
-                if (label.Tag != null)
+                if (label.Tag != null && label.Tag is string && !string.IsNullOrWhiteSpace(label.Tag.ToString()))
                 {
                     label.Content = getTranslation((String) label.Tag).FormateTranslationText();
                 }
@@ -59,7 +59,7 @@ namespace Forge_Modding_Helper_3.Utils
 
             foreach (Button button in buttons)
             {
-                if (button.Tag != null)
+                if (button.Tag != null && button.Tag is string && !string.IsNullOrWhiteSpace(button.Tag.ToString()))
                     button.Content = getTranslation((String)button.Tag).FormateTranslationText();
             }
 
@@ -68,7 +68,7 @@ namespace Forge_Modding_Helper_3.Utils
 
             foreach (CheckBox checkbox in checkboxes)
             {
-                if (checkbox.Tag != null)
+                if (checkbox.Tag != null && checkbox.Tag is string && !string.IsNullOrWhiteSpace(checkbox.Tag.ToString()))
                     checkbox.Content = getTranslation((String)checkbox.Tag);
             }
 
@@ -77,7 +77,7 @@ namespace Forge_Modding_Helper_3.Utils
 
             foreach (GroupBox group in groups)
             {
-                if (group.Tag != null)
+                if (group.Tag != null && group.Tag is string && !string.IsNullOrWhiteSpace(group.Tag.ToString()))
                     group.Header = getTranslation((String)group.Tag);
             }
         }
