@@ -4,7 +4,7 @@ It is still in developpment, so it's not stable and only pre-releases are availa
 Forge Modding Helper is only available on Windows.
 
 Currently, only French translation is available, but you can submit your own language by copying and editing [this file](https://github.com/JeremTech/Forge-Modding-Helper/blob/master/Forge%20Modding%20Helper%203/Resources/Languages/french.json).
-After that, just make a pull request !
+After that, just make a pull request or open a feature request with the file in attachement !
 
 ## Version
 
@@ -34,7 +34,7 @@ v3.0.0.0-Pre4 | *N/A*
 
 ## More informations 
 
-You can join Jerem'Tech's Discord to ask help or speak about Forge Modding Helper : https://discord.com/invite/GWcM5gq
-You can also see in real-time the progression of the next update on Trello (in french) : https://trello.com/b/4C7TwCta/forge-modding-helper
+You can join [Jerem'Tech's Discord](https://discord.com/invite/GWcM5gq) to ask help or speak about Forge Modding Helper.
+You can also see in real-time the progression of the next update on the [Forge Modding Helper Trello](https://trello.com/b/4C7TwCta/forge-modding-helper) (in french).
 
 © JeremTech - 2020
