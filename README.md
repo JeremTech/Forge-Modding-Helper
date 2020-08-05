@@ -3,9 +3,14 @@ Forge Modding Helper is an utility software to manage Forge's Workspace.
 It is still in developpment, so it's not stable and only pre-releases are available.
 Forge Modding Helper is only available on Windows.
 
-Currently, only French translation is available, but you can submit your own language by copying and editing this file : 
-https://github.com/JeremTech/Forge-Modding-Helper/blob/master/Forge%20Modding%20Helper%203/Resources/Languages/french.json
-After that, just make a pull request or send the file at jeremtech@gmx.fr !
+Currently, only French translation is available, but you can submit your own language by copying and editing [this file](https://github.com/JeremTech/Forge-Modding-Helper/blob/master/Forge%20Modding%20Helper%203/Resources/Languages/french.json).
+After that, just make a pull request !
+
+## Version
+
+Last version | Last stable version
+------------ | -------------
+v3.0.0.0-Pre4 | *N/A*
 
 ## Features
 
