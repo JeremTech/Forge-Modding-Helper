@@ -104,6 +104,7 @@
         "workspace_manager.button.translations": "Traductions",
         "workspace_manager.button.export": "Exportation",
         "workspace_manager.alert.delete": "Etes-vous sûr de vouloir déplacer %N élément(s) vers la corbeille ?",
+        "workspace_manager.alert.close": "Etes-vous sûr de vouloir fermer cet espace de travail ?",
 
         "options.label.ui_language": "Langue de l'interface",
         "options.button.about": "A propos",

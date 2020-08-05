@@ -113,7 +113,31 @@ namespace Forge_Modding_Helper_3
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Environment.Exit(0);
+            MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.getTranslation("workspace_manager.alert.close"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (msgResult == MessageBoxResult.Yes)
+            {
+                WelcomeWindow welcomeWindow = new WelcomeWindow();
+
+                // Update welcome UI depending on the presence of recent projects or not
+                if (RecentWorkspaces.ReadDataFile())
+                {
+                    welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
+                    welcomeWindow.listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+                }
+                else
+                {
+                    welcomeWindow.label_no_workspace_found.Visibility = Visibility.Visible;
+                }
+
+                // Windows management
+                welcomeWindow.Show();
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+            
         }
 
         private void button_menu_click(object sender, RoutedEventArgs e)
