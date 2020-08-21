@@ -63,6 +63,7 @@
             <Label x:Name="mineraft_version_label" Content="Version de Minecraft :" HorizontalAlignment="Left" Margin="6,196,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="134" Tag="assistant_creator.label.step3.minecraft_version"/>
             <Image x:Name="minecraft_version_image" HorizontalAlignment="Left" Height="26" Margin="471,197,0,0" VerticalAlignment="Top" Width="26"/>
             <ComboBox x:Name="forge_version_comboBox" HorizontalAlignment="Left" Margin="145,199,0,0" VerticalAlignment="Top" Width="119" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="1.16.2"/>
                 <ComboBoxItem Content="1.16.1"/>
                 <ComboBoxItem Content="1.15.2" Background="#FFFFCF00"/>
                 <ComboBoxItem Content="1.14.4"/>
@@ -112,7 +113,7 @@
         </Grid>
 
         <Grid x:Name="first_grid" Height="399" Margin="0,57,0.4,0" VerticalAlignment="Top" Background="#FF2D2D30">
-            <Label x:Name="label_versions" Content="Minecraft 1.13 : 1.13.2&#xA;Minecraft 1.14 : 1.14.2 - 1.14.3 - 1.14.4&#xA;Minecraft 1.15 : 1.15.2&#xD;&#xA;Minecraft 1.16 : 1.16.1" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Foreground="White" Height="142" Width="494"/>
+            <Label x:Name="label_versions" Content="Minecraft 1.13 : 1.13.2&#xA;Minecraft 1.14 : 1.14.2 - 1.14.3 - 1.14.4&#xA;Minecraft 1.15 : 1.15.2&#xA;Minecraft 1.16 : 1.16.1 - 1.16.2" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Foreground="White" Height="142" Width="494"/>
             <Label x:Name="label_welcome_next" Content="Choisissez un répertoire de destination puis cliquez sur &quot;Suivant&quot; pour continuer." HorizontalAlignment="Left" Margin="10,361,0,0" VerticalAlignment="Top" Foreground="White" Tag="assistant_creator.label.welcome.next_message"/>
             <GroupBox x:Name="groupBox" Header="Répertoire de destination" HorizontalAlignment="Left" Height="56" Margin="10,288,0,0" VerticalAlignment="Top" Width="495" Foreground="White" Tag="assistant_creator.group.welcome.output_directory">
                 <TextBox x:Name="textbox_directory" HorizontalAlignment="Left" Height="23" Margin="5,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="441" Background="#FF252526" Foreground="White" IsReadOnly="True"/>
