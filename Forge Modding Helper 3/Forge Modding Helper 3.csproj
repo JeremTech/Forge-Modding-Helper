@@ -58,6 +58,9 @@
     <StartupObject>Forge_Modding_Helper_3.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Leow.TextEditor">
+      <HintPath>..\..\Leow.TextEditor.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -104,6 +107,9 @@
     <Compile Include="Windows\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\AddTranslationFileDialog.xaml.cs">
+      <DependentUpon>AddTranslationFileDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\OptionWindow.xaml.cs">
       <DependentUpon>OptionWindow.xaml</DependentUpon>
     </Compile>
@@ -120,6 +126,10 @@
       <DependentUpon>WorkspaceManager.xaml</DependentUpon>
     </Compile>
     <Page Include="Windows\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AddTranslationFileDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

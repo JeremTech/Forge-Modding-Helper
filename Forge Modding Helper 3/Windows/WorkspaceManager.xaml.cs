@@ -214,6 +214,7 @@ namespace Forge_Modding_Helper_3
                 {
                     this.lang_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
                     this.language_grid.Visibility = Visibility.Visible;
+                    RefreshTranslationFilesList();
                 }
                 else if (tag.Contains("export"))
                 {
@@ -461,6 +462,52 @@ namespace Forge_Modding_Helper_3
         }
         #endregion
 
+        #region Translation files section controls events
+        private void language_files_listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (language_files_listBox.SelectedItem != null && File.Exists(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang", language_files_listBox.SelectedItem.ToString())))
+            {
+                language_textEditor.Text = File.ReadAllText(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang", language_files_listBox.SelectedItem.ToString()));
+                translation_delete_file_button.IsEnabled = true;
+            }
+            else
+            {
+                language_textEditor.Text = "";
+                translation_delete_file_button.IsEnabled = false;
+            }
+        }
+
+        private void language_textEditor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (language_files_listBox.SelectedItem != null)
+            {
+                File.WriteAllText(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang", language_files_listBox.SelectedItem.ToString()), language_textEditor.Text);
+            }
+        }
+
+        private void translation_delete_file_button_Click(object sender, RoutedEventArgs e)
+        {
+            string filePath = System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang", language_files_listBox.SelectedItem.ToString());
+
+            if (language_files_listBox.SelectedItem != null && File.Exists(filePath))
+            {
+                MessageBoxResult res = MessageBox.Show(UITextTranslator.getTranslation("workspace_manager.lang.delete"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (res == MessageBoxResult.Yes)
+                {
+                    File.Delete(filePath);
+                    RefreshTranslationFilesList();
+                }
+            }
+        }
+
+        private void translation_add_file_button_Click(object sender, RoutedEventArgs e)
+        {
+            new AddTranslationFileDialog(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang")).ShowDialog();
+            RefreshTranslationFilesList();
+        }
+        #endregion
+
         #region Integrated Project Scan
         /// <summary>
         /// Refresh blockstates section by reload blockstates files list
@@ -535,6 +582,20 @@ namespace Forge_Modding_Helper_3
                 else
                     listView_textures.ItemsSource = texturesList.Where(item => System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(item.FilePath)).Contains((string)textures_folder_comboBox.SelectedItem));
             }
+        }
+
+        /// <summary>
+        /// Refresh translation section by reload translation files list
+        /// </summary>
+        private void RefreshTranslationFilesList()
+        {
+            language_files_listBox.Items.Clear();
+
+            List<String> fileList = Directory.EnumerateFiles(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang")).ToList();
+            fileList.ForEach(element => language_files_listBox.Items.Add(System.IO.Path.GetFileName(element)));
+
+            if (language_files_listBox.Items.Count > 0)
+                language_files_listBox.SelectedIndex = 0;
         }
         #endregion
     }

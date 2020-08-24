@@ -1,9 +1,10 @@
-﻿<Window x:Class="Forge_Modding_Helper_3.WorkspaceManager"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3"
+        xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor" x:Class="Forge_Modding_Helper_3.WorkspaceManager"
         mc:Ignorable="d"
         Title="Gestion de l'espace de travail - Forge Modding Helper" Height="526" Width="1018" ResizeMode="CanMinimize" Closing="Window_Closing" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -307,7 +308,15 @@
             <ComboBox x:Name="textures_folder_comboBox" HorizontalAlignment="Left" Margin="644,7,0,0" VerticalAlignment="Top" Width="104" Height="27" SelectionChanged="textures_folder_comboBox_SelectionChanged"/>
         </Grid>
         <Grid x:Name="language_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
-            <Label Content="Cette fonctionnalité n'est pas encore disponible" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="#FFBFBFBF" Height="397" Width="830" Tag="feature.not_available"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="179*"/>
+                <ColumnDefinition Width="661*"/>
+            </Grid.ColumnDefinitions>
+            <TextEditor:TextEditor x:Name="language_textEditor" HorizontalAlignment="Left" Height="377" Margin="174,10,0,0" VerticalAlignment="Top" Width="656" Background="#FF3E3E42" Foreground="White" HorizontalLinesBrush="#FF686868" SelectionBrush="#FFD1A100" Grid.ColumnSpan="2" TextChanged="language_textEditor_TextChanged"/>
+            <ListBox x:Name="language_files_listBox" HorizontalAlignment="Left" Height="348" Margin="13,39,0,0" VerticalAlignment="Top" Width="149" Background="#FF3E3E42" SelectionChanged="language_files_listBox_SelectionChanged" Foreground="White"/>
+            <Label x:Name="translation_files_label" Content="Fichiers" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16" Width="81" Tag="workspace_manager.lang.label.files"/>
+            <Button x:Name="translation_add_file_button" Content="+" HorizontalAlignment="Left" Margin="138,10,0,0" VerticalAlignment="Top" Width="24" Foreground="#FF2C8333" FontWeight="Bold" FontSize="14" FontFamily="Tahoma" Height="24" Click="translation_add_file_button_Click"/>
+            <Button x:Name="translation_delete_file_button" Content="X" HorizontalAlignment="Left" Margin="112,10,0,0" VerticalAlignment="Top" Width="24" Foreground="#FF832C2C" FontFamily="Tahoma" Height="24" IsEnabled="False" Click="translation_delete_file_button_Click"/>
         </Grid>
         <Grid x:Name="exportation_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
             <Label Content="Cette fonctionnalité n'est pas encore disponible" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="#FFBFBFBF" Height="397" Width="830" Tag="feature.not_available"/>
