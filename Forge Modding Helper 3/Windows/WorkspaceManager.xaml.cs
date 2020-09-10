@@ -100,7 +100,6 @@ namespace Forge_Modding_Helper_3
         private void updateUI()
         {
             this.label_mod_name.Content = modInfos["mod_name"];
-            this.label_mod_description.Content = modInfos["mod_description"];
             this.label_home_minecraft_version.Content = modInfos["minecraft_version"];
             this.label_minecraft_version.Content = "Minecraft " + modInfos["minecraft_version"];
             this.label_home_forge_version.Content = modInfos["forge_version"];
@@ -109,6 +108,10 @@ namespace Forge_Modding_Helper_3
             this.label_home_textures_number.Content = texturesList.Count;
             this.label_home_models_number.Content = modelsList.Count;
             this.label_home_javafiles_number.Content = javaFileList.Count;
+
+            string[] desc = modInfos["mod_description"].Split('\r');
+            if (desc.Count() != 0) this.label_mod_description.Content = desc[0];
+            else this.label_mod_description.Content = modInfos["mod_description"];
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
