@@ -136,7 +136,7 @@ namespace Forge_Modding_Helper_3.Windows
             updateSecondaryStatus("project_scan.mod_info.mods_toml", 11);
             modInfos["mod_name"] = modToml.getBetween("displayName=\"", "\"");
             updateSecondaryStatus("project_scan.mod_info.mods_toml", 22);
-            modInfos["mod_description"] = modToml.getBetween("description='''", "'''").Replace(Environment.NewLine, " ").Trim();
+            modInfos["mod_description"] = modToml.getBetween("description='''", "'''").Trim();
             updateSecondaryStatus("project_scan.mod_info.mods_toml", 33);
             modInfos["mod_logo"] = modToml.getBetween("logoFile=\"", "\"");
             updateSecondaryStatus("project_scan.mod_info.mods_toml", 44);

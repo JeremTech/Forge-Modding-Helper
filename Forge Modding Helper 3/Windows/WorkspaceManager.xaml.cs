@@ -94,9 +94,11 @@ namespace Forge_Modding_Helper_3
             jsonContent = File.ReadAllText(System.IO.Path.Combine(path, "fmh", "java_files_list.json"));
             javaFileList = JsonConvert.DeserializeObject<List<string>>(jsonContent);
 
-            #region Updating UI
+            updateUI();
+        }
 
-            // Mod infos
+        private void updateUI()
+        {
             this.label_mod_name.Content = modInfos["mod_name"];
             this.label_mod_description.Content = modInfos["mod_description"];
             this.label_home_minecraft_version.Content = modInfos["minecraft_version"];
@@ -107,8 +109,6 @@ namespace Forge_Modding_Helper_3
             this.label_home_textures_number.Content = texturesList.Count;
             this.label_home_models_number.Content = modelsList.Count;
             this.label_home_javafiles_number.Content = javaFileList.Count;
-
-            #endregion
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -173,6 +173,7 @@ namespace Forge_Modding_Helper_3
                 {
                     this.mod_toml_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
                     this.mod_settings_grid.Visibility = Visibility.Visible;
+                    updateModSettingsSection();
                 }
                 else if (tag.Contains("blockstates"))
                 {
@@ -223,6 +224,125 @@ namespace Forge_Modding_Helper_3
                 }
             }
         }
+
+        #region Mod settings section controls events
+        // Temporary variable for logo path
+        string new_logo_path = "";
+
+        public void updateModSettingsSection() 
+        {
+            this.mod_settings_name_textbox.Text = modInfos["mod_name"];
+            this.mod_settings_authors_textbox.Text = modInfos["mod_authors"];
+            this.mod_settings_version_textbox.Text = modInfos["mod_version"];
+            this.mod_settings_modid_textbox.Text = modInfos["mod_id"];
+            this.mod_settings_group_textbox.Text = modInfos["mod_group"];
+            this.mod_settings_credits_textbox.Text = modInfos["mod_credits"];
+            this.mod_settings_website_textbox.Text = modInfos["display_url"];
+            this.mod_settings_bug_tracker_textbox.Text = modInfos["issue_tracker"];
+            this.mod_settings_update_json_textbox.Text = modInfos["update_json"];
+            this.mod_settings_description_textbox.Text = modInfos["mod_description"];
+            this.mod_settings_minecraft_version_textbox.Text = modInfos["minecraft_version"];
+            this.mod_settings_forge_version_textbox.Text = modInfos["forge_version"];
+            this.mod_settings_mappings_version_textbox.Text = modInfos["mappings_version"];
+
+            if (File.Exists(System.IO.Path.Combine(path, @"src\main\resources\logo.png")))
+            {
+                using (var stream = File.OpenRead(System.IO.Path.Combine(path, @"src\main\resources\logo.png")))
+                {
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = stream;
+                    image.EndInit();
+                    this.mod_logo_image.Source = image;
+                }
+            }
+            else
+            {
+                this.mod_logo_image.Source = null;
+            }
+        }
+
+        private void update_mod_settings_button_Click(object sender, RoutedEventArgs e)
+        {
+            modInfos["mod_name"] = this.mod_settings_name_textbox.Text;
+            modInfos["mod_authors"] = this.mod_settings_authors_textbox.Text;
+            modInfos["mod_version"] = this.mod_settings_version_textbox.Text;
+            modInfos["mod_id"] = this.mod_settings_modid_textbox.Text;
+            modInfos["mod_group"] = this.mod_settings_group_textbox.Text;
+            modInfos["mod_credits"] = this.mod_settings_credits_textbox.Text;
+            modInfos["display_url"] = this.mod_settings_website_textbox.Text;
+            modInfos["issue_tracker"] = this.mod_settings_bug_tracker_textbox.Text;
+            modInfos["update_json"] = this.mod_settings_update_json_textbox.Text;
+            modInfos["mod_description"] = this.mod_settings_description_textbox.Text;
+            modInfos["minecraft_version"] = this.mod_settings_minecraft_version_textbox.Text;
+            modInfos["forge_version"] = this.mod_settings_forge_version_textbox.Text;
+            modInfos["mappings_version"] = this.mod_settings_mappings_version_textbox.Text;
+
+            if(!string.IsNullOrWhiteSpace(new_logo_path))
+            {
+                if (File.Exists(new_logo_path))
+                {
+                    if (File.Exists(System.IO.Path.Combine(path, @"src\main\resources\logo.png"))) File.Delete(System.IO.Path.Combine(path, @"src\main\resources\logo.png"));
+                    File.Copy(new_logo_path, this.path + @"\src\main\resources\logo.png");
+                    this.modInfos["mod_logo"] = new_logo_path;
+                }
+            }
+
+            new ModToml(this.modInfos, this.path).generateFile();
+            new BuildGradle(this.modInfos, this.path).generateFile();
+            updateUI();
+        }
+
+        private void browse_mod_logo_Click(object sender, RoutedEventArgs e)
+        {
+            // Create and configure FileDialog
+            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
+            fileDialog.RestoreDirectory = true;
+            fileDialog.Title = "Choisissez un logo pour votre mod";
+            fileDialog.DefaultExt = "png";
+            fileDialog.Filter = "png files (*.png)|*.png";
+            fileDialog.CheckFileExists = true;
+            fileDialog.CheckPathExists = true;
+            // Display the FileDialog
+            fileDialog.ShowDialog();
+
+            // Check the user selection
+            if (!String.IsNullOrWhiteSpace(fileDialog.FileName))
+            {
+                using (var stream = File.OpenRead(fileDialog.FileName))
+                {
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = stream;
+                    image.EndInit();
+                    this.mod_logo_image.Source = image;
+                }
+
+                new_logo_path = fileDialog.FileName;
+            }
+            else if (File.Exists(System.IO.Path.Combine(path, @"src\main\resources\logo.png")))
+            {
+                using (var stream = File.OpenRead(System.IO.Path.Combine(path, @"src\main\resources\logo.png")))
+                {
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = stream;
+                    image.EndInit();
+                    this.mod_logo_image.Source = image;
+                }
+
+                new_logo_path = null;
+            }
+            else
+            {
+                this.mod_logo_image.Source = null;
+                new_logo_path = null;
+            }
+        }
+        #endregion
 
         #region Blockstates section controls events
 

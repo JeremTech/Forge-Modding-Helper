@@ -116,7 +116,7 @@
         </Grid.RowDefinitions>
         <Image x:Name="image_mod_logo" HorizontalAlignment="Left" Height="56" Margin="10,10,0,0" VerticalAlignment="Top" Width="56" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
         <Label x:Name="label_mod_name" Content="Nom du mod" HorizontalAlignment="Left" Margin="71,6,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20" Width="444" Height="40"/>
-        <Label x:Name="label_mod_description" Content="Description du mod" HorizontalAlignment="Left" Margin="71,35,0,0" VerticalAlignment="Top" Width="444" Foreground="#FFD1D1D1" FontSize="15"/>
+        <Label x:Name="label_mod_description" Content="Description du mod" HorizontalAlignment="Left" Margin="71,35,0,0" VerticalAlignment="Top" Width="694" Foreground="#FFD1D1D1" FontSize="15" MaxHeight="71"/>
         <ProgressBar x:Name="progressbar_status" HorizontalAlignment="Left" Height="11" Margin="0,74,0,0" VerticalAlignment="Top" Width="1012"/>
         <Label x:Name="label_forge_version" Content="Forge --" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="802,10,0,0" VerticalAlignment="Top" Width="187" Foreground="#FFD1D1D1" FontSize="15"/>
         <Label x:Name="label_minecraft_version" Content="Minecraft --" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Margin="802,35,0,0" VerticalAlignment="Top" Width="187" Foreground="#FFD1D1D1" FontSize="15"/>
@@ -234,7 +234,48 @@
             </Separator.RenderTransform>
         </Separator>
         <Grid x:Name="mod_settings_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
-            <Label Content="Cette fonctionnalité n'est pas encore disponible" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="#FFBFBFBF" Height="397" Width="830" Tag="feature.not_available"/>
+            <Separator HorizontalAlignment="Left" Height="40" Margin="256,175,0,0" VerticalAlignment="Top" Width="328" RenderTransformOrigin="0.5,0.5">
+                <Separator.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Separator.RenderTransform>
+            </Separator>
+            <Label x:Name="mod_settings_name_label" Content="Nom :" HorizontalAlignment="Left" Margin="15,33,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.mod_name" Width="95"/>
+            <TextBox x:Name="mod_settings_name_textbox" HorizontalAlignment="Left" Height="23" Margin="119,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" Foreground="White" Background="#FF3E3E42" MaxLines="1"/>
+            <Label x:Name="mod_settings_authors_label" Content="Auteurs :" HorizontalAlignment="Left" Margin="15,72,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.mod_authors" Width="95"/>
+            <TextBox x:Name="mod_settings_authors_textbox" HorizontalAlignment="Left" Height="23" Margin="119,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" Foreground="White" Background="#FF3E3E42" MaxLines="1"/>
+            <Label x:Name="mod_settings_version_label" Content="Version :" HorizontalAlignment="Left" Margin="15,110,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.mod_version" Width="95"/>
+            <TextBox x:Name="mod_settings_version_textbox" HorizontalAlignment="Left" Height="23" Margin="119,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" Foreground="White" Background="#FF3E3E42" MaxLines="1" MaxLength="20"/>
+            <Label x:Name="mod_settings_modid_label" Content="Modid :" HorizontalAlignment="Left" Margin="15,146,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.mod_id" Width="95"/>
+            <TextBox x:Name="mod_settings_modid_textbox" HorizontalAlignment="Left" Height="23" Margin="119,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" Foreground="White" Background="#FF2D2D30" IsReadOnly="True" BorderBrush="{x:Null}" MaxLines="1"/>
+            <Label x:Name="mod_settings_group_label" Content="Mod group :" HorizontalAlignment="Left" Margin="15,178,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.mod_group" Width="95"/>
+            <TextBox x:Name="mod_settings_group_textbox" HorizontalAlignment="Left" Height="23" Margin="119,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" Foreground="White" Background="#FF2D2D30" IsReadOnly="True" BorderBrush="{x:Null}" MaxLines="1"/>
+            <Label x:Name="mod_settings_credits_label" Content="Crédits :" HorizontalAlignment="Left" Margin="15,213,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.mod_credits" Width="95"/>
+            <TextBox x:Name="mod_settings_credits_textbox" HorizontalAlignment="Left" Height="23" Margin="119,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" Foreground="White" Background="#FF3E3E42" MaxLines="1"/>
+            <Label x:Name="mod_settings_website_label" Content="Site web :" HorizontalAlignment="Left" Margin="15,250,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.mod_website" Width="95"/>
+            <TextBox x:Name="mod_settings_website_textbox" HorizontalAlignment="Left" Height="23" Margin="119,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" Foreground="White" Background="#FF3E3E42" MaxLines="1"/>
+            <Label x:Name="mod_settings_bug_tracker_label" Content="Bugs Tracker :" HorizontalAlignment="Left" Margin="15,287,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.mod_bug_tracker" Width="95"/>
+            <TextBox x:Name="mod_settings_bug_tracker_textbox" HorizontalAlignment="Left" Height="23" Margin="119,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" Foreground="White" Background="#FF3E3E42" MaxLines="1"/>
+            <Label x:Name="mod_settings_update_json_label" Content="Json de MAJ :" HorizontalAlignment="Left" Margin="15,324,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.mod_json_url" Width="95"/>
+            <TextBox x:Name="mod_settings_update_json_textbox" HorizontalAlignment="Left" Height="23" Margin="119,327,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285" Foreground="White" Background="#FF3E3E42" MaxLines="1"/>
+            <Button x:Name="update_mod_settings_button" Content="Appliquer les modifications" HorizontalAlignment="Left" Margin="437,306,0,0" VerticalAlignment="Top" Width="393" Height="31" Tag="workspace_manager.modsettings.button.update_settings" Click="update_mod_settings_button_Click"/>
+            <Label x:Name="mod_settings_description_label" Content="Description :" HorizontalAlignment="Left" Margin="541,33,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.mod_description" Width="289"/>
+            <Label x:Name="mod_settings_minecraft_version_label" Content="Version de Minecraft :" HorizontalAlignment="Left" Margin="437,187,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.minecraft_version" Width="130"/>
+            <TextBox x:Name="mod_settings_minecraft_version_textbox" HorizontalAlignment="Left" Height="23" Margin="572,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="254" Foreground="White" Background="#FF2D2D30" IsReadOnly="True" BorderBrush="{x:Null}" MaxLines="1"/>
+            <Label x:Name="mod_settings_forge_version_label" Content="Version de Forge :" HorizontalAlignment="Left" Margin="437,217,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.forge_version" Width="130"/>
+            <TextBox x:Name="mod_settings_forge_version_textbox" HorizontalAlignment="Left" Height="23" Margin="572,221,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="254" Foreground="White" Background="#FF2D2D30" IsReadOnly="True" BorderBrush="{x:Null}" MaxLines="1"/>
+            <Label x:Name="mod_settings_mappings_version_label" Content="Version des mappings :" HorizontalAlignment="Left" Margin="437,248,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modsettings.mappings_version" Width="135"/>
+            <TextBox x:Name="mod_settings_mappings_version_textbox" HorizontalAlignment="Left" Height="23" Margin="577,253,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249" Foreground="White" Background="#FF2D2D30" IsReadOnly="True" BorderBrush="{x:Null}" MaxLines="1"/>
+            <Border BorderBrush="#FF00DFFF" BorderThickness="1" HorizontalAlignment="Left" Height="100" Margin="435,64,0,0" VerticalAlignment="Top" Width="100">
+                <Image x:Name="mod_logo_image" HorizontalAlignment="Left" Height="100" Margin="-1" VerticalAlignment="Top" Width="100"/>
+            </Border>
+            <TextBox x:Name="mod_settings_description_textbox" HorizontalAlignment="Left" Height="100" Margin="545,64,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="288" AcceptsReturn="True" Background="#FF3E3E42" Foreground="White" Tag="mod_description"/>
+            <Label x:Name="mod_settings_logo_label" Content="Logo du mod :" HorizontalAlignment="Left" Margin="429,34,0,0" VerticalAlignment="Top" Foreground="White" Width="100" Tag="workspace_manager.modsettings.mod_logo"/>
+            <Button x:Name="browse_mod_logo" Content="..." HorizontalAlignment="Left" Margin="510,144,0,0" VerticalAlignment="Top" Width="24" Height="19" Click="browse_mod_logo_Click"/>
         </Grid>
         <Grid x:Name="blockstates_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
             <ListView x:Name="listView_blockstates" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="347" Margin="10,40,0,0" VerticalAlignment="Top" Width="820" Background="{x:Null}" Foreground="White" BorderBrush="White" SelectionMode="Extended" SelectionChanged="listView_blockstates_SelectionChanged">
