@@ -126,6 +126,13 @@
         "workspace_manager.lang.delete": "Etes-vous sûr de vouloir déplacer ce fichier vers la corbeille ?",
         "workspace_manager.lang.add.error": "Le fichier de traduction que vous souhaitez ajouter existe déjà. Il sera donc remplacer. \n Souhaitez-vous poursuivre ?",
 
+        "workspace_manager.modexport.mod_name": "Nom du mod :",
+        "workspace_manager.modexport.mod_authors": "Auteur(s) :",
+        "workspace_manager.modexport.mod_version": "Version :",
+        "workspace_manager.modexport.minecraft_version":"Version de Minecraft :",
+        "workspace_manager.modexport.forge_version":"Version de Forge :",
+        "workspace_manager.modexport.export":"Exporter le mod",
+        "workspace_manager.modexport.recap":"Récapitulatif",
 
         "options.label.ui_language": "Langue de l'interface",
         "options.button.about": "A propos",

@@ -224,6 +224,7 @@ namespace Forge_Modding_Helper_3
                 {
                     this.build_button_border.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(0, 116, 255));
                     this.exportation_grid.Visibility = Visibility.Visible;
+                    updateModExportSection();
                 }
             }
         }
@@ -628,6 +629,42 @@ namespace Forge_Modding_Helper_3
         {
             new AddTranslationFileDialog(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang")).ShowDialog();
             RefreshTranslationFilesList();
+        }
+        #endregion
+
+        #region Mod export section controls events
+        public void updateModExportSection()
+        {
+            this.mod_export_name_label.Content = modInfos["mod_name"];
+            this.mod_export_authors_label.Content = modInfos["mod_authors"];
+            this.mod_export_version_label.Content = modInfos["mod_version"];
+            this.mod_export_minecraft_version_label.Content = modInfos["minecraft_version"];
+            this.mod_export_forge_version_label.Content = modInfos["forge_version"];
+
+            if (File.Exists(System.IO.Path.Combine(path, @"src\main\resources\logo.png")))
+            {
+                using (var stream = File.OpenRead(System.IO.Path.Combine(path, @"src\main\resources\logo.png")))
+                {
+                    var image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = stream;
+                    image.EndInit();
+                    this.mod_export_logo_image.Source = image;
+                }
+            }
+            else
+            {
+                this.mod_export_logo_image.Source = null;
+            }
+        }
+
+        private void mod_export_button_Click(object sender, RoutedEventArgs e)
+        {
+            this.mod_export_console.FontSize = 10;
+            this.mod_export_console.StartProcess("cmd.exe", string.Empty);
+            this.mod_export_console.WriteInput("cd " + this.path, System.Windows.Media.Color.FromRgb(255, 240, 0), false);
+            this.mod_export_console.WriteInput("gradlew build", System.Windows.Media.Color.FromRgb(255, 240, 0), true);
         }
         #endregion
 

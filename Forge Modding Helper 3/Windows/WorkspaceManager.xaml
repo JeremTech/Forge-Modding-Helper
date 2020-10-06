@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3"
-        xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor" x:Class="Forge_Modding_Helper_3.WorkspaceManager"
+        xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor" xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF" x:Class="Forge_Modding_Helper_3.WorkspaceManager"
         mc:Ignorable="d"
         Title="Gestion de l'espace de travail - Forge Modding Helper" Height="526" Width="1018" ResizeMode="CanMinimize" Closing="Window_Closing" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -360,7 +360,22 @@
             <Button x:Name="translation_delete_file_button" Content="X" HorizontalAlignment="Left" Margin="112,10,0,0" VerticalAlignment="Top" Width="24" Foreground="#FF832C2C" FontFamily="Tahoma" Height="24" IsEnabled="False" Click="translation_delete_file_button_Click"/>
         </Grid>
         <Grid x:Name="exportation_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
-            <Label Content="Cette fonctionnalité n'est pas encore disponible" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Foreground="#FFBFBFBF" Height="397" Width="830" Tag="feature.not_available"/>
+            <Label Content="Exporter son mod" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="10,4,0,0" VerticalAlignment="Top" Width="820" Foreground="White" FontSize="20"/>
+            <GroupBox x:Name="mod_export_recap_groupBox" Header="Récapitulatif" HorizontalAlignment="Left" Height="296" Margin="10,44,0,0" VerticalAlignment="Top" Width="362" Foreground="White" Tag="workspace_manager.modexport.recap"/>
+            <GroupBox x:Name="mod_export_console_groupBox" Header="Console" HorizontalAlignment="Left" Height="296" Margin="377,44,0,0" VerticalAlignment="Top" Width="453" Foreground="White"/>
+            <Button x:Name="mod_export_button" Content="Exporter le mod" HorizontalAlignment="Left" Margin="10,350,0,0" VerticalAlignment="Top" Width="820" Height="32" Tag="workspace_manager.modexport.export" Click="mod_export_button_Click"/>
+            <Label x:Name="mod_export_name_desc_label" Content="Nom du mod :" HorizontalAlignment="Left" Margin="26,69,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modexport.mod_name" Width="92"/>
+            <Label x:Name="mod_export_authors_desc_label" Content="Auteurs :" HorizontalAlignment="Left" Margin="26,98,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modexport.mod_authors" Width="72"/>
+            <Label x:Name="mod_export_version_desc_label" Content="Version :" HorizontalAlignment="Left" Margin="26,129,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modexport.mod_version" Width="72"/>
+            <Label x:Name="mod_export_minecraft_version_desc_label" Content="Version de Minecraft :" HorizontalAlignment="Left" Margin="26,161,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modexport.minecraft_version" Width="130"/>
+            <Label x:Name="mod_export_forge_version_desc_label" Content="Version de Forge :" HorizontalAlignment="Left" Margin="26,194,0,0" VerticalAlignment="Top" Foreground="White" Tag="workspace_manager.modexport.forge_version" Width="130"/>
+            <Label x:Name="mod_export_name_label" Content="" HorizontalAlignment="Left" Margin="123,69,0,0" VerticalAlignment="Top" Foreground="White" Tag="" Width="235"/>
+            <Label x:Name="mod_export_authors_label" Content="" HorizontalAlignment="Left" Margin="103,99,0,0" VerticalAlignment="Top" Foreground="White" Tag="" Width="255"/>
+            <Label x:Name="mod_export_version_label" Content="" HorizontalAlignment="Left" Margin="103,130,0,0" VerticalAlignment="Top" Foreground="White" Tag="" Width="255"/>
+            <Label x:Name="mod_export_minecraft_version_label" Content="" HorizontalAlignment="Left" Margin="161,163,0,0" VerticalAlignment="Top" Foreground="White" Tag="" Width="197"/>
+            <Label x:Name="mod_export_forge_version_label" Content="" HorizontalAlignment="Left" Margin="147,194,0,0" VerticalAlignment="Top" Foreground="White" Tag="" Width="211"/>
+            <Image x:Name="mod_export_logo_image" HorizontalAlignment="Left" Height="100" Margin="161,228,0,0" VerticalAlignment="Top" Width="100"/>
+            <WPF:ConsoleControl x:Name="mod_export_console" HorizontalAlignment="Left" Height="259" Margin="392,69,0,0" VerticalAlignment="Top" Width="423"/>
         </Grid>
     </Grid>
 </Window>
