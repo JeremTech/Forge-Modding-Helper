@@ -13,11 +13,11 @@
         <Label x:Name="version_desc_label" Content="Version :" HorizontalAlignment="Left" Margin="20,135,0,0" VerticalAlignment="Top" Foreground="White" Tag="about.label.version" Width="105"/>
         <Label x:Name="contributors_desc_label" Content="Contributeur : " HorizontalAlignment="Left" Margin="20,161,0,0" VerticalAlignment="Top" Foreground="White" Width="105" Tag="about.label.contributors"/>
         <Label x:Name="repository_desc_label" Content="Github :" HorizontalAlignment="Left" Margin="20,187,0,0" VerticalAlignment="Top" Foreground="White" Width="105" Tag="about.label.repository"/>
-        <Label x:Name="librairies_desc_label" Content="Bibliothèques utilisées :" HorizontalAlignment="Left" Margin="20,230,0,0" VerticalAlignment="Top" Foreground="White" Tag="about.label.librairies"/>
+        <Label x:Name="librairies_desc_label" Content="Bibliothèques utilisées :" HorizontalAlignment="Left" Margin="20,222,0,0" VerticalAlignment="Top" Foreground="White" Tag="about.label.librairies"/>
         <Label x:Name="version_label" Content="0.0.0.0" HorizontalAlignment="Left" Margin="130,135,0,0" VerticalAlignment="Top" Foreground="White" Tag="" Width="290"/>
         <Label x:Name="contributors_label" Content="Jerem'Tech" HorizontalAlignment="Left" Margin="130,161,0,0" VerticalAlignment="Top" Foreground="White" Tag="" Width="310"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="130,192,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="310" Text="https://github.com/JeremTech/Forge-Modding-Helper" Background="{x:Null}" Foreground="#FF598EFF" BorderBrush="{x:Null}" SelectionBrush="#FF535B6A"/>
-        <Label Content="• Newtonsoft.Json v12.0.3" HorizontalAlignment="Left" Margin="30,256,0,0" VerticalAlignment="Top" Foreground="White" Tag=""/>
+        <Label Content="• Newtonsoft.Json v12.0.3&#xD;&#xA;• ConsoleControl.WPF v1.3.0&#xD;&#xA;• ConsoleControlAPI v1.3.0" HorizontalAlignment="Left" Margin="30,241,0,0" VerticalAlignment="Top" Foreground="White" Tag="" Width="177"/>
 
     </Grid>
 </Window>
