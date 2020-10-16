@@ -16,9 +16,6 @@ using Forge_Modding_Helper_3.Utils;
 
 namespace Forge_Modding_Helper_3.Windows
 {
-    /// <summary>
-    /// Logique d'interaction pour AboutWindow.xaml
-    /// </summary>
     public partial class AboutWindow : Window
     {
         public AboutWindow()
@@ -26,12 +23,14 @@ namespace Forge_Modding_Helper_3.Windows
             InitializeComponent();
         }
 
+        // Fonction called when the window is initialized
         private void Window_Initialized(object sender, EventArgs e)
         {
             // Loadings translations
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
 
+            // Updating app infos
             version_label.Content = AppInfos.GetApplicationVersionString();
         }
     }
