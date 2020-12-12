@@ -4,136 +4,397 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3"
-        mc:Ignorable="d" Height="548.361" Width="520.902" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Title="Assistant Creator - Forge Modding Helper" Closing="Window_Closing" Initialized="Window_Initialized">
+        mc:Ignorable="d" Height="548.361" Width="570" WindowStartupLocation="CenterScreen" Title="Assistant Creator - Forge Modding Helper" Closing="Window_Closing" Initialized="Window_Initialized" ResizeMode="CanMinimize">
+
     <Grid x:Name="main_grid" Background="#FF252526">
 
-        <Grid x:Name="finish_grid" Height="399" Margin="0,57,0.4,0" VerticalAlignment="Top" Background="#FF2D2D30">
-            <Label x:Name="label_bug" Content="Si vous rencontrez des bugs en liens avec l'utilisation de ce présent assistant de création,&#xA;ou bien si vous avez des suggestions d'améliorations ou d'ajouts, vous pouvez les poster &#xA;sur le bugtracker du logiciel disponible à cette adresse :" HorizontalAlignment="Left" Margin="10,232,0,0" VerticalAlignment="Top" Foreground="White" Height="60" Width="494" Tag="assistant_creator.label.finish.bug_info"/>
-            <Label x:Name="label_finish_close" Content="Cliquez sur &quot;Terminer&quot; pour fermer l'assistant." HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Foreground="White" Width="480" Tag="assistant_creator.label.finish.close"/>
-            <TextBlock Margin="14,290,139.6,81"><Hyperlink NavigateUri="https://github.com/JeremTech/Forge-Modding-Helper/issues"><Run Text="https://github.com/JeremTech/Forge-Modding-Helper/issues"/></Hyperlink></TextBlock>
-            <Label x:Name="label_finish" Content="Nous avons terminé de créer votre espace de travail !&#xA;Il ne vous reste plus qu'à importer le projet gradle dans votre IDE favori !" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Height="43" Width="494" Tag="assistant_creator.label.finish.description"/>
-        </Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
 
-        <Grid x:Name="generation_grid" Height="399" Margin="0,57,0,0" VerticalAlignment="Top" Background="#FF2D2D30">
-            <ProgressBar x:Name="progress_progressbar" HorizontalAlignment="Left" Height="17" Margin="10,36,0,0" VerticalAlignment="Top" Width="485"/>
-            <Label x:Name="progress_label" Content="Statut : ..." HorizontalAlignment="Left" Margin="6,8,0,0" VerticalAlignment="Top" Foreground="White" Width="481"/>
-            <ListBox x:Name="progress_listBox" HorizontalAlignment="Left" Height="320" Margin="10,69,0,0" VerticalAlignment="Top" Width="485" Background="#FF3E3E42" Foreground="White" BorderBrush="#FF4CD3CB"/>
-        </Grid>
+        <!-- Header -->
+        <StackPanel Orientation="Vertical" Grid.Row="0" VerticalAlignment="Top">
+            <DockPanel VerticalAlignment="Top">
+                <Image x:Name="logo" HorizontalAlignment="Left" Height="30" Width="30" Margin="10, 10, 5, 10" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
+                <Label x:Name="label" Content="Assistant Creator" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="18"/>
+                <Label x:Name="step_label" Content="Etape X sur X" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" Foreground="White"/>
+            </DockPanel>
+            <ProgressBar x:Name="step_progressbar" HorizontalAlignment="Stretch" Height="10" VerticalAlignment="Bottom" Foreground="#FF3E60D4"/>
+        </StackPanel>
 
-        <Grid x:Name="fith_grid" HorizontalAlignment="Left" Height="399" Margin="0,57,0,0" VerticalAlignment="Top" Width="514" Background="#FF2D2D30">
-            <Label x:Name="label_pregen_internet" Content="Vous devrez être connecté à Internet durant tout le processus de génération de l'espace &#xA;de travail." HorizontalAlignment="Left" Margin="10,323,0,0" VerticalAlignment="Top" Foreground="White" Height="43" Width="494" Tag="assistant_creator.label.step5.internet"/>
-            <Label x:Name="label_pregen_next" Content="Cliquez sur &quot;Suivant&quot; pour générer votre espace de travail." HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Foreground="White" Width="475" Tag="assistant_creator.label.step5.next_message"/>
-            <CheckBox x:Name="download_forge_checkBox" Content="Téléchargement et décompression de Forge&#xA;" HorizontalAlignment="Left" Margin="14,120,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="True" IsEnabled="False" Height="18" Width="471" Tag="assistant_creator.checkbox.step5.downloading_forge"/>
-            <CheckBox x:Name="build_gradle_checkBox" Content="Configuration du build.gradle" HorizontalAlignment="Left" Margin="14,140,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="True" Height="18" Width="471" Tag="assistant_creator.checkbox.step5.build_gradle"/>
-            <CheckBox x:Name="mod_toml_checkBox" Content="Configuration du mod.toml" HorizontalAlignment="Left" Margin="14,160,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="True" Height="18" Width="471" Tag="assistant_creator.checkbox.step5.mod_toml"/>
-            <CheckBox x:Name="code_packages_checkBox" Content="Génération des packages de code" HorizontalAlignment="Left" Margin="14,180,0,0" VerticalAlignment="Top" Foreground="White" IsChecked="True" Height="18" Width="471" Tag="assistant_creator.checkbox.step5.code_package"/>
-            <CheckBox x:Name="assets_packages_checkBox" Content="Génération des packages des assets" HorizontalAlignment="Left" Margin="14,200,0,0" VerticalAlignment="Top" Foreground="White" Height="18" IsChecked="True" Width="471" Tag="assistant_creator.checkbox.step5.assets_package"/>
-            <CheckBox x:Name="fr_lang_file_checkBox" Content="Génération du fichier fr__fr.lang" HorizontalAlignment="Left" Margin="14,220,0,0" VerticalAlignment="Top" Foreground="White" Height="18" IsChecked="{Binding IsChecked, ElementName=assets_packages_checkBox, Mode=OneWay}" IsEnabled="{Binding IsChecked, ElementName=assets_packages_checkBox, Mode=OneWay}" Width="471" Tag="assistant_creator.checkbox.step5.lang_file"/>
-            <Label x:Name="label_pregen_description" Content="Parfait !&#xA;Nous avons désormais toutes les informations nécessaires à la création de votre espace&#xA;de travail. Nous allons donc procéder à sa génération." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Height="63" Width="494" Tag="assistant_creator.label.step5.description"/>
-            <Label x:Name="label_custom_generation" Content="Personnaliser la génération :" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" Foreground="White" Height="30" Width="494" Tag="assistant_creator.label.step5.custom_gen"/>
-        </Grid>
+        <!-- Grid container -->
+        <Grid x:Name="grid_container" Background="#FF2D2D30" Grid.Row="1" VerticalAlignment="Stretch">
 
-        <Grid x:Name="fourth_grid" HorizontalAlignment="Left" Height="399" Margin="0,57,0,0" VerticalAlignment="Top" Width="514" Background="#FF2D2D30" Visibility="Visible">
-            <Label x:Name="label6" Content="Passons maintenant aux données facultatives." HorizontalContentAlignment="Center" Margin="10,13,20,0" VerticalAlignment="Top" Foreground="White" Height="27" Tag="assistant_creator.label.step4.description"/>
-            <Label x:Name="label7" Content="Logo du mod :" HorizontalAlignment="Left" Margin="6,260,0,0" VerticalAlignment="Top" Foreground="White" Width="106" Tag="assistant_creator.label.step4.mod_logo"/>
-            <Label x:Name="display_url" Content="Lien vers le site internet du mod :" HorizontalAlignment="Left" Margin="6,56,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="460" Tag="assistant_creator.label.step4.mod_website"/>
-            <Separator Height="16" Margin="184,39,183,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="display_url_textbox" Height="23" Margin="10,85,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#FF3E3E42" TextChanged="Optional_TextBox_TextChanged" ToolTip="Nom du mod que le joueur verra." LostFocus="TextBox_LostFocus" Tag="display_url"/>
-            <Label x:Name="issue_tracker_label" Content="Lien vers le système de suivi de bugs du mod :" HorizontalAlignment="Left" Margin="6,124,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="460" Tag="assistant_creator.label.step4.issue_tracker"/>
-            <TextBox x:Name="issue_tracker_textbox" Height="23" Margin="10,153,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#FF3E3E42" TextChanged="Optional_TextBox_TextChanged" ToolTip="Nom du mod que le joueur verra." LostFocus="TextBox_LostFocus" Tag="issue_tracker"/>
-            <Label x:Name="update_json_label" Content="Lien vers le fichier .json pour la vérification de mises à jour du mod :" HorizontalAlignment="Left" Margin="6,196,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="460" Tag="assistant_creator.label.step4.update_json"/>
-            <TextBox x:Name="mod_version_textbox1" Height="23" Margin="10,225,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#FF3E3E42" TextChanged="Optional_TextBox_TextChanged" ToolTip="Nom du mod que le joueur verra." Tag="update_json"/>
-            <Image x:Name="mod_logo_image" HorizontalAlignment="Left" Height="100" Margin="12,289,0,0" VerticalAlignment="Top" Width="100"/>
-            <Border BorderBrush="#FF00DFFF" BorderThickness="1" HorizontalAlignment="Left" Height="100" Margin="12,288,0,0" VerticalAlignment="Top" Width="100"/>
-            <TextBox x:Name="logo_path_textbox" HorizontalAlignment="Left" Height="23" Margin="129,333,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="337" Background="#FF3E3E42" Foreground="White" IsReadOnly="True"/>
-            <Button x:Name="browse_logo_button" Content="..." HorizontalAlignment="Left" Margin="471,335,0,0" VerticalAlignment="Top" Width="23" Click="Browse_logo_button_Click"/>
-            <Label x:Name="label7_Copy" Content="Chemin vers le logo du mod :" HorizontalAlignment="Left" Margin="126,305,0,0" VerticalAlignment="Top" Foreground="White" Width="340" Tag="assistant_creator.label.step4.mod_logo.path"/>
-        </Grid>
+            <!-- First grid -->
+            <Grid x:Name="first_grid" Panel.ZIndex="10" Background="#FF2D2D30" Visibility="Visible" VerticalAlignment="Stretch" Margin="10">
 
-        <Grid x:Name="second_grid" HorizontalAlignment="Left" Height="399" Margin="0,57,0,0" VerticalAlignment="Top" Width="514" Background="#FF2D2D30" Visibility="Visible">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="229*"/>
-                <RowDefinition Height="170*"/>
-            </Grid.RowDefinitions>
-            <Label x:Name="label_step2_description" Content="Débutons avec les informations basiques de votre mod." HorizontalContentAlignment="Center" Margin="10,13,20,0" VerticalAlignment="Top" Foreground="White" Height="27" Tag="assistant_creator.label.step2.description"/>
-            <Label x:Name="label4" Content="Description du mod :" HorizontalAlignment="Left" Margin="6,37,0,0" VerticalAlignment="Top" Foreground="White" Grid.Row="1" Width="488" Tag="assistant_creator.label.step2.mod_description"/>
-            <Label x:Name="mod_name_label" Content="Nom du mod :" HorizontalAlignment="Left" Margin="6,56,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="460" Tag="assistant_creator.label.step2.mod_name"/>
-            <Separator Height="16" Margin="184,39,183,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="mod_name_textbox" Height="23" Margin="10,85,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#FF3E3E42" TextChanged="TextBox_TextChanged" ToolTip="Nom du mod que le joueur verra." LostFocus="TextBox_LostFocus" Tag="mod_name"/>
-            <Image x:Name="mod_name_image" HorizontalAlignment="Left" Height="26" Margin="471,59,0,0" VerticalAlignment="Top" Width="26" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
-            <Label x:Name="mod_authors_label" Content="Auteur(s) du mod :" HorizontalAlignment="Left" Margin="6,124,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="460" Tag="assistant_creator.label.step2.mod_authors"/>
-            <TextBox x:Name="mod_authors_textbox" Height="23" Margin="10,153,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#FF3E3E42" TextChanged="TextBox_TextChanged" ToolTip="Nom du mod que le joueur verra." LostFocus="TextBox_LostFocus" Tag="mod_authors"/>
-            <Image x:Name="mod_authors_image" HorizontalAlignment="Left" Height="26" Margin="471,127,0,0" VerticalAlignment="Top" Width="26" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
-            <Label x:Name="mod_version_label" Content="Version du mod :" HorizontalAlignment="Left" Margin="6,196,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="460" Tag="assistant_creator.label.step2.mod_version"/>
-            <TextBox x:Name="mod_version_textbox" Height="23" Margin="10,225,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#FF3E3E42" TextChanged="TextBox_TextChanged" ToolTip="Nom du mod que le joueur verra." LostFocus="TextBox_LostFocus" Tag="mod_version" Text="1.0.0.0" Grid.RowSpan="2"/>
-            <Image x:Name="mod_version_image" HorizontalAlignment="Left" Height="26" Margin="471,199,0,0" VerticalAlignment="Top" Width="26" Source="/Forge Modding Helper 3;component/Resources/Pictures/check.png"/>
-            <TextBox x:Name="mod_description_textbox" HorizontalAlignment="Left" Height="81" Margin="10,65.4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="484" AcceptsReturn="True" Background="#FF3E3E42" Foreground="White" Tag="mod_description" TextChanged="Optional_TextBox_TextChanged" Grid.Row="1"/>
-        </Grid>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock x:Name="label_welcome" Tag="assistant_creator.label.welcome" HorizontalAlignment="Stretch" Foreground="White" TextWrapping="WrapWithOverflow" Text="Bienvenue !&#xA;Nous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant."/>
 
-        <Grid x:Name="third_grid" HorizontalAlignment="Left" Height="399" Margin="0,57,0,0" VerticalAlignment="Top" Width="514" Background="#FF2D2D30" Visibility="Visible" IsEnabled="True">
-            <Label x:Name="label5" Content="Poursuivons avec des informations plus avancées." HorizontalContentAlignment="Center" Margin="11,11,20,0" VerticalAlignment="Top" Foreground="White" Height="27" Tag="assistant_creator.label.step3.description"/>
-            <Label x:Name="forge_version_label" Content="Version de Forge :" HorizontalAlignment="Left" Margin="6,242,0,0" VerticalAlignment="Top" Foreground="White" Width="224"/>
-            <Label x:Name="mod_id_label" Content="Mod ID :" HorizontalAlignment="Left" Margin="6,56,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="460" Tag="assistant_creator.label.step3.mod_id"/>
-            <Separator Height="16" Margin="184,39,183,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="mod_id_textbox" Height="23" Margin="10,85,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#FF3E3E42" TextChanged="TextBox_TextChanged" ToolTip="Nom du mod que le joueur verra." LostFocus="TextBox_LostFocus" Tag="mod_id"/>
-            <Image x:Name="mod_id_image" HorizontalAlignment="Left" Height="26" Margin="471,59,0,0" VerticalAlignment="Top" Width="26" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
-            <Label x:Name="mod_group_label" Content="&quot;Mod Group&quot; :" HorizontalAlignment="Left" Margin="6,124,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="460" Tag="assistant_creator.label.step3.mod_group"/>
-            <TextBox x:Name="mod_group_textbox" Height="23" Margin="10,153,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Background="#FF3E3E42" TextChanged="TextBox_TextChanged" ToolTip="Nom du mod que le joueur verra." LostFocus="TextBox_LostFocus" Tag="mod_group"/>
-            <Image x:Name="mod_group_image" HorizontalAlignment="Left" Height="26" Margin="471,127,0,0" VerticalAlignment="Top" Width="26" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
-            <Label x:Name="mineraft_version_label" Content="Version de Minecraft :" HorizontalAlignment="Left" Margin="6,196,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="134" Tag="assistant_creator.label.step3.minecraft_version"/>
-            <Image x:Name="minecraft_version_image" HorizontalAlignment="Left" Height="26" Margin="471,197,0,0" VerticalAlignment="Top" Width="26"/>
-            <ComboBox x:Name="forge_version_comboBox" HorizontalAlignment="Left" Margin="145,199,0,0" VerticalAlignment="Top" Width="119" SelectionChanged="ComboBox_SelectionChanged">
-                <ComboBoxItem Content="1.16.4"/>
-                <ComboBoxItem Content="1.16.3"/>
-                <ComboBoxItem Content="1.15.2"/>
-                <ComboBoxItem Content="1.14.4"/>
-                <ComboBoxItem Content="1.13.2"/>
-            </ComboBox>
-            <Image x:Name="forge_version_image" HorizontalAlignment="Left" Height="26" Margin="471,243,0,0" VerticalAlignment="Top" Width="26"/>
-            <Grid x:Name="forge_versions_grid" HorizontalAlignment="Left" Height="117" Margin="11,272,0,0" VerticalAlignment="Top" Width="486">
-                <Grid x:Name="latest_forge_version_grid" HorizontalAlignment="Left" Height="100" Margin="35,10,0,0" VerticalAlignment="Top" Width="161" Background="#FF686868" Visibility="Hidden">
-                    <Label Content="Dernière version" Margin="41,5,7,0" VerticalAlignment="Top" Foreground="White" Tag="assistant_creator.label.step3.forge_version.latest"/>
-                    <Separator Height="15" Margin="0,31,0,0" VerticalAlignment="Top"/>
-                    <Image x:Name="image1" HorizontalAlignment="Left" Height="23" Margin="12,8,0,0" VerticalAlignment="Top" Width="20" Source="/Forge Modding Helper 3;component/Resources/Pictures/bug_icon.png"/>
-                    <Label x:Name="latest_forge_version_label" Content="0.0.0.0" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,46,0,0" VerticalAlignment="Top" Foreground="#FFB2B3D7" Width="161"/>
-                    <RadioButton x:Name="latest_radiobutton" Content="" Margin="73,78,73,0" VerticalAlignment="Top" GroupName="forge_version" IsChecked="True" Checked="forge_version_radiobutton_Checked"/>
-                </Grid>
-                <Grid x:Name="recommended_forge_version_grid" Height="100" Margin="280,10,45,0" VerticalAlignment="Top" Background="#FF686868" Visibility="Hidden">
-                    <Label Content="Version recommandée" Margin="28,5,4.6,0" VerticalAlignment="Top" Foreground="White" Tag="assistant_creator.label.step3.forge_version.recommended"/>
-                    <Separator Height="15" Margin="-1,31,-0.4,0" VerticalAlignment="Top"/>
-                    <Image x:Name="image1_Copy" HorizontalAlignment="Left" Height="23" Margin="5,8,0,0" VerticalAlignment="Top" Width="20" Source="/Forge Modding Helper 3;component/Resources/Pictures/star_icon.png"/>
-                    <Label x:Name="recommended_forge_version_label" Content="0.0.0.0" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,46,-0.4,0" VerticalAlignment="Top" Foreground="#FFD3D777" Width="161"/>
-                    <RadioButton x:Name="recommended_radiobutton" Content="" Margin="73,78,73.4,0" VerticalAlignment="Top" GroupName="forge_version" Checked="forge_version_radiobutton_Checked"/>
-                </Grid>
+                    <!-- Supported minecraft versions -->
+                    <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0">
+                        <Label x:Name="label_supported_mc_versions" Tag="assistant_creator.label.welcome.supported_mc_versions" Foreground="White" Content="Version de Minecraft supportées :" />
+                        <Label Foreground="White" Margin="0, -6, 0, 0" Content="●  Minecraft 1.13 : 1.13.2" />
+                        <Label Foreground="White" Margin="0, -6, 0, 0" Content="●  Minecraft 1.14 : 1.14.4"/>
+                        <Label Foreground="White" Margin="0, -6, 0, 0" Content="●  Minecraft 1.15 : 1.15.2"/>
+                        <Label Foreground="White" Margin="0, -6, 0, 0" Content="●  Minecraft 1.16 : 1.16.3 / 1.16.4"/>
+                    </StackPanel>
+
+                    <!-- Output folder selection -->
+                    <GroupBox x:Name="groupBox" Tag="assistant_creator.group.welcome.output_directory" Foreground="White" Header="Répertoire de destination" Padding="5" Margin="0, 70, 0 ,0">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock x:Name="label_welcome_next" Tag="assistant_creator.label.welcome.output_directory_message" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="WrapWithOverflow" Margin="0, 0, 0, 7" Text="Choisissez un répertoire de destination dans lequel sera généré l'espace de travail :" Foreground="White"/>
+                                <TextBox x:Name="textbox_directory"  Grid.Row="1" Background="#FF252526" Foreground="White" IsReadOnly="True"/>
+                                <Button x:Name="button_browse_directory"  Grid.Row="1" Grid.Column="1" Content="..." Padding="7, 0, 7, 0" Margin="4, 0, 0, 0" Click="button_browse_directory_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
+                    <Label x:Name="label_invalid_workspace_folder" Grid.Row="2" Grid.ColumnSpan="2" Background="#FF2D2D30" Foreground="Red" Visibility="Hidden" HorizontalContentAlignment="Center" Content="Ce dossier contient déjà un espace de travail Forge !"/>
+                </StackPanel>
+                <TextBlock x:Name="label_internet_required" Tag="assistant_creator.label.welcome.internet" TextWrapping="WrapWithOverflow" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10" Foreground="White" Text="Vous devrez être connecté à Internet durant tout le processus de création de l'espace de travail."/>
             </Grid>
-            <ProgressBar x:Name="loading_progressbar" Height="16" Margin="177,335,188,0" VerticalAlignment="Top" IsIndeterminate="True" Visibility="Hidden"/>
-            <Label x:Name="loading_label" HorizontalContentAlignment="Center" Content="Chargement..." Tag="assistant_creator.label.step3.forge_version.loading" HorizontalAlignment="Left" Margin="177,304,0,0" VerticalAlignment="Top" Width="149" Foreground="White" Visibility="Hidden"/>
+            
+
+            <!-- Second grid -->
+            <Grid x:Name="second_grid" Panel.ZIndex="9" Background="#FF2D2D30" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                
+                <!-- Step header -->
+                <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0" Grid.Row="0">
+                    <TextBlock x:Name="label_step2_description" Tag="assistant_creator.label.step2.description" TextAlignment="Center" Foreground="White" Text="Débutons avec les informations basiques de votre mod."/>
+                    <Separator Height="16" Width="200" VerticalAlignment="Top"/>
+                </StackPanel>
+
+                <!-- Mod name -->
+                <StackPanel Grid.Row="1">
+                    <DockPanel>
+                        <Label x:Name="mod_name_label" Tag="assistant_creator.label.step2.mod_name" DockPanel.Dock="Left" Foreground="White" Content="Nom du mod :"/>
+                        <Image x:Name="mod_name_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                    </DockPanel>
+                    <TextBox x:Name="mod_name_textbox" Tag="mod_name" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" DockPanel.Dock="Bottom" Foreground="White" Background="#FF3E3E42" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Mod authors -->
+                <StackPanel Grid.Row="2">
+                    <DockPanel>
+                        <Label x:Name="mod_authors_label" Tag="assistant_creator.label.step2.mod_authors" Foreground="White" DockPanel.Dock="Left" Content="Auteur(s) du mod :"/>
+                        <Image x:Name="mod_authors_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                    </DockPanel>
+                    <TextBox x:Name="mod_authors_textbox" Tag="mod_authors" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" DockPanel.Dock="Bottom" Foreground="White" Background="#FF3E3E42" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Mod version -->
+                <StackPanel Grid.Row="3">
+                    <DockPanel>
+                        <Label x:Name="mod_version_label" Tag="assistant_creator.label.step2.mod_version" DockPanel.Dock="Left" Foreground="White" Content="Version du mod :" />
+                        <Image x:Name="mod_version_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/check.png"/>
+                    </DockPanel>
+                    <TextBox x:Name="mod_version_textbox"  Tag="mod_version" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="White" Background="#FF3E3E42" DockPanel.Dock="Bottom" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus" Text="1.0.0.0"/>
+                </StackPanel>
+
+                <!-- Mod description -->
+                <StackPanel Grid.Row="4">
+                    <DockPanel>
+                        <Label x:Name="mod_description_label" Tag="assistant_creator.label.step2.mod_description" Foreground="White" Content="Description du mod :"/>
+                    </DockPanel>
+                    <TextBox x:Name="mod_description_textbox" Tag="mod_description" TextWrapping="Wrap" Height="70"  Margin="0, 5, 0, 0" HorizontalAlignment="Stretch" AcceptsReturn="True" Background="#FF3E3E42" Foreground="White" TextChanged="Optional_TextBox_TextChanged"/>
+                </StackPanel>
+
+            </Grid>
+
+
+            <!-- Third grid -->
+            <Grid x:Name="third_grid" Panel.ZIndex="8" Background="#FF2D2D30" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Step header -->
+                <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0" Grid.Row="0">
+                    <TextBlock x:Name="label_step3_description" Tag="assistant_creator.label.step3.description" TextAlignment="Center" Foreground="White" Text="Poursuivons avec des informations plus avancées."/>
+                    <Separator Height="16" Width="200" VerticalAlignment="Top"/>
+                </StackPanel>
+
+                <!-- Mod id -->
+                <StackPanel Grid.Row="1">
+                    <DockPanel>
+                        <Label x:Name="mod_id_label" Tag="assistant_creator.label.step3.mod_id" DockPanel.Dock="Left" Foreground="White" Content="Mod ID :"/>
+                        <Image x:Name="mod_id_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                    </DockPanel>
+                    <TextBox x:Name="mod_id_textbox" Tag="mod_id" Height="20"  Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="White" Background="#FF3E3E42" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Mod group -->
+                <StackPanel Grid.Row="2">
+                    <DockPanel>
+                        <Label x:Name="mod_group_label" Tag="assistant_creator.label.step3.mod_group" DockPanel.Dock="Left" Foreground="White" Content="&quot;Mod Group&quot; :"/>
+                        <Image x:Name="mod_group_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                    </DockPanel>
+                    <TextBox x:Name="mod_group_textbox" Tag="mod_group" Height="20"  Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="White" Background="#FF3E3E42" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Minecraft version -->
+                <StackPanel Grid.Row="3">
+                    <DockPanel>
+                        <Label x:Name="mineraft_version_label" Tag="assistant_creator.label.step3.minecraft_version" DockPanel.Dock="Left" Foreground="White" Content="Version de Minecraft :"/>
+                        <ComboBox x:Name="forge_version_comboBox" DockPanel.Dock="Left" Width="120" Margin="10, 0" SelectionChanged="ComboBox_SelectionChanged">
+                            <ComboBoxItem Content="1.16.4"/>
+                            <ComboBoxItem Content="1.16.3"/>
+                            <ComboBoxItem Content="1.15.2"/>
+                            <ComboBoxItem Content="1.14.4"/>
+                            <ComboBoxItem Content="1.13.2"/>
+                        </ComboBox>
+                        <Image x:Name="minecraft_version_image"  HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                    </DockPanel>
+                </StackPanel>
+
+                <!-- Forge version -->
+                <StackPanel Grid.Row="4">
+                    <DockPanel>
+                        <Label x:Name="forge_version_label" Content="Version de Forge :" DockPanel.Dock="Left" Foreground="White"/>
+                        <ProgressBar x:Name="loading_progressbar" Height="16" Width="100" IsIndeterminate="True" DockPanel.Dock="Right" HorizontalAlignment="Right" Visibility="Hidden"/>
+                    </DockPanel>
+                    <Grid x:Name="forge_versions_grid" Margin="50, 10, 50, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Latest Forge version -->
+                        <Grid x:Name="latest_forge_version_grid" HorizontalAlignment="Center" Height="100" Width="160" Background="#FF686868" Visibility="Hidden" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="10"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0, 5, 0, 5" Grid.Row="0">
+                                <Image x:Name="latest_forge_version_image" Height="15" Width="15" Margin="0, 2, 0, 0" Source="/Forge Modding Helper 3;component/Resources/Pictures/bug_icon.png"/>
+                                <Label Tag="assistant_creator.label.step3.forge_version.latest" Foreground="White" Content="Dernière version"/>
+                            </StackPanel>
+
+                            <Separator Grid.Row="1"/>
+
+                            <StackPanel Orientation="Vertical" Grid.Row="2">
+                                <Label x:Name="latest_forge_version_label" Content="0.0.0.0" HorizontalContentAlignment="Center" Foreground="#FFB2B3D7"/>
+                                <RadioButton x:Name="latest_radiobutton" GroupName="forge_version" HorizontalAlignment="Center" IsChecked="True" Checked="forge_version_radiobutton_Checked"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Recommended Forge version -->
+                        <Grid x:Name="recommended_forge_version_grid" HorizontalAlignment="Center" Height="100" Width="160" Background="#FF686868" Visibility="Hidden" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="10"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Orientation="Horizontal" Margin="0, 5, 0, 5" Grid.Row="0">
+                                <Image x:Name="recommended_forge_version_image" Height="15" Width="15" Margin="0, 2, 0, 0" Source="/Forge Modding Helper 3;component/Resources/Pictures/star_icon.png"/>
+                                <Label Tag="assistant_creator.label.step3.forge_version.recommended" Foreground="White" Content="Version recommandée"/>
+                            </StackPanel>
+
+                            <Separator Grid.Row="1"/>
+
+                            <StackPanel Orientation="Vertical" Grid.Row="2">
+                                <Label x:Name="recommended_forge_version_label" Content="0.0.0.0" HorizontalContentAlignment="Center" Foreground="#FFD3D777"/>
+                                <RadioButton x:Name="recommended_radiobutton" GroupName="forge_version" HorizontalAlignment="Center" IsChecked="True" Checked="forge_version_radiobutton_Checked"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+
+            <!-- Fourth grid -->
+            <Grid x:Name="fourth_grid" Panel.ZIndex="7" Background="#FF2D2D30" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Step header -->
+                <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0" Grid.Row="0">
+                    <TextBlock x:Name="label_step4_description" Tag="assistant_creator.label.step4.description" TextAlignment="Center" Foreground="White" Text="Passons maintenant aux données facultatives."/>
+                    <Separator Height="16" Width="200" VerticalAlignment="Top"/>
+                </StackPanel>
+
+                <!-- Display url -->
+                <StackPanel Grid.Row="1">
+                    <DockPanel>
+                        <Label x:Name="display_url_label" Tag="assistant_creator.label.step4.mod_website" DockPanel.Dock="Left" Foreground="White" Content="Lien vers le site internet du mod :"/>
+                    </DockPanel>
+                    <TextBox x:Name="display_url_textbox" Tag="display_url" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="White" Background="#FF3E3E42" TextChanged="Optional_TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Issue tracker -->
+                <StackPanel Grid.Row="2">
+                    <DockPanel>
+                        <Label x:Name="issue_tracker_label" Tag="assistant_creator.label.step4.issue_tracker" Foreground="White" DockPanel.Dock="Left" Content="Lien vers le système de suivi de bugs du mod :"/>
+                    </DockPanel>
+                    <TextBox x:Name="issue_tracker_textbox" Tag="issue_tracker" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" DockPanel.Dock="Bottom" Foreground="White" Background="#FF3E3E42" TextChanged="Optional_TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Update Json -->
+                <StackPanel Grid.Row="3">
+                    <DockPanel>
+                        <Label x:Name="update_json_label" Tag="assistant_creator.label.step4.update_json" Foreground="White" DockPanel.Dock="Left" Content="Lien vers le fichier .json pour la vérification de mises à jour du mod :"/>
+                    </DockPanel>
+                    <TextBox x:Name="update_json_textbox" Tag="update_json" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" DockPanel.Dock="Bottom" Foreground="White" Background="#FF3E3E42" TextChanged="Optional_TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Mod logo -->
+                <StackPanel Grid.Row="4">
+                    <DockPanel>
+                        <Label x:Name="mod_logo_label" Tag="assistant_creator.label.step4.mod_logo" Foreground="White" DockPanel.Dock="Left" Content="Logo du mod :"/>
+                    </DockPanel>
+                    <Grid x:Name="mod_logo_grid" Margin="0, 5, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="mod_logo_image" HorizontalAlignment="Left" Height="90" Width="90" Grid.Column="0"/>
+                        <Border BorderBrush="#FF00DFFF" HorizontalAlignment="Left" BorderThickness="1" Height="90" Width="90" Grid.Column="0"/>
+
+                        <!-- Mod logo path -->
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5, 0, 0, 0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock x:Name="mod_logo_path_label" Tag="assistant_creator.label.step4.mod_logo.path" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="WrapWithOverflow" Margin="0, 0, 0, 7" Text="Chemin vers le logo du mod :" Foreground="White"/>
+                                <TextBox x:Name="logo_path_textbox" Height="20" TextWrapping="Wrap" Grid.Row="1" Background="#FF3E3E42" Foreground="White" IsReadOnly="True"/>
+                                <Button x:Name="browse_logo_button"  Grid.Row="1" Grid.Column="1" Content="..." Padding="7, 0, 7, 0" Margin="4, 0, 0, 0" Click="Browse_logo_button_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    
+                </StackPanel>
+                
+            </Grid>
+
+            <!-- Fith grid -->
+            <Grid x:Name="fith_grid" Panel.ZIndex="6" Background="#FF2D2D30" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <!-- Step header -->
+                <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0" Grid.Row="0">
+                    <TextBlock x:Name="label_pregen_description" Tag="assistant_creator.label.step5.description" TextAlignment="Center" Foreground="White" TextWrapping="Wrap" Text="Parfait ! Nous avons désormais toutes les informations nécessaires à la création de votre espace&#xA;de travail. Nous allons donc procéder à sa génération."/>
+                    <Separator Height="16" Width="200" VerticalAlignment="Top"/>
+                </StackPanel>
+
+                <!-- Checkboxes -->
+                <StackPanel Grid.Row="1">
+                    <Label x:Name="label_custom_generation" Tag="assistant_creator.label.step5.custom_gen" Margin="0, 0, 0, 5" Foreground="White" Content="Personnaliser la génération :"/>
+                    <CheckBox x:Name="download_forge_checkBox" Tag="assistant_creator.checkbox.step5.downloading_forge" Margin="15, 0, 0, 5" Foreground="White" IsChecked="True" IsEnabled="False" Content="Téléchargement et décompression de Forge"/>
+                    <CheckBox x:Name="build_gradle_checkBox" Tag="assistant_creator.checkbox.step5.build_gradle" Margin="15, 0, 0, 5" Foreground="White" IsChecked="True" Content="Configuration du build.gradle"/>
+                    <CheckBox x:Name="mod_toml_checkBox" Tag="assistant_creator.checkbox.step5.mod_toml" Margin="15, 0, 0, 5" Foreground="White" IsChecked="True" Content="Configuration du mod.toml"/>
+                    <CheckBox x:Name="code_packages_checkBox" Tag="assistant_creator.checkbox.step5.code_package" Margin="15, 0, 0, 5" Foreground="White" IsChecked="True" Content="Génération des packages de code"/>
+                    <CheckBox x:Name="assets_packages_checkBox" Tag="assistant_creator.checkbox.step5.assets_package" Margin="15, 0, 0, 5" Foreground="White" IsChecked="True" Content="Génération des packages des assets"/>
+                    <CheckBox x:Name="fr_lang_file_checkBox" Tag="assistant_creator.checkbox.step5.lang_file" Margin="15, 0, 0, 5" Foreground="White" IsChecked="{Binding IsChecked, ElementName=assets_packages_checkBox, Mode=OneWay}" IsEnabled="{Binding IsChecked, ElementName=assets_packages_checkBox, Mode=OneWay}" Content="Génération du fichier fr__fr.lang"/>
+                </StackPanel>
+
+                <!-- Warning labels -->
+                <StackPanel Grid.Row="2">
+                    <TextBlock x:Name="label_pregen_internet" Tag="assistant_creator.label.step5.internet" Margin="0, 0, 0, 5" Foreground="White" Text="Vous devrez être connecté à Internet durant tout le processus de génération de l'espace de travail."/>
+                    <TextBlock x:Name="label_pregen_next" Tag="assistant_creator.label.step5.next_message" Foreground="White" Text="Cliquez sur &quot;Suivant&quot; pour générer votre espace de travail."/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Generation grid -->
+            <Grid x:Name="generation_grid" Panel.ZIndex="5" Background="#FF2D2D30" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Progress header -->
+                <StackPanel Grid.Row="0">
+                    <Label x:Name="progress_label" Margin="0, 0, 0, 3" Foreground="White" Content="Statut : ..."/>
+                    <ProgressBar x:Name="progress_progressbar" Height="17"/>
+                </StackPanel>
+
+                <!-- Event listbox -->
+                <ListBox x:Name="progress_listBox" Grid.Row="1" Background="#FF3E3E42" Foreground="White" BorderBrush="#FF4CD3CB"/>
+
+            </Grid>
+
+            <!-- Finish grid -->
+            <Grid x:Name="finish_grid" Panel.ZIndex="4" Background="#FF2D2D30" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <Image x:Name="finish_image" Height="90" Width="90" Source="/Forge Modding Helper 3;component/Resources/Pictures/check.png"/>
+                    <TextBlock x:Name="label_finish" Tag="assistant_creator.label.finish.description" Foreground="White" TextWrapping="Wrap" TextAlignment="Center" Margin="0, 10, 0, 0" Text="Nous avons terminé de créer votre espace de travail ! Il ne vous reste plus qu'à importer le projet gradle dans votre IDE favori !"/>
+                </StackPanel>
+
+                <TextBlock x:Name="label_finish_close" Tag="assistant_creator.label.finish.close" Foreground="White" TextWrapping="Wrap" Text="Cliquez sur &quot;Terminer&quot; pour fermer l'assistant." Grid.Row="1" VerticalAlignment="Bottom"/>
+            </Grid>
         </Grid>
 
-        <Grid x:Name="first_grid" Height="399" Margin="0,57,0.4,0" VerticalAlignment="Top" Background="#FF2D2D30">
-            <Label x:Name="label_versions" Content="Minecraft 1.13 : 1.13.2&#xA;Minecraft 1.14 : 1.14.4&#xA;Minecraft 1.15 : 1.15.2&#xA;Minecraft 1.16 : 1.16.3 - 1.16.4" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Foreground="White" Height="142" Width="494"/>
-            <Label x:Name="label_welcome_next" Content="Choisissez un répertoire de destination puis cliquez sur &quot;Suivant&quot; pour continuer." HorizontalAlignment="Left" Margin="10,361,0,0" VerticalAlignment="Top" Foreground="White" Tag="assistant_creator.label.welcome.next_message"/>
-            <GroupBox x:Name="groupBox" Header="Répertoire de destination" HorizontalAlignment="Left" Height="56" Margin="10,288,0,0" VerticalAlignment="Top" Width="495" Foreground="White" Tag="assistant_creator.group.welcome.output_directory">
-                <TextBox x:Name="textbox_directory" HorizontalAlignment="Left" Height="23" Margin="5,6,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="441" Background="#FF252526" Foreground="White" IsReadOnly="True"/>
-            </GroupBox>
-            <Button x:Name="button_browse_directory" Content="..." HorizontalAlignment="Left" Margin="467,310,0,0" VerticalAlignment="Top" Width="28" Height="24" Click="button_browse_directory_Click"/>
-            <Label x:Name="label_invalid_workspace_folder" Content="Ce dossier contient déjà un espace de travail Forge !" HorizontalAlignment="Left" Margin="211,283,0,0" VerticalAlignment="Top" Background="#FF2D2D30" Foreground="Red" Height="26" Visibility="Hidden"/>
-            <Label x:Name="label_welcome" Content="Bienvenue dans l'assistant de création d'espace de travail Minecraft Forge !&#xA;Nous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant.&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Height="61" Width="494" Tag="assistant_creator.label.welcome"/>
-            <Label x:Name="label1_supported_mc_versions" Content="Version de Minecraft supportées :" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Foreground="White" Height="27" Width="494" Tag="assistant_creator.label.welcome.supported_mc_versions"/>
-            <Label x:Name="label_internet_required" Content="Vous devrez être connecté à Internet durant tout le processus de création de l'espace &#xA;de travail." HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Foreground="White" Height="45" Width="494" Tag="assistant_creator.label.welcome.internet"/>
-        </Grid>
+        <!-- Footer -->
+        <StackPanel Orientation="Vertical" Grid.Row="2" VerticalAlignment="Center" Margin="6">
+            <DockPanel VerticalAlignment="Top" LastChildFill="False">
+                <Label x:Name="missing_infos_label" Tag="assistant_creator.label.missing_infos" Foreground="#FFFF7777" Background="{x:Null}" Visibility="Hidden" Content="Informations manquantes"/>
 
-        <Button x:Name="next_button" Content="Suivant &gt;" HorizontalAlignment="Left" Margin="322,470,0,0" VerticalAlignment="Top" Width="89" Height="25" Click="Next_button_Click" Tag="assistant_creator.button.next"/>
-        <Button x:Name="cancel_button" Content="Annuler" Margin="430,470,10,0" VerticalAlignment="Top" Height="25" Click="Cancel_button_Click" Tag="assistant_creator.button.cancel"/>
-        <Button x:Name="previous_button" Content="&lt; Précédent" HorizontalAlignment="Left" Margin="228,470,0,0" VerticalAlignment="Top" Width="89" Height="25" Click="Previous_button_Click" IsEnabled="False" Tag="assistant_creator.button.previous"/>
-        <Separator HorizontalAlignment="Left" Height="17" Margin="0,38,0,0" VerticalAlignment="Top" Width="515"/>
-        <ProgressBar x:Name="step_progressbar" HorizontalAlignment="Left" Height="10" Margin="0,44,0,0" VerticalAlignment="Top" Width="514" Foreground="#FF3E60D4"/>
-        <Label x:Name="label" Content="Assistant Creator" HorizontalAlignment="Left" Margin="44,5,0,0" VerticalAlignment="Top" Foreground="White" FontSize="18"/>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="28" Margin="11,9,0,0" VerticalAlignment="Top" Width="28" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
-        <Label x:Name="step_label" Content="Etape X sur X" HorizontalAlignment="Left" Margin="421,11,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <Label x:Name="missing_infos_label" Tag="assistant_creator.label.missing_infos" Content="Informations manquantes" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Foreground="#FFFF7777" Height="31" Width="146" Background="{x:Null}" Visibility="Hidden"/>
-        <Button x:Name="finish_button" Tag="assistant_creator.button.finish" Content="Terminer" Margin="430,470,10,0" VerticalAlignment="Top" Height="25" Click="finish_button_Click" Visibility="Hidden"/>
-        <Separator HorizontalAlignment="Left" Height="16" Margin="0,447,-0.6,0" VerticalAlignment="Top" Width="515"/>
+                <Grid HorizontalAlignment="Stretch" DockPanel.Dock="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Buttons -->
+                    <Button x:Name="previous_button" Content="&lt; Précédent" Click="Previous_button_Click" IsEnabled="False" Grid.Column="0" Panel.ZIndex="1" Margin="3, 0, 3, 0" Width="80" Tag="assistant_creator.button.previous"/>
+                    <Button x:Name="next_button" Content="Suivant &gt;" Click="Next_button_Click"  Panel.ZIndex="2" Width="80"  Grid.Column="1" Margin="3, 0, 3, 0" Tag="assistant_creator.button.next"/>
+                    <Button x:Name="cancel_button" Content="Annuler" Click="Cancel_button_Click"  Panel.ZIndex="3" Width="80"  Grid.Column="2" Margin="3, 0, 3, 0" Tag="assistant_creator.button.cancel"/>
+                    <Button x:Name="finish_button" Tag="assistant_creator.button.finish" Content="Terminer" Panel.ZIndex="0" Width="80"  Grid.Column="2" Margin="3, 0, 3, 0" Click="finish_button_Click" Visibility="Hidden"/>
+                </Grid>
+
+            </DockPanel>
+        </StackPanel>
 
     </Grid>
 </Window>

@@ -54,6 +54,17 @@ namespace Forge_Modding_Helper_3.Utils
                 }
             }
 
+            // Updating TextBlocks
+            IEnumerable<TextBlock> textblocks = UIUtils.FindVisualChildren<TextBlock>(window);
+
+            foreach (TextBlock textblock in textblocks)
+            {
+                if (textblock.Tag != null && textblock.Tag is string && !string.IsNullOrWhiteSpace(textblock.Tag.ToString()))
+                {
+                    textblock.Text = getTranslation((String)textblock.Tag).FormateTranslationText();
+                }
+            }
+
             // Updating buttons
             IEnumerable<Button> buttons = UIUtils.FindVisualChildren<Button>(window);
 

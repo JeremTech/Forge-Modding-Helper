@@ -94,7 +94,6 @@ namespace Forge_Modding_Helper_3
         {
             // Update Forge version selection UI
             forge_versions_grid.ClearValue(EffectProperty);
-            loading_label.Visibility = Visibility.Hidden;
             loading_progressbar.Visibility = Visibility.Hidden;
 
             // Check if a latest version is found
@@ -102,6 +101,9 @@ namespace Forge_Modding_Helper_3
             {
                 this.latest_forge_version_label.Content = versions.getLatestForgeVersion(mod_infos["minecraft_version"]);
                 this.latest_forge_version_grid.Visibility = Visibility.Visible;
+                this.latest_radiobutton.IsChecked = true;
+                missing_infos_label.Visibility = Visibility.Hidden;
+                minecraft_version_image.Source = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/check.png", UriKind.Relative));
             }
             else
             {
@@ -113,6 +115,9 @@ namespace Forge_Modding_Helper_3
             {
                 this.recommended_forge_version_label.Content = versions.getRecommendedForgeVersion(mod_infos["minecraft_version"]);
                 this.recommended_forge_version_grid.Visibility = Visibility.Visible;
+                this.recommended_radiobutton.IsChecked = true;
+                missing_infos_label.Visibility = Visibility.Hidden;
+                minecraft_version_image.Source = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/check.png", UriKind.Relative));
             }
             else
             {
@@ -524,6 +529,11 @@ namespace Forge_Modding_Helper_3
                         img.Source = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png", UriKind.Relative));
                     }
                 }
+
+                if(missing_infos_label != null)
+                {
+                    missing_infos_label.Visibility = Visibility.Hidden;
+                }
             }
         }
 
@@ -556,7 +566,6 @@ namespace Forge_Modding_Helper_3
             BlurEffect effect = new BlurEffect();
             effect.Radius = 20;
             forge_versions_grid.Effect = effect;
-            loading_label.Visibility = Visibility.Visible;
             loading_progressbar.Visibility = Visibility.Visible;
             mod_infos["minecraft_version"] = (string) ((ComboBoxItem)forge_version_comboBox.SelectedItem).Content;
 
@@ -641,6 +650,7 @@ namespace Forge_Modding_Helper_3
                     {
                         this.folder = fbd.SelectedPath;
                         this.label_invalid_workspace_folder.Visibility = Visibility.Hidden;
+                        missing_infos_label.Visibility = Visibility.Hidden;
                     }
                     else
                     {
