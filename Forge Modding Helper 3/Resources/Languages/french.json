@@ -55,7 +55,6 @@
         "assistant_creator.checkbox.step5.assets_package": "Génération des packages des assets",
         "assistant_creator.checkbox.step5.lang_file": "Génération du fichier fr__fr.lang",
         "assistant_creator.label.finish.description": "Nous avons terminé de créer votre espace de travail !\nIl ne vous reste plus qu'à importer le projet gradle dans votre IDE favori !",
-        "assistant_creator.label.finish.bug_info": "Si vous rencontrez des bugs avec l'utilisation de Forge Modding Helper, ou bien si vous avez des suggestions d'améliorations ou d'ajouts, vous pouvez les poster sur le bugtracker disponible à cette adresse :",
         "assistant_creator.label.finish.close": "Cliquez sur \"Terminer\" pour fermer l'assistant.",
         "assistant_creator.progress.extract_archive": "Extraction de l'archive...",
         "assistant_creator.progress.delete_archive": "Suppression de l'archive...",

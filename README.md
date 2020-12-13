@@ -16,22 +16,22 @@ Lastest version | Lastest stable version
 ------------ | -------------
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/jeremtech/Forge-Modding-Helper?color=9cf&include_prereleases&label=%20&style=flat-square)](https://github.com/JeremTech/Forge-Modding-Helper/releases)| ![Unavailable](https://img.shields.io/badge/%20-Unavailable-red?style=flat-square)
 
-## Features in v3.0.0.0-Pre4
+## Features in v3.0.0.0-Pre5
 
 - [x] Workspace creation wizard
 - [x] Workspace dashboard
-- [x] Manage assets (models, textures, blockstates)
-- [ ] Easy language file editing 
-- [ ] Easy mod publication
+- [x] Easy mod settings edition
+- [x] Explore assets (models, textures, blockstates)
+- [x] Easy language file editing 
+- [x] Easy mod publication
 
-## Supported Minecraft Forge Versions in v3.0.0.0-Pre4
+## Supported Minecraft Forge Versions in v3.0.0.0-Pre5
 
-- [x] Minecraft Forge 1.16.1 (latest)
-- [x] Minecraft Forge 1.15.2 (latest and recommended)
-- [x] Minecraft Forge 1.14.4 (latest and recommended)
-- [x] Minecraft Forge 1.14.3 (latest) 
-- [x] Minecraft Forge 1.14.2 (latest)
-- [x] Minecraft Forge 1.13.2 (latest)
+- [x] Minecraft Forge 1.16.4
+- [x] Minecraft Forge 1.16.3
+- [x] Minecraft Forge 1.15.2
+- [x] Minecraft Forge 1.14.4 
+- [x] Minecraft Forge 1.13.2
 
 ## More informations 
 
