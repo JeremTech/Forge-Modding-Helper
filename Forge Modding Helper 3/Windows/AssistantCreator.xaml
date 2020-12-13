@@ -69,7 +69,7 @@
             
 
             <!-- Second grid -->
-            <Grid x:Name="second_grid" Panel.ZIndex="9" Background="#FF2D2D30" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+            <Grid x:Name="second_grid" Panel.ZIndex="12" Background="#FF2D2D30" Visibility="Visible" VerticalAlignment="Stretch" Margin="10">
                 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
@@ -103,14 +103,34 @@
                     <TextBox x:Name="mod_authors_textbox" Tag="mod_authors" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" DockPanel.Dock="Bottom" Foreground="White" Background="#FF3E3E42" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
                 </StackPanel>
 
-                <!-- Mod version -->
-                <StackPanel Grid.Row="3">
-                    <DockPanel>
-                        <Label x:Name="mod_version_label" Tag="assistant_creator.label.step2.mod_version" DockPanel.Dock="Left" Foreground="White" Content="Version du mod :" />
-                        <Image x:Name="mod_version_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/check.png"/>
-                    </DockPanel>
-                    <TextBox x:Name="mod_version_textbox"  Tag="mod_version" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="White" Background="#FF3E3E42" DockPanel.Dock="Bottom" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus" Text="1.0.0.0"/>
-                </StackPanel>
+                <!-- Mod version / Mod license -->
+                <Grid Grid.Row="3">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Mod version -->
+                    <StackPanel Grid.Column="0" Margin="0, 0, 10, 0">
+                        <DockPanel>
+                            <Label x:Name="mod_version_label" Tag="assistant_creator.label.step2.mod_version" DockPanel.Dock="Left" Foreground="White" Content="Version du mod :" />
+                            <Image x:Name="mod_version_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/check.png"/>
+                        </DockPanel>
+                        <TextBox x:Name="mod_version_textbox"  Tag="mod_version" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="White" Background="#FF3E3E42" DockPanel.Dock="Bottom" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus" Text="1.0.0.0"/>
+                    </StackPanel>
+
+                    <!-- Mod license -->
+                    <StackPanel Grid.Column="1" Margin="10, 0, 0, 0">
+                        <DockPanel>
+                            <Label x:Name="mod_license_label" Tag="assistant_creator.label.step2.mod_license" DockPanel.Dock="Left" Foreground="White" Content="Licence du mod :" />
+                            <Image x:Name="mod_license_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                            <Image x:Name="mod_license_help" HorizontalAlignment="Right" Height="20" Width="20" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/help_icon.png" MouseLeftButtonUp="mod_license_help_MouseLeftButtonUp"/>
+                        </DockPanel>
+                        <TextBox x:Name="mod_license_textbox"  Tag="mod_license" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="White" Background="#FF3E3E42" DockPanel.Dock="Bottom" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                    </StackPanel>
+
+                </Grid>
 
                 <!-- Mod description -->
                 <StackPanel Grid.Row="4">

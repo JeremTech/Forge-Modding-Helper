@@ -272,6 +272,9 @@
   <ItemGroup>
     <Resource Include="Resources\Pictures\github_white.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Pictures\help_icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
 </Project>

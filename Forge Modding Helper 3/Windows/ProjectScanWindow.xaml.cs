@@ -35,6 +35,7 @@ namespace Forge_Modding_Helper_3.Windows
             {"mod_name", ""},
             {"mod_authors", ""},
             {"mod_version", ""},
+            {"mod_license", ""},
             {"mod_description", ""},
             {"mod_id", ""},
             {"mod_group", ""},
@@ -132,22 +133,25 @@ namespace Forge_Modding_Helper_3.Windows
             updateSecondaryStatus("project_scan.mod_info.mods_toml", 0);
 
             string modToml = File.ReadAllText(Path.Combine(path, "src\\main\\resources\\META-INF\\mods.toml"));
+
+            modInfos["mod_license"] = modToml.getBetween("license=\"", "\"");
+            updateSecondaryStatus("project_scan.mod_info.mods_toml", 10);
             modInfos["mod_id"] = modToml.getBetween("modId=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 11);
+            updateSecondaryStatus("project_scan.mod_info.mods_toml", 20);
             modInfos["mod_name"] = modToml.getBetween("displayName=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 22);
+            updateSecondaryStatus("project_scan.mod_info.mods_toml", 30);
             modInfos["mod_description"] = modToml.getBetween("description='''", "'''").Trim();
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 33);
+            updateSecondaryStatus("project_scan.mod_info.mods_toml", 40);
             modInfos["mod_logo"] = modToml.getBetween("logoFile=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 44);
+            updateSecondaryStatus("project_scan.mod_info.mods_toml", 50);
             modInfos["mod_credits"] = modToml.getBetween("credits=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 55);
+            updateSecondaryStatus("project_scan.mod_info.mods_toml", 60);
             modInfos["mod_authors"] = modToml.getBetween("authors=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 66);
+            updateSecondaryStatus("project_scan.mod_info.mods_toml", 70);
             modInfos["display_url"] = modToml.getBetween("displayURL=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 77);
+            updateSecondaryStatus("project_scan.mod_info.mods_toml", 80);
             modInfos["update_json"] = modToml.getBetween("updateJSONURL=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 88);
+            updateSecondaryStatus("project_scan.mod_info.mods_toml", 90);
             modInfos["issue_tracker"] = modToml.getBetween("issueTrackerURL=\"", "\"");
             updateSecondaryStatus("project_scan.mod_info.mods_toml", 100);
 

@@ -36,6 +36,7 @@ namespace Forge_Modding_Helper_3
             {"mod_name", ""},
             {"mod_authors", ""},
             {"mod_version", ""},
+            {"mod_license", ""},
             {"mod_description", ""},
             {"mod_id", ""},
             {"mod_group", ""},
@@ -190,7 +191,7 @@ namespace Forge_Modding_Helper_3
                 case 1:
                     {
                         // Check if mandatory step's infos are completed
-                        if (!String.IsNullOrEmpty(this.mod_infos["mod_name"]) && !String.IsNullOrEmpty(this.mod_infos["mod_authors"]) && !String.IsNullOrEmpty(this.mod_infos["mod_version"]))
+                        if (!String.IsNullOrEmpty(this.mod_infos["mod_name"]) && !String.IsNullOrEmpty(this.mod_infos["mod_authors"]) && !String.IsNullOrEmpty(this.mod_infos["mod_version"]) && !String.IsNullOrEmpty(this.mod_infos["mod_license"]))
                         {
                             // Update UI components
                             missing_infos_label.Visibility = Visibility.Hidden;
@@ -700,8 +701,12 @@ namespace Forge_Modding_Helper_3
                 }
             }
         }
+
         #endregion
 
-        
+        private void mod_license_help_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://choosealicense.com/");
+        }
     }
 }

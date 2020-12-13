@@ -38,6 +38,7 @@ namespace Forge_Modding_Helper_3
             {"mod_name", ""},
             {"mod_authors", ""},
             {"mod_version", ""},
+            {"mod_license", ""},
             {"mod_description", ""},
             {"mod_id", ""},
             {"mod_group", ""},
@@ -248,6 +249,7 @@ namespace Forge_Modding_Helper_3
             this.mod_settings_minecraft_version_textbox.Text = modInfos["minecraft_version"];
             this.mod_settings_forge_version_textbox.Text = modInfos["forge_version"];
             this.mod_settings_mappings_version_textbox.Text = modInfos["mappings_version"];
+            this.mod_settings_license_textbox.Text = modInfos["mod_license"];
 
             if (File.Exists(System.IO.Path.Combine(path, @"src\main\resources\logo.png")))
             {
@@ -282,8 +284,9 @@ namespace Forge_Modding_Helper_3
             modInfos["minecraft_version"] = this.mod_settings_minecraft_version_textbox.Text;
             modInfos["forge_version"] = this.mod_settings_forge_version_textbox.Text;
             modInfos["mappings_version"] = this.mod_settings_mappings_version_textbox.Text;
+            modInfos["mod_license"] = this.mod_settings_license_textbox.Text;
 
-            if(!string.IsNullOrWhiteSpace(new_logo_path))
+            if (!string.IsNullOrWhiteSpace(new_logo_path))
             {
                 if (File.Exists(new_logo_path))
                 {

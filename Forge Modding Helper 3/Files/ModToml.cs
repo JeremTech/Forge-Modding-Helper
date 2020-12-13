@@ -30,6 +30,8 @@ namespace Forge_Modding_Helper_3
             string modToml = "modLoader=\"javafml\"";
             // loaderVersion
             modToml += Environment.NewLine + "loaderVersion=\"[" + this.mod_infos["forge_version"].Split('.')[0] + ",)\"";
+            // modId
+            modToml += Environment.NewLine + "license=\"" + this.mod_infos["mod_license"] + "\"";
             // issueTrackerURL
             if (!string.IsNullOrEmpty(this.mod_infos["issue_tracker"]))
                 modToml += Environment.NewLine + "issueTrackerURL=\"" + this.mod_infos["issue_tracker"] + "\"";
@@ -70,6 +72,7 @@ mandatory = true
 versionRange = ""[" + this.mod_infos["forge_version"].Split('.')[0] + @",)"" 
 ordering = ""NONE""
 side = ""BOTH""
+
 [[dependencies." + this.mod_infos["mod_id"] + @"]]
 modId = ""minecraft""
 mandatory = true
