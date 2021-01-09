@@ -376,7 +376,7 @@
             <Label x:Name="mod_export_version_label" Content="" HorizontalAlignment="Left" Margin="103,130,0,0" VerticalAlignment="Top" Foreground="White" Tag="" Width="255"/>
             <Label x:Name="mod_export_minecraft_version_label" Content="" HorizontalAlignment="Left" Margin="161,163,0,0" VerticalAlignment="Top" Foreground="White" Tag="" Width="197"/>
             <Label x:Name="mod_export_forge_version_label" Content="" HorizontalAlignment="Left" Margin="147,194,0,0" VerticalAlignment="Top" Foreground="White" Tag="" Width="211"/>
-            <Image x:Name="mod_export_logo_image" HorizontalAlignment="Left" Height="100" Margin="161,228,0,0" VerticalAlignment="Top" Width="100"/>
+            <Image x:Name="mod_export_logo_image" HorizontalAlignment="Left" Height="100" Margin="134,228,0,0" VerticalAlignment="Top" Width="100"/>
             <WPF:ConsoleControl x:Name="mod_export_console" HorizontalAlignment="Left" Height="259" Margin="392,69,0,0" VerticalAlignment="Top" Width="423"/>
         </Grid>
     </Grid>
