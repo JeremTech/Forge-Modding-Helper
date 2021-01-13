@@ -216,6 +216,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <EmbeddedResource Include="Resources\Languages\french.json" />
+    <EmbeddedResource Include="Resources\Languages\english.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
