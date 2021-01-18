@@ -39,7 +39,7 @@
                         <Label Foreground="White" Margin="0, -6, 0, 0" Content="●  Minecraft 1.13 : 1.13.2" />
                         <Label Foreground="White" Margin="0, -6, 0, 0" Content="●  Minecraft 1.14 : 1.14.4"/>
                         <Label Foreground="White" Margin="0, -6, 0, 0" Content="●  Minecraft 1.15 : 1.15.2"/>
-                        <Label Foreground="White" Margin="0, -6, 0, 0" Content="●  Minecraft 1.16 : 1.16.3 / 1.16.4"/>
+                        <Label Foreground="White" Margin="0, -6, 0, 0" Content="●  Minecraft 1.16 : 1.16.3 / 1.16.4 / 1.16.5"/>
                     </StackPanel>
 
                     <!-- Output folder selection -->
@@ -183,6 +183,7 @@
                     <DockPanel>
                         <Label x:Name="mineraft_version_label" Tag="assistant_creator.label.step3.minecraft_version" DockPanel.Dock="Left" Foreground="White" Content="Version de Minecraft :"/>
                         <ComboBox x:Name="forge_version_comboBox" DockPanel.Dock="Left" Width="120" Margin="10, 0" SelectionChanged="ComboBox_SelectionChanged">
+                            <ComboBoxItem Content="1.16.5"/>
                             <ComboBoxItem Content="1.16.4"/>
                             <ComboBoxItem Content="1.16.3"/>
                             <ComboBoxItem Content="1.15.2"/>
