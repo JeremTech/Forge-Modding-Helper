@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,6 +28,11 @@ namespace Forge_Modding_Helper_3.Windows
         public RenameDialog(string filePath)
         {
             InitializeComponent();
+
+            // Loading translations
+            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            this.Title = UITextTranslator.getTranslation("dialog.rename.title");
 
             this.filePath = filePath;
         }

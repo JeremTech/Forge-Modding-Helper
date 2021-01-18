@@ -149,6 +149,13 @@
         "about.label.repository": "GitHub :",
         "about.label.librairies": "Bibliothèques utilisées :",
 
+        "dialog.rename.title": "Renommer",
+        "dialog.rename.current_name": "Nom actuel :",
+        "dialog.rename.new_name": "Nouveau nom :",
+        "dialog.rename.rename": "Renommer",
+        "dialog.rename.cancel": "Annuler",
+
+
         "feature.not_available": "Cette fonctionnalité n'est pas encore disponible."
     } 
 }

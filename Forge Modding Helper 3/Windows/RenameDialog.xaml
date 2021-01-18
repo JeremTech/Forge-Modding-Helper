@@ -11,13 +11,15 @@
             <ColumnDefinition Width="255*"/>
             <ColumnDefinition Width="256*"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="rename_title_label" Content="Renommer" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top" Foreground="White" Width="455" FontSize="20" Grid.ColumnSpan="2" Height="37"/>
-        <Separator HorizontalAlignment="Left" Height="20" Margin="0,49,0,0" VerticalAlignment="Top" Width="511" Grid.ColumnSpan="2"/>
-        <Label x:Name="current_name_desc_label" Content="Nom actuel :" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Foreground="White" Width="105" Height="26"/>
-        <Label x:Name="new_name_label" Content="Nouveau nom :" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" Foreground="White" Width="105" Height="26"/>
-        <TextBox x:Name="new_name_textBox" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="120,111,0,0" TextWrapping="Wrap" Text="NewFileName" VerticalAlignment="Top" Width="345" BorderBrush="#FF686868" Foreground="White" Background="#FF252526" Grid.ColumnSpan="2" TextChanged="textBox_TextChanged"/>
-        <Button x:Name="rename_button" Content="Renommer" HorizontalAlignment="Left" Margin="2,162,0,0" VerticalAlignment="Top" Width="100" Height="24" Grid.Column="1" IsEnabled="False" Click="rename_button_Click"/>
-        <Button x:Name="cancel_button" Content="Annuler" HorizontalAlignment="Left" Margin="137,162,0,0" VerticalAlignment="Top" Width="100" Height="24" Click="cancel_button_Click"/>
-        <TextBlock x:Name="current_name_label" HorizontalAlignment="Left" Margin="120,84,0,0" TextWrapping="Wrap" Text="CurrentFileName" VerticalAlignment="Top" Foreground="White" Grid.ColumnSpan="2" Width="345" Height="21"/>
+        <Grid x:Name="main_grid" HorizontalAlignment="Left" Height="202" Margin="0,6,0,0" VerticalAlignment="Top" Width="497" Grid.ColumnSpan="2">
+            <Label x:Name="rename_title_label" Content="Renommer" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Width="455" FontSize="20" Height="37" Tag="dialog.rename.title"/>
+            <Separator HorizontalAlignment="Left" Height="20" Margin="0,50,0,0" VerticalAlignment="Top" Width="497"/>
+            <Label x:Name="current_name_desc_label" Content="Nom actuel :" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top" Foreground="White" Width="105" Height="26" Tag="dialog.rename.current_name"/>
+            <Label x:Name="new_name_label" Content="Nouveau nom :" HorizontalAlignment="Left" Margin="10,112,0,0" VerticalAlignment="Top" Foreground="White" Width="105" Height="26" Tag="dialog.rename.new_name"/>
+            <TextBox x:Name="new_name_textBox" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="120,112,0,0" TextWrapping="Wrap" Text="NewFileName" VerticalAlignment="Top" Width="345" BorderBrush="#FF686868" Foreground="White" Background="#FF252526" TextChanged="textBox_TextChanged"/>
+            <Button x:Name="rename_button" Content="Renommer" HorizontalAlignment="Left" Margin="250,163,0,0" VerticalAlignment="Top" Width="100" Height="24" IsEnabled="False" Click="rename_button_Click" Tag="dialog.rename.rename"/>
+            <Button x:Name="cancel_button" Content="Annuler" HorizontalAlignment="Left" Margin="137,163,0,0" VerticalAlignment="Top" Width="100" Height="24" Click="cancel_button_Click" Tag="dialog.rename.cancel"/>
+            <TextBlock x:Name="current_name_label" HorizontalAlignment="Left" Margin="120,85,0,0" TextWrapping="Wrap" Text="CurrentFileName" VerticalAlignment="Top" Foreground="White" Width="345" Height="21"/>
+        </Grid>
     </Grid>
 </Window>

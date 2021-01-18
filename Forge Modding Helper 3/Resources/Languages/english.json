@@ -149,6 +149,12 @@
         "about.label.repository": "GitHub :",
         "about.label.librairies": "Librairies used :",
 
+        "dialog.rename.title": "Rename",
+        "dialog.rename.current_name": "Current name :",
+        "dialog.rename.new_name": "New name :",
+        "dialog.rename.rename": "Rename",
+        "dialog.rename.cancel": "Cancel",
+
         "feature.not_available": "This feature is not available yet."
     } 
 }
