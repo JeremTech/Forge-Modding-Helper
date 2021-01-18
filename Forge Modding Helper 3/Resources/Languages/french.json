@@ -4,6 +4,7 @@
         "loading.label.loading": "Chargement...",
         "loading.check.folder": "Vérification des dossiers d'application...",
 
+        "welcome.title": "Bienvenue - Forge Modding Helper",
         "welcome.label.recents_workspaces": "Espaces de travail récents",
         "welcome.label.no_workspaces": "Aucun espace de travail récent n'a été trouvé",
         "welcome.button.new": "Nouveau",
@@ -19,6 +20,7 @@
         "welcome.alert.import.error.unsupported": "Erreur : la version de Minecraft de l'espace de travail que vous souhaitez importer n'est pas supporté par Forge Modding Helper.",
         "welcome.alert.import.error.invalid": "Erreur : le dossier sélectionné est invalide.",
 
+        "assistant_creator.title": "Assistant Creator - Forge Modding Helper",
         "assistant_creator.label.welcome": "Bienvenue dans l'assistant de création d'espace de travail Minecraft Forge ! Nous allons ensemble créer un espace de travail sur mesure grâce à ce présent assistant.",
         "assistant_creator.label.welcome.supported_mc_versions": "Versions de Minecraft supportées :",
         "assistant_creator.label.welcome.internet": "Vous devrez être connecté à Internet durant tout le processus de création de l'espace de travail.",
@@ -93,6 +95,7 @@
         "project_scan.java_files": "Analyse des fichiers java...",
         "project_scan.java_files.writing_file": "Ecriture de la liste des fichiers java...",
 
+        "workspace_manager.title": "Gestionnaire de l'espace de travail - Forge Modding Helper",
         "workspace_manager.label.textures": "Textures",
         "workspace_manager.label.models": "Modèles",
         "workspace_manager.label.java_files": "Fichiers .java",
@@ -135,10 +138,12 @@
         "workspace_manager.modexport.export": "Exporter le mod",
         "workspace_manager.modexport.recap": "Récapitulatif",
 
+        "options.title": "Options - Forge Modding Helper",
         "options.label.ui_language": "Langue de l'interface",
         "options.button.about": "A propos",
         "options.button.report_bug": "Signaler un bug",
 
+        "about.title": "A propos de Forge Modding Helper",
         "about.label.version": "Version :",
         "about.label.contributors": "Contributeurs :",
         "about.label.repository": "GitHub :",

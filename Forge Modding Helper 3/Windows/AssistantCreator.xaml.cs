@@ -75,6 +75,8 @@ namespace Forge_Modding_Helper_3
             // Loadings translations
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            label_welcome_output_directory.Text = UITextTranslator.getTranslation("assistant_creator.label.welcome.output_directory_message");
+            this.Title = UITextTranslator.getTranslation("assistant_creator.title");
         }
 
         /// <summary>

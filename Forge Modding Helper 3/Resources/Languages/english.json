@@ -4,6 +4,7 @@
         "loading.label.loading": "Loading...",
         "loading.check.folder": "Checking application folders...",
 
+        "welcome.title": "Welcome - Forge Modding Helper",
         "welcome.label.recents_workspaces": "Recent workspaces",
         "welcome.label.no_workspaces": "No recent workspace was found",
         "welcome.button.new": "New",
@@ -19,6 +20,7 @@
         "welcome.alert.import.error.unsupported": "Error : workspace's Minecraft version is not supported by Forge Modding Helper. Importation canceled.",
         "welcome.alert.import.error.invalid": "Error : invalid selected folder.",
 
+        "assistant_creator.title": "Assistant Creator - Forge Modding Helper",
         "assistant_creator.label.welcome": "Welcome to the Minecraft Forge workspace creation wizard ! We will create for you a workspace with the settings which you will define in the next pages.",
         "assistant_creator.label.welcome.supported_mc_versions": "Supported Minecraft versions :",
         "assistant_creator.label.welcome.internet": "You must be connected to Internet during all the creation process.",
@@ -93,6 +95,7 @@
         "project_scan.java_files": "Analyzing java files...",
         "project_scan.java_files.writing_file": "Writing java files list file...",
 
+        "workspace_manager.title": "Workspace manager - Forge Modding Helper",
         "workspace_manager.label.textures": "Textures",
         "workspace_manager.label.models": "Models",
         "workspace_manager.label.java_files": "Java files",
@@ -135,10 +138,12 @@
         "workspace_manager.modexport.export": "Export mod",
         "workspace_manager.modexport.recap": "Summary",
 
+        "options.title": "Options - Forge Modding Helper",
         "options.label.ui_language": "Language",
         "options.button.about": "About",
         "options.button.report_bug": "Report bug",
 
+        "about.title": "About Forge Modding Helper",
         "about.label.version": "Version :",
         "about.label.contributors": "Contributors :",
         "about.label.repository": "GitHub :",

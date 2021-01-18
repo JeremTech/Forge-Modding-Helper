@@ -41,7 +41,9 @@ namespace Forge_Modding_Helper_3.Windows
         {
             version_label.Content = AppInfos.GetApplicationVersionString();
 
+            // Loading translations
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            this.Title = UITextTranslator.getTranslation("welcome.title");
         }
 
         #region Buttons
@@ -166,6 +168,7 @@ namespace Forge_Modding_Helper_3.Windows
 
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this);
+            this.Title = UITextTranslator.getTranslation("welcome.title");
         }
         #endregion
 

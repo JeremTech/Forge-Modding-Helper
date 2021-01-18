@@ -71,6 +71,7 @@ namespace Forge_Modding_Helper_3
 
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            this.Title = UITextTranslator.getTranslation("workspace_manager.title");
         }
 
         private void Window_Initialized(object sender, EventArgs e)

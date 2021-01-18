@@ -31,6 +31,7 @@ namespace Forge_Modding_Helper_3.Windows
             // Loadings translations
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            this.Title = UITextTranslator.getTranslation("options.title");
 
             // Reading option file
             OptionsFile.ReadDataFile();
