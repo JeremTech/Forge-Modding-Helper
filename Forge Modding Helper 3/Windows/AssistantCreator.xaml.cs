@@ -155,6 +155,7 @@ namespace Forge_Modding_Helper_3
         /// </summary>
         private void Cancel_button_Click(object sender, RoutedEventArgs e)
         {
+
             this.Close();
         }
         #endregion
@@ -700,6 +701,24 @@ namespace Forge_Modding_Helper_3
                 {
                     // We cancel the event / the window closing
                     e.Cancel = true;
+                }
+                else 
+                {
+                    WelcomeWindow welcomeWindow = new WelcomeWindow();
+
+                    // Update welcome UI depending on the presence of recent projects or not
+                    if (RecentWorkspaces.ReadDataFile())
+                    {
+                        welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
+                        welcomeWindow.listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+                    }
+                    else
+                    {
+                        welcomeWindow.label_no_workspace_found.Visibility = Visibility.Visible;
+                    }
+
+                    // Windows management
+                    welcomeWindow.Show();
                 }
             }
         }

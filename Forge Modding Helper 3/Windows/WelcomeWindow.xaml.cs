@@ -54,7 +54,9 @@ namespace Forge_Modding_Helper_3.Windows
         {
             // Display the Assistant Creator
             AssistantCreator creator = new AssistantCreator();
-            creator.ShowDialog();
+            creator.Show();
+
+            this.Close();
         }
 
         /// <summary>
