@@ -13,23 +13,26 @@ using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows;
+using McModAPIVersions;
+using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace Forge_Modding_Helper_3
 {
     public partial class AssistantCreator : Window
     {
         // Number of step of the Assistant Creator
-        private double total_step = 5.0;
+        private double total_step = 6.0;
         // Current step
         private double step = 0.0;
         // Output folder
         private string folder = "";
-        // Url to json to check last forge versions
-        private string versions_url = "https://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.json";
-        // Background Worker to retrieve forge versions
-        private readonly BackgroundWorker background_thread = new BackgroundWorker();
         // Forge Version manager
         private ForgeVersionsUtils versions = new ForgeVersionsUtils();
+        // Temp vars
+        private List<String> AvalaibleForgeVersions = new List<string>();
+        private string RecommendedForgeVersion = "";
+        private string LatestForgeVersion = "";
         // Mod infos storage
         private Dictionary<string, string> mod_infos = new Dictionary<string, string>
         {
@@ -56,16 +59,13 @@ namespace Forge_Modding_Helper_3
             // Reset step display
             updateStep(0.0);
 
-            // Initialize background thread
-            background_thread.DoWork += Background_thread_DoWork;
-            background_thread.RunWorkerCompleted += Background_thread_RunWorkerCompleted;
-
             // Hiding all grids except the first one
             first_grid.Visibility = Visibility.Visible;
             second_grid.Visibility = Visibility.Hidden;
             third_grid.Visibility = Visibility.Hidden;
             fourth_grid.Visibility = Visibility.Hidden;
-            fith_grid.Visibility = Visibility.Hidden;
+            fifth_grid.Visibility = Visibility.Hidden;
+            sixth_grid.Visibility = Visibility.Hidden;
             generation_grid.Visibility = Visibility.Hidden;
             finish_grid.Visibility = Visibility.Hidden;
         }
@@ -77,6 +77,10 @@ namespace Forge_Modding_Helper_3
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
             label_welcome_output_directory.Text = UITextTranslator.getTranslation("assistant_creator.label.welcome.output_directory_message");
             this.Title = UITextTranslator.getTranslation("assistant_creator.title");
+
+            // Adding supported Minecraft versions to the step 4 ComboBox
+            AppInfos.getSupportedMinecraftVersions().Reverse();
+            forge_version_comboBox.ItemsSource = AppInfos.getSupportedMinecraftVersions();
         }
 
         /// <summary>
@@ -88,66 +92,6 @@ namespace Forge_Modding_Helper_3
             step_progressbar.Value = (stepIn / this.total_step) * 100;
             step_label.Content = UITextTranslator.getTranslation("assistant_creator.step") + " " + stepIn + " / " + this.total_step;
         }
-
-        #region Background Worker
-        /// <summary>
-        /// Function executed when the forge version retrieval background thread finished his tasks
-        /// </summary>
-        private void Background_thread_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            // Update Forge version selection UI
-            forge_versions_grid.ClearValue(EffectProperty);
-            loading_progressbar.Visibility = Visibility.Hidden;
-
-            // Check if a latest version is found
-            if (!string.IsNullOrWhiteSpace(versions.getLatestForgeVersion(mod_infos["minecraft_version"])))
-            {
-                this.latest_forge_version_label.Content = versions.getLatestForgeVersion(mod_infos["minecraft_version"]);
-                this.latest_forge_version_grid.Visibility = Visibility.Visible;
-                this.latest_radiobutton.IsChecked = true;
-                missing_infos_label.Visibility = Visibility.Hidden;
-                minecraft_version_image.Source = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/check.png", UriKind.Relative));
-            }
-            else
-            {
-                this.latest_forge_version_grid.Visibility = Visibility.Hidden;
-            }
-
-            // Check if a recommended version is found
-            if (!string.IsNullOrWhiteSpace(versions.getRecommendedForgeVersion(mod_infos["minecraft_version"])))
-            {
-                this.recommended_forge_version_label.Content = versions.getRecommendedForgeVersion(mod_infos["minecraft_version"]);
-                this.recommended_forge_version_grid.Visibility = Visibility.Visible;
-                this.recommended_radiobutton.IsChecked = true;
-                missing_infos_label.Visibility = Visibility.Hidden;
-                minecraft_version_image.Source = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/check.png", UriKind.Relative));
-            }
-            else
-            {
-                this.recommended_forge_version_grid.Visibility = Visibility.Hidden;
-            }
-
-            // Set selected version to the latest version
-            this.mod_infos["forge_version"] = versions.getLatestForgeVersion(mod_infos["minecraft_version"]);
-        }
-
-        /// <summary>
-        /// Function executed when the forge version retrieval background thread is call
-        /// </summary>
-        private void Background_thread_DoWork(object sender, DoWorkEventArgs e)
-        {
-            string content = "";
-
-            using (WebClient client = new WebClient())
-            {
-                // Retrieve forge versions json content
-                content = client.DownloadString(versions_url);
-            }
-
-            // Convert content to ForgeVersionsUtils object
-            versions = JsonConvert.DeserializeObject<ForgeVersionsUtils>(content);
-        }
-        #endregion
 
         #region Cancel button
         /// <summary>
@@ -216,7 +160,7 @@ namespace Forge_Modding_Helper_3
                 case 2:
                     {
                         // Check if mandatory step's infos are completed
-                        if (!String.IsNullOrWhiteSpace(this.mod_infos["mod_id"]) && !String.IsNullOrWhiteSpace(this.mod_infos["mod_group"]) && !String.IsNullOrWhiteSpace(this.mod_infos["minecraft_version"]) && !String.IsNullOrWhiteSpace(this.mod_infos["forge_version"]))
+                        if (!String.IsNullOrWhiteSpace(this.mod_infos["mod_id"]) && !String.IsNullOrWhiteSpace(this.mod_infos["mod_group"]))
                         {
                             // Update UI components
                             missing_infos_label.Visibility = Visibility.Hidden;
@@ -236,9 +180,30 @@ namespace Forge_Modding_Helper_3
                     }
                 case 3:
                     {
+                        if(!String.IsNullOrWhiteSpace(this.mod_infos["minecraft_version"]) && !String.IsNullOrWhiteSpace(this.mod_infos["forge_version"]))
+                        {
+                            // Update UI components
+                            fourth_grid.Visibility = Visibility.Hidden;
+                            fifth_grid.Visibility = Visibility.Visible;
+                            missing_infos_label.Visibility = Visibility.Hidden;
+
+                            // Increase and update step number
+                            this.step++;
+                            this.updateStep(this.step);
+                        }
+                        else 
+                        {
+                            // Display missing infos message
+                            missing_infos_label.Visibility = Visibility.Visible;
+                        }
+                       
+                        break;
+                    }
+                case 4:
+                    {
                         // Update UI components
-                        fourth_grid.Visibility = Visibility.Hidden;
-                        fith_grid.Visibility = Visibility.Visible;
+                        fifth_grid.Visibility = Visibility.Hidden;
+                        sixth_grid.Visibility = Visibility.Visible;
                         missing_infos_label.Visibility = Visibility.Hidden;
 
                         // Increase and update step number
@@ -246,14 +211,14 @@ namespace Forge_Modding_Helper_3
                         this.updateStep(this.step);
                         break;
                     }
-                case 4:
+                case 5:
                     {
                         // Saving in recent workspaces
                         RecentWorkspaces.RecentWorkspacesList.Add(new Workspace(this.mod_infos["mod_name"], this.mod_infos["minecraft_version"], this.folder, this.mod_infos["mod_description"], DateTime.Now));
                         RecentWorkspaces.WriteDataFile();
 
                         // Update UI components
-                        fith_grid.Visibility = Visibility.Hidden;
+                        sixth_grid.Visibility = Visibility.Hidden;
                         generation_grid.Visibility = Visibility.Visible;
                         missing_infos_label.Visibility = Visibility.Hidden;
                         next_button.IsEnabled = false;
@@ -265,16 +230,26 @@ namespace Forge_Modding_Helper_3
                         this.updateStep(this.step);
 
                         // Forge download
-                        update_progress(0, "Téléchargement de Forge " + this.mod_infos["minecraft_version"] + " - " + this.mod_infos["forge_version"] + " en cours...");
+                        update_progress(0, "Téléchargement de Forge " + this.mod_infos["forge_version"] + " en cours...");
 
                         WebClient client = new WebClient();
                         client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
                         client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
-                        client.DownloadFileAsync(new Uri("https://files.minecraftforge.net/maven/net/minecraftforge/forge/" + this.mod_infos["minecraft_version"] + "-" + this.mod_infos["forge_version"] + "/forge-" + this.mod_infos["minecraft_version"] + "-" + this.mod_infos["forge_version"] + "-mdk.zip"), this.folder + @"\mdk.zip");
+
+                        string dlLink = "";
+                        try
+                        {
+                            dlLink = McForge.GetMDKDownloadLink(this.mod_infos["forge_version"].Split('-')[0], this.mod_infos["forge_version"].Split('-')[1]);
+                        } 
+                        catch(VersionNotFoundException)
+                        {
+                            update_progress(0, "Impossible de récupérer le MDK de Forge " + this.mod_infos["forge_version"] + " !");
+                        }
+                        client.DownloadFileAsync(new Uri(dlLink), this.folder + @"\mdk.zip");
 
                         break;
                     }
-                case 5:
+                case 6:
                     {
                         // Update UI components
                         generation_grid.Visibility = Visibility.Hidden;
@@ -340,7 +315,19 @@ namespace Forge_Modding_Helper_3
                 {
                     // Update UI components
                     fourth_grid.Visibility = Visibility.Visible;
-                    fith_grid.Visibility = Visibility.Hidden;
+                    fifth_grid.Visibility = Visibility.Hidden;
+                    missing_infos_label.Visibility = Visibility.Hidden;
+
+                    // Decrease and update step number
+                    this.step--;
+                    this.updateStep(this.step);
+                    break;
+                }
+                case 5:
+                {
+                    // Update UI components
+                    fifth_grid.Visibility = Visibility.Visible;
+                    sixth_grid.Visibility = Visibility.Hidden;
                     missing_infos_label.Visibility = Visibility.Hidden;
 
                     // Decrease and update step number
@@ -560,40 +547,92 @@ namespace Forge_Modding_Helper_3
         }
         #endregion
 
-        #region ComboBox Forge Version
+        #region API Version selection related functions
         /// <summary>
         /// Function called when the selected minecraft version change
         /// </summary>
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Update UI component
             BlurEffect effect = new BlurEffect();
             effect.Radius = 20;
-            forge_versions_grid.Effect = effect;
-            loading_progressbar.Visibility = Visibility.Visible;
-            mod_infos["minecraft_version"] = (string) ((ComboBoxItem)forge_version_comboBox.SelectedItem).Content;
+            forge_version_list.Effect = effect;
+            loading_versions_progressbar.Visibility = Visibility.Visible;
+            mod_infos["minecraft_version"] = (string) (forge_version_comboBox.SelectedItem);
 
-            // Starting forge version checker
-            background_thread.RunWorkerAsync();
-        }
-        #endregion
+            // Retrieve Forge versions
+            await RetrieveAvailableForgeVersion(mod_infos["minecraft_version"]);
 
-        #region Radiobutton Forge version
-        /// <summary>
-        /// Function called when the user change the forge version selection
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void forge_version_radiobutton_Checked(object sender, RoutedEventArgs e)
-        {
-            if(latest_radiobutton.IsChecked == true)
+            // Clear then fill list
+            forge_version_list.Items.Clear();
+
+            foreach (string version in AvalaibleForgeVersions)
             {
-                this.mod_infos["forge_version"] = versions.getLatestForgeVersion(this.mod_infos["minecraft_version"]);
+                // If this is the recommended version
+                if (version.Equals(mod_infos["minecraft_version"] + "-" + RecommendedForgeVersion))
+                {
+                    // Display a small star icon before version text
+                    forge_version_list.Items.Insert(0, new { Version = version, Image = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/star_icon.png", UriKind.Relative)) });
+                }
+                // Else if this is the latest version
+                else if (version.Equals(mod_infos["minecraft_version"] + "-" + LatestForgeVersion))
+                { 
+                    // Display a small bug icon before version text
+                    forge_version_list.Items.Insert(0, new { Version = version, Image = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/bug_icon.png", UriKind.Relative)) });
+                }
+                else
+                {
+                    // No icon before version text
+                    forge_version_list.Items.Insert(0, new { Version = version, Image = (BitmapImage) null });
+                }
             }
-            else
-            {
-                this.mod_infos["forge_version"] = versions.getRecommendedForgeVersion(this.mod_infos["minecraft_version"]);
 
+            // Update UI
+            forge_version_list.ClearValue(EffectProperty);
+            loading_versions_progressbar.Visibility = Visibility.Hidden;
+            minecraft_version_image.Source = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/check.png", UriKind.Relative));
+        }
+
+        /// <summary>
+        /// Retrieve all forge versions informations (using McModAPIVersions)
+        /// </summary>
+        /// <param name="mcVersion">Targetted Minecraft version</param>
+        private async Task RetrieveAvailableForgeVersion(string mcVersion)
+        {
+            // Run it async
+            await Task.Factory.StartNew(() => 
+            {
+                try
+                {
+                    // Retrieve all available Forge version for the wanted Minecraft version
+                    AvalaibleForgeVersions = McForge.GetAvailableVersions(mcVersion);
+                    LatestForgeVersion = McForge.GetLatestVersion(mcVersion);
+                    RecommendedForgeVersion = McForge.GetRecommendedVersion(mcVersion);
+                }
+                catch (VersionNotFoundException) { }
+                catch (Exception) 
+                {
+                    // If we can't retrieve remote informations 
+                    MessageBox.Show(UITextTranslator.getTranslation("assistant_creator.alert.no_connection"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Function called when the user change version selection
+        /// </summary>
+        private void forge_version_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Convert sender as listbox
+            ListBox listBox = sender as ListBox;
+
+            // If successfull convertion and selected item not null
+            if(listBox != null && listBox.SelectedItem != null)
+            {
+                // Retrieve version value from anonymous type
+                string version = (string) listBox.SelectedItem.GetType().GetProperty("Version").GetValue(listBox.SelectedItem, null);
+                selected_version_label.Content = version;
+                this.mod_infos["forge_version"] = version;
             }
         }
         #endregion
