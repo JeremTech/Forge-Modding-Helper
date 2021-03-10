@@ -30,7 +30,7 @@ namespace Forge_Modding_Helper_3
         // Forge Version manager
         private ForgeVersionsUtils versions = new ForgeVersionsUtils();
         // Temp vars
-        private List<String> AvalaibleForgeVersions = new List<string>();
+        private List<String> AvailableForgeVersions = new List<string>();
         private string RecommendedForgeVersion = "";
         private string LatestForgeVersion = "";
         // Mod infos storage
@@ -566,7 +566,7 @@ namespace Forge_Modding_Helper_3
             // Clear then fill list
             forge_version_list.Items.Clear();
 
-            foreach (string version in AvalaibleForgeVersions)
+            foreach (string version in AvailableForgeVersions)
             {
                 // If this is the recommended version
                 if (version.Equals(mod_infos["minecraft_version"] + "-" + RecommendedForgeVersion))
@@ -605,7 +605,7 @@ namespace Forge_Modding_Helper_3
                 try
                 {
                     // Retrieve all available Forge version for the wanted Minecraft version
-                    AvalaibleForgeVersions = McForge.GetAvailableVersions(mcVersion);
+                    AvailableForgeVersions = McForge.GetAvailableVersions(mcVersion);
                     LatestForgeVersion = McForge.GetLatestVersion(mcVersion);
                     RecommendedForgeVersion = McForge.GetRecommendedVersion(mcVersion);
                 }

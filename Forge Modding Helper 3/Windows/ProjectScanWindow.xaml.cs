@@ -70,197 +70,34 @@ namespace Forge_Modding_Helper_3.Windows
             // Loadings translations
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
-
-            this.main_status_label.Content = UITextTranslator.getTranslation("project_scan.initialization");
-            this.secondary_status_label.Content = UITextTranslator.getTranslation("project_scan.initialization");
         }
 
-        private void Window_Initialized(object sender, EventArgs e)
+        public ProjectScanWindow(string projectPath)
         {
+            InitializeComponent();
+            App.CurrentProjectData = new Project(projectPath);
 
+            // Loadings translations
+            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            await Task.Factory.StartNew(ScanProject);
+            // Launch and wait all scanning tasks
+            await Task.WhenAll(new Task[] {App.CurrentProjectData.ScanBuildGradle(), App.CurrentProjectData.ScanModToml(), App.CurrentProjectData.ScanTextures(), App.CurrentProjectData.ScanBlockstates(), App.CurrentProjectData.ScanModels(), App.CurrentProjectData.ScanJavaFiles()});
+
+            // Writing mod data
+            await App.CurrentProjectData.WriteModData();
 
             // Once scan finished
             if (this.showProjectWindow)
             {
                 RecentWorkspaces.AddRecentWorkspace(new Workspace(modInfos["mod_name"], modInfos["minecraft_version"], path, modInfos["mod_description"], DateTime.Now));
-                new WorkspaceManager(this.path).Show();
+                new WorkspaceManager(App.CurrentProjectData.ProjectDirectory).Show();
             }
 
             this.Close();
-        }
-
-        private void updateMainStatus(string statusTranslateKey, int statusPercentage)
-        {
-            this.main_status_label.Dispatcher.Invoke((MethodInvoker) delegate { main_status_label.Content = UITextTranslator.getTranslation(statusTranslateKey); });
-            this.main_progress_bar.Dispatcher.Invoke((MethodInvoker) delegate { main_progress_bar.Value = statusPercentage; });
-        }
-
-        private void updateSecondaryStatus(string statusTranslateKey, int statusPercentage)
-        {
-            this.secondary_status_label.Dispatcher.Invoke((MethodInvoker)delegate { secondary_status_label.Content = UITextTranslator.getTranslation(statusTranslateKey); });
-            this.secondary_progressbar.Dispatcher.Invoke((MethodInvoker)delegate { secondary_progressbar.Value = statusPercentage; });
-        }
-
-        public void ScanProject()
-        {
-            // fmh directory creation
-            Directory.CreateDirectory(Path.Combine(path, "fmh"));
-
-            #region Scan mod infos
-            updateMainStatus("project_scan.mod_info", 0);
-
-            // Scan build.gradle
-            updateSecondaryStatus("project_scan.mod_info.build_gradle", 0);
-
-            string buildGradle = File.ReadAllText(Path.Combine(path, "build.gradle"));
-            modInfos["mappings_version"] = buildGradle.getBetween("mappings channel: 'snapshot', version: '", "'");
-            updateSecondaryStatus("project_scan.mod_info.build_gradle", 20);
-            modInfos["mod_version"] = buildGradle.getBetween("version = '", "'");
-            updateSecondaryStatus("project_scan.mod_info.build_gradle", 40);
-            modInfos["mod_group"] = buildGradle.getBetween("group = '", "'");
-            updateSecondaryStatus("project_scan.mod_info.build_gradle", 60);
-            modInfos["forge_version"] = buildGradle.getBetween("minecraft 'net.minecraftforge:forge:", "'");
-            updateSecondaryStatus("project_scan.mod_info.build_gradle", 80);
-            modInfos["minecraft_version"] = modInfos["forge_version"].getBetween("", "-");
-            updateSecondaryStatus("project_scan.mod_info.build_gradle", 100);
-
-            // Scan mods.toml
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 0);
-
-            string modToml = File.ReadAllText(Path.Combine(path, "src\\main\\resources\\META-INF\\mods.toml"));
-
-            modInfos["mod_license"] = modToml.getBetween("license=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 10);
-            modInfos["mod_id"] = modToml.getBetween("modId=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 20);
-            modInfos["mod_name"] = modToml.getBetween("displayName=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 30);
-            modInfos["mod_description"] = modToml.getBetween("description='''", "'''").Trim();
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 40);
-            modInfos["mod_logo"] = modToml.getBetween("logoFile=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 50);
-            modInfos["mod_credits"] = modToml.getBetween("credits=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 60);
-            modInfos["mod_authors"] = modToml.getBetween("authors=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 70);
-            modInfos["display_url"] = modToml.getBetween("displayURL=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 80);
-            modInfos["update_json"] = modToml.getBetween("updateJSONURL=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 90);
-            modInfos["issue_tracker"] = modToml.getBetween("issueTrackerURL=\"", "\"");
-            updateSecondaryStatus("project_scan.mod_info.mods_toml", 100);
-
-            updateSecondaryStatus("project_scan.mod_info.writing_file", 0);
-            WriteModInfos();
-            updateSecondaryStatus("project_scan.mod_info.writing_file", 100);
-            #endregion
-
-            #region Scan textures
-            updateMainStatus("project_scan.textures", 25);
-
-            // Scan textures directory
-            DirectoryFileListing((Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "textures")));
-
-            updateSecondaryStatus("project_scan.textures.writing_file", 0);
-            WriteTexturesList();
-            updateSecondaryStatus("project_scan.textures.writing_file", 100);
-            #endregion
-
-            #region Scan blockstates
-            updateMainStatus("project_scan.blockstates", 50);
-
-            // Scan blockstates directory
-            DirectoryFileListing((Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "blockstates")));
-
-            updateSecondaryStatus("project_scan.blockstates.writing_file", 0);
-            WriteBlockstatesList();
-            updateSecondaryStatus("project_scan.blockstates.writing_file", 100);
-            #endregion
-
-            #region Scan models
-            updateMainStatus("project_scan.models", 75);
-
-            // Scan models directory
-            DirectoryFileListing(Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "models"));
-
-            updateSecondaryStatus("project_scan.models.writing_file", 0);
-            WriteModelsList();
-            updateSecondaryStatus("project_scan.models.writing_file", 100);
-            #endregion
-
-            #region Scan java files
-            updateMainStatus("project_scan.java_files", 95);
-
-            // Scan java directory
-            DirectoryFileListing(Path.Combine(path, "src\\main\\java"));
-
-            updateSecondaryStatus("project_scan.java_files.writing_file", 0);
-            WriteJavaFilesList();
-            updateSecondaryStatus("project_scan.java_files.writing_file", 100);
-            #endregion
-        }
-
-        public void WriteModInfos()
-        {
-            string jsonContent = JsonConvert.SerializeObject(modInfos, Formatting.Indented);
-            File.WriteAllText(Path.Combine(path, "fmh", "mod_infos.json"), jsonContent);
-        }
-
-        public void WriteBlockstatesList()
-        {
-            string jsonContent = JsonConvert.SerializeObject(blockstatesList, Formatting.Indented);
-            File.WriteAllText(Path.Combine(path, "fmh", "blockstates_list.json"), jsonContent);
-        }
-
-        public void WriteTexturesList()
-        {
-            string jsonContent = JsonConvert.SerializeObject(texturesList, Formatting.Indented);
-            File.WriteAllText(Path.Combine(path, "fmh", "textures_list.json"), jsonContent);
-        }
-
-        public void WriteModelsList()
-        {
-            string jsonContent = JsonConvert.SerializeObject(modelsList, Formatting.Indented);
-            File.WriteAllText(Path.Combine(path, "fmh", "models_list.json"), jsonContent);
-        }
-
-        public void WriteJavaFilesList()
-        {
-            string jsonContent = JsonConvert.SerializeObject(javaFileList, Formatting.Indented);
-            File.WriteAllText(Path.Combine(path, "fmh", "java_files_list.json"), jsonContent);
-        }
-
-        public void DirectoryFileListing(string path)
-        {
-            try
-            {
-                foreach (string f in Directory.GetFiles(path))
-                {
-                    updateSecondaryStatus(Path.GetFileName(f), 0);
-                    if(path.Contains("textures"))
-                        texturesList.Add(f);
-                    else if (path.Contains("blockstates"))
-                        blockstatesList.Add(f);
-                    else if(path.Contains("models"))
-                        modelsList.Add(f);
-                    else if (path.Contains("java"))
-                        javaFileList.Add(f);
-                }
-
-                foreach (string d in Directory.GetDirectories(path))
-                {
-                    DirectoryFileListing(d);
-                }
-            }
-            catch (System.Exception excpt)
-            {
-                Console.WriteLine(excpt.Message);
-            }
-        }
+        }    
     }
 }

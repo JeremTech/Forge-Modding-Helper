@@ -41,5 +41,35 @@ namespace Forge_Modding_Helper_3.Utils
 
             return isForgeWorkspace;
         }
+
+        /// <summary>
+        /// Return a list of files in a directory and in his all sub-directories
+        /// </summary>
+        /// <param name="path">Targetted directory</param>
+        public static List<string> DeepFileListing(string path)
+        {
+            List<string> fileList = new List<string>();
+
+            try
+            {
+                // For each file in the directory
+                foreach (string f in Directory.GetFiles(path))
+                {
+                    fileList.Add(f);
+                }
+
+                // For each sub directory
+                foreach (string d in Directory.GetDirectories(path))
+                {
+                    fileList.AddRange(DeepFileListing(d));
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return fileList;
+        }
     }
 }

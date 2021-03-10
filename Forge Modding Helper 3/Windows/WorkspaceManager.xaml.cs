@@ -101,19 +101,19 @@ namespace Forge_Modding_Helper_3
 
         private void updateUI()
         {
-            this.label_mod_name.Content = modInfos["mod_name"];
-            this.label_home_minecraft_version.Content = modInfos["minecraft_version"];
-            this.label_minecraft_version.Content = "Minecraft " + modInfos["minecraft_version"];
-            this.label_home_forge_version.Content = modInfos["forge_version"];
-            this.label_forge_version.Content = "Forge " + modInfos["forge_version"];
-            this.label_home_mappings_version.Content = modInfos["mappings_version"];
+            this.label_mod_name.Content = App.CurrentProjectData.ModData.ModName;
+            this.label_home_minecraft_version.Content = App.CurrentProjectData.ModData.ModMinecraftVersion;
+            this.label_minecraft_version.Content = "Minecraft " + App.CurrentProjectData.ModData.ModMinecraftVersion;
+            this.label_home_forge_version.Content = App.CurrentProjectData.ModData.ModForgeVersion;
+            this.label_forge_version.Content = "Forge " + App.CurrentProjectData.ModData.ModForgeVersion;
+            this.label_home_mappings_version.Content = App.CurrentProjectData.ModData.ModMappingsVersion;
             this.label_home_textures_number.Content = texturesList.Count;
             this.label_home_models_number.Content = modelsList.Count;
             this.label_home_javafiles_number.Content = javaFileList.Count;
 
-            string[] desc = modInfos["mod_description"].Split('\r');
+            string[] desc = App.CurrentProjectData.ModData.ModDescription.Split('\r');
             if (desc.Count() != 0) this.label_mod_description.Content = desc[0];
-            else this.label_mod_description.Content = modInfos["mod_description"];
+            else this.label_mod_description.Content = App.CurrentProjectData.ModData.ModDescription;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -194,7 +194,7 @@ namespace Forge_Modding_Helper_3
 
                     List<string> models_folders = new List<string>();
                     models_folders.Add("--");
-                    foreach (string modelsFolder in Directory.GetDirectories(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "models")))
+                    foreach (string modelsFolder in Directory.GetDirectories(System.IO.Path.Combine(path, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "models")))
                     {
                         models_folders.Add(System.IO.Path.GetFileName(modelsFolder));
                     }
@@ -209,7 +209,7 @@ namespace Forge_Modding_Helper_3
 
                     List<string> textures_folders = new List<string>();
                     textures_folders.Add("--");
-                    foreach (string texturesFolder in Directory.GetDirectories(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "textures")))
+                    foreach (string texturesFolder in Directory.GetDirectories(System.IO.Path.Combine(path, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "textures")))
                     {
                         textures_folders.Add(System.IO.Path.GetFileName(texturesFolder));
                     }
@@ -237,20 +237,20 @@ namespace Forge_Modding_Helper_3
 
         public void updateModSettingsSection() 
         {
-            this.mod_settings_name_textbox.Text = modInfos["mod_name"];
-            this.mod_settings_authors_textbox.Text = modInfos["mod_authors"];
-            this.mod_settings_version_textbox.Text = modInfos["mod_version"];
-            this.mod_settings_modid_textbox.Text = modInfos["mod_id"];
-            this.mod_settings_group_textbox.Text = modInfos["mod_group"];
-            this.mod_settings_credits_textbox.Text = modInfos["mod_credits"];
-            this.mod_settings_website_textbox.Text = modInfos["display_url"];
-            this.mod_settings_bug_tracker_textbox.Text = modInfos["issue_tracker"];
-            this.mod_settings_update_json_textbox.Text = modInfos["update_json"];
-            this.mod_settings_description_textbox.Text = modInfos["mod_description"];
-            this.mod_settings_minecraft_version_textbox.Text = modInfos["minecraft_version"];
-            this.mod_settings_forge_version_textbox.Text = modInfos["forge_version"];
-            this.mod_settings_mappings_version_textbox.Text = modInfos["mappings_version"];
-            this.mod_settings_license_textbox.Text = modInfos["mod_license"];
+            this.mod_settings_name_textbox.Text = App.CurrentProjectData.ModData.ModName;
+            this.mod_settings_authors_textbox.Text = App.CurrentProjectData.ModData.ModAuthors;
+            this.mod_settings_version_textbox.Text = App.CurrentProjectData.ModData.ModVersion;
+            this.mod_settings_modid_textbox.Text = App.CurrentProjectData.ModData.ModID;
+            this.mod_settings_group_textbox.Text = App.CurrentProjectData.ModData.ModGroup;
+            this.mod_settings_credits_textbox.Text = App.CurrentProjectData.ModData.ModCredits;
+            this.mod_settings_website_textbox.Text = App.CurrentProjectData.ModData.ModWebsite;
+            this.mod_settings_bug_tracker_textbox.Text = App.CurrentProjectData.ModData.ModIssueTracker;
+            this.mod_settings_update_json_textbox.Text = App.CurrentProjectData.ModData.ModUpdateJSONURL;
+            this.mod_settings_description_textbox.Text = App.CurrentProjectData.ModData.ModDescription;
+            this.mod_settings_minecraft_version_textbox.Text = App.CurrentProjectData.ModData.ModMinecraftVersion;
+            this.mod_settings_forge_version_textbox.Text = App.CurrentProjectData.ModData.ModForgeVersion;
+            this.mod_settings_mappings_version_textbox.Text = App.CurrentProjectData.ModData.ModMappingsVersion;
+            this.mod_settings_license_textbox.Text = App.CurrentProjectData.ModData.ModLicense;
 
             if (File.Exists(System.IO.Path.Combine(path, @"src\main\resources\logo.png")))
             {
@@ -272,20 +272,20 @@ namespace Forge_Modding_Helper_3
 
         private void update_mod_settings_button_Click(object sender, RoutedEventArgs e)
         {
-            modInfos["mod_name"] = this.mod_settings_name_textbox.Text;
-            modInfos["mod_authors"] = this.mod_settings_authors_textbox.Text;
-            modInfos["mod_version"] = this.mod_settings_version_textbox.Text;
-            modInfos["mod_id"] = this.mod_settings_modid_textbox.Text;
-            modInfos["mod_group"] = this.mod_settings_group_textbox.Text;
-            modInfos["mod_credits"] = this.mod_settings_credits_textbox.Text;
-            modInfos["display_url"] = this.mod_settings_website_textbox.Text;
-            modInfos["issue_tracker"] = this.mod_settings_bug_tracker_textbox.Text;
-            modInfos["update_json"] = this.mod_settings_update_json_textbox.Text;
-            modInfos["mod_description"] = this.mod_settings_description_textbox.Text;
-            modInfos["minecraft_version"] = this.mod_settings_minecraft_version_textbox.Text;
-            modInfos["forge_version"] = this.mod_settings_forge_version_textbox.Text;
-            modInfos["mappings_version"] = this.mod_settings_mappings_version_textbox.Text;
-            modInfos["mod_license"] = this.mod_settings_license_textbox.Text;
+            App.CurrentProjectData.ModData.ModName = this.mod_settings_name_textbox.Text;
+            App.CurrentProjectData.ModData.ModAuthors = this.mod_settings_authors_textbox.Text;
+            App.CurrentProjectData.ModData.ModVersion = this.mod_settings_version_textbox.Text;
+            App.CurrentProjectData.ModData.ModID = this.mod_settings_modid_textbox.Text;
+            App.CurrentProjectData.ModData.ModGroup = this.mod_settings_group_textbox.Text;
+            App.CurrentProjectData.ModData.ModCredits = this.mod_settings_credits_textbox.Text;
+            App.CurrentProjectData.ModData.ModWebsite = this.mod_settings_website_textbox.Text;
+            App.CurrentProjectData.ModData.ModIssueTracker = this.mod_settings_bug_tracker_textbox.Text;
+            App.CurrentProjectData.ModData.ModUpdateJSONURL = this.mod_settings_update_json_textbox.Text;
+            App.CurrentProjectData.ModData.ModDescription = this.mod_settings_description_textbox.Text;
+            App.CurrentProjectData.ModData.ModMinecraftVersion = this.mod_settings_minecraft_version_textbox.Text;
+            App.CurrentProjectData.ModData.ModForgeVersion = this.mod_settings_forge_version_textbox.Text;
+            App.CurrentProjectData.ModData.ModMappingsVersion = this.mod_settings_mappings_version_textbox.Text;
+            App.CurrentProjectData.ModData.ModLicense = this.mod_settings_license_textbox.Text;
 
             if (!string.IsNullOrWhiteSpace(new_logo_path))
             {
@@ -293,7 +293,7 @@ namespace Forge_Modding_Helper_3
                 {
                     if (File.Exists(System.IO.Path.Combine(path, @"src\main\resources\logo.png"))) File.Delete(System.IO.Path.Combine(path, @"src\main\resources\logo.png"));
                     File.Copy(new_logo_path, this.path + @"\src\main\resources\logo.png");
-                    this.modInfos["mod_logo"] = new_logo_path;
+                    App.CurrentProjectData.ModData.ModLogo = new_logo_path;
                 }
             }
 
@@ -593,9 +593,9 @@ namespace Forge_Modding_Helper_3
         #region Translation files section controls events
         private void language_files_listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (language_files_listBox.SelectedItem != null && File.Exists(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang", language_files_listBox.SelectedItem.ToString())))
+            if (language_files_listBox.SelectedItem != null && File.Exists(System.IO.Path.Combine(path, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang", language_files_listBox.SelectedItem.ToString())))
             {
-                language_textEditor.Text = File.ReadAllText(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang", language_files_listBox.SelectedItem.ToString()));
+                language_textEditor.Text = File.ReadAllText(System.IO.Path.Combine(path, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang", language_files_listBox.SelectedItem.ToString()));
                 translation_delete_file_button.IsEnabled = true;
             }
             else
@@ -609,13 +609,13 @@ namespace Forge_Modding_Helper_3
         {
             if (language_files_listBox.SelectedItem != null)
             {
-                File.WriteAllText(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang", language_files_listBox.SelectedItem.ToString()), language_textEditor.Text);
+                File.WriteAllText(System.IO.Path.Combine(path, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang", language_files_listBox.SelectedItem.ToString()), language_textEditor.Text);
             }
         }
 
         private void translation_delete_file_button_Click(object sender, RoutedEventArgs e)
         {
-            string filePath = System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang", language_files_listBox.SelectedItem.ToString());
+            string filePath = System.IO.Path.Combine(path, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang", language_files_listBox.SelectedItem.ToString());
 
             if (language_files_listBox.SelectedItem != null && File.Exists(filePath))
             {
@@ -631,7 +631,7 @@ namespace Forge_Modding_Helper_3
 
         private void translation_add_file_button_Click(object sender, RoutedEventArgs e)
         {
-            new AddTranslationFileDialog(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang")).ShowDialog();
+            new AddTranslationFileDialog(System.IO.Path.Combine(path, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang")).ShowDialog();
             RefreshTranslationFilesList();
         }
         #endregion
@@ -639,11 +639,11 @@ namespace Forge_Modding_Helper_3
         #region Mod export section controls events
         public void updateModExportSection()
         {
-            this.mod_export_name_label.Content = modInfos["mod_name"];
-            this.mod_export_authors_label.Content = modInfos["mod_authors"];
-            this.mod_export_version_label.Content = modInfos["mod_version"];
-            this.mod_export_minecraft_version_label.Content = modInfos["minecraft_version"];
-            this.mod_export_forge_version_label.Content = modInfos["forge_version"];
+            this.mod_export_name_label.Content = App.CurrentProjectData.ModData.ModName;
+            this.mod_export_authors_label.Content = App.CurrentProjectData.ModData.ModAuthors;
+            this.mod_export_version_label.Content = App.CurrentProjectData.ModData.ModVersion;
+            this.mod_export_minecraft_version_label.Content = App.CurrentProjectData.ModData.ModMinecraftVersion;
+            this.mod_export_forge_version_label.Content = App.CurrentProjectData.ModData.ModForgeVersion;
 
             if (File.Exists(System.IO.Path.Combine(path, @"src\main\resources\logo.png")))
             {
@@ -755,7 +755,7 @@ namespace Forge_Modding_Helper_3
         {
             language_files_listBox.Items.Clear();
 
-            List<String> fileList = Directory.EnumerateFiles(System.IO.Path.Combine(path, "src\\main\\resources\\assets", modInfos["mod_id"], "lang")).ToList();
+            List<String> fileList = Directory.EnumerateFiles(System.IO.Path.Combine(path, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang")).ToList();
             fileList.ForEach(element => language_files_listBox.Items.Add(System.IO.Path.GetFileName(element)));
 
             if (language_files_listBox.Items.Count > 0)
