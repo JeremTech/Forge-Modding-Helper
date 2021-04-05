@@ -1,0 +1,772 @@
+﻿<Window x:Class="Forge_Modding_Helper_3.Windows.ProjectExplorer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows" 
+        xmlns:fa="http://schemas.fontawesome.io/icons/" 
+        xmlns:utils="clr-namespace:Forge_Modding_Helper_3.Utils" xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor" xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF"
+        mc:Ignorable="d"
+        Title="Project Explorer" Height="720" Width="1340" Icon="/Forge Modding Helper 3;component/Resources/Pictures/icon.png" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+
+    <Window.Resources>
+        
+        <utils:StringToImageConverter x:Key="StringToImageConverter"/>
+
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Style.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                    <Setter Property="Background" Value="#333333"></Setter>
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="#2D2D30"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+    </Window.Resources>
+    
+    <Grid x:Name="MainGrid" Background="{StaticResource PrimaryBackgroundColor}">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230"/>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Side bar menu -->
+        <Grid x:Name="SideBarGrid" Grid.Column="0" Background="{StaticResource SecondaryBackgroundColor}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="205"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Menu header -->
+            <StackPanel x:Name="SideBarHeaderStackPanel" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" Margin="0, 30, 0, 0">
+                <Image x:Name="ModLogoSideBarImage" Width="100" Height="100" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
+                <TextBlock x:Name="ModNameSideBarTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="20" TextAlignment="Center" Margin="0, 10, 0, 3" Text="MyMod"/>
+                <StackPanel x:Name="SideBarModVersionStackPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Foreground="{StaticResource FontColorSecondary}" FontSize="16" TextAlignment="Center" Text="v"/>
+                    <TextBlock x:Name="ModVersionSideBarTextBlock" Foreground="{StaticResource FontColorSecondary}" FontSize="16" TextAlignment="Center" Text="1.0.0.0"/>
+                </StackPanel>
+            </StackPanel>
+            
+            <!-- Menu buttons -->
+            <StackPanel Grid.Row="1" x:Name="SideBarButtonsStackPanel" VerticalAlignment="Center">
+
+                <!-- Home button -->
+                <Grid x:Name="SideBarHomeButton" Tag="Home" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="SideBarHomeButtonBorder" Grid.Column="0" Height="60" Background="#FF37ADE7" Tag="home"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Home" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Home"/>
+                </Grid>
+
+                <!-- Mod settings button -->
+                <Grid x:Name="SideBarModSettingsButton" Tag="ModSettings" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="SideBarModSettingsButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="settings"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Cogs" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Mod settings"/>
+                </Grid>
+
+                <!-- Blockstates button -->
+                <Grid x:Name="SideBarBlockstatesButton" Tag="Blockstates" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="SideBarBlockstatesButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="blockstates"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="ListUl" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Blockstates"/>
+                </Grid>
+
+                <!-- Models button -->
+                <Grid x:Name="SideBarModelsButton" Tag="Models" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="SideBarModelsButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="models"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Cube" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Models"/>
+                </Grid>
+
+                <!-- Textures button -->
+                <Grid x:Name="SideBarTexturesButton" Tag="Textures" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="SideBarTexturesButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="textures"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Image" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Textures"/>
+                </Grid>
+
+                <!-- Translations button -->
+                <Grid x:Name="SideBarTranslationsButton" Tag="Translations" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="SideBarTranslationsButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="translations"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Language" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Translations"/>
+                </Grid>
+
+                <!-- Exportation button -->
+                <Grid x:Name="SideBarExporationButton" Tag="Exportation" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="SideBarExportationButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="exportation"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="File" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Export"/>
+                </Grid>
+
+            </StackPanel>
+
+        </Grid>
+        
+        <!-- Separator between side bar and right grids -->
+        <Border Grid.Column="1" Background="#FF686868"/>
+        
+        <!-- Right grids -->
+        
+        <!-- Home grid -->
+        <Grid x:Name="HomeGrid" Grid.Column="2" Visibility="Visible">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <fa:ImageAwesome HorizontalAlignment="Center" Icon="ExclamationCircle" Width="60" Height="60" Foreground="{StaticResource FontColorPrimary}" Margin="0, 0, 0, 20"/>
+                <TextBlock x:Name="HomeLabelNoAvailable" Foreground="{StaticResource FontColorPrimary}" TextAlignment="Center" FontSize="20" Tag="feature.not_available" Text="Cette fonctionnalité n'est pas encore disponible."/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ModSettings grid -->
+        <Grid x:Name="ModSettingsGrid" Grid.Column="2" Visibility="Hidden">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Header - Mod logo, name and description -->
+            <Grid x:Name="ModSettingsHeaderGrid" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Margin="15">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Mod logo -->
+                <Border Grid.Column="0" BorderBrush="{StaticResource BorderColor}" BorderThickness="1">
+                    <Image x:Name="ModSettingsModLogoImage" Source="{x:Null}"/>
+                </Border>
+                <DockPanel Grid.Column="0" Height="22" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <Button x:Name="ModSettingsModLogoDeleteButton" DockPanel.Dock="Right" Width="25" Click="ModSettingsModLogoDeleteButtonClick">
+                        <fa:ImageAwesome Foreground="#FF0000" Icon="Trash"/>
+                    </Button>
+                    <Button x:Name="ModSettingsModLogoButton" Content="..." DockPanel.Dock="Right" Width="30" Click="ModSettingsModLogoButtonClick"/>
+                </DockPanel>
+
+                <!-- Mod name and description -->
+                <Grid Grid.Column="1" Margin="15, 0, 0, 0">
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox x:Name="ModSettingsModNameTextbox" Grid.Row="0" FontSize="20" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBox x:Name="ModSettingsModDescriptionTextbox" Grid.Row="1" FontSize="14" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 5, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </Grid>
+                
+            </Grid>
+            
+            <!-- Left column -->
+            <Grid Grid.Column="0" Grid.Row="1" Margin="15, 15, 15, 0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <!-- Mod authors -->
+                <StackPanel Orientation="Vertical" Grid.Row="0">
+                    <TextBlock x:Name="ModSettingsModAuthorsTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Auteur(s) du mod"/>
+                    <TextBox x:Name="ModSettingsModAuthorsTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+                <!-- Mod license -->
+                <StackPanel Orientation="Vertical" Grid.Row="1">
+                    <TextBlock x:Name="ModSettingsModLicenseTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Licence du mod"/>
+                    <TextBox x:Name="ModSettingsModLicenseTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+                <!-- Mod credits -->
+                <StackPanel Orientation="Vertical" Grid.Row="2">
+                    <TextBlock x:Name="ModSettingsModCreditsTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Crédits du mod"/>
+                    <TextBox x:Name="ModSettingsModCreditsTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+                <!-- Mod website -->
+                <StackPanel Orientation="Vertical" Grid.Row="3">
+                    <TextBlock x:Name="ModSettingsModWebsiteTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Site internet du mod"/>
+                    <TextBox x:Name="ModSettingsModWebsiteTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+                <!-- Mod bug tracker url -->
+                <StackPanel Orientation="Vertical" Grid.Row="4">
+                    <TextBlock x:Name="ModSettingsModBugTrackerURLTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Lien vers le bug tracker du mod"/>
+                    <TextBox x:Name="ModSettingsModBugTrackerURLTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+                <!-- Mod update json url -->
+                <StackPanel Orientation="Vertical" Grid.Row="5">
+                    <TextBlock x:Name="ModSettingsModUpdateJsonURLTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Lien vers le JSON de mise à jour"/>
+                    <TextBox x:Name="ModSettingsModUpdateJsonURLTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+            </Grid>
+            
+            <!-- Separator -->
+            <Border Grid.Column="1" Grid.Row="1" Margin="0, 25" Background="{StaticResource FontColorPrimary}"/>
+
+            <!-- Right column -->
+            <Grid Grid.Column="2" Grid.Row="1" Margin="15, 15, 15, 0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <!-- Mod version -->
+                <StackPanel Orientation="Vertical" Grid.Row="0">
+                    <TextBlock x:Name="ModSettingsModVersionTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Version du mod"/>
+                    <TextBox x:Name="ModSettingsModVersionTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+                <!-- Minecraft version -->
+                <StackPanel Orientation="Vertical" Grid.Row="1">
+                    <TextBlock x:Name="ModSettingsMinecraftVersionTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Version de Minecraft"/>
+                    <TextBox x:Name="ModSettingsMinecraftVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{StaticResource PrimaryBackgroundColor}" Foreground="{StaticResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+                <!-- Forge version -->
+                <StackPanel Orientation="Vertical" Grid.Row="2">
+                    <TextBlock x:Name="ModSettingsForgeVersionTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Version de Forge"/>
+                    <TextBox x:Name="ModSettingsForgeVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{StaticResource PrimaryBackgroundColor}" Foreground="{StaticResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+                <!-- Mappings version -->
+                <StackPanel Orientation="Vertical" Grid.Row="3">
+                    <TextBlock x:Name="ModSettingsMappingsVersionTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Version des mappings"/>
+                    <TextBox x:Name="ModSettingsMappingsVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{StaticResource PrimaryBackgroundColor}" Foreground="{StaticResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+                <!-- Modid -->
+                <StackPanel Orientation="Vertical" Grid.Row="4">
+                    <TextBlock x:Name="ModSettingsModidTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Modid"/>
+                    <TextBox x:Name="ModSettingsModidTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{StaticResource PrimaryBackgroundColor}" Foreground="{StaticResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+                <!-- Modgroup -->
+                <StackPanel Orientation="Vertical" Grid.Row="5">
+                    <TextBlock x:Name="ModSettingsModgroupTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Mod group"/>
+                    <TextBox x:Name="ModSettingsModgroupTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{StaticResource PrimaryBackgroundColor}" Foreground="{StaticResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                </StackPanel>
+
+            </Grid>
+
+            <!-- Separator -->
+            <Border Grid.ColumnSpan="3" Grid.Row="2" Background="#FF686868"/>
+
+            <!-- Status label and save button -->
+            <Grid Grid.Row="3" Grid.ColumnSpan="3" Background="{StaticResource SecondaryBackgroundColor}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock x:Name="ModSettingsStatusLabel" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Foreground="{StaticResource FontColorPrimary}" FontSize="13" Margin="0, 0, 20, 0" Text="Toutes les modifications ont été sauvegardées"/>
+                <Button x:Name="ModSettingsSaveButton" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Content="Appliquer les modifications" Padding="5" Margin="20, 0, 0, 0" Width="300" FontSize="14" Click="ModSettingsSaveButtonClick"/>
+            </Grid>
+            
+        </Grid>
+
+        <!-- Blockstates grid -->
+        <Grid x:Name="BlockstatesGrid" Grid.Column="2" Visibility="Hidden" IsVisibleChanged="GridIsVisibleChanged">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Search bar and buttons -->
+            <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10">
+                <Grid Grid.Row="0" Background="{StaticResource InputsBackgroundColor}">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+
+                    <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{StaticResource FontColorPrimary}" Margin="5"/>
+                    <TextBox x:Name="BlockstatesSearchTextbox" FontSize="14" Grid.Column="1" BorderBrush="{x:Null}" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" BorderThickness="0" TextChanged="SearchTextboxTextChanged"/>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <Button x:Name="BlockstatesRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
+                            <fa:ImageAwesome Foreground="DarkCyan" Icon="Pencil" Margin="4, 5"/>
+                        </Button>
+                        <Button x:Name="BlockstatesDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
+                            <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
+                        </Button>
+                        <Button x:Name="BlockstatesRefreshButton" Width="30" Click="RefreshButtonClick">
+                            <fa:ImageAwesome Foreground="DarkGreen" Icon="Refresh" Margin="4"/>
+                        </Button>
+                    </StackPanel>
+                
+                </Grid>
+            </Border>
+            
+            <!-- Listview -->
+            <Border Grid.Row="1" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10, 0">
+                <ListView x:Name="BlockstatesListView" Background="{StaticResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
+                    
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="70"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+                                
+                                <fa:ImageAwesome Grid.Row="0" Icon="{Binding Icon}" Foreground="{StaticResource FontColorPrimary}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56"/>
+                                <TextBlock Grid.Row="1" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" MaxWidth="128" FontSize="13"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="7" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    
+                </ListView>
+            </Border>
+            
+            <!-- Status bar -->
+            <Grid Grid.Row="2" Background="{StaticResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Separator -->
+                <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#FF686868"/>
+
+                <!-- Loading progressbar and textblock -->
+                <StackPanel x:Name="BlockstatesLoadingStackPanel" Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden">
+                    <ProgressBar x:Name="BlockstatesLoadingProgressBar" IsIndeterminate="True"  Width="120" Height="15" Margin="12, 0"/>
+                    <TextBlock x:Name="BlockstatesLoadingStatusTextblock" Foreground="{StaticResource FontColorPrimary}" Text="Chargement de la liste des fichiers..." FontSize="14"/>
+                </StackPanel>
+
+                <!-- File count -->
+                <StackPanel x:Name="BlockstatesFileCountStackPanel" Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock x:Name="BlockstatesFileCountTextblock" Foreground="{StaticResource FontColorPrimary}" Text="0" Margin="0, 0, 3, 0" FontSize="14"/>
+                    <TextBlock x:Name="BlockstatesFileLabelTextblock" Foreground="{StaticResource FontColorPrimary}" Text="fichiers" Margin="0, 0, 12, 0" FontSize="14"/>
+                </StackPanel>
+
+            </Grid>
+            
+        </Grid>
+
+
+        <!-- Models grid -->
+        <Grid x:Name="ModelsGrid" Grid.Column="2" Visibility="Hidden" IsVisibleChanged="GridIsVisibleChanged">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <!-- Search bar and buttons -->
+            <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10">
+                <Grid Grid.Row="0" Background="{StaticResource InputsBackgroundColor}">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+
+                    <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{StaticResource FontColorPrimary}" Margin="5"/>
+                    <TextBox x:Name="ModelsSearchTextbox" FontSize="14" Grid.Column="1" BorderBrush="{x:Null}" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" BorderThickness="0" TextChanged="SearchTextboxTextChanged"/>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <Button x:Name="ModelsRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
+                            <fa:ImageAwesome Foreground="DarkCyan" Icon="Pencil" Margin="4, 5"/>
+                        </Button>
+                        <Button x:Name="ModelsDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
+                            <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
+                        </Button>
+                        <Button x:Name="ModelsRefreshButton" Width="30" Click="RefreshButtonClick">
+                            <fa:ImageAwesome Foreground="DarkGreen" Icon="Refresh" Margin="4"/>
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <!-- Listview -->
+            <Border Grid.Row="1" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10, 0">
+                <ListView x:Name="ModelsListView" Background="{StaticResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="70"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+
+
+                                <fa:ImageAwesome Grid.Row="0" Icon="{Binding Icon}" Foreground="{StaticResource FontColorPrimary}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56"/>
+                                <TextBlock Grid.Row="1" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" MaxWidth="128" FontSize="13"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="7" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+
+                </ListView>
+            </Border>
+
+            <!-- Status bar -->
+            <Grid Grid.Row="2" Background="{StaticResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Separator -->
+                <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#FF686868"/>
+
+                <!-- Loading progressbar and textblock -->
+                <StackPanel x:Name="ModelsLoadingStackPanel" Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden">
+                    <ProgressBar x:Name="ModelsLoadingProgressBar" IsIndeterminate="True"  Width="120" Height="15" Margin="12, 0"/>
+                    <TextBlock x:Name="ModelsLoadingStatusTextblock" Foreground="{StaticResource FontColorPrimary}" Text="Chargement de la liste des fichiers..." FontSize="14"/>
+                </StackPanel>
+
+                <!-- File count -->
+                <StackPanel x:Name="ModelsFileCountStackPanel" Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock x:Name="ModelsFileCountTextblock" Foreground="{StaticResource FontColorPrimary}" Text="0" Margin="0, 0, 3, 0" FontSize="14"/>
+                    <TextBlock x:Name="ModelsFileLabelTextblock" Foreground="{StaticResource FontColorPrimary}" Text="fichiers" Margin="0, 0, 12, 0" FontSize="14"/>
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+
+        <!-- Textures grid -->
+        <Grid x:Name="TexturesGrid" Grid.Column="2" Visibility="Hidden" IsVisibleChanged="GridIsVisibleChanged">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <!-- Search bar and buttons -->
+            <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10">
+                <Grid Grid.Row="0" Background="{StaticResource InputsBackgroundColor}">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+
+                    <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{StaticResource FontColorPrimary}" Margin="5"/>
+                    <TextBox x:Name="TexturesSearchTextbox" FontSize="14" Grid.Column="1" BorderBrush="{x:Null}" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" BorderThickness="0" TextChanged="SearchTextboxTextChanged"/>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <Button x:Name="TexturesRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
+                            <fa:ImageAwesome Foreground="DarkCyan" Icon="Pencil" Margin="4, 5"/>
+                        </Button>
+                        <Button x:Name="TexturesDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
+                            <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
+                        </Button>
+                        <Button x:Name="TexturesRefreshButton" Width="30" Click="RefreshButtonClick">
+                            <fa:ImageAwesome Foreground="DarkGreen" Icon="Refresh" Margin="4"/>
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <!-- Listview -->
+            <Border Grid.Row="1" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10, 0">
+                <ListView x:Name="TexturesListView" Background="{StaticResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="70"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+
+                                <Image Source="{Binding FilePath, Converter={StaticResource StringToImageConverter}}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56"/>
+                                <TextBlock Grid.Row="1" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" MaxWidth="128" FontSize="13"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="7" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+
+                </ListView>
+            </Border>
+
+            <!-- Status bar -->
+            <Grid Grid.Row="2" Background="{StaticResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Separator -->
+                <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#FF686868"/>
+
+                <!-- Loading progressbar and textblock -->
+                <StackPanel x:Name="TexturesLoadingStackPanel" Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden">
+                    <ProgressBar x:Name="TexturesLoadingProgressBar" IsIndeterminate="True"  Width="120" Height="15" Margin="12, 0"/>
+                    <TextBlock x:Name="TexturesLoadingStatusTextblock" Foreground="{StaticResource FontColorPrimary}" Text="Chargement de la liste des fichiers..." FontSize="14"/>
+                </StackPanel>
+
+                <!-- File count -->
+                <StackPanel x:Name="TexturesFileCountStackPanel" Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock x:Name="TexturesFileCountTextblock" Foreground="{StaticResource FontColorPrimary}" Text="0" Margin="0, 0, 3, 0" FontSize="14"/>
+                    <TextBlock x:Name="TexturesFileLabelTextblock" Foreground="{StaticResource FontColorPrimary}" Text="fichiers" Margin="0, 0, 12, 0" FontSize="14"/>
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+
+        <!-- Translations grid -->
+        <Grid x:Name="TranslationsGrid" Grid.Column="2" Visibility="Hidden" IsVisibleChanged="GridIsVisibleChanged">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Left column -->
+            <Grid Grid.Column="0" Margin="10" Grid.Row="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="65"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Header -->
+                <TextBlock x:Name="TranslationsFilesTextblock" Text="Fichiers" Foreground="{StaticResource FontColorPrimary}" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0">
+                    <Button x:Name="TranslationsAddButton" Width="30" Click="TranslationsAddButtonClick">
+                        <fa:ImageAwesome Foreground="DarkGreen" Icon="Plus" Margin="4"/>
+                    </Button>
+                    <Button x:Name="TranslationsDeleteButton" Width="30" Margin="5, 0, 0, 0" IsEnabled="False" Click="TranslationsDeleteButtonClick">
+                        <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
+                    </Button>
+                </StackPanel>
+                
+                <!-- Files list -->
+                <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="{StaticResource BorderColor}" Margin="0, 5, 0, 0" BorderThickness="1">
+                    <ListBox x:Name="TranslationsFilesListBox" BorderThickness="0" AlternationCount="2" Background="{StaticResource SecondaryBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" SelectionChanged="TranslationsFilesListBoxSelectionChanged"/>
+                </Border>
+            </Grid>
+
+            <!-- File editor -->
+            <Border Grid.Column="1" Grid.Row="0" BorderBrush="{StaticResource BorderColor}" Margin="10" BorderThickness="1">
+                <TextEditor:TextEditor x:Name="TranslationsTextEditor" BorderThickness="0" Background="{StaticResource SecondaryBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" HorizontalLinesBrush="#FF686868" SelectionBrush="#FFD1A100" TextChanged="TranslationsTextEditorTextChanged"/>
+            </Border>
+
+            <!-- Status bar -->
+            <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="{StaticResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Separator -->
+                <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#FF686868"/>
+
+                <!-- Loading progressbar and textblock -->
+                <StackPanel x:Name="TranslationsLoadingStackPanel" Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden">
+                    <ProgressBar x:Name="TranslationsLoadingProgressBar" IsIndeterminate="True"  Width="120" Height="15" Margin="12, 0"/>
+                    <TextBlock x:Name="TranslationsLoadingStatusTextblock" Foreground="{StaticResource FontColorPrimary}" Text="Chargement de la liste des fichiers..." FontSize="14"/>
+                </StackPanel>
+
+            </Grid>
+            
+        </Grid>
+
+        <!-- Exportation grid -->
+        <Grid x:Name="ExportationGrid" Grid.Column="2" Visibility="Hidden">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+
+            <Border BorderThickness="1" Grid.Column="1" BorderBrush="{StaticResource BorderColor}"/>
+            
+            <!-- Recap panel -->
+            <Grid Grid.Column="2" Background="{StaticResource SecondaryBackgroundColor}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="ExportationRecapTextBlock" Grid.Row="0" Foreground="{StaticResource FontColorPrimary}" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" Margin="10" Text="Récapitulatif"/>
+
+                <!-- Mod name -->
+                <StackPanel HorizontalAlignment="Center" Grid.Row="1">
+                    <TextBlock x:Name="ModNameExportationRecapLabelTextBlock" Text="Nom" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}"/>
+                    <TextBlock x:Name="ModNameExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                </StackPanel>
+
+                <!-- Mod version -->
+                <StackPanel HorizontalAlignment="Center" Grid.Row="2">
+                    <TextBlock x:Name="ModVersionExportationRecapLabelTextBlock" Text="Version" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}"/>
+                    <TextBlock x:Name="ModVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                </StackPanel>
+
+                <!-- Mod authors -->
+                <StackPanel HorizontalAlignment="Center" Grid.Row="3">
+                    <TextBlock x:Name="ModAuthorsExportationRecapLabelTextBlock" Text="Auteurs" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}"/>
+                    <TextBlock x:Name="ModAuthorsExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                </StackPanel>
+
+                <!-- Minecraft version -->
+                <StackPanel HorizontalAlignment="Center" Grid.Row="4">
+                    <TextBlock x:Name="MinecraftVersionExportationRecapLabelTextBlock" Text="Version de Minecraft" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}"/>
+                    <TextBlock x:Name="MinecraftVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                </StackPanel>
+
+                <!-- Forge version -->
+                <StackPanel HorizontalAlignment="Center" Grid.Row="5">
+                    <TextBlock x:Name="ForgeVersionExportationRecapLabelTextBlock" Text="Version de Forge" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}"/>
+                    <TextBlock x:Name="ForgeVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                </StackPanel>
+
+                <!-- Mappings version -->
+                <StackPanel HorizontalAlignment="Center" Grid.Row="6">
+                    <TextBlock x:Name="MappingsVersionExportationRecapLabelTextBlock" Text="Mappings" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}"/>
+                    <TextBlock x:Name="MappingsVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                </StackPanel>
+                
+                <Border BorderThickness="1" Grid.Row="8" BorderBrush="{StaticResource FontColorPrimary}"/>
+
+                <!-- Exportation button -->
+                <Button x:Name="ExportationButton" Content="Exporter le mod" Height="30" Grid.Row="9" Margin="30, 0" Click="ExportationButtonClick"/>
+
+            </Grid>
+
+            <WPF:ConsoleControl x:Name="ModExportationConsoleControl" Grid.Column="0" Margin="10"/>
+
+        </Grid>
+        
+    </Grid>
+</Window>

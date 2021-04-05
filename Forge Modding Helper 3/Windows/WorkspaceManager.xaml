@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3"
-        xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor" xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF" x:Class="Forge_Modding_Helper_3.WorkspaceManager"
+        xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor" 
+        xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF" 
+        x:Class="Forge_Modding_Helper_3.WorkspaceManager"
         mc:Ignorable="d"
         Title="Gestion de l'espace de travail - Forge Modding Helper" Height="526" Width="1018" ResizeMode="CanMinimize" Closing="Window_Closing" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -326,7 +328,7 @@
             <Button x:Name="models_reload_button" Content="⟳" HorizontalAlignment="Left" Margin="748,7,0,0" VerticalAlignment="Top" Width="27" Height="27" FontWeight="Bold" FontSize="18" Foreground="#FF177613" FontFamily="Tahoma" Click="models_reload_button_Click"/>
             <ComboBox x:Name="models_folder_comboBox" HorizontalAlignment="Left" Margin="644,7,0,0" VerticalAlignment="Top" Width="104" Height="27" SelectionChanged="models_folder_comboBox_SelectionChanged"/>
         </Grid>
-        <Grid x:Name="textures_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
+        <Grid x:Name="textures_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Visible">
             <ListView x:Name="listView_textures" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Height="347" Margin="10,40,0,0" VerticalAlignment="Top" Width="820" Background="{x:Null}" Foreground="White" BorderBrush="White" SelectionMode="Extended" SelectionChanged="listView_textures_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -350,7 +352,7 @@
             <Button x:Name="textures_reload_button" Content="⟳" HorizontalAlignment="Left" Margin="748,7,0,0" VerticalAlignment="Top" Width="27" Height="27" FontWeight="Bold" FontSize="18" Foreground="#FF177613" FontFamily="Tahoma" Click="textures_reload_button_Click"/>
             <ComboBox x:Name="textures_folder_comboBox" HorizontalAlignment="Left" Margin="644,7,0,0" VerticalAlignment="Top" Width="104" Height="27" SelectionChanged="textures_folder_comboBox_SelectionChanged"/>
         </Grid>
-        <Grid x:Name="language_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
+        <Grid x:Name="language_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="179*"/>
                 <ColumnDefinition Width="661*"/>
@@ -361,7 +363,7 @@
             <Button x:Name="translation_add_file_button" Content="+" HorizontalAlignment="Left" Margin="138,10,0,0" VerticalAlignment="Top" Width="24" Foreground="#FF2C8333" FontWeight="Bold" FontSize="14" FontFamily="Tahoma" Height="24" Click="translation_add_file_button_Click"/>
             <Button x:Name="translation_delete_file_button" Content="X" HorizontalAlignment="Left" Margin="112,10,0,0" VerticalAlignment="Top" Width="24" Foreground="#FF832C2C" FontFamily="Tahoma" Height="24" IsEnabled="False" Click="translation_delete_file_button_Click"/>
         </Grid>
-        <Grid x:Name="exportation_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Hidden">
+        <Grid x:Name="exportation_grid" HorizontalAlignment="Left" Height="397" Margin="156,90,0,0" VerticalAlignment="Top" Width="840" Background="#FF2D2D30" Visibility="Visible">
             <Label Content="Exporter son mod" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="10,4,0,0" VerticalAlignment="Top" Width="820" Foreground="White" FontSize="20"/>
             <GroupBox x:Name="mod_export_recap_groupBox" Header="Récapitulatif" HorizontalAlignment="Left" Height="296" Margin="10,44,0,0" VerticalAlignment="Top" Width="362" Foreground="White" Tag="workspace_manager.modexport.recap"/>
             <GroupBox x:Name="mod_export_console_groupBox" Header="Console" HorizontalAlignment="Left" Height="296" Margin="377,44,0,0" VerticalAlignment="Top" Width="453" Foreground="White"/>

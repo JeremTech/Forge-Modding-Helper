@@ -119,6 +119,7 @@
     </ApplicationDefinition>
     <Compile Include="Files\OptionsFile.cs" />
     <Compile Include="Files\RecentWorkspaces.cs" />
+    <Compile Include="Objects\FileEntry.cs" />
     <Compile Include="Objects\Workspace.cs" />
     <Compile Include="Files\BuildGradle.cs" />
     <Compile Include="Utils\AppInfos.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Files\ModToml.cs" />
     <Compile Include="Objects\ModInfos.cs" />
     <Compile Include="Objects\Project.cs" />
+    <Compile Include="Utils\StringToImageConverter.cs" />
     <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Utils\UITextTranslator.cs" />
     <Compile Include="Utils\UIUtils.cs" />
@@ -150,6 +152,9 @@
     </Compile>
     <Compile Include="Windows\WorkspaceManager.xaml.cs">
       <DependentUpon>WorkspaceManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ProjectExplorer.xaml.cs">
+      <DependentUpon>ProjectExplorer.xaml</DependentUpon>
     </Compile>
     <Page Include="Windows\AboutWindow.xaml">
       <SubType>Designer</SubType>
@@ -195,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\WorkspaceManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProjectExplorer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

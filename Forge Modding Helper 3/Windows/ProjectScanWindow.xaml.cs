@@ -49,18 +49,6 @@ namespace Forge_Modding_Helper_3.Windows
             {"mappings_version", ""}
         };
 
-        // Blockstates list storage
-        private List<String> blockstatesList = new List<string>();
-
-        // Textures list storage
-        private List<String> texturesList = new List<string>();
-
-        // Models list storage
-        private List<String> modelsList = new List<string>();
-
-        // java file list storage
-        private List<String> javaFileList = new List<string>();
-
         public ProjectScanWindow(string path, bool showProjectWindow = true)
         {
             InitializeComponent();
@@ -94,7 +82,7 @@ namespace Forge_Modding_Helper_3.Windows
             if (this.showProjectWindow)
             {
                 RecentWorkspaces.AddRecentWorkspace(new Workspace(modInfos["mod_name"], modInfos["minecraft_version"], path, modInfos["mod_description"], DateTime.Now));
-                new WorkspaceManager(App.CurrentProjectData.ProjectDirectory).Show();
+                new ProjectExplorer().Show();
             }
 
             this.Close();
