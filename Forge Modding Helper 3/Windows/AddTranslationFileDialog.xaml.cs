@@ -21,21 +21,21 @@ namespace Forge_Modding_Helper_3.Windows
 
             // Load translations
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
-            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
             this.Title = UITextTranslator.getTranslation("dialog.translation.add.title");
         }
 
         private void name_textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (add_button != null)
+            if (AddButton != null)
             {
                 if (!string.IsNullOrWhiteSpace(name_textBox.Text) && name_textBox.Text.EndsWith(".json"))
                 {
-                    add_button.IsEnabled = true;
+                    AddButton.IsEnabled = true;
                 }
                 else
                 {
-                    add_button.IsEnabled = false;
+                    AddButton.IsEnabled = false;
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace Forge_Modding_Helper_3.Windows
         {
             if (File.Exists(Path.Combine(this.langPath, this.name_textBox.Text)))
             {
-                MessageBoxResult res = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.translations.add.alert.error"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult res = MessageBox.Show(UITextTranslator.getTranslation("dialog.translation.add.alert.error"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (res == MessageBoxResult.Yes)
                 {

@@ -137,7 +137,6 @@
         "project_explorer.translations.files": "Files",
         "project_explorer.translations.loading_files": "Loading translations files list...",
         "project_explorer.translations.alert.delete": "Are you sure you want to move this file to trash ?",
-        "project_explorer.translations.add.alert.error": "This translation file already exist. So it will be replaced. \n Continue ?",
         "project_explorer.export.summary": "Summary",
         "project_explorer.export.name": "Name",
         "project_explorer.export.mod_version": "Mod version",
@@ -168,6 +167,7 @@
         "dialog.translation.add.file_name": "File name :",
         "dialog.translation.add.add": "Add",
         "dialog.translation.add.cancel": "Cancel",
+        "dialog.translation.add.alert.error": "This translation file already exist. So it will be replaced.\nContinue ?",
 
         "feature.not_available": "This feature is not available yet."
     }

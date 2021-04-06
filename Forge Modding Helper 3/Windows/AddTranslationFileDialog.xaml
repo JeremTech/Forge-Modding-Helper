@@ -3,20 +3,43 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows"
+        xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows" xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Ajouter un fichier de traduction" Height="197" Width="514" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid x:Name="main_grid" Background="#FF2D2D30">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="245*"/>
-            <ColumnDefinition Width="261*"/>
-        </Grid.ColumnDefinitions>
-        <Label x:Name="add_translation_file_title_label" Content="Add a translation file" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top" Foreground="White" Width="455" FontSize="20" Height="37" Grid.ColumnSpan="2" Tag="dialog.translation.add.title"/>
-        <Separator HorizontalAlignment="Left" Height="20" Margin="0,49,-5,0" VerticalAlignment="Top" Width="511" Grid.ColumnSpan="2"/>
-        <Label x:Name="name_label" Content="File name :" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top" Foreground="White" Width="105" Height="26" Tag="dialog.translation.add.file_name"/>
-        <TextBox x:Name="name_textBox" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="120,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="345" BorderBrush="#FF686868" Foreground="White" Background="#FF252526" TextChanged="name_textBox_TextChanged" Grid.ColumnSpan="2" Text="lang_lang.json"/>
-        <Button x:Name="add_button" Content="Add" HorizontalAlignment="Left" Margin="5,125,0,0" VerticalAlignment="Top" Width="100" Height="24" IsEnabled="False" Click="add_button_Click" Grid.Column="1" Tag="dialog.translation.add.add"/>
-        <Button x:Name="cancel_button" Content="Annuler" HorizontalAlignment="Left" Margin="137,125,0,0" VerticalAlignment="Top" Width="100" Height="24" Click="cancel_button_Click" Tag="dialog.translation.add.cancel"/>
+        Title="Add a translation file" Height="197" Width="503" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid x:Name="MainGrid" Background="#FF2D2D30">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10, 0">
+            <fa:ImageAwesome HorizontalAlignment="Left" Icon="Language" Width="25" Height="25" Foreground="{StaticResource FontColorPrimary}"/>
+            <TextBlock x:Name="AddTranslationTitleTextblock" Text="Add a translation file" HorizontalAlignment="Left" Margin="5, 0" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource FontColorPrimary}" Tag="dialog.translation.add.title"/>
+        </StackPanel>
+        <Border Grid.Row="1" BorderThickness="1" BorderBrush="{StaticResource FontColorPrimary}"/>
+
+        <!-- File name entry -->
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10, 0" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <Label x:Name="name_label" Content="File name :" HorizontalAlignment="Left" Foreground="White" Tag="dialog.translation.add.file_name"/>
+            <TextBox x:Name="name_textBox" VerticalContentAlignment="Center" TextWrapping="Wrap" Width="400" BorderBrush="#FF686868" Foreground="White" Background="#FF252526" TextChanged="name_textBox_TextChanged" Text="lang_lang.json"/>
+        </StackPanel>
+        
+        <!-- Buttons -->
+        <Grid x:Name="GridButtons" Grid.Row="3">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="24" Margin="5, 0" Click="cancel_button_Click" Grid.Column="0" Tag="dialog.translation.add.cancel"/>
+            <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Height="24" Margin="5, 0" IsEnabled="False" Click="add_button_Click" Grid.Column="1" Tag="dialog.translation.add.add"/>
+
+        </Grid>
 
     </Grid>
 </Window>

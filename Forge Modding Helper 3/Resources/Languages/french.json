@@ -135,7 +135,6 @@
         "project_explorer.translations.files": "Fichiers",
         "project_explorer.translations.loading_files": "Chargement de la liste des fichiers de traductions...",
         "project_explorer.translations.delete": "Etes-vous sûr de vouloir déplacer ce fichier vers la corbeille ?",
-        "project_explorer.translations.add.alert.error": "Le fichier de traduction que vous souhaitez ajouter existe déjà. Il sera donc remplacer. \n Souhaitez-vous poursuivre ?",
         "project_explorer.export.summary": "Récapitulatif",
         "project_explorer.export.name": "Nom",
         "project_explorer.export.mod_version": "Version du mod",
@@ -166,6 +165,7 @@
         "dialog.translation.add.file_name": "Nom du fichier :",
         "dialog.translation.add.add": "Ajouter",
         "dialog.translation.add.cancel": "Annuler",
+        "dialog.translation.add.alert.error": "Le fichier de traduction que vous souhaitez ajouter existe déjà. Il sera donc remplacer.\nSouhaitez-vous poursuivre ?",
 
         "feature.not_available": "Cette fonctionnalité n'est pas encore disponible."
     }
