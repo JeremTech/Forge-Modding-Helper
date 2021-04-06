@@ -1,4 +1,5 @@
 ﻿using FontAwesome.WPF;
+using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Microsoft.VisualBasic.FileIO;
@@ -29,6 +30,12 @@ namespace Forge_Modding_Helper_3.Windows
             // Initialize UI
             InitializeComponent();
             RefreshInterfaceModInfos();
+
+            // Load translations
+            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
+            this.Title = UITextTranslator.getTranslation("project_explorer.title");
+            this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
         }
 
         #region ModSettings section
@@ -37,7 +44,7 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private void ModSettingsTextboxTextChanged(object sender, TextChangedEventArgs e)
         {
-            this.ModSettingsStatusLabel.Text = "Certaines modifications n'ont pas été sauvegardées !";
+            this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.unsaved_modifications");
             this.ModSettingsStatusLabel.Foreground = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#FF0000"));
         }
 
@@ -49,9 +56,9 @@ namespace Forge_Modding_Helper_3.Windows
             // Create and configure FileDialog
             Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
             fileDialog.RestoreDirectory = true;
-            fileDialog.Title = "Choisissez un logo pour votre mod";
+            fileDialog.Title = UITextTranslator.getTranslation("project_explorer.mod_settings.choose_logo_file");
             fileDialog.DefaultExt = "png";
-            fileDialog.Filter = "png files (*.png)|*.png";
+            fileDialog.Filter = UITextTranslator.getTranslation("project_explorer.mod_settings.filter_logo_file") + " (*.png)|*.png";
             fileDialog.CheckFileExists = true;
             fileDialog.CheckPathExists = true;
             fileDialog.Multiselect = false;
@@ -71,7 +78,7 @@ namespace Forge_Modding_Helper_3.Windows
                     this.ModSettingsModLogoImage.Source = image;
 
                     // Deleting existing logo
-                    if (File.Exists(System.IO.Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"))) FileSystem.DeleteFile(System.IO.Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                    if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"))) FileSystem.DeleteFile(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
                     // Copying new logo
                     File.Copy(fileDialog.FileName, App.CurrentProjectData.ProjectDirectory + @"\src\main\resources\logo.png");
                     // Update mod data 
@@ -80,9 +87,9 @@ namespace Forge_Modding_Helper_3.Windows
                     RefreshInterfaceModInfos();
                 }
             }
-            else if (File.Exists(System.IO.Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
+            else if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
             {
-                using (var stream = File.OpenRead(System.IO.Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
+                using (var stream = File.OpenRead(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
                 {
                     var image = new BitmapImage();
                     image.BeginInit();
@@ -104,11 +111,11 @@ namespace Forge_Modding_Helper_3.Windows
         private void ModSettingsModLogoDeleteButtonClick(object sender, RoutedEventArgs e)
         {
             // Create and display confirmation message
-            MessageBoxResult result = MessageBox.Show("Etes vous sûr de vouloir déplacer le logo du mod vers la corbeille ?", "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.mod_settings.alerte.delete_logo_message"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if(result == MessageBoxResult.Yes) 
             {
                 App.CurrentProjectData.ModData.ModLogo = "";
-                FileSystem.DeleteFile(System.IO.Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                FileSystem.DeleteFile(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
                 RefreshInterfaceModInfos();
             }
         }
@@ -140,6 +147,8 @@ namespace Forge_Modding_Helper_3.Windows
             //TODO Update build.gradle and mod.toml
 
             // Update UI
+            this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.saved_modifications");
+            this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
             RefreshInterfaceModInfos();
         }
         #endregion
@@ -365,7 +374,7 @@ namespace Forge_Modding_Helper_3.Windows
 
             if (TranslationsFilesListBox.SelectedItem != null && File.Exists(filePath))
             {
-                MessageBoxResult res = MessageBox.Show(UITextTranslator.getTranslation("workspace_manager.lang.delete"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult res = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.translations.alert.delete"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (res == MessageBoxResult.Yes)
                 {
@@ -431,8 +440,6 @@ namespace Forge_Modding_Helper_3.Windows
             this.ModSettingsMappingsVersionTextbox.Text = App.CurrentProjectData.ModData.ModMappingsVersion;
             this.ModSettingsModidTextbox.Text = App.CurrentProjectData.ModData.ModID;
             this.ModSettingsModgroupTextbox.Text = App.CurrentProjectData.ModData.ModGroup;
-            this.ModSettingsStatusLabel.Text = "Toutes les modifications ont été sauvegardées";
-            this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
 
             // Mod exportation
             this.ModNameExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModName;
@@ -535,7 +542,7 @@ namespace Forge_Modding_Helper_3.Windows
                     if(BlockstatesListView.SelectedItems.Count > 0)
                     {
                         // Display confirmation message
-                        MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("workspace_manager.alert.delete").Replace("%N", BlockstatesListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.alert.delete").Replace("%N", BlockstatesListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                         // If user say Yes
                         if(result == MessageBoxResult.Yes)
@@ -560,7 +567,7 @@ namespace Forge_Modding_Helper_3.Windows
                     if (ModelsListView.SelectedItems.Count > 0)
                     {
                         // Display confirmation message
-                        MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("workspace_manager.alert.delete").Replace("%N", ModelsListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.alert.delete").Replace("%N", ModelsListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                         // If user say Yes
                         if (result == MessageBoxResult.Yes)
@@ -585,7 +592,7 @@ namespace Forge_Modding_Helper_3.Windows
                     if (TexturesListView.SelectedItems.Count > 0)
                     {
                         // Display confirmation message
-                        MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("workspace_manager.alert.delete").Replace("%N", TexturesListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.alert.delete").Replace("%N", TexturesListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                         // If user say Yes
                         if (result == MessageBoxResult.Yes)

@@ -25,19 +25,20 @@ namespace Forge_Modding_Helper_3.Utils
         /// <param name="localization">Name of the language in the file</param>
         public static void LoadTranslationFile(String localization)
         {
-            string directoryName = "Forge_Modding_Helper_3.Resources.Languages";
-            List<string> languagesFilesList = Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(element => element.StartsWith(directoryName) && element.EndsWith(".json")).ToList();
+            string directoryPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "Languages");
+
+            if(!Directory.Exists(directoryPath))
+            {
+                MessageBox.Show("Forge Modding Helper", "\"" + directoryPath + "\" not found.\nUnable to load translations.\n\nThe application will close.");
+                Application.Current.Shutdown();
+            }
+
+            List<string> languagesFilesList = Directory.GetFiles(directoryPath).ToList();
 
             foreach (string filePath in languagesFilesList)
             {
-                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(filePath);
-
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    string fileContent = reader.ReadToEnd();
-                    if(JsonConvert.DeserializeObject<TranslationFile>(fileContent).name == localization)
-                        translationFile = JsonConvert.DeserializeObject<TranslationFile>(fileContent);
-                }
+                string fileContent = File.ReadAllText(filePath);
+                if(JsonConvert.DeserializeObject<TranslationFile>(fileContent).name == localization) translationFile = JsonConvert.DeserializeObject<TranslationFile>(fileContent);
             }
         }
 
@@ -112,18 +113,20 @@ namespace Forge_Modding_Helper_3.Utils
         {
             List<String> languagesList = new List<string>();
 
-            string directoryName = "Forge_Modding_Helper_3.Resources.Languages";
-            List<string> languagesFilesList = Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(element => element.StartsWith(directoryName) && element.EndsWith(".json")).ToList();
+            string directoryPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Resources", "Languages");
+
+            if (!Directory.Exists(directoryPath))
+            {
+                MessageBox.Show("Forge Modding Helper", "\"" + directoryPath + "\" not found.\nUnable to load translations.\n\nThe application will close.");
+                Application.Current.Shutdown();
+            }
+
+            List<string> languagesFilesList = Directory.GetFiles(directoryPath).ToList();
 
             foreach (string filePath in languagesFilesList)
             {
-                Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(filePath);
-
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    string fileContent = reader.ReadToEnd();
-                    languagesList.Add(JsonConvert.DeserializeObject<TranslationFile>(fileContent).name);
-                }
+                string fileContent = File.ReadAllText(filePath);
+                languagesList.Add(JsonConvert.DeserializeObject<TranslationFile>(fileContent).name);
             }
 
             return languagesList;
@@ -132,7 +135,8 @@ namespace Forge_Modding_Helper_3.Utils
 
     public class TranslationFile
     {
-        public String name { get; set; }
+        public string id { get; set; }
+        public string name { get; set; }
         public Dictionary<String, String> entries { get; set; }
     }
 }
