@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows" xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="Add a translation file" Height="197" Width="503" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid x:Name="MainGrid" Background="#FF2D2D30">
+    <Grid x:Name="MainGrid" Background="{StaticResource PrimaryBackgroundColor}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -24,8 +24,8 @@
 
         <!-- File name entry -->
         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10, 0" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <Label x:Name="name_label" Content="File name :" HorizontalAlignment="Left" Foreground="White" Tag="dialog.translation.add.file_name"/>
-            <TextBox x:Name="name_textBox" VerticalContentAlignment="Center" TextWrapping="Wrap" Width="400" BorderBrush="#FF686868" Foreground="White" Background="#FF252526" TextChanged="name_textBox_TextChanged" Text="lang_lang.json"/>
+            <Label x:Name="name_label" Content="File name :" HorizontalAlignment="Left" Foreground="{StaticResource FontColorPrimary}" Tag="dialog.translation.add.file_name"/>
+            <TextBox x:Name="name_textBox" VerticalContentAlignment="Center" TextWrapping="Wrap" Width="400" BorderBrush="#FF686868" Foreground="{StaticResource FontColorPrimary}" Background="{StaticResource InputsBackgroundColor}" TextChanged="name_textBox_TextChanged" Text="lang_lang.json"/>
         </StackPanel>
         
         <!-- Buttons -->
