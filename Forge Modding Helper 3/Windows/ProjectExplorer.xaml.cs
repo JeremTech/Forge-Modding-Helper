@@ -823,6 +823,43 @@ namespace Forge_Modding_Helper_3.Windows
                 }
             }
         }
+
+        /// <summary>
+        /// Fonction called before window closing
+        /// used to prevent closing
+        /// </summary>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // Displaying confirmation message
+            MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.alert.close"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            // If yes
+            if (msgResult == MessageBoxResult.Yes)
+            {
+                // Configuring welcome window
+                WelcomeWindow welcomeWindow = new WelcomeWindow();
+
+                // Update welcome UI depending on the presence of recent projects or not
+                if (RecentWorkspaces.ReadDataFile())
+                {
+                    welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
+                    welcomeWindow.listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+                }
+                else
+                {
+                    welcomeWindow.label_no_workspace_found.Visibility = Visibility.Visible;
+                }
+
+                // Windows management
+                welcomeWindow.Show();
+            }
+            // If no
+            else
+            {
+                // Cancel closing
+                e.Cancel = true;
+            }
+        }
         #endregion
     }
 }

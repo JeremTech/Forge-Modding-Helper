@@ -7,7 +7,7 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/" 
         xmlns:utils="clr-namespace:Forge_Modding_Helper_3.Utils" xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor" xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF"
         mc:Ignorable="d"
-        Title="Project Explorer" Height="720" Width="1340" Icon="/Forge Modding Helper 3;component/Resources/Pictures/icon.png" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="Project Explorer" Height="720" Width="1340" Icon="/Forge Modding Helper 3;component/Resources/Pictures/icon.png" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Closing="Window_Closing">
 
     <Window.Resources>
         

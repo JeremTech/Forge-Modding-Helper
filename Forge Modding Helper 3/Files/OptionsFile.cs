@@ -15,7 +15,7 @@ namespace Forge_Modding_Helper_3.Files
         private static string language = "en_us";
 
         // Selected theme
-        private static string theme = "Dark";
+        private static string theme = "dark";
 
         /// <summary>
         /// Get current language

@@ -59,6 +59,10 @@ namespace Forge_Modding_Helper_3.Utils
                 localization = "en_us";
                 string fileContent = File.ReadAllText(Path.Combine(directoryPath, "en_us.json"));
                 translationFile = JsonConvert.DeserializeObject<TranslationFile>(fileContent);
+
+                // Rewrite option files
+                OptionsFile.setCurrentLanguage("en_us");
+                OptionsFile.WriteDataFile();
             }
         }
 

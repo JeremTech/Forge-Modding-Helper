@@ -102,6 +102,7 @@
 
         "project_explorer.title": "Project Explorer - Forge Modding Helper",
         "project_explorer.alert.delete": "Are you sure you want to move %N element(s) to trash ?",
+        "project_explorer.alert.close": "Are you sure you want to close this workspace ?",
         "project_explorer.sidebar.home": "Home",
         "project_explorer.sidebar.mod_settings": "Mod settings",
         "project_explorer.sidebar.blockstates": "Blockstates",
