@@ -3,32 +3,56 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows"
+        xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows" xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Options - Forge Modding Helper" Height="216" Width="273" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" Closed="Window_Closed">
-    <Grid x:Name="main_grid" Background="#FF2D2D30">
+        Title="Settings - Forge Modding Helper" Height="346" Width="318" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" Closed="Window_Closed">
+    <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}">
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="1"/>
             <RowDefinition Height="32"/>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="1"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <!-- Header -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10, 0" Grid.ColumnSpan="2">
+            <fa:ImageAwesome HorizontalAlignment="Left" Icon="Wrench" Width="25" Height="25" Foreground="{DynamicResource FontColorPrimary}"/>
+            <TextBlock x:Name="AddTranslationTitleTextblock" Text="Settings" HorizontalAlignment="Left" Margin="10, 0" FontSize="16" VerticalAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" Tag="options.header.title"/>
+        </StackPanel>
+        <Border Grid.Row="1" BorderThickness="1" BorderBrush="{DynamicResource FontColorPrimary}" Grid.ColumnSpan="2"/>
+
 
         <!-- UI Language -->
-        <Label x:Name="ui_language_label" Grid.Row="0" Content="Language :" Margin="5, 0, 10, 0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource FontColorPrimary}" Tag="options.label.ui_language"/>
-        <ComboBox x:Name="ui_language_comboBox" Grid.Row="1" Margin="10, 0, 10, 0" FlowDirection="LeftToRight" VerticalAlignment="Top" Grid.Column="0" HorizontalAlignment="Stretch" Height="25" SelectionChanged="ui_language_comboBox_SelectionChanged"/>
+        <TextBlock x:Name="ui_language_textblock" Grid.Row="2" Text="Language :" FlowDirection="LeftToRight" Margin="10,7,5,4" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Tag="options.label.ui_language"/>
+        <ComboBox x:Name="ui_language_comboBox" Grid.Row="3" Margin="10, 0, 10, 0" FlowDirection="LeftToRight" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="33" SelectionChanged="ui_language_comboBox_SelectionChanged" Grid.ColumnSpan="2">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Path=Value}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
-        <Border Grid.Row="2" BorderBrush="{StaticResource FontColorPrimary}" BorderThickness="1"/>
+        <!-- UI Theme -->
+        <TextBlock x:Name="ui_theme_textblock" Grid.Row="4" Text="Theme :" FlowDirection="LeftToRight" Margin="10,0,5,4" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Tag="options.label.ui_theme"/>
+        <ComboBox x:Name="ui_theme_comboBox" Grid.Row="5" Margin="10, 0, 10, 0" FlowDirection="LeftToRight" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="33" SelectionChanged="ui_theme_comboBox_SelectionChanged" Grid.ColumnSpan="2">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Path=Value}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Border Grid.Row="6" BorderBrush="{DynamicResource FontColorPrimary}" BorderThickness="1" Grid.ColumnSpan="2"/>
 
         <!-- Buttons -->
-        <Button x:Name="about_button" Grid.Row="3" Margin="10, 15, 10, 5" Content="About" VerticalAlignment="Top" Height="28" Tag="options.button.about" Click="about_button_Click"/>
-        <Button x:Name="report_bug_button" Grid.Row="4" Margin="10, 10, 10, 5" Content="Report bug" VerticalAlignment="Top" Height="28" Tag="options.button.report_bug" Click="report_bug_button_Click"/>
+        <Button x:Name="about_button" Grid.Row="7" Margin="10,15,10,0" Content="About" VerticalAlignment="Top" Height="28" Tag="options.button.about" Click="about_button_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="report_bug_button" Grid.Row="8" Margin="10,10,10,0" Content="Report bug" VerticalAlignment="Top" Height="28" Tag="options.button.report_bug" Click="report_bug_button_Click" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

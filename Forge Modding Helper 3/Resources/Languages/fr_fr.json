@@ -1,5 +1,4 @@
 {
-    "id": "fr_fr",
     "name": "Français",
     "entries": {
         "loading.label.loading": "Chargement...",
@@ -145,7 +144,9 @@
         "project_explorer.export.export": "Exporter le mod",
 
         "options.title": "Options - Forge Modding Helper",
+        "options.header.title": "Options",
         "options.label.ui_language": "Langue de l'interface",
+        "options.label.ui_theme": "Thème de l'interface",
         "options.button.about": "A propos",
         "options.button.report_bug": "Signaler un bug",
 

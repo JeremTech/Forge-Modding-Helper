@@ -1,5 +1,4 @@
 {
-    "id": "en_us",
     "name": "English (BETA)",
     "entries": {
         "loading.label.loading": "Loading...",
@@ -146,8 +145,10 @@
         "project_explorer.export.mappings_version": "Mappings version",
         "project_explorer.export.export": "Export mod",
 
-        "options.title": "Options - Forge Modding Helper",
+        "options.title": "Settings - Forge Modding Helper",
+        "options.header.title": "Settings",
         "options.label.ui_language": "Language",
+        "options.label.ui_theme": "Theme",
         "options.button.about": "About",
         "options.button.report_bug": "Report bug",
 

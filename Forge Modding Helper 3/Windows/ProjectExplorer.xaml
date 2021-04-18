@@ -16,17 +16,17 @@
         <Style TargetType="{x:Type ListBoxItem}">
             <Style.Triggers>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                    <Setter Property="Background" Value="#333333"></Setter>
+                    <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundColor}"/>
                 </Trigger>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                    <Setter Property="Background" Value="#2D2D30"></Setter>
+                    <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColor}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
         
     </Window.Resources>
     
-    <Grid x:Name="MainGrid" Background="{StaticResource PrimaryBackgroundColor}">
+    <Grid x:Name="MainGrid" Background="{DynamicResource PrimaryBackgroundColor}">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="230"/>
@@ -35,7 +35,7 @@
         </Grid.ColumnDefinitions>
         
         <!-- Side bar menu -->
-        <Grid x:Name="SideBarGrid" Grid.Column="0" Background="{StaticResource SecondaryBackgroundColor}">
+        <Grid x:Name="SideBarGrid" Grid.Column="0" Background="{DynamicResource SecondaryBackgroundColor}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="205"/>
@@ -45,10 +45,10 @@
             <!-- Menu header -->
             <StackPanel x:Name="SideBarHeaderStackPanel" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" Margin="0, 30, 0, 0">
                 <Image x:Name="ModLogoSideBarImage" Width="100" Height="100" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
-                <TextBlock x:Name="ModNameSideBarTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="20" TextAlignment="Center" Margin="0, 10, 0, 3" Text="MyMod"/>
+                <TextBlock x:Name="ModNameSideBarTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="20" TextAlignment="Center" Margin="0, 10, 0, 3" Text="MyMod"/>
                 <StackPanel x:Name="SideBarModVersionStackPanel" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Foreground="{StaticResource FontColorSecondary}" FontSize="16" TextAlignment="Center" Text="v"/>
-                    <TextBlock x:Name="ModVersionSideBarTextBlock" Foreground="{StaticResource FontColorSecondary}" FontSize="16" TextAlignment="Center" Text="1.0.0.0"/>
+                    <TextBlock Foreground="{DynamicResource FontColorSecondary}" FontSize="16" TextAlignment="Center" Text="v"/>
+                    <TextBlock x:Name="ModVersionSideBarTextBlock" Foreground="{DynamicResource FontColorSecondary}" FontSize="16" TextAlignment="Center" Text="1.0.0.0"/>
                 </StackPanel>
             </StackPanel>
             
@@ -62,9 +62,9 @@
                         <ColumnDefinition Width="60"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border x:Name="SideBarHomeButtonBorder" Grid.Column="0" Height="60" Background="#FF37ADE7" Tag="home"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Home" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Home" Tag="project_explorer.sidebar.home"/>
+                    <Border x:Name="SideBarHomeButtonBorder" Grid.Column="0" Height="60" Background="{DynamicResource BorderColor}" Tag="home"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Home" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Home" Tag="project_explorer.sidebar.home"/>
                 </Grid>
 
                 <!-- Mod settings button -->
@@ -75,8 +75,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border x:Name="SideBarModSettingsButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="settings"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Cogs" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Mod settings" Tag="project_explorer.sidebar.mod_settings"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Cogs" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Mod settings" Tag="project_explorer.sidebar.mod_settings"/>
                 </Grid>
 
                 <!-- Blockstates button -->
@@ -87,8 +87,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border x:Name="SideBarBlockstatesButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="blockstates"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="ListUl" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Blockstates" Tag="project_explorer.sidebar.blockstates"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="ListUl" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Blockstates" Tag="project_explorer.sidebar.blockstates"/>
                 </Grid>
 
                 <!-- Models button -->
@@ -99,8 +99,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border x:Name="SideBarModelsButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="models"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Cube" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Models" Tag="project_explorer.sidebar.models"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Cube" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Models" Tag="project_explorer.sidebar.models"/>
                 </Grid>
 
                 <!-- Textures button -->
@@ -111,8 +111,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border x:Name="SideBarTexturesButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="textures"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Image" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Textures" Tag="project_explorer.sidebar.textures"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Image" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Textures" Tag="project_explorer.sidebar.textures"/>
                 </Grid>
 
                 <!-- Translations button -->
@@ -123,8 +123,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border x:Name="SideBarTranslationsButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="translations"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Language" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Translations" Tag="project_explorer.sidebar.translations"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Language" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Translations" Tag="project_explorer.sidebar.translations"/>
                 </Grid>
 
                 <!-- Exportation button -->
@@ -135,8 +135,8 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Border x:Name="SideBarExportationButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="exportation"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="File" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{StaticResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{StaticResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Export" Tag="project_explorer.sidebar.export"/>
+                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="File" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Export" Tag="project_explorer.sidebar.export"/>
                 </Grid>
 
             </StackPanel>
@@ -151,8 +151,8 @@
         <!-- Home grid -->
         <Grid x:Name="HomeGrid" Grid.Column="2" Visibility="Visible">
             <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <fa:ImageAwesome HorizontalAlignment="Center" Icon="ExclamationCircle" Width="60" Height="60" Foreground="{StaticResource FontColorPrimary}" Margin="0, 0, 0, 20"/>
-                <TextBlock x:Name="HomeLabelNoAvailable" Foreground="{StaticResource FontColorPrimary}" TextAlignment="Center" FontSize="20" Text="This feature is not available yet." Tag="feature.not_available"/>
+                <fa:ImageAwesome HorizontalAlignment="Center" Icon="ExclamationCircle" Width="60" Height="60" Foreground="{DynamicResource FontColorPrimary}" Margin="0, 0, 0, 20"/>
+                <TextBlock x:Name="HomeLabelNoAvailable" Foreground="{DynamicResource FontColorPrimary}" TextAlignment="Center" FontSize="20" Text="This feature is not available yet." Tag="feature.not_available"/>
             </StackPanel>
         </Grid>
 
@@ -181,7 +181,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <!-- Mod logo -->
-                <Border Grid.Column="0" BorderBrush="{StaticResource BorderColor}" BorderThickness="1">
+                <Border Grid.Column="0" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1">
                     <Image x:Name="ModSettingsModLogoImage" Source="{x:Null}"/>
                 </Border>
                 <DockPanel Grid.Column="0" Height="22" HorizontalAlignment="Right" VerticalAlignment="Bottom">
@@ -199,8 +199,8 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
-                    <TextBox x:Name="ModSettingsModNameTextbox" Grid.Row="0" FontSize="20" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" TextChanged="ModSettingsTextboxTextChanged"/>
-                    <TextBox x:Name="ModSettingsModDescriptionTextbox" Grid.Row="1" FontSize="14" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 5, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBox x:Name="ModSettingsModNameTextbox" Grid.Row="0" FontSize="20" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBox x:Name="ModSettingsModDescriptionTextbox" Grid.Row="1" FontSize="14" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" Margin="0, 5, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </Grid>
                 
             </Grid>
@@ -219,44 +219,44 @@
 
                 <!-- Mod authors -->
                 <StackPanel Orientation="Vertical" Grid.Row="0">
-                    <TextBlock x:Name="ModSettingsModAuthorsTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Mod author(s)" Tag="project_explorer.mod_settings.authors"/>
-                    <TextBox x:Name="ModSettingsModAuthorsTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsModAuthorsTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Mod author(s)" Tag="project_explorer.mod_settings.authors"/>
+                    <TextBox x:Name="ModSettingsModAuthorsTextbox" FontSize="14" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
                 <!-- Mod license -->
                 <StackPanel Orientation="Vertical" Grid.Row="1">
-                    <TextBlock x:Name="ModSettingsModLicenseTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Mod license" Tag="project_explorer.mod_settings.license"/>
-                    <TextBox x:Name="ModSettingsModLicenseTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsModLicenseTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Mod license" Tag="project_explorer.mod_settings.license"/>
+                    <TextBox x:Name="ModSettingsModLicenseTextbox" FontSize="14" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
                 <!-- Mod credits -->
                 <StackPanel Orientation="Vertical" Grid.Row="2">
-                    <TextBlock x:Name="ModSettingsModCreditsTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Mod credits" Tag="project_explorer.mod_settings.credits"/>
-                    <TextBox x:Name="ModSettingsModCreditsTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsModCreditsTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Mod credits" Tag="project_explorer.mod_settings.credits"/>
+                    <TextBox x:Name="ModSettingsModCreditsTextbox" FontSize="14" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
                 <!-- Mod website -->
                 <StackPanel Orientation="Vertical" Grid.Row="3">
-                    <TextBlock x:Name="ModSettingsModWebsiteTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Mod website" Tag="project_explorer.mod_settings.website"/>
-                    <TextBox x:Name="ModSettingsModWebsiteTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsModWebsiteTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Mod website" Tag="project_explorer.mod_settings.website"/>
+                    <TextBox x:Name="ModSettingsModWebsiteTextbox" FontSize="14" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
                 <!-- Mod bug tracker url -->
                 <StackPanel Orientation="Vertical" Grid.Row="4">
-                    <TextBlock x:Name="ModSettingsModBugTrackerURLTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Mod bug tracker" Tag="project_explorer.mod_settings.bugtracker"/>
-                    <TextBox x:Name="ModSettingsModBugTrackerURLTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsModBugTrackerURLTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Mod bug tracker" Tag="project_explorer.mod_settings.bugtracker"/>
+                    <TextBox x:Name="ModSettingsModBugTrackerURLTextbox" FontSize="14" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
                 <!-- Mod update json url -->
                 <StackPanel Orientation="Vertical" Grid.Row="5">
-                    <TextBlock x:Name="ModSettingsModUpdateJsonURLTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Link to the update json file" Tag="project_explorer.mod_settings.updatejson"/>
-                    <TextBox x:Name="ModSettingsModUpdateJsonURLTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsModUpdateJsonURLTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Link to the update json file" Tag="project_explorer.mod_settings.updatejson"/>
+                    <TextBox x:Name="ModSettingsModUpdateJsonURLTextbox" FontSize="14" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
             </Grid>
             
             <!-- Separator -->
-            <Border Grid.Column="1" Grid.Row="1" Margin="0, 25" Background="{StaticResource FontColorPrimary}"/>
+            <Border Grid.Column="1" Grid.Row="1" Margin="0, 25" Background="{DynamicResource FontColorPrimary}"/>
 
             <!-- Right column -->
             <Grid Grid.Column="2" Grid.Row="1" Margin="15, 15, 15, 0">
@@ -272,38 +272,38 @@
 
                 <!-- Mod version -->
                 <StackPanel Orientation="Vertical" Grid.Row="0">
-                    <TextBlock x:Name="ModSettingsModVersionTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Mod version" Tag="project_explorer.mod_settings.mod_version"/>
-                    <TextBox x:Name="ModSettingsModVersionTextbox" FontSize="14" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsModVersionTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Mod version" Tag="project_explorer.mod_settings.mod_version"/>
+                    <TextBox x:Name="ModSettingsModVersionTextbox" FontSize="14" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
                 <!-- Minecraft version -->
                 <StackPanel Orientation="Vertical" Grid.Row="1">
-                    <TextBlock x:Name="ModSettingsMinecraftVersionTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Minecraft version" Tag="project_explorer.mod_settings.minecraft_version"/>
-                    <TextBox x:Name="ModSettingsMinecraftVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{StaticResource PrimaryBackgroundColor}" Foreground="{StaticResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsMinecraftVersionTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Minecraft version" Tag="project_explorer.mod_settings.minecraft_version"/>
+                    <TextBox x:Name="ModSettingsMinecraftVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{DynamicResource PrimaryBackgroundColor}" Foreground="{DynamicResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
                 <!-- Forge version -->
                 <StackPanel Orientation="Vertical" Grid.Row="2">
-                    <TextBlock x:Name="ModSettingsForgeVersionTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Forge version" Tag="project_explorer.mod_settings.forge_version"/>
-                    <TextBox x:Name="ModSettingsForgeVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{StaticResource PrimaryBackgroundColor}" Foreground="{StaticResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsForgeVersionTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Forge version" Tag="project_explorer.mod_settings.forge_version"/>
+                    <TextBox x:Name="ModSettingsForgeVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{DynamicResource PrimaryBackgroundColor}" Foreground="{DynamicResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
                 <!-- Mappings version -->
                 <StackPanel Orientation="Vertical" Grid.Row="3">
-                    <TextBlock x:Name="ModSettingsMappingsVersionTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Mappings version" Tag="project_explorer.mod_settings.mappings_version"/>
-                    <TextBox x:Name="ModSettingsMappingsVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{StaticResource PrimaryBackgroundColor}" Foreground="{StaticResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsMappingsVersionTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Mappings version" Tag="project_explorer.mod_settings.mappings_version"/>
+                    <TextBox x:Name="ModSettingsMappingsVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{DynamicResource PrimaryBackgroundColor}" Foreground="{DynamicResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
                 <!-- Modid -->
                 <StackPanel Orientation="Vertical" Grid.Row="4">
-                    <TextBlock x:Name="ModSettingsModidTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Modid" Tag="project_explorer.mod_settings.modid"/>
-                    <TextBox x:Name="ModSettingsModidTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{StaticResource PrimaryBackgroundColor}" Foreground="{StaticResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsModidTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Modid" Tag="project_explorer.mod_settings.modid"/>
+                    <TextBox x:Name="ModSettingsModidTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{DynamicResource PrimaryBackgroundColor}" Foreground="{DynamicResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
                 <!-- Modgroup -->
                 <StackPanel Orientation="Vertical" Grid.Row="5">
-                    <TextBlock x:Name="ModSettingsModgroupTextBlock" Foreground="{StaticResource FontColorPrimary}" FontSize="14" Text="Mod group" Tag="project_explorer.mod_settings.mod_group"/>
-                    <TextBox x:Name="ModSettingsModgroupTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{StaticResource PrimaryBackgroundColor}" Foreground="{StaticResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsModgroupTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Mod group" Tag="project_explorer.mod_settings.mod_group"/>
+                    <TextBox x:Name="ModSettingsModgroupTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{DynamicResource PrimaryBackgroundColor}" Foreground="{DynamicResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
             </Grid>
@@ -312,14 +312,14 @@
             <Border Grid.ColumnSpan="3" Grid.Row="2" Background="#FF686868"/>
 
             <!-- Status label and save button -->
-            <Grid Grid.Row="3" Grid.ColumnSpan="3" Background="{StaticResource SecondaryBackgroundColor}">
+            <Grid Grid.Row="3" Grid.ColumnSpan="3" Background="{DynamicResource SecondaryBackgroundColor}">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock x:Name="ModSettingsStatusLabel" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Foreground="{StaticResource FontColorPrimary}" FontSize="13" Margin="0, 0, 20, 0" Text="All modifications have been saved." Tag="project_explorer.mod_settings.saved_modifications"/>
+                <TextBlock x:Name="ModSettingsStatusLabel" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" FontSize="13" Margin="0, 0, 20, 0" Text="All modifications have been saved." Tag="project_explorer.mod_settings.saved_modifications"/>
                 <Button x:Name="ModSettingsSaveButton" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Content="Save modifications" Padding="5" Margin="20, 0, 0, 0" Width="300" FontSize="14" Click="ModSettingsSaveButtonClick" Tag="project_explorer.mod_settings.save_modifications"/>
             </Grid>
             
@@ -335,8 +335,8 @@
             </Grid.RowDefinitions>
             
             <!-- Search bar and buttons -->
-            <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10">
-                <Grid Grid.Row="0" Background="{StaticResource InputsBackgroundColor}">
+            <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10">
+                <Grid Grid.Row="0" Background="{DynamicResource InputsBackgroundColor}">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
@@ -344,8 +344,8 @@
                         <ColumnDefinition Width="90"/>
                     </Grid.ColumnDefinitions>
 
-                    <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{StaticResource FontColorPrimary}" Margin="5"/>
-                    <TextBox x:Name="BlockstatesSearchTextbox" FontSize="14" Grid.Column="1" BorderBrush="{x:Null}" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" BorderThickness="0" TextChanged="SearchTextboxTextChanged"/>
+                    <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" Margin="5"/>
+                    <TextBox x:Name="BlockstatesSearchTextbox" FontSize="14" Grid.Column="1" BorderBrush="{x:Null}" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" BorderThickness="0" TextChanged="SearchTextboxTextChanged"/>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Button x:Name="BlockstatesRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
@@ -363,8 +363,8 @@
             </Border>
             
             <!-- Listview -->
-            <Border Grid.Row="1" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10, 0">
-                <ListView x:Name="BlockstatesListView" Background="{StaticResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
+            <Border Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10, 0">
+                <ListView x:Name="BlockstatesListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
                     
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -375,8 +375,8 @@
                                     <RowDefinition Height="20"/>
                                 </Grid.RowDefinitions>
                                 
-                                <fa:ImageAwesome Grid.Row="0" Icon="{Binding Icon}" Foreground="{StaticResource FontColorPrimary}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56"/>
-                                <TextBlock Grid.Row="1" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" MaxWidth="128" FontSize="13"/>
+                                <fa:ImageAwesome Grid.Row="0" Icon="{Binding Icon}" Foreground="{DynamicResource FontColorPrimary}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56"/>
+                                <TextBlock Grid.Row="1" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" MaxWidth="128" FontSize="13"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -391,7 +391,7 @@
             </Border>
             
             <!-- Status bar -->
-            <Grid Grid.Row="2" Background="{StaticResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
+            <Grid Grid.Row="2" Background="{DynamicResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1"/>
@@ -409,13 +409,13 @@
                 <!-- Loading progressbar and textblock -->
                 <StackPanel x:Name="BlockstatesLoadingStackPanel" Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden">
                     <ProgressBar x:Name="BlockstatesLoadingProgressBar" IsIndeterminate="True"  Width="120" Height="15" Margin="12, 0"/>
-                    <TextBlock x:Name="BlockstatesLoadingStatusTextblock" Foreground="{StaticResource FontColorPrimary}" Text="Loading blockstates list..." FontSize="14" Tag="project_explorer.blockstates.loading_files"/>
+                    <TextBlock x:Name="BlockstatesLoadingStatusTextblock" Foreground="{DynamicResource FontColorPrimary}" Text="Loading blockstates list..." FontSize="14" Tag="project_explorer.blockstates.loading_files"/>
                 </StackPanel>
 
                 <!-- File count -->
                 <StackPanel x:Name="BlockstatesFileCountStackPanel" Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextBlock x:Name="BlockstatesFileCountTextblock" Foreground="{StaticResource FontColorPrimary}" Text="0" Margin="0, 0, 3, 0" FontSize="14"/>
-                    <TextBlock x:Name="BlockstatesFileLabelTextblock" Foreground="{StaticResource FontColorPrimary}" Text="files" Margin="0, 0, 12, 0" FontSize="14" Tag="project_explorer.blockstates.files"/>
+                    <TextBlock x:Name="BlockstatesFileCountTextblock" Foreground="{DynamicResource FontColorPrimary}" Text="0" Margin="0, 0, 3, 0" FontSize="14"/>
+                    <TextBlock x:Name="BlockstatesFileLabelTextblock" Foreground="{DynamicResource FontColorPrimary}" Text="files" Margin="0, 0, 12, 0" FontSize="14" Tag="project_explorer.blockstates.files"/>
                 </StackPanel>
 
             </Grid>
@@ -433,8 +433,8 @@
             </Grid.RowDefinitions>
 
             <!-- Search bar and buttons -->
-            <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10">
-                <Grid Grid.Row="0" Background="{StaticResource InputsBackgroundColor}">
+            <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10">
+                <Grid Grid.Row="0" Background="{DynamicResource InputsBackgroundColor}">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
@@ -442,8 +442,8 @@
                         <ColumnDefinition Width="90"/>
                     </Grid.ColumnDefinitions>
 
-                    <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{StaticResource FontColorPrimary}" Margin="5"/>
-                    <TextBox x:Name="ModelsSearchTextbox" FontSize="14" Grid.Column="1" BorderBrush="{x:Null}" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" BorderThickness="0" TextChanged="SearchTextboxTextChanged"/>
+                    <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" Margin="5"/>
+                    <TextBox x:Name="ModelsSearchTextbox" FontSize="14" Grid.Column="1" BorderBrush="{x:Null}" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" BorderThickness="0" TextChanged="SearchTextboxTextChanged"/>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Button x:Name="ModelsRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
@@ -461,8 +461,8 @@
             </Border>
 
             <!-- Listview -->
-            <Border Grid.Row="1" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10, 0">
-                <ListView x:Name="ModelsListView" Background="{StaticResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
+            <Border Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10, 0">
+                <ListView x:Name="ModelsListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -474,8 +474,8 @@
                                 </Grid.RowDefinitions>
 
 
-                                <fa:ImageAwesome Grid.Row="0" Icon="{Binding Icon}" Foreground="{StaticResource FontColorPrimary}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56"/>
-                                <TextBlock Grid.Row="1" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" MaxWidth="128" FontSize="13"/>
+                                <fa:ImageAwesome Grid.Row="0" Icon="{Binding Icon}" Foreground="{DynamicResource FontColorPrimary}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56"/>
+                                <TextBlock Grid.Row="1" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" MaxWidth="128" FontSize="13"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -490,7 +490,7 @@
             </Border>
 
             <!-- Status bar -->
-            <Grid Grid.Row="2" Background="{StaticResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
+            <Grid Grid.Row="2" Background="{DynamicResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1"/>
@@ -508,13 +508,13 @@
                 <!-- Loading progressbar and textblock -->
                 <StackPanel x:Name="ModelsLoadingStackPanel" Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden">
                     <ProgressBar x:Name="ModelsLoadingProgressBar" IsIndeterminate="True"  Width="120" Height="15" Margin="12, 0"/>
-                    <TextBlock x:Name="ModelsLoadingStatusTextblock" Foreground="{StaticResource FontColorPrimary}" Text="Loading models list..." FontSize="14" Tag="project_explorer.models.loading_files"/>
+                    <TextBlock x:Name="ModelsLoadingStatusTextblock" Foreground="{DynamicResource FontColorPrimary}" Text="Loading models list..." FontSize="14" Tag="project_explorer.models.loading_files"/>
                 </StackPanel>
 
                 <!-- File count -->
                 <StackPanel x:Name="ModelsFileCountStackPanel" Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextBlock x:Name="ModelsFileCountTextblock" Foreground="{StaticResource FontColorPrimary}" Text="0" Margin="0, 0, 3, 0" FontSize="14"/>
-                    <TextBlock x:Name="ModelsFileLabelTextblock" Foreground="{StaticResource FontColorPrimary}" Text="files" Margin="0, 0, 12, 0" FontSize="14" Tag="project_explorer.models.files"/>
+                    <TextBlock x:Name="ModelsFileCountTextblock" Foreground="{DynamicResource FontColorPrimary}" Text="0" Margin="0, 0, 3, 0" FontSize="14"/>
+                    <TextBlock x:Name="ModelsFileLabelTextblock" Foreground="{DynamicResource FontColorPrimary}" Text="files" Margin="0, 0, 12, 0" FontSize="14" Tag="project_explorer.models.files"/>
                 </StackPanel>
 
             </Grid>
@@ -531,8 +531,8 @@
             </Grid.RowDefinitions>
 
             <!-- Search bar and buttons -->
-            <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10">
-                <Grid Grid.Row="0" Background="{StaticResource InputsBackgroundColor}">
+            <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10">
+                <Grid Grid.Row="0" Background="{DynamicResource InputsBackgroundColor}">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
@@ -540,8 +540,8 @@
                         <ColumnDefinition Width="90"/>
                     </Grid.ColumnDefinitions>
 
-                    <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{StaticResource FontColorPrimary}" Margin="5"/>
-                    <TextBox x:Name="TexturesSearchTextbox" FontSize="14" Grid.Column="1" BorderBrush="{x:Null}" Background="{StaticResource InputsBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" Padding="5" BorderThickness="0" TextChanged="SearchTextboxTextChanged"/>
+                    <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" Margin="5"/>
+                    <TextBox x:Name="TexturesSearchTextbox" FontSize="14" Grid.Column="1" BorderBrush="{x:Null}" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" Padding="5" BorderThickness="0" TextChanged="SearchTextboxTextChanged"/>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Button x:Name="TexturesRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
@@ -559,8 +559,8 @@
             </Border>
 
             <!-- Listview -->
-            <Border Grid.Row="1" BorderBrush="{StaticResource BorderColor}" BorderThickness="1" Margin="10, 0">
-                <ListView x:Name="TexturesListView" Background="{StaticResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
+            <Border Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10, 0">
+                <ListView x:Name="TexturesListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -572,7 +572,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Image Source="{Binding FilePath, Converter={StaticResource StringToImageConverter}}" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56"/>
-                                <TextBlock Grid.Row="1" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" MaxWidth="128" FontSize="13"/>
+                                <TextBlock Grid.Row="1" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" MaxWidth="128" FontSize="13"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -587,7 +587,7 @@
             </Border>
 
             <!-- Status bar -->
-            <Grid Grid.Row="2" Background="{StaticResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
+            <Grid Grid.Row="2" Background="{DynamicResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1"/>
@@ -605,13 +605,13 @@
                 <!-- Loading progressbar and textblock -->
                 <StackPanel x:Name="TexturesLoadingStackPanel" Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden">
                     <ProgressBar x:Name="TexturesLoadingProgressBar" IsIndeterminate="True"  Width="120" Height="15" Margin="12, 0"/>
-                    <TextBlock x:Name="TexturesLoadingStatusTextblock" Foreground="{StaticResource FontColorPrimary}" Text="Loading textures list..." FontSize="14" Tag="project_explorer.textures.loading_files"/>
+                    <TextBlock x:Name="TexturesLoadingStatusTextblock" Foreground="{DynamicResource FontColorPrimary}" Text="Loading textures list..." FontSize="14" Tag="project_explorer.textures.loading_files"/>
                 </StackPanel>
 
                 <!-- File count -->
                 <StackPanel x:Name="TexturesFileCountStackPanel" Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextBlock x:Name="TexturesFileCountTextblock" Foreground="{StaticResource FontColorPrimary}" Text="0" Margin="0, 0, 3, 0" FontSize="14"/>
-                    <TextBlock x:Name="TexturesFileLabelTextblock" Foreground="{StaticResource FontColorPrimary}" Text="files" Margin="0, 0, 12, 0" FontSize="14" Tag="project_explorer.textures.files"/>
+                    <TextBlock x:Name="TexturesFileCountTextblock" Foreground="{DynamicResource FontColorPrimary}" Text="0" Margin="0, 0, 3, 0" FontSize="14"/>
+                    <TextBlock x:Name="TexturesFileLabelTextblock" Foreground="{DynamicResource FontColorPrimary}" Text="files" Margin="0, 0, 12, 0" FontSize="14" Tag="project_explorer.textures.files"/>
                 </StackPanel>
 
             </Grid>
@@ -645,7 +645,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <!-- Header -->
-                <TextBlock x:Name="TranslationsFilesTextblock" Text="Files" Foreground="{StaticResource FontColorPrimary}" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Tag="project_explorer.translations.files"/>
+                <TextBlock x:Name="TranslationsFilesTextblock" Text="Files" Foreground="{DynamicResource FontColorPrimary}" FontSize="17" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Tag="project_explorer.translations.files"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0">
                     <Button x:Name="TranslationsAddButton" Width="30" Click="TranslationsAddButtonClick">
                         <fa:ImageAwesome Foreground="DarkGreen" Icon="Plus" Margin="4"/>
@@ -656,18 +656,18 @@
                 </StackPanel>
                 
                 <!-- Files list -->
-                <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="{StaticResource BorderColor}" Margin="0, 5, 0, 0" BorderThickness="1">
-                    <ListBox x:Name="TranslationsFilesListBox" BorderThickness="0" AlternationCount="2" Background="{StaticResource SecondaryBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" SelectionChanged="TranslationsFilesListBoxSelectionChanged"/>
+                <Border Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="{DynamicResource BorderColor}" Margin="0, 5, 0, 0" BorderThickness="1">
+                    <ListBox x:Name="TranslationsFilesListBox" BorderThickness="0" AlternationCount="2" Background="{DynamicResource SecondaryBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" SelectionChanged="TranslationsFilesListBoxSelectionChanged"/>
                 </Border>
             </Grid>
 
             <!-- File editor -->
-            <Border Grid.Column="1" Grid.Row="0" BorderBrush="{StaticResource BorderColor}" Margin="10" BorderThickness="1">
-                <TextEditor:TextEditor x:Name="TranslationsTextEditor" BorderThickness="0" Background="{StaticResource SecondaryBackgroundColor}" Foreground="{StaticResource FontColorPrimary}" HorizontalLinesBrush="#FF686868" SelectionBrush="#FFD1A100" TextChanged="TranslationsTextEditorTextChanged"/>
+            <Border Grid.Column="1" Grid.Row="0" BorderBrush="{DynamicResource BorderColor}" Margin="10" BorderThickness="1">
+                <TextEditor:TextEditor x:Name="TranslationsTextEditor" BorderThickness="0" Background="{DynamicResource SecondaryBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" HorizontalLinesBrush="#FF686868" SelectionBrush="#FFD1A100" TextChanged="TranslationsTextEditorTextChanged"/>
             </Border>
 
             <!-- Status bar -->
-            <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="{StaticResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
+            <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="{DynamicResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1"/>
@@ -685,7 +685,7 @@
                 <!-- Loading progressbar and textblock -->
                 <StackPanel x:Name="TranslationsLoadingStackPanel" Orientation="Horizontal" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden">
                     <ProgressBar x:Name="TranslationsLoadingProgressBar" IsIndeterminate="True"  Width="120" Height="15" Margin="12, 0"/>
-                    <TextBlock x:Name="TranslationsLoadingStatusTextblock" Foreground="{StaticResource FontColorPrimary}" Text="Chargement de la liste des fichiers..." FontSize="14" Tag="project_explorer.translations.loading_files"/>
+                    <TextBlock x:Name="TranslationsLoadingStatusTextblock" Foreground="{DynamicResource FontColorPrimary}" Text="Chargement de la liste des fichiers..." FontSize="14" Tag="project_explorer.translations.loading_files"/>
                 </StackPanel>
 
             </Grid>
@@ -701,10 +701,10 @@
                 <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
 
-            <Border BorderThickness="1" Grid.Column="1" BorderBrush="{StaticResource BorderColor}"/>
+            <Border BorderThickness="1" Grid.Column="1" BorderBrush="{DynamicResource BorderColor}"/>
             
             <!-- Recap panel -->
-            <Grid Grid.Column="2" Background="{StaticResource SecondaryBackgroundColor}">
+            <Grid Grid.Column="2" Background="{DynamicResource SecondaryBackgroundColor}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
@@ -719,45 +719,45 @@
                     <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock x:Name="ExportationRecapTextBlock" Grid.Row="0" Foreground="{StaticResource FontColorPrimary}" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" Margin="10" Text="Summary" Tag="project_explorer.export.summary"/>
+                <TextBlock x:Name="ExportationRecapTextBlock" Grid.Row="0" Foreground="{DynamicResource FontColorPrimary}" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" Margin="10" Text="Summary" Tag="project_explorer.export.summary"/>
 
                 <!-- Mod name -->
                 <StackPanel HorizontalAlignment="Center" Grid.Row="1">
-                    <TextBlock x:Name="ModNameExportationRecapLabelTextBlock" Text="Name" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}" Tag="project_explorer.export.name"/>
-                    <TextBlock x:Name="ModNameExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock x:Name="ModNameExportationRecapLabelTextBlock" Text="Name" HorizontalAlignment="Center" FontSize="14" Foreground="{DynamicResource FontColorSecondary}" Tag="project_explorer.export.name"/>
+                    <TextBlock x:Name="ModNameExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource FontColorPrimary}"/>
                 </StackPanel>
 
                 <!-- Mod version -->
                 <StackPanel HorizontalAlignment="Center" Grid.Row="2">
-                    <TextBlock x:Name="ModVersionExportationRecapLabelTextBlock" Text="Mod version" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}" Tag="project_explorer.export.mod_version"/>
-                    <TextBlock x:Name="ModVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock x:Name="ModVersionExportationRecapLabelTextBlock" Text="Mod version" HorizontalAlignment="Center" FontSize="14" Foreground="{DynamicResource FontColorSecondary}" Tag="project_explorer.export.mod_version"/>
+                    <TextBlock x:Name="ModVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource FontColorPrimary}"/>
                 </StackPanel>
 
                 <!-- Mod authors -->
                 <StackPanel HorizontalAlignment="Center" Grid.Row="3">
-                    <TextBlock x:Name="ModAuthorsExportationRecapLabelTextBlock" Text="Authors" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}" Tag="project_explorer.export.authors"/>
-                    <TextBlock x:Name="ModAuthorsExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock x:Name="ModAuthorsExportationRecapLabelTextBlock" Text="Authors" HorizontalAlignment="Center" FontSize="14" Foreground="{DynamicResource FontColorSecondary}" Tag="project_explorer.export.authors"/>
+                    <TextBlock x:Name="ModAuthorsExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource FontColorPrimary}"/>
                 </StackPanel>
 
                 <!-- Minecraft version -->
                 <StackPanel HorizontalAlignment="Center" Grid.Row="4">
-                    <TextBlock x:Name="MinecraftVersionExportationRecapLabelTextBlock" Text="Minecraft version" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}" Tag="project_explorer.export.minecraft_version"/>
-                    <TextBlock x:Name="MinecraftVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock x:Name="MinecraftVersionExportationRecapLabelTextBlock" Text="Minecraft version" HorizontalAlignment="Center" FontSize="14" Foreground="{DynamicResource FontColorSecondary}" Tag="project_explorer.export.minecraft_version"/>
+                    <TextBlock x:Name="MinecraftVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource FontColorPrimary}"/>
                 </StackPanel>
 
                 <!-- Forge version -->
                 <StackPanel HorizontalAlignment="Center" Grid.Row="5">
-                    <TextBlock x:Name="ForgeVersionExportationRecapLabelTextBlock" Text="Forge version" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}" Tag="project_explorer.export.forge_version"/>
-                    <TextBlock x:Name="ForgeVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock x:Name="ForgeVersionExportationRecapLabelTextBlock" Text="Forge version" HorizontalAlignment="Center" FontSize="14" Foreground="{DynamicResource FontColorSecondary}" Tag="project_explorer.export.forge_version"/>
+                    <TextBlock x:Name="ForgeVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource FontColorPrimary}"/>
                 </StackPanel>
 
                 <!-- Mappings version -->
                 <StackPanel HorizontalAlignment="Center" Grid.Row="6">
-                    <TextBlock x:Name="MappingsVersionExportationRecapLabelTextBlock" Text="Mappings version" HorizontalAlignment="Center" FontSize="14" Foreground="{StaticResource FontColorSecondary}" Tag="project_explorer.export.mappings_version"/>
-                    <TextBlock x:Name="MappingsVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource FontColorPrimary}"/>
+                    <TextBlock x:Name="MappingsVersionExportationRecapLabelTextBlock" Text="Mappings version" HorizontalAlignment="Center" FontSize="14" Foreground="{DynamicResource FontColorSecondary}" Tag="project_explorer.export.mappings_version"/>
+                    <TextBlock x:Name="MappingsVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource FontColorPrimary}"/>
                 </StackPanel>
                 
-                <Border BorderThickness="1" Grid.Row="8" BorderBrush="{StaticResource FontColorPrimary}"/>
+                <Border BorderThickness="1" Grid.Row="8" BorderBrush="{DynamicResource FontColorPrimary}"/>
 
                 <!-- Exportation button -->
                 <Button x:Name="ExportationButton" Content="Export mod" Height="30" Grid.Row="9" Margin="30, 0" Click="ExportationButtonClick" Tag="project_explorer.export.export"/>

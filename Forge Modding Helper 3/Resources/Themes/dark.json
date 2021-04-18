@@ -1,0 +1,9 @@
+﻿{
+    "name": "Dark",
+    "PrimaryBackgroundColor": "#FF2D2D30",
+    "SecondaryBackgroundColor": "#FF252526",
+    "InputsBackgroundColor": "#FF333337",
+    "FontColorPrimary": "White",
+    "FontColorSecondary": "#FFB0B0B0",
+    "BorderColor": "#FF37ADE7"
+}

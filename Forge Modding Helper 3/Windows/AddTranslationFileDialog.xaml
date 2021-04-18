@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows" xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="Add a translation file" Height="197" Width="503" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid x:Name="MainGrid" Background="{StaticResource PrimaryBackgroundColor}">
+    <Grid x:Name="MainGrid" Background="{DynamicResource PrimaryBackgroundColor}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -17,15 +17,15 @@
         
         <!-- Header -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10, 0">
-            <fa:ImageAwesome HorizontalAlignment="Left" Icon="Language" Width="25" Height="25" Foreground="{StaticResource FontColorPrimary}"/>
-            <TextBlock x:Name="AddTranslationTitleTextblock" Text="Add a translation file" HorizontalAlignment="Left" Margin="5, 0" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource FontColorPrimary}" Tag="dialog.translation.add.title"/>
+            <fa:ImageAwesome HorizontalAlignment="Left" Icon="Language" Width="25" Height="25" Foreground="{DynamicResource FontColorPrimary}"/>
+            <TextBlock x:Name="AddTranslationTitleTextblock" Text="Add a translation file" HorizontalAlignment="Left" Margin="5, 0" FontSize="16" VerticalAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" Tag="dialog.translation.add.title"/>
         </StackPanel>
-        <Border Grid.Row="1" BorderThickness="1" BorderBrush="{StaticResource FontColorPrimary}"/>
+        <Border Grid.Row="1" BorderThickness="1" BorderBrush="{DynamicResource FontColorPrimary}"/>
 
         <!-- File name entry -->
         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10, 0" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <Label x:Name="name_label" Content="File name :" HorizontalAlignment="Left" Foreground="{StaticResource FontColorPrimary}" Tag="dialog.translation.add.file_name"/>
-            <TextBox x:Name="name_textBox" VerticalContentAlignment="Center" TextWrapping="Wrap" Width="400" BorderBrush="#FF686868" Foreground="{StaticResource FontColorPrimary}" Background="{StaticResource InputsBackgroundColor}" TextChanged="name_textBox_TextChanged" Text="lang_lang.json"/>
+            <Label x:Name="name_label" Content="File name :" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Tag="dialog.translation.add.file_name"/>
+            <TextBox x:Name="name_textBox" VerticalContentAlignment="Center" TextWrapping="Wrap" Width="400" BorderBrush="#FF686868" Foreground="{DynamicResource FontColorPrimary}" Background="{DynamicResource InputsBackgroundColor}" TextChanged="name_textBox_TextChanged" Text="lang_lang.json"/>
         </StackPanel>
         
         <!-- Buttons -->

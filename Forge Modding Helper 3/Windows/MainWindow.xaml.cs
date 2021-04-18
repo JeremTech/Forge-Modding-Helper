@@ -26,6 +26,9 @@ namespace Forge_Modding_Helper_3
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this);
 
+            // Loading theme
+            App.LoadThemeFile(OptionsFile.GetCurrentTheme());
+
             // Checking app folders
             updateLoadingStatut("Vérification des dossiers d'application...", 20);
 

@@ -6,34 +6,34 @@
         xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows"
         mc:Ignorable="d"
         Title="Forge Modding Helper - Bienvenue" Height="505.875" Width="638" ResizeMode="CanMinimize" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen">
-    <Grid x:Name="main_grid" Background="#FF2D2D30">
+    <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}">
         <Image HorizontalAlignment="Left" Height="71" Margin="129,21,0,0" VerticalAlignment="Top" Width="70" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
-        <Label Content="Forge Modding Helper" HorizontalAlignment="Left" Margin="205,17,0,0" VerticalAlignment="Top" Foreground="White" FontSize="28" Width="300"/>
-        <Label x:Name="version_label" Content="v0.0.0.0" Margin="354,56,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Width="161" FontSize="13"/>
+        <Label Content="Forge Modding Helper" HorizontalAlignment="Left" Margin="205,17,0,0" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" FontSize="28" Width="300"/>
+        <Label x:Name="version_label" Content="v0.0.0.0" Margin="354,56,0,0" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Width="161" FontSize="13"/>
         <Button x:Name="new_mod_button" Content="Nouveau" HorizontalAlignment="Left" Margin="455,210,0,0" VerticalAlignment="Top" Width="140" Height="24" Click="new_mod_button_Click" Tag="welcome.button.new"/>
-        <Label x:Name="label" Content="Espaces de travail récents" HorizontalAlignment="Left" Margin="10,106,0,0" VerticalAlignment="Top" Foreground="White" Width="226" FontSize="16" Tag="welcome.label.recents_workspaces"/>
-        <Separator HorizontalAlignment="Left" Height="13" Margin="14,133,0,0" VerticalAlignment="Top" Width="254" Background="White"/>
+        <Label x:Name="label" Content="Espaces de travail récents" HorizontalAlignment="Left" Margin="10,106,0,0" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Width="226" FontSize="16" Tag="welcome.label.recents_workspaces"/>
+        <Separator HorizontalAlignment="Left" Height="13" Margin="14,133,0,0" VerticalAlignment="Top" Width="254" Background="{DynamicResource FontColorPrimary}"/>
 
-        <ListBox x:Name="listbox_recent_workspaces" HorizontalAlignment="Left" Height="300" Margin="11,151,0,0" VerticalAlignment="Top" Width="394" Background="#FF3E3E42" SelectionChanged="listbox_recent_workspaces_SelectionChanged">
+        <ListBox x:Name="listbox_recent_workspaces" HorizontalAlignment="Left" Height="300" Margin="11,151,0,0" VerticalAlignment="Top" Width="394" Background="{DynamicResource InputsBackgroundColor}" SelectionChanged="listbox_recent_workspaces_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="[" Foreground="White"/>
-                            <Label Content="{Binding minecraft_version}" HorizontalAlignment="Left" Foreground="White" Margin="-9, 0, -9, 0"/>
-                            <Label Content="]" Foreground="White"/>
-                            <Label Content="{Binding mod_name}" Foreground="White" FontWeight="Bold" Margin="-5, 0, 0, 0"/>
+                            <Label Content="[" Foreground="{DynamicResource FontColorPrimary}"/>
+                            <Label Content="{Binding minecraft_version}" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Margin="-9, 0, -9, 0"/>
+                            <Label Content="]" Foreground="{DynamicResource FontColorPrimary}"/>
+                            <Label Content="{Binding mod_name}" Foreground="{DynamicResource FontColorPrimary}" FontWeight="Bold" Margin="-5, 0, 0, 0"/>
                         </StackPanel>
-                        <Label Content="{Binding description}" HorizontalContentAlignment="Left" FontStyle="Italic" Foreground="White" Margin="0, -5, 0, 0"/>
+                        <Label Content="{Binding description}" HorizontalContentAlignment="Left" FontStyle="Italic" Foreground="{DynamicResource FontColorPrimary}" Margin="0, -5, 0, 0"/>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Label Content="© 2017 - 2020 Jerem'Tech" HorizontalAlignment="Left" Margin="205,57,0,0" VerticalAlignment="Top" Width="149" Foreground="White"/>
-        <Label x:Name="label_no_workspace_found" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Aucun espace de travail récent n'a été trouvé" Margin="14,158,0,0" VerticalAlignment="Top" Foreground="#FFC9C9C9" HorizontalAlignment="Left" Width="391" Height="294"/>
+        <Label Content="© 2017 - 2020 Jerem'Tech" HorizontalAlignment="Left" Margin="205,57,0,0" VerticalAlignment="Top" Width="149" Foreground="{DynamicResource FontColorPrimary}"/>
+        <Label x:Name="label_no_workspace_found" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Aucun espace de travail récent n'a été trouvé" Margin="14,158,0,0" VerticalAlignment="Top" Foreground="{DynamicResource FontColorSecondary}" HorizontalAlignment="Left" Width="391" Height="294"/>
         <Button x:Name="open_mod_button" Content="Ouvrir" HorizontalAlignment="Left" Margin="455,243,0,0" VerticalAlignment="Top" Width="140" Height="24" Tag="welcome.button.open" Click="open_mod_button_Click" IsEnabled="False"/>
-        <Separator HorizontalAlignment="Left" Height="14" Margin="300,298,0,0" VerticalAlignment="Top" Width="256" Background="White" RenderTransformOrigin="0.5,0.5">
+        <Separator HorizontalAlignment="Left" Height="14" Margin="300,298,0,0" VerticalAlignment="Top" Width="256" Background="{DynamicResource FontColorPrimary}" RenderTransformOrigin="0.5,0.5">
             <Separator.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
