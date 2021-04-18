@@ -5,13 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows"
         mc:Ignorable="d"
-        Title="Options - Forge Modding Helper" Height="236" Width="323" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" Closed="Window_Closed">
+        Title="Options - Forge Modding Helper" Height="216" Width="273" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" Closed="Window_Closed">
     <Grid x:Name="main_grid" Background="#FF2D2D30">
-        <Label x:Name="ui_language_label" Content="Langue de l'interface :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White" Width="282" Tag="options.label.ui_language"/>
-        <ComboBox x:Name="ui_language_comboBox" HorizontalAlignment="Left" Margin="13,42,0,0" VerticalAlignment="Top" Width="279" SelectionChanged="ui_language_comboBox_SelectionChanged"/>
-        <Separator HorizontalAlignment="Left" Height="22" Margin="0,74,0,0" VerticalAlignment="Top" Width="337"/>
-        <Button x:Name="about_button" Content="A propos" HorizontalAlignment="Left" Margin="13,107,0,0" VerticalAlignment="Top" Width="279" Height="28" Tag="options.button.about" Click="about_button_Click"/>
-        <Button x:Name="report_bug_button" Content="Signaler un bug" HorizontalAlignment="Left" Margin="13,147,0,0" VerticalAlignment="Top" Width="279" Height="28" Tag="options.button.report_bug" Click="report_bug_button_Click"/>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- UI Language -->
+        <Label x:Name="ui_language_label" Grid.Row="0" Content="Language :" Margin="5, 0, 10, 0" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{StaticResource FontColorPrimary}" Tag="options.label.ui_language"/>
+        <ComboBox x:Name="ui_language_comboBox" Grid.Row="1" Margin="10, 0, 10, 0" FlowDirection="LeftToRight" VerticalAlignment="Top" Grid.Column="0" HorizontalAlignment="Stretch" Height="25" SelectionChanged="ui_language_comboBox_SelectionChanged"/>
+
+        <Border Grid.Row="2" BorderBrush="{StaticResource FontColorPrimary}" BorderThickness="1"/>
+
+        <!-- Buttons -->
+        <Button x:Name="about_button" Grid.Row="3" Margin="10, 15, 10, 5" Content="About" VerticalAlignment="Top" Height="28" Tag="options.button.about" Click="about_button_Click"/>
+        <Button x:Name="report_bug_button" Grid.Row="4" Margin="10, 10, 10, 5" Content="Report bug" VerticalAlignment="Top" Height="28" Tag="options.button.report_bug" Click="report_bug_button_Click"/>
 
     </Grid>
 </Window>
