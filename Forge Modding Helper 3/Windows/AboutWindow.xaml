@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows"
         mc:Ignorable="d"
-        Title="A propos" Height="351" Width="451" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized">
-    <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}">
+        Title="A propos" Height="356" Width="451" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized">
+    <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}" Margin="0,0,0,-4">
 
         <!-- Header -->
         <Image x:Name="image" HorizontalAlignment="Left" Height="90" Margin="20,20,0,0" VerticalAlignment="Top" Width="90" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png" Stretch="Fill"/>
         <Label Content="Forge Modding Helper" HorizontalAlignment="Left" Margin="120,15,0,0" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" FontSize="28" Width="300"/>
-        <Label Content="© 2017 - 2020 Jerem'Tech" HorizontalAlignment="Left" Margin="120,58,0,0" VerticalAlignment="Top" Width="149" Foreground="{DynamicResource FontColorPrimary}"/>
+        <Label Content="© 2017 - 2021 Jerem'Tech" HorizontalAlignment="Left" Margin="120,58,0,0" VerticalAlignment="Top" Width="149" Foreground="{DynamicResource FontColorPrimary}"/>
 
         <!-- General informations section -->
         <StackPanel HorizontalAlignment="Left" Height="89" Margin="20,128,0,0" VerticalAlignment="Top" Width="415">
@@ -31,11 +31,11 @@
         </StackPanel>
 
         <!-- External librairies section -->
-        <StackPanel HorizontalAlignment="Left" Height="75" Margin="20,220,0,0" VerticalAlignment="Top" Width="415">
+        <StackPanel HorizontalAlignment="Left" Height="85" Margin="20,220,0,0" VerticalAlignment="Top" Width="415">
             <Label x:Name="librairies_desc_label" Content="Bibliothèques utilisées :" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag="about.label.librairies"/>
             <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                <Label Content="• Newtonsoft.Json v12.0.3&#xA;• ConsoleControl.WPF v1.3.0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
-                <Label Content="• ConsoleControlAPI v1.3.0&#xA;• Leow.TextEditor v0.4.7541.19769" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
+                <Label Content="• Newtonsoft.Json v13.0.1&#xA;• ConsoleControl.WPF v1.3.0&#xA;• McModAPIVersions v1.1.0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
+                <Label Content="• ConsoleControlAPI v1.3.0&#xA;• Leow.TextEditor v0.4.7541.19769&#xA;• FontAwesome.WPF v4.7.0.9" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
             </DockPanel>
         </StackPanel>
     </Grid>

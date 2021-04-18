@@ -9,16 +9,12 @@ namespace Forge_Modding_Helper_3.Windows
 {
     public partial class ProjectScanWindow : Window
     {
-        // Project path
-        private string path = "";
-
         // Show project window after scan
         private bool showProjectWindow = true;
 
         public ProjectScanWindow(string path, bool showProjectWindow = true)
         {
             InitializeComponent();
-            this.path = path;
             this.showProjectWindow = showProjectWindow;
 
             // Loadings translations
@@ -47,7 +43,7 @@ namespace Forge_Modding_Helper_3.Windows
             // Once scan finished
             if (this.showProjectWindow)
             {
-                RecentWorkspaces.AddRecentWorkspace(new Workspace(App.CurrentProjectData.ModData.ModName, App.CurrentProjectData.ModData.ModVersion, path, App.CurrentProjectData.ModData.ModDescription, DateTime.Now));
+                RecentWorkspaces.AddRecentWorkspace(new Workspace(App.CurrentProjectData.ModData.ModName, App.CurrentProjectData.ModData.ModMinecraftVersion, App.CurrentProjectData.ProjectDirectory, App.CurrentProjectData.ModData.ModDescription, DateTime.Now));
                 new ProjectExplorer().Show();
             }
 

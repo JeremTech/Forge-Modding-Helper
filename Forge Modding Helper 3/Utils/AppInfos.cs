@@ -11,10 +11,10 @@ namespace Forge_Modding_Helper_3.Utils
     public class AppInfos
     {
         // Define if the current version is stable or not
-        private static bool isStable = true;
+        private static bool isStable = false;
 
         // If "isStable" is set to false, then the current version is the pre-release with the number "pre_release_number"
-        private static int pre_release_number = 0;
+        private static int pre_release_number = 1;
 
         // List of Minecraft versions supported by Forge Modding Helper
         private static List<String> supportedMcVersions = new List<string>() {"1.13.2", "1.14.4", "1.15.2", "1.16.3", "1.16.4", "1.16.5" };

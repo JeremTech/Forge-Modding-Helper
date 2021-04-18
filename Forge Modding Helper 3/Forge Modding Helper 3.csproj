@@ -87,8 +87,8 @@
       <HintPath>..\packages\McModAPIVersions.1.1.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -120,7 +120,7 @@
     <Compile Include="Files\OptionsFile.cs" />
     <Compile Include="Files\RecentWorkspaces.cs" />
     <Compile Include="Files\ThemeFile.cs" />
-    <Compile Include="Files\TranslationFiles.cs" />
+    <Compile Include="Files\TranslationFile.cs" />
     <Compile Include="Objects\FileEntry.cs" />
     <Compile Include="Objects\Workspace.cs" />
     <Compile Include="Files\BuildGradle.cs" />
@@ -151,9 +151,6 @@
     </Compile>
     <Compile Include="Windows\WelcomeWindow.xaml.cs">
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\WorkspaceManager.xaml.cs">
-      <DependentUpon>WorkspaceManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ProjectExplorer.xaml.cs">
       <DependentUpon>ProjectExplorer.xaml</DependentUpon>
@@ -198,10 +195,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\WelcomeWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\WorkspaceManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -292,26 +285,7 @@
     <Resource Include="Resources\Pictures\forge_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Pictures\code_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Pictures\picture_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Pictures\models_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Pictures\java_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Pictures\code_file_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Pictures\search_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Pictures\block_icon.png" />
-    <EmbeddedResource Include="Resources\Pictures\item_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Pictures\github_white.png" />
