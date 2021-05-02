@@ -163,11 +163,11 @@ namespace Forge_Modding_Helper_3.Windows
             BlockstatesLoadingStackPanel.Visibility = Visibility.Visible;
 
             // Run it async
-            await Task.Factory.StartNew(() =>
+            await Task.Run(() =>
             {
                 // Clear content
-                Application.Current.Dispatcher.Invoke(() => BlockstatesListView.Items.Clear());
-                Application.Current.Dispatcher.Invoke(() => BlockstatesFileCountTextblock.Text = "0");
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, new Action(() => BlockstatesListView.Items.Clear()));
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, new Action(() => BlockstatesFileCountTextblock.Text = "0"));
 
                 // Foreach blockstates file
                 foreach (string fileIn in App.CurrentProjectData.BlockstatesList)
@@ -176,14 +176,14 @@ namespace Forge_Modding_Helper_3.Windows
                     {
                         if(fileIn.Contains(filterText))
                         {
-                            Application.Current.Dispatcher.Invoke(() => BlockstatesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline)));
-                            Application.Current.Dispatcher.Invoke(() => BlockstatesFileCountTextblock.Text = int.Parse(BlockstatesFileCountTextblock.Text) + 1 + "");
+                            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline))));
+                            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesFileCountTextblock.Text = int.Parse(BlockstatesFileCountTextblock.Text) + 1 + ""));
                         }
                     }
                     else
                     {
-                        Application.Current.Dispatcher.Invoke(() => BlockstatesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline)));
-                        Application.Current.Dispatcher.Invoke(() => BlockstatesFileCountTextblock.Text = int.Parse(BlockstatesFileCountTextblock.Text) + 1 + "");
+                        Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline))));
+                        Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesFileCountTextblock.Text = int.Parse(BlockstatesFileCountTextblock.Text) + 1 + ""));
                     }
                 }
             });
@@ -204,11 +204,11 @@ namespace Forge_Modding_Helper_3.Windows
                 ModelsLoadingStackPanel.Visibility = Visibility.Visible;
 
                 // Run it async
-                await Task.Factory.StartNew(() =>
+                await Task.Run(() =>
                 {
                     // Clear content
-                    Application.Current.Dispatcher.Invoke(() => ModelsListView.Items.Clear());
-                    Application.Current.Dispatcher.Invoke(() => ModelsFileCountTextblock.Text = "0");
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Clear()));
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsFileCountTextblock.Text = "0"));
 
                     // Foreach blockstates file
                     foreach (string fileIn in App.CurrentProjectData.ModelsList)
@@ -219,34 +219,34 @@ namespace Forge_Modding_Helper_3.Windows
                             {
                                 if (fileIn.Contains("item"))
                                 {
-                                    Application.Current.Dispatcher.Invoke(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Diamond)));
+                                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Diamond))));
                                 }
                                 else if (fileIn.Contains("block"))
                                 {
-                                    Application.Current.Dispatcher.Invoke(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Cube)));
+                                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Cube))));
                                 }
                                 else
                                 {
-                                    Application.Current.Dispatcher.Invoke(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline)));
+                                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline))));
                                 }
-                                Application.Current.Dispatcher.Invoke(() => ModelsFileCountTextblock.Text = int.Parse(ModelsFileCountTextblock.Text) + 1 + "");
+                                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsFileCountTextblock.Text = int.Parse(ModelsFileCountTextblock.Text) + 1 + ""));
                             }
                         }
                         else
                         {
                             if (fileIn.Contains("item"))
                             {
-                                Application.Current.Dispatcher.Invoke(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Diamond)));
+                                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Diamond))));
                             }
                             else if (fileIn.Contains("block"))
                             {
-                                Application.Current.Dispatcher.Invoke(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Cube)));
+                                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Cube))));
                             }
                             else
                             {
-                                Application.Current.Dispatcher.Invoke(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline)));
+                                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline))));
                             }
-                            Application.Current.Dispatcher.Invoke(() => ModelsFileCountTextblock.Text = int.Parse(ModelsFileCountTextblock.Text) + 1 + "");
+                            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsFileCountTextblock.Text = int.Parse(ModelsFileCountTextblock.Text) + 1 + ""));
                         }
                     }
                 });
@@ -268,11 +268,11 @@ namespace Forge_Modding_Helper_3.Windows
                 TexturesLoadingStackPanel.Visibility = Visibility.Visible;
 
                 // Run it async
-                await Task.Factory.StartNew(() =>
+                await Task.Run(() =>
                 {
                     // Clear content
-                    Application.Current.Dispatcher.Invoke(() => TexturesListView.Items.Clear());
-                    Application.Current.Dispatcher.Invoke(() => TexturesFileCountTextblock.Text = "0");
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesListView.Items.Clear()));
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = "0"));
 
                     // Foreach blockstates file
                     foreach (string fileIn in App.CurrentProjectData.TexturesList)
@@ -281,14 +281,14 @@ namespace Forge_Modding_Helper_3.Windows
                         {
                             if (fileIn.Contains(filterText))
                             {
-                                Application.Current.Dispatcher.Invoke(() => TexturesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Image)));
-                                Application.Current.Dispatcher.Invoke(() => TexturesFileCountTextblock.Text = int.Parse(TexturesFileCountTextblock.Text) + 1 + "");
+                                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Image))));
+                                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = int.Parse(TexturesFileCountTextblock.Text) + 1 + ""));
                             }
                         }
                         else
                         {
-                            Application.Current.Dispatcher.Invoke(() => TexturesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Image)));
-                            Application.Current.Dispatcher.Invoke(() => TexturesFileCountTextblock.Text = int.Parse(TexturesFileCountTextblock.Text) + 1 + "");
+                            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Image))));
+                            Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = int.Parse(TexturesFileCountTextblock.Text) + 1 + ""));
                         }
                     }
                 });
@@ -311,10 +311,10 @@ namespace Forge_Modding_Helper_3.Windows
             List<string> fileList = Directory.EnumerateFiles(Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang")).ToList();
 
             // Run it async
-            await Task.Factory.StartNew(() =>
+            await Task.Run(() =>
             {
                 fileList.ForEach(element => Application.Current.Dispatcher.Invoke(() => TranslationsFilesListBox.Items.Add(Path.GetFileName(element))));
-                if (Application.Current.Dispatcher.Invoke(() => TranslationsFilesListBox.Items.Count > 0)) Application.Current.Dispatcher.Invoke(() => TranslationsFilesListBox.SelectedIndex = 0);
+                if (Application.Current.Dispatcher.Invoke(() => TranslationsFilesListBox.Items.Count > 0)) Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TranslationsFilesListBox.SelectedIndex = 0));
             });
 
             TranslationsLoadingStackPanel.Visibility = Visibility.Hidden;
@@ -328,17 +328,17 @@ namespace Forge_Modding_Helper_3.Windows
             TranslationsLoadingStackPanel.Visibility = Visibility.Visible;
 
             // Run it async
-            await Task.Factory.StartNew(() =>
+            await Task.Run(() =>
             {
                 if (Application.Current.Dispatcher.Invoke(() => TranslationsFilesListBox.SelectedItem != null) && File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang", Application.Current.Dispatcher.Invoke(() => TranslationsFilesListBox.SelectedItem.ToString()))))
                 {
-                    Application.Current.Dispatcher.Invoke(() => TranslationsTextEditor.Text = File.ReadAllText(Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang", TranslationsFilesListBox.SelectedItem.ToString())));
-                    Application.Current.Dispatcher.Invoke(() => TranslationsDeleteButton.IsEnabled = true);
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TranslationsTextEditor.Text = File.ReadAllText(Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang", TranslationsFilesListBox.SelectedItem.ToString()))));
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TranslationsDeleteButton.IsEnabled = true));
                 }
                 else
                 {
-                    Application.Current.Dispatcher.Invoke(() => TranslationsTextEditor.Text = "");
-                    Application.Current.Dispatcher.Invoke(() => TranslationsDeleteButton.IsEnabled = false);
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TranslationsTextEditor.Text = ""));
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TranslationsDeleteButton.IsEnabled = false));
                 }
             });
 
