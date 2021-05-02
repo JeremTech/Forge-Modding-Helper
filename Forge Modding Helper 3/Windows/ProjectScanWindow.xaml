@@ -13,6 +13,6 @@
         </Grid.RowDefinitions>
 
         <fa:ImageAwesome Grid.Row="0" HorizontalAlignment="Center" Icon="CircleOutlineNotch" Width="60" Height="60" Spin="True" Margin="0, 5, 0, 0" SpinDuration="5" Foreground="{DynamicResource FontColorPrimary}"/>
-        <Label x:Name="statut_label" Grid.Row="1" Content="Récupération des informations de votre projet..." HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Margin="0, 0, 0, 20" Tag="project_scan.wait_message"/>
+        <Label x:Name="statut_label" Grid.Row="1" Content="Retrieving project's data..." HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Margin="0, 0, 0, 20" Tag="project_scan.wait_message"/>
     </Grid>
 </Window>

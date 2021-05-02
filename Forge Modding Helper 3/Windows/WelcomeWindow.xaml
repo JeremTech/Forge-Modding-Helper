@@ -37,7 +37,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="210"/>
+                <ColumnDefinition Width="220"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -69,7 +69,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Label x:Name="label_no_workspace_found" Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="No recent workspace was found" Foreground="{DynamicResource FontColorSecondary}"/>
+            <Label x:Name="label_no_workspace_found" Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Aucun espace de travail récent n'a été trouvé" Foreground="{DynamicResource FontColorSecondary}"/>
 
             <!-- Buttons -->
             <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">

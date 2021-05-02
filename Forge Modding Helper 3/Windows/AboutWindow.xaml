@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows"
         mc:Ignorable="d"
-        Title="A propos" Height="356" Width="451" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized">
+        Title="About" Height="356" Width="451" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized">
     <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}" Margin="0,0,0,-4">
 
         <!-- Header -->
@@ -20,7 +20,7 @@
                 <Label x:Name="version_label" Content="0.0.0.0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
-                <Label x:Name="contributors_desc_label" Content="Contributeur : " HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag="about.label.contributors"/>
+                <Label x:Name="contributors_desc_label" Content="Contributor : " HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag="about.label.contributors"/>
                 <Label x:Name="contributors_label" Content="Jerem'Tech" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
@@ -32,7 +32,7 @@
 
         <!-- External librairies section -->
         <StackPanel HorizontalAlignment="Left" Height="85" Margin="20,220,0,0" VerticalAlignment="Top" Width="415">
-            <Label x:Name="librairies_desc_label" Content="Bibliothèques utilisées :" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag="about.label.librairies"/>
+            <Label x:Name="librairies_desc_label" Content="Used librairies :" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag="about.label.librairies"/>
             <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
                 <Label Content="• Newtonsoft.Json v13.0.1&#xA;• ConsoleControl.WPF v1.3.0&#xA;• McModAPIVersions v1.1.0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
                 <Label Content="• ConsoleControlAPI v1.3.0&#xA;• Leow.TextEditor v0.4.7541.19769&#xA;• FontAwesome.WPF v4.7.0.9" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
