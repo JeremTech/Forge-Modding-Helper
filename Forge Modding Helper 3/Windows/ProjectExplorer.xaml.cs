@@ -850,6 +850,13 @@ namespace Forge_Modding_Helper_3.Windows
                     welcomeWindow.label_no_workspace_found.Visibility = Visibility.Visible;
                 }
 
+                // Cleaning Project Explorer window
+                this.BlockstatesListView.Items.Clear();
+                this.ModelsListView.Items.Clear();
+                this.TexturesListView.Items.Clear();
+                this.TranslationsFilesListBox.Items.Clear();
+                this.TranslationsTextEditor.Clear();
+
                 // Windows management
                 welcomeWindow.Show();
             }
