@@ -145,7 +145,9 @@ namespace Forge_Modding_Helper_3.Windows
             // Write mod data json files
             await App.CurrentProjectData.WriteModData();
 
-            //TODO Update build.gradle and mod.toml
+            // Update build.gradle and mod.toml
+            new BuildGradle(App.CurrentProjectData.ModData, App.CurrentProjectData.ProjectDirectory).generateFile();
+            new ModToml(App.CurrentProjectData.ModData, App.CurrentProjectData.ProjectDirectory).generateFile();
 
             // Update UI
             this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.saved_modifications");
@@ -839,6 +841,9 @@ namespace Forge_Modding_Helper_3.Windows
             {
                 // Configuring welcome window
                 WelcomeWindow welcomeWindow = new WelcomeWindow();
+
+                // rewrite project file
+                App.CurrentProjectData.WriteProjectFile();
 
                 // Refresh recent project list
                 LastWorkspaces.RefreshData();

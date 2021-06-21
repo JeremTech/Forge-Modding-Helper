@@ -53,6 +53,9 @@ namespace Forge_Modding_Helper_3
             {"forge_version", ""}
         };
 
+        // Mod data
+        private ModInfos ModData = new ModInfos();
+
         public AssistantCreator()
         {
             InitializeComponent();
@@ -441,11 +444,27 @@ namespace Forge_Modding_Helper_3
                 File.WriteAllText(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\lang\fr_fr.json", "{" + Environment.NewLine + Environment.NewLine + "}");
             }
 
+            // Configuring ModData object
+            ModData.ModName = this.mod_infos["mod_name"];
+            ModData.ModAuthors = this.mod_infos["mod_authors"];
+            ModData.ModVersion = this.mod_infos["mod_version"];
+            ModData.ModLicense = this.mod_infos["mod_license"];
+            ModData.ModDescription = this.mod_infos["mod_description"];
+            ModData.ModID = this.mod_infos["mod_id"];
+            ModData.ModGroup = this.mod_infos["mod_group"];
+            ModData.ModLogo = this.mod_infos["mod_logo"];
+            ModData.ModCredits = this.mod_infos["mod_credits"];
+            ModData.ModWebsite = this.mod_infos["display_url"];
+            ModData.ModIssueTracker = this.mod_infos["issue_tracker"];
+            ModData.ModUpdateJSONURL = this.mod_infos["update_json"];
+            ModData.ModMinecraftVersion = this.mod_infos["minecraft_version"];
+            ModData.ModForgeVersion = this.mod_infos["forge_version"];
+
             // Generate build.gradle file
             if (build_gradle_checkBox.IsChecked == true)
             {
                 update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.configurate_build_gradle_file") + " \"" + this.folder + "\"...");
-                BuildGradle build_gradle = new BuildGradle(this.mod_infos, this.folder);
+                BuildGradle build_gradle = new BuildGradle(this.ModData, this.folder);
                 build_gradle.generateFile();
             }
 
@@ -453,7 +472,7 @@ namespace Forge_Modding_Helper_3
             if (mod_toml_checkBox.IsChecked == true)
             {
                 update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.configurate_toml_file") + " \"" + this.folder + @"\src\main\resources\META-INF\""...");
-                ModToml mod_toml = new ModToml(this.mod_infos, this.folder);
+                ModToml mod_toml = new ModToml(this.ModData, this.folder);
                 mod_toml.generateFile();
             }
 

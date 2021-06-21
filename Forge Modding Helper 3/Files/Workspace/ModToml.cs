@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Forge_Modding_Helper_3.Objects;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Forge_Modding_Helper_3
     // This class allow to generate mod.toml file
     public class ModToml
     {
-        private Dictionary<string, string> mod_infos = new Dictionary<string, string> { };
+        private ModInfos ModInfos = new ModInfos();
         private string folder = "";
 
         /// <summary>
@@ -18,9 +19,9 @@ namespace Forge_Modding_Helper_3
         /// </summary>
         /// <param name="mod_infos">Dictionnary with all mod infos</param>
         /// <param name="generation_foler">Output folder</param>
-        public ModToml(Dictionary<string, string> mod_infos, string generation_foler)
+        public ModToml(ModInfos _ModInfos, string generation_foler)
         {
-            this.mod_infos = mod_infos;
+            this.ModInfos = _ModInfos;
             this.folder = generation_foler;
         }
 
@@ -29,12 +30,12 @@ namespace Forge_Modding_Helper_3
             // modloader
             string modToml = "modLoader=\"javafml\"";
             // loaderVersion
-            modToml += Environment.NewLine + "loaderVersion=\"[" + this.mod_infos["forge_version"].Split('.')[0] + ",)\"";
+            modToml += Environment.NewLine + "loaderVersion=\"[" + this.ModInfos.ModForgeVersion.Split('.')[0] + ",)\"";
             // modId
-            modToml += Environment.NewLine + "license=\"" + this.mod_infos["mod_license"] + "\"";
+            modToml += Environment.NewLine + "license=\"" + this.ModInfos.ModLicense + "\"";
             // issueTrackerURL
-            if (!string.IsNullOrEmpty(this.mod_infos["issue_tracker"]))
-                modToml += Environment.NewLine + "issueTrackerURL=\"" + this.mod_infos["issue_tracker"] + "\"";
+            if (!string.IsNullOrEmpty(this.ModInfos.ModIssueTracker))
+                modToml += Environment.NewLine + "issueTrackerURL=\"" + this.ModInfos.ModIssueTracker + "\"";
             // logoFile
             modToml += Environment.NewLine + "logoFile=\"logo.png\"";
 
@@ -42,41 +43,41 @@ namespace Forge_Modding_Helper_3
             modToml += Environment.NewLine + Environment.NewLine + "[[mods]]";
 
             // modId
-            modToml += Environment.NewLine + "modId=\"" + this.mod_infos["mod_id"] + "\"";
+            modToml += Environment.NewLine + "modId=\"" + this.ModInfos.ModID + "\"";
             // version
             modToml += Environment.NewLine + "version=\"${ file.jarVersion}\"";
             // displayName
-            modToml += Environment.NewLine + "displayName=\"" + this.mod_infos["mod_name"] + "\"";
+            modToml += Environment.NewLine + "displayName=\"" + this.ModInfos.ModName + "\"";
             // updateJSONURL
-            if (!string.IsNullOrEmpty(this.mod_infos["update_json"]))
-                modToml += Environment.NewLine + "updateJSONURL=\"" + this.mod_infos["update_json"] + "\"";
+            if (!string.IsNullOrEmpty(this.ModInfos.ModUpdateJSONURL))
+                modToml += Environment.NewLine + "updateJSONURL=\"" + this.ModInfos.ModUpdateJSONURL + "\"";
             // displayURL
-            if (!string.IsNullOrEmpty(this.mod_infos["display_url"]))
-                modToml += Environment.NewLine + "displayURL=\"" + this.mod_infos["display_url"] + "\"";
+            if (!string.IsNullOrEmpty(this.ModInfos.ModUpdateJSONURL))
+                modToml += Environment.NewLine + "displayURL=\"" + this.ModInfos.ModUpdateJSONURL + "\"";
             // credits
-            if (!string.IsNullOrEmpty(this.mod_infos["mod_credits"]))
-                modToml += Environment.NewLine + "credits=\"" + this.mod_infos["mod_credits"] + "\"";
+            if (!string.IsNullOrEmpty(this.ModInfos.ModCredits))
+                modToml += Environment.NewLine + "credits=\"" + this.ModInfos.ModCredits + "\"";
             // authors
-            if (!string.IsNullOrEmpty(this.mod_infos["mod_authors"]))
-                modToml += Environment.NewLine + "authors=\"" + this.mod_infos["mod_authors"] + "\"";
+            if (!string.IsNullOrEmpty(this.ModInfos.ModAuthors))
+                modToml += Environment.NewLine + "authors=\"" + this.ModInfos.ModAuthors + "\"";
             // description
-            if (!string.IsNullOrEmpty(this.mod_infos["mod_description"]))
-                modToml += Environment.NewLine + "description='''" + Environment.NewLine + this.mod_infos["mod_description"] + Environment.NewLine + "'''";
+            if (!string.IsNullOrEmpty(this.ModInfos.ModDescription))
+                modToml += Environment.NewLine + "description='''" + Environment.NewLine + this.ModInfos.ModDescription + Environment.NewLine + "'''";
 
             // Dependencies section
             modToml += Environment.NewLine + Environment.NewLine;
 
-            modToml += @"[[dependencies." + this.mod_infos["mod_id"] + @"]]
+            modToml += @"[[dependencies." + this.ModInfos.ModID + @"]]
 modId=""forge""
 mandatory = true
-versionRange = ""[" + this.mod_infos["forge_version"].Split('.')[0] + @",)"" 
+versionRange = ""[" + this.ModInfos.ModForgeVersion.Split('.')[0] + @",)"" 
 ordering = ""NONE""
 side = ""BOTH""
 
-[[dependencies." + this.mod_infos["mod_id"] + @"]]
+[[dependencies." + this.ModInfos.ModID + @"]]
 modId = ""minecraft""
 mandatory = true
-versionRange = ""[" + this.mod_infos["minecraft_version"] + @"]""
+versionRange = ""[" + this.ModInfos.ModMinecraftVersion + @"]""
 ordering = ""NONE""
 side = ""BOTH""";
 
