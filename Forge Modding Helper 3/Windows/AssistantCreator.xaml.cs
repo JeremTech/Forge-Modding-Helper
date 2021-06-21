@@ -16,6 +16,7 @@ using Forge_Modding_Helper_3.Windows;
 using McModAPIVersions;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Forge_Modding_Helper_3.Files.Software;
 
 namespace Forge_Modding_Helper_3
 {
@@ -214,8 +215,8 @@ namespace Forge_Modding_Helper_3
                 case 5:
                     {
                         // Saving in recent workspaces
-                        RecentWorkspaces.RecentWorkspacesList.Add(new Workspace(this.mod_infos["mod_name"], this.mod_infos["minecraft_version"], this.folder, this.mod_infos["mod_description"], DateTime.Now));
-                        RecentWorkspaces.WriteDataFile();
+                        LastWorkspaces.LastWorkspacesData.Add(new Workspace(this.folder, DateTime.Now));
+                        LastWorkspaces.WriteData();
 
                         // Update UI components
                         sixth_grid.Visibility = Visibility.Hidden;
@@ -746,10 +747,11 @@ namespace Forge_Modding_Helper_3
                     WelcomeWindow welcomeWindow = new WelcomeWindow();
 
                     // Update welcome UI depending on the presence of recent projects or not
-                    if (RecentWorkspaces.ReadDataFile())
+                    LastWorkspaces.ReadData();
+                    if (LastWorkspaces.LastWorkspacesData.Count > 0)
                     {
                         welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
-                        welcomeWindow.listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+                        welcomeWindow.listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesData;
                     }
                     else
                     {

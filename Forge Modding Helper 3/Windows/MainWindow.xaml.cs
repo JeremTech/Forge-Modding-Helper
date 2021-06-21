@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Files.Software;
 using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows;
 
@@ -37,10 +38,11 @@ namespace Forge_Modding_Helper_3
             WelcomeWindow welcomeWindow = new WelcomeWindow();
 
             // Update welcome UI depending on the presence of recent projects or not
-            if (RecentWorkspaces.ReadDataFile())
+            LastWorkspaces.ReadData();
+            if (LastWorkspaces.LastWorkspacesData.Count > 0)
             {
                 welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
-                welcomeWindow.listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+                welcomeWindow.listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
             }
             else
             {

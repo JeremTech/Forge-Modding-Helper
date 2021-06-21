@@ -117,23 +117,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Files\OptionsFile.cs" />
-    <Compile Include="Files\RecentWorkspaces.cs" />
-    <Compile Include="Files\ThemeFile.cs" />
-    <Compile Include="Files\TranslationFile.cs" />
+    <Compile Include="Files\Software\LastWorkspaces.cs" />
+    <Compile Include="Files\Software\OptionsFile.cs" />
+    <Compile Include="Files\Software\ThemeFile.cs" />
+    <Compile Include="Files\Software\TranslationFile.cs" />
+    <Compile Include="Files\Workspace\ProjectFile.cs" />
     <Compile Include="Objects\FileEntry.cs" />
     <Compile Include="Objects\Workspace.cs" />
-    <Compile Include="Files\BuildGradle.cs" />
-    <Compile Include="Utils\AppInfos.cs" />
+    <Compile Include="Files\Workspace\BuildGradle.cs" />
+    <Compile Include="Utils\Software\AppInfos.cs" />
     <Compile Include="Utils\DirectoryUtils.cs" />
     <Compile Include="Utils\ForgeVersionsUtils.cs" />
-    <Compile Include="Files\ModToml.cs" />
+    <Compile Include="Files\Workspace\ModToml.cs" />
     <Compile Include="Objects\ModInfos.cs" />
     <Compile Include="Objects\Project.cs" />
-    <Compile Include="Utils\StringToImageConverter.cs" />
+    <Compile Include="Utils\UI\StringToImageConverter.cs" />
     <Compile Include="Utils\StringUtils.cs" />
-    <Compile Include="Utils\UITextTranslator.cs" />
-    <Compile Include="Utils\UIUtils.cs" />
+    <Compile Include="Utils\UI\UITextTranslator.cs" />
+    <Compile Include="Utils\UI\UIUtils.cs" />
     <Compile Include="Windows\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows" xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Forge Modding Helper - Welcome" Height="505.875" Width="638" ResizeMode="CanMinimize" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen">
+        Title="Forge Modding Helper - Welcome" Height="505.875" Width="638" ResizeMode="CanMinimize" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     
     
     <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}">
@@ -57,14 +57,17 @@
             <ListBox x:Name="listbox_recent_workspaces" Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 10" Background="{DynamicResource InputsBackgroundColor}" SelectionChanged="listbox_recent_workspaces_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="[" Foreground="{DynamicResource FontColorPrimary}"/>
-                                <Label Content="{Binding minecraft_version}" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Margin="-9, 0, -9, 0"/>
-                                <Label Content="]" Foreground="{DynamicResource FontColorPrimary}"/>
-                                <Label Content="{Binding mod_name}" Foreground="{DynamicResource FontColorPrimary}" FontWeight="Bold" Margin="-5, 0, 0, 0"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding ModLogo}" Width="40" Height="40" Margin="0, 2, 5, 0"/>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="[" Foreground="{DynamicResource FontColorPrimary}"/>
+                                    <Label Content="{Binding MCVersion}" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Margin="-9, 0, -9, 0"/>
+                                    <Label Content="]" Foreground="{DynamicResource FontColorPrimary}"/>
+                                    <Label Content="{Binding ModName}" Foreground="{DynamicResource FontColorPrimary}" FontWeight="Bold" Margin="-5, 0, 0, 0"/>
+                                </StackPanel>
+                                <Label Content="{Binding ModDescription}" HorizontalContentAlignment="Left" FontStyle="Italic" Foreground="{DynamicResource FontColorPrimary}" Margin="0, -5, 0, 0"/>
                             </StackPanel>
-                            <Label Content="{Binding description}" HorizontalContentAlignment="Left" FontStyle="Italic" Foreground="{DynamicResource FontColorPrimary}" Margin="0, -5, 0, 0"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

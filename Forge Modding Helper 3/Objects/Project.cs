@@ -1,4 +1,5 @@
-﻿using Forge_Modding_Helper_3.Utils;
+﻿using Forge_Modding_Helper_3.Files.Workspace_Data;
+using Forge_Modding_Helper_3.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -188,6 +189,21 @@ namespace Forge_Modding_Helper_3.Objects
                     Console.WriteLine(e.Message);
                 }
             });
+        }
+
+        /// <summary>
+        /// Write project file in 'fmh' directory
+        /// </summary>
+        public void WriteProjectFile()
+        {
+            if(File.Exists(this.ProjectDirectory + "\\src\\main\\resources\\logo.png"))
+            {
+                File.WriteAllText(Path.Combine(this.ProjectDirectory, "fmh", "project.fmh"), JsonConvert.SerializeObject(new ProjectFile(this.ModData.ModName, this.ModData.ModDescription, this.ProjectDirectory + "\\src\\main\\resources\\logo.png", "Forge", this.ModData.ModForgeVersion, this.ModData.ModMinecraftVersion, this.ProjectDirectory), Formatting.Indented));
+            }
+            else
+            {
+                File.WriteAllText(Path.Combine(this.ProjectDirectory, "fmh", "project.fmh"), JsonConvert.SerializeObject(new ProjectFile(this.ModData.ModName, this.ModData.ModDescription, new Uri("/Forge Modding Helper 3;component/Resources/Pictures/forge_logo.png", UriKind.Relative).ToString(), "Forge", this.ModData.ModForgeVersion, this.ModData.ModMinecraftVersion, this.ProjectDirectory), Formatting.Indented));
+            }
         }
     }
 }

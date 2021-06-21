@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Files.Software;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 
@@ -34,16 +36,20 @@ namespace Forge_Modding_Helper_3.Windows
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Check if fmh folder exist in workspace directory
+            if (!Directory.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh"))) Directory.CreateDirectory(Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh"));
+
             // Launch and wait all scanning tasks
             await Task.WhenAll(new Task[] {App.CurrentProjectData.ScanBuildGradle(), App.CurrentProjectData.ScanModToml(), App.CurrentProjectData.ScanTextures(), App.CurrentProjectData.ScanBlockstates(), App.CurrentProjectData.ScanModels(), App.CurrentProjectData.ScanJavaFiles()});
 
             // Writing mod data
             await App.CurrentProjectData.WriteModData();
+            App.CurrentProjectData.WriteProjectFile();
 
             // Once scan finished
             if (this.showProjectWindow)
             {
-                RecentWorkspaces.AddRecentWorkspace(new Workspace(App.CurrentProjectData.ModData.ModName, App.CurrentProjectData.ModData.ModMinecraftVersion, App.CurrentProjectData.ProjectDirectory, App.CurrentProjectData.ModData.ModDescription, DateTime.Now));
+                LastWorkspaces.AddRecentWorkspace(new Workspace(App.CurrentProjectData.ProjectDirectory, DateTime.Now));
                 new ProjectExplorer().Show();
             }
 

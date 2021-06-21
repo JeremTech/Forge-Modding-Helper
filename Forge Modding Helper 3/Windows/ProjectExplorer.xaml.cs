@@ -1,5 +1,6 @@
 ﻿using FontAwesome.WPF;
 using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Files.Software;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Microsoft.VisualBasic.FileIO;
@@ -839,11 +840,15 @@ namespace Forge_Modding_Helper_3.Windows
                 // Configuring welcome window
                 WelcomeWindow welcomeWindow = new WelcomeWindow();
 
+                // Refresh recent project list
+                LastWorkspaces.RefreshData();
+
                 // Update welcome UI depending on the presence of recent projects or not
-                if (RecentWorkspaces.ReadDataFile())
+                LastWorkspaces.ReadData();
+                if (LastWorkspaces.LastWorkspacesData.Count > 0)
                 {
                     welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
-                    welcomeWindow.listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+                    welcomeWindow.listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
                 }
                 else
                 {
