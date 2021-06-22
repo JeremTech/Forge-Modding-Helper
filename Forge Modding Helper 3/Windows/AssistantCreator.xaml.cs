@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -15,7 +14,6 @@ using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows;
 using McModAPIVersions;
 using System.Threading.Tasks;
-using System.Windows.Media;
 using Forge_Modding_Helper_3.Files.Software;
 
 namespace Forge_Modding_Helper_3
@@ -28,8 +26,6 @@ namespace Forge_Modding_Helper_3
         private double step = 0.0;
         // Output folder
         private string folder = "";
-        // Forge Version manager
-        private ForgeVersionsUtils versions = new ForgeVersionsUtils();
         // Temp vars
         private List<String> AvailableForgeVersions = new List<string>();
         private string RecommendedForgeVersion = "";

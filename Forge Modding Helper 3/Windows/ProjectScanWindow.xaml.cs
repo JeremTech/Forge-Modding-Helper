@@ -14,20 +14,11 @@ namespace Forge_Modding_Helper_3.Windows
         // Show project window after scan
         private bool showProjectWindow = true;
 
-        public ProjectScanWindow(string path, bool showProjectWindow = true)
-        {
-            InitializeComponent();
-            this.showProjectWindow = showProjectWindow;
-
-            // Loadings translations
-            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
-            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
-        }
-
-        public ProjectScanWindow(string projectPath)
+        public ProjectScanWindow(string projectPath, bool showProjectWindow = true)
         {
             InitializeComponent();
             App.CurrentProjectData = new Project(projectPath);
+            this.showProjectWindow = showProjectWindow;
 
             // Loadings translations
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());

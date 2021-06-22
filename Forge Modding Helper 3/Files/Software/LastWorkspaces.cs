@@ -1,6 +1,7 @@
 ﻿using Forge_Modding_Helper_3.Files.Workspace_Data;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
+using Forge_Modding_Helper_3.Windows;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -75,6 +76,12 @@ namespace Forge_Modding_Helper_3.Files.Software
                 // Read project files of each recents workspaces
                 foreach(Workspace _workspace in LastWorkspacesData)
                 {
+                    // Create project file if project file doesn't exist (workspaces from previous version of FMH)
+                    if(!File.Exists(Path.Combine(_workspace.path, "fmh\\project.fmh")))
+                    {
+                        new ProjectScanWindow(_workspace.path, false).ShowDialog();
+                    }
+
                     LastWorkspacesProjectFile.Add(JsonConvert.DeserializeObject<ProjectFile>(File.ReadAllText(Path.Combine(_workspace.path, "fmh\\project.fmh"))));
                 }
             }

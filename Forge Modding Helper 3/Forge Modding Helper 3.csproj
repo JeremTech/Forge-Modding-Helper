@@ -127,7 +127,6 @@
     <Compile Include="Files\Workspace\BuildGradle.cs" />
     <Compile Include="Utils\Software\AppInfos.cs" />
     <Compile Include="Utils\DirectoryUtils.cs" />
-    <Compile Include="Utils\ForgeVersionsUtils.cs" />
     <Compile Include="Files\Workspace\ModToml.cs" />
     <Compile Include="Objects\ModInfos.cs" />
     <Compile Include="Objects\Project.cs" />
