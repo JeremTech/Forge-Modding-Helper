@@ -137,7 +137,7 @@ namespace Forge_Modding_Helper_3.Windows
             App.CurrentProjectData.ModData.ModUpdateJSONURL = this.ModSettingsModUpdateJsonURLTextbox.Text;
             App.CurrentProjectData.ModData.ModVersion = this.ModSettingsModVersionTextbox.Text;
             App.CurrentProjectData.ModData.ModMinecraftVersion = this.ModSettingsMinecraftVersionTextbox.Text;
-            App.CurrentProjectData.ModData.ModForgeVersion = this.ModSettingsForgeVersionTextbox.Text;
+            App.CurrentProjectData.ModData.ModAPIVersion = this.ModSettingsForgeVersionTextbox.Text;
             App.CurrentProjectData.ModData.ModMappingsVersion = this.ModSettingsMappingsVersionTextbox.Text;
             App.CurrentProjectData.ModData.ModID = this.ModSettingsModidTextbox.Text;
             App.CurrentProjectData.ModData.ModGroup = this.ModSettingsModgroupTextbox.Text;
@@ -439,7 +439,7 @@ namespace Forge_Modding_Helper_3.Windows
             this.ModSettingsModUpdateJsonURLTextbox.Text = App.CurrentProjectData.ModData.ModUpdateJSONURL;
             this.ModSettingsModVersionTextbox.Text = App.CurrentProjectData.ModData.ModVersion;
             this.ModSettingsMinecraftVersionTextbox.Text = App.CurrentProjectData.ModData.ModMinecraftVersion;
-            this.ModSettingsForgeVersionTextbox.Text = App.CurrentProjectData.ModData.ModForgeVersion;
+            this.ModSettingsForgeVersionTextbox.Text = App.CurrentProjectData.ModData.ModAPIVersion;
             this.ModSettingsMappingsVersionTextbox.Text = App.CurrentProjectData.ModData.ModMappingsVersion;
             this.ModSettingsModidTextbox.Text = App.CurrentProjectData.ModData.ModID;
             this.ModSettingsModgroupTextbox.Text = App.CurrentProjectData.ModData.ModGroup;
@@ -448,7 +448,7 @@ namespace Forge_Modding_Helper_3.Windows
             this.ModNameExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModName;
             this.ModVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModVersion;
             this.ModAuthorsExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModAuthors;
-            this.ForgeVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModForgeVersion;
+            this.ForgeVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModAPIVersion;
             this.MinecraftVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModMinecraftVersion;
             this.MappingsVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModMappingsVersion;
         }

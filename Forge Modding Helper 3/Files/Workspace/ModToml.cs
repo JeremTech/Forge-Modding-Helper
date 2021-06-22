@@ -30,7 +30,7 @@ namespace Forge_Modding_Helper_3
             // modloader
             string modToml = "modLoader=\"javafml\"";
             // loaderVersion
-            modToml += Environment.NewLine + "loaderVersion=\"[" + this.ModInfos.ModForgeVersion.Split('.')[0] + ",)\"";
+            modToml += Environment.NewLine + "loaderVersion=\"[" + this.ModInfos.ModAPIVersion.Split('.')[0] + ",)\"";
             // modId
             modToml += Environment.NewLine + "license=\"" + this.ModInfos.ModLicense + "\"";
             // issueTrackerURL
@@ -70,7 +70,7 @@ namespace Forge_Modding_Helper_3
             modToml += @"[[dependencies." + this.ModInfos.ModID + @"]]
 modId=""forge""
 mandatory = true
-versionRange = ""[" + this.ModInfos.ModForgeVersion.Split('.')[0] + @",)"" 
+versionRange = ""[" + this.ModInfos.ModAPIVersion.Split('.')[0] + @",)"" 
 ordering = ""NONE""
 side = ""BOTH""
 

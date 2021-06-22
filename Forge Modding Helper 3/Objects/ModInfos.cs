@@ -77,7 +77,7 @@ namespace Forge_Modding_Helper_3.Objects
         /// <summary>
         /// Forge version of the mod
         /// </summary>
-        public string ModForgeVersion { get; set; }
+        public string ModAPIVersion { get; set; }
 
         /// <summary>
         /// Mappings version of the mod
@@ -103,7 +103,7 @@ namespace Forge_Modding_Helper_3.Objects
             this.ModIssueTracker = "";
             this.ModUpdateJSONURL = "";
             this.ModMinecraftVersion = "";
-            this.ModForgeVersion = "";
+            this.ModAPIVersion = "";
             this.ModMappingsVersion = "";
         }
     }

@@ -77,8 +77,8 @@ namespace Forge_Modding_Helper_3.Objects
                 this.ModData.ModMappingsVersion = buildGradle.getBetween("mappings channel: 'snapshot', version: '", "'");
                 this.ModData.ModVersion = buildGradle.getBetween("version = '", "'");
                 this.ModData.ModGroup = buildGradle.getBetween("group = '", "'");
-                this.ModData.ModForgeVersion = buildGradle.getBetween("minecraft 'net.minecraftforge:forge:", "'");
-                this.ModData.ModMinecraftVersion = this.ModData.ModForgeVersion.getBetween("", "-");
+                this.ModData.ModAPIVersion = buildGradle.getBetween("minecraft 'net.minecraftforge:forge:", "'");
+                this.ModData.ModMinecraftVersion = this.ModData.ModAPIVersion.getBetween("", "-");
             });
         }
 
@@ -198,11 +198,11 @@ namespace Forge_Modding_Helper_3.Objects
         {
             if(File.Exists(this.ProjectDirectory + "\\src\\main\\resources\\logo.png"))
             {
-                File.WriteAllText(Path.Combine(this.ProjectDirectory, "fmh", "project.fmh"), JsonConvert.SerializeObject(new ProjectFile(this.ModData.ModName, this.ModData.ModDescription, this.ProjectDirectory + "\\src\\main\\resources\\logo.png", "Forge", this.ModData.ModForgeVersion, this.ModData.ModMinecraftVersion, this.ProjectDirectory), Formatting.Indented));
+                File.WriteAllText(Path.Combine(this.ProjectDirectory, "fmh", "project.fmh"), JsonConvert.SerializeObject(new ProjectFile(this.ModData.ModName, this.ModData.ModDescription, this.ProjectDirectory + "\\src\\main\\resources\\logo.png", "Forge", this.ModData.ModAPIVersion, this.ModData.ModMinecraftVersion, this.ProjectDirectory), Formatting.Indented));
             }
             else
             {
-                File.WriteAllText(Path.Combine(this.ProjectDirectory, "fmh", "project.fmh"), JsonConvert.SerializeObject(new ProjectFile(this.ModData.ModName, this.ModData.ModDescription, new Uri("/Forge Modding Helper 3;component/Resources/Pictures/forge_logo.png", UriKind.Relative).ToString(), "Forge", this.ModData.ModForgeVersion, this.ModData.ModMinecraftVersion, this.ProjectDirectory), Formatting.Indented));
+                File.WriteAllText(Path.Combine(this.ProjectDirectory, "fmh", "project.fmh"), JsonConvert.SerializeObject(new ProjectFile(this.ModData.ModName, this.ModData.ModDescription, new Uri("/Forge Modding Helper 3;component/Resources/Pictures/forge_logo.png", UriKind.Relative).ToString(), "Forge", this.ModData.ModAPIVersion, this.ModData.ModMinecraftVersion, this.ProjectDirectory), Formatting.Indented));
             }
         }
     }

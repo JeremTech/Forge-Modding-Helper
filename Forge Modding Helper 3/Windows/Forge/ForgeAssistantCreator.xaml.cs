@@ -454,7 +454,7 @@ namespace Forge_Modding_Helper_3
             ModData.ModIssueTracker = this.mod_infos["issue_tracker"];
             ModData.ModUpdateJSONURL = this.mod_infos["update_json"];
             ModData.ModMinecraftVersion = this.mod_infos["minecraft_version"];
-            ModData.ModForgeVersion = this.mod_infos["forge_version"];
+            ModData.ModAPIVersion = this.mod_infos["forge_version"];
 
             // Generate build.gradle file
             if (build_gradle_checkBox.IsChecked == true)

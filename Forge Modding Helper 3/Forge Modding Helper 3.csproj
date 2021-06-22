@@ -137,33 +137,33 @@
     <Compile Include="Windows\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AddTranslationFileDialog.xaml.cs">
+    <Compile Include="Windows\Files\AddTranslationFileDialog.xaml.cs">
       <DependentUpon>AddTranslationFileDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\OptionWindow.xaml.cs">
       <DependentUpon>OptionWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ProjectScanWindow.xaml.cs">
-      <DependentUpon>ProjectScanWindow.xaml</DependentUpon>
+    <Compile Include="Windows\Forge\ForgeProjectScanWindow.xaml.cs">
+      <DependentUpon>ForgeProjectScanWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\RenameDialog.xaml.cs">
+    <Compile Include="Windows\Files\RenameDialog.xaml.cs">
       <DependentUpon>RenameDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\WelcomeWindow.xaml.cs">
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ProjectExplorer.xaml.cs">
-      <DependentUpon>ProjectExplorer.xaml</DependentUpon>
+    <Compile Include="Windows\Forge\ForgeProjectExplorer.xaml.cs">
+      <DependentUpon>ForgeProjectExplorer.xaml</DependentUpon>
     </Compile>
     <Page Include="Windows\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AddTranslationFileDialog.xaml">
+    <Page Include="Windows\Files\AddTranslationFileDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AssistantCreator.xaml">
+    <Page Include="Windows\Forge\ForgeAssistantCreator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -175,8 +175,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Windows\AssistantCreator.xaml.cs">
-      <DependentUpon>AssistantCreator.xaml</DependentUpon>
+    <Compile Include="Windows\Forge\ForgeAssistantCreator.xaml.cs">
+      <DependentUpon>ForgeAssistantCreator.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -186,11 +186,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ProjectScanWindow.xaml">
+    <Page Include="Windows\Forge\ForgeProjectScanWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\RenameDialog.xaml">
+    <Page Include="Windows\Files\RenameDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,7 +198,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ProjectExplorer.xaml">
+    <Page Include="Windows\Forge\ForgeProjectExplorer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
