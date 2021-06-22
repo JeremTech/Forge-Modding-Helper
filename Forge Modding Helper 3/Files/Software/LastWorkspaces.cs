@@ -77,12 +77,16 @@ namespace Forge_Modding_Helper_3.Files.Software
                 foreach(Workspace _workspace in LastWorkspacesData)
                 {
                     // Create project file if project file doesn't exist (workspaces from previous version of FMH)
-                    if(!File.Exists(Path.Combine(_workspace.path, "fmh\\project.fmh")))
+                    if(!File.Exists(Path.Combine(_workspace.path, "fmh\\project.fmh")) && DirectoryUtils.CheckFolderIsForgeWorkspace(_workspace.path))
                     {
                         new ProjectScanWindow(_workspace.path, false).ShowDialog();
                     }
 
-                    LastWorkspacesProjectFile.Add(JsonConvert.DeserializeObject<ProjectFile>(File.ReadAllText(Path.Combine(_workspace.path, "fmh\\project.fmh"))));
+                    // Check if project folder is always correct and if it's not a duplication
+                    if (DirectoryUtils.CheckFolderIsForgeWorkspace(_workspace.path) && !LastWorkspacesProjectFile.Exists(wp => wp.ProjectPath == _workspace.path)) 
+                    {
+                        LastWorkspacesProjectFile.Add(JsonConvert.DeserializeObject<ProjectFile>(File.ReadAllText(Path.Combine(_workspace.path, "fmh\\project.fmh"))));
+                    }
                 }
             }
         }
@@ -112,8 +116,8 @@ namespace Forge_Modding_Helper_3.Files.Software
 
             foreach (Workspace workspace in LastWorkspacesData)
             {
-                // Check directory validity
-                if (Directory.Exists(workspace.path) && DirectoryUtils.CheckFolderIsForgeWorkspace(workspace.path))
+                // Check directory validity and if workspace is not already registered
+                if (Directory.Exists(workspace.path) && DirectoryUtils.CheckFolderIsForgeWorkspace(workspace.path) && !workspaces.Exists(w => w.path == workspace.path))
                 {
                     workspaces.Add(new Workspace(workspace.path, workspace.lastUpdated));
                 }
