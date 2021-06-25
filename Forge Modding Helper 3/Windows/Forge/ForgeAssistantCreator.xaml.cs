@@ -763,10 +763,11 @@ namespace Forge_Modding_Helper_3
 
                     // Update welcome UI depending on the presence of recent projects or not
                     LastWorkspaces.ReadData();
+
                     if (LastWorkspaces.LastWorkspacesData.Count > 0)
                     {
                         welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
-                        welcomeWindow.listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesData;
+                        welcomeWindow.listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
                     }
                     else
                     {
