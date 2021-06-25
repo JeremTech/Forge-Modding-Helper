@@ -1,0 +1,9 @@
+﻿{
+  "name": "Dracula",
+  "PrimaryBackgroundColor": "#313335",
+  "SecondaryBackgroundColor": "#3C3F41",
+  "InputsBackgroundColor": "#3C3F41",
+  "FontColorPrimary": "#d3d3d3",
+  "FontColorSecondary": "#b4b4b4",
+  "BorderColor": "#326FC1"
+}

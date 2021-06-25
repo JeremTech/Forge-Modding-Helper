@@ -233,6 +233,9 @@
     <Content Include="Resources\Languages\en_us.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Themes\dracula.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Themes\dark.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
