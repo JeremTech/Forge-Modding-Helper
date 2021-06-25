@@ -52,8 +52,8 @@ namespace Forge_Modding_Helper_3
             if (!string.IsNullOrEmpty(this.ModInfos.ModUpdateJSONURL))
                 modToml += Environment.NewLine + "updateJSONURL=\"" + this.ModInfos.ModUpdateJSONURL + "\"";
             // displayURL
-            if (!string.IsNullOrEmpty(this.ModInfos.ModUpdateJSONURL))
-                modToml += Environment.NewLine + "displayURL=\"" + this.ModInfos.ModUpdateJSONURL + "\"";
+            if (!string.IsNullOrEmpty(this.ModInfos.ModWebsite))
+                modToml += Environment.NewLine + "displayURL=\"" + this.ModInfos.ModWebsite + "\"";
             // credits
             if (!string.IsNullOrEmpty(this.ModInfos.ModCredits))
                 modToml += Environment.NewLine + "credits=\"" + this.ModInfos.ModCredits + "\"";
