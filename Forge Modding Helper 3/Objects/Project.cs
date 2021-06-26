@@ -74,11 +74,27 @@ namespace Forge_Modding_Helper_3.Objects
             await Task.Factory.StartNew(() =>
             {
                 string buildGradle = File.ReadAllText(Path.Combine(this.ProjectDirectory, "build.gradle"));
-                this.ModData.ModMappingsVersion = buildGradle.getBetween("mappings channel: 'snapshot', version: '", "'");
                 this.ModData.ModVersion = buildGradle.getBetween("version = '", "'");
                 this.ModData.ModGroup = buildGradle.getBetween("group = '", "'");
                 this.ModData.ModAPIVersion = buildGradle.getBetween("minecraft 'net.minecraftforge:forge:", "'");
                 this.ModData.ModMinecraftVersion = this.ModData.ModAPIVersion.getBetween("", "-");
+
+                // Mappings
+                switch(buildGradle.getBetween("mappings channel: '", "'"))
+                {
+                    // Case 'snapshot' or 'stable', this is MCP mappings
+                    case "snapshot":
+                        this.ModData.ModMappingsVersion = buildGradle.getBetween("mappings channel: 'snapshot', version: '", "'") + " (MCP)";
+                        break;
+                    case "stable":
+                        this.ModData.ModMappingsVersion = buildGradle.getBetween("mappings channel: 'stable', version: '", "'") + " (MCP)";
+                        break;
+
+                    // Case official, this is mojang mappings
+                    case "official":
+                        this.ModData.ModMappingsVersion = buildGradle.getBetween("mappings channel: 'official', version: '", "'") + " (Mojang)";
+                        break;
+                }
             });
         }
 
