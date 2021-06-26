@@ -17,7 +17,7 @@ namespace Forge_Modding_Helper_3
             version_label.Content = AppInfos.GetApplicationVersionString();
 
             // Checking files
-            if(!File.Exists(Path.Combine(AppInfos.getApplicationDataDirectory(), "options.json")))
+            if (!File.Exists(Path.Combine(AppInfos.getApplicationDataDirectory(), "options.json")))
                 OptionsFile.WriteDataFile();
 
             // Load options
@@ -26,15 +26,13 @@ namespace Forge_Modding_Helper_3
             // Loadings translations
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this);
+            updateLoadingStatut(UITextTranslator.getTranslation("loading.label.loading"), 0);
 
             // Loading theme
             App.LoadThemeFile(OptionsFile.GetCurrentTheme());
 
-            // Checking app folders
-            updateLoadingStatut("Vérification des dossiers d'application...", 20);
-
             // Load last workspaces
-            updateLoadingStatut("Récupération des espaces de travail récents...", 40);
+            updateLoadingStatut(UITextTranslator.getTranslation("loading.retrieving_workspaces"), 40);
             WelcomeWindow welcomeWindow = new WelcomeWindow();
 
             // Update welcome UI depending on the presence of recent projects or not

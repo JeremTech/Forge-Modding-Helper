@@ -230,7 +230,7 @@ namespace Forge_Modding_Helper_3
                         this.updateStep(this.step);
 
                         // Forge download
-                        update_progress(0, "Téléchargement de Forge " + this.mod_infos["forge_version"] + " en cours...");
+                        update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.downloading_forge") + this.mod_infos["forge_version"] + "...");
 
                         WebClient client = new WebClient();
                         client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
@@ -243,7 +243,7 @@ namespace Forge_Modding_Helper_3
                         } 
                         catch(VersionNotFoundException)
                         {
-                            update_progress(0, "Impossible de récupérer le MDK de Forge " + this.mod_infos["forge_version"] + " !");
+                            update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.downloading_forge.error") + this.mod_infos["forge_version"] + " !");
                         }
                         client.DownloadFileAsync(new Uri(dlLink), this.folder + @"\mdk.zip");
 
