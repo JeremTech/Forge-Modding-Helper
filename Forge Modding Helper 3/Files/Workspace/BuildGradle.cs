@@ -29,6 +29,7 @@ namespace Forge_Modding_Helper_3
         {
             string[] lines = File.ReadAllLines(this.folder + @"\build.gradle");
             string[] output = new string[lines.Length];
+            bool isDataSectionReaded = false;
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -64,11 +65,20 @@ namespace Forge_Modding_Helper_3
                     string str = StringUtils.getBetween(line, "\"Implementation-Vendor\" :\"", "\"");
                     output[i] = line.Replace(str, this.ModInfos.ModAuthors);
                 }
+                else if (line.Contains("data {"))
+                {
+                    isDataSectionReaded = true;
+                    output[i] = line;
+                }
+                else if (line.Contains("examplemod {") && isDataSectionReaded)
+                {
+                    output[i] = line.Replace("examplemod", this.ModInfos.ModID);
+                }
                 else
                 {
                     output[i] = line;
                 }
-            }
+            }            
 
             File.Delete(this.folder + @"\build.gradle");
             File.AppendAllLines(this.folder + @"\build.gradle", output);
