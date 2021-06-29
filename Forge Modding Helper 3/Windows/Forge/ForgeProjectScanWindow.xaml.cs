@@ -30,8 +30,11 @@ namespace Forge_Modding_Helper_3.Windows
             // Check if fmh folder exist in workspace directory
             if (!Directory.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh"))) Directory.CreateDirectory(Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh"));
 
-            // Launch and wait all scanning tasks
-            await Task.WhenAll(new Task[] {App.CurrentProjectData.ScanBuildGradle(), App.CurrentProjectData.ScanModToml(), App.CurrentProjectData.ScanTextures(), App.CurrentProjectData.ScanBlockstates(), App.CurrentProjectData.ScanModels(), App.CurrentProjectData.ScanJavaFiles()});
+            // Launch and wait mod infos scanning tasks
+            await Task.WhenAll(new Task[] { App.CurrentProjectData.ScanBuildGradle(), App.CurrentProjectData.ScanModToml() });
+
+            // Launch and wait all others scanning tasks
+            await Task.WhenAll(new Task[] {App.CurrentProjectData.ScanTextures(), App.CurrentProjectData.ScanBlockstates(), App.CurrentProjectData.ScanModels(), App.CurrentProjectData.ScanJavaFiles()});
 
             // Writing mod data
             await App.CurrentProjectData.WriteModData();

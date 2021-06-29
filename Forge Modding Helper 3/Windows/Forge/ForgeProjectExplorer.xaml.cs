@@ -24,6 +24,11 @@ namespace Forge_Modding_Helper_3.Windows
     public partial class ProjectExplorer : Window
     {
         /// <summary>
+        /// Allow to know if window is closing or not
+        /// </summary>
+        private bool isClosing = false;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public ProjectExplorer()
@@ -169,8 +174,8 @@ namespace Forge_Modding_Helper_3.Windows
             await Task.Run(() =>
             {
                 // Clear content
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, new Action(() => BlockstatesListView.Items.Clear()));
-                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Render, new Action(() => BlockstatesFileCountTextblock.Text = "0"));
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesListView.Items.Clear()));
+                Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesFileCountTextblock.Text = "0"));
 
                 // Foreach blockstates file
                 foreach (string fileIn in App.CurrentProjectData.BlockstatesList)
@@ -189,6 +194,8 @@ namespace Forge_Modding_Helper_3.Windows
                         Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesFileCountTextblock.Text = int.Parse(BlockstatesFileCountTextblock.Text) + 1 + ""));
                     }
                 }
+
+                
             });
 
             BlockstatesLoadingStackPanel.Visibility = Visibility.Hidden;
@@ -252,6 +259,7 @@ namespace Forge_Modding_Helper_3.Windows
                             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsFileCountTextblock.Text = int.Parse(ModelsFileCountTextblock.Text) + 1 + ""));
                         }
                     }
+
                 });
 
                 ModelsLoadingStackPanel.Visibility = Visibility.Hidden;
@@ -294,6 +302,7 @@ namespace Forge_Modding_Helper_3.Windows
                             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = int.Parse(TexturesFileCountTextblock.Text) + 1 + ""));
                         }
                     }
+
                 });
 
                 TexturesLoadingStackPanel.Visibility = Visibility.Hidden;
@@ -777,7 +786,7 @@ namespace Forge_Modding_Helper_3.Windows
             Grid senderGrid = sender as Grid;
             
             // Check if sender is not null
-            if(senderGrid != null)
+            if(senderGrid != null && isClosing == false)
             {
                 // If visiblity is changed to Visible
                 if(senderGrid.Visibility == Visibility.Visible)
@@ -839,6 +848,9 @@ namespace Forge_Modding_Helper_3.Windows
             // If yes
             if (msgResult == MessageBoxResult.Yes)
             {
+                // Set isClosing to true
+                isClosing = true;
+
                 // Configuring welcome window
                 WelcomeWindow welcomeWindow = new WelcomeWindow();
 
