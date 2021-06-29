@@ -182,7 +182,7 @@ namespace Forge_Modding_Helper_3.Windows
                 {
                     if(!string.IsNullOrWhiteSpace(filterText))
                     {
-                        if(fileIn.Contains(filterText))
+                        if(Path.GetFileName(fileIn).Contains(filterText))
                         {
                             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline))));
                             Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesFileCountTextblock.Text = int.Parse(BlockstatesFileCountTextblock.Text) + 1 + ""));
@@ -225,7 +225,7 @@ namespace Forge_Modding_Helper_3.Windows
                     {
                         if (!string.IsNullOrWhiteSpace(filterText))
                         {
-                            if (fileIn.Contains(filterText))
+                            if (Path.GetFileName(fileIn).Contains(filterText))
                             {
                                 if (fileIn.Contains("item"))
                                 {
@@ -290,7 +290,7 @@ namespace Forge_Modding_Helper_3.Windows
                     {
                         if (!string.IsNullOrWhiteSpace(filterText))
                         {
-                            if (fileIn.Contains(filterText))
+                            if (Path.GetFileName(fileIn).Contains(filterText))
                             {
                                 Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Image))));
                                 Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = int.Parse(TexturesFileCountTextblock.Text) + 1 + ""));
