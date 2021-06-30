@@ -28,6 +28,12 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private bool isClosing = false;
 
+        // Cancellation token sources
+        private CancellationTokenSource blockstatesTokenSource;
+        private CancellationTokenSource modelsTokenSource;
+        private CancellationTokenSource texturesTokenSource;
+
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -168,35 +174,50 @@ namespace Forge_Modding_Helper_3.Windows
         /// <param name="filterText">Text filtering - Leave empty for no filter</param>
         private async Task RefreshBlockstatesListView(string filterText)
         {
+            // Manage cancellation token
+            if (blockstatesTokenSource != null) blockstatesTokenSource.Cancel();
+            blockstatesTokenSource = new CancellationTokenSource();
+            var cancellationToken = blockstatesTokenSource.Token;
+
             BlockstatesLoadingStackPanel.Visibility = Visibility.Visible;
 
             // Run it async
-            await Task.Run(() =>
+            try
             {
-                // Clear content
-                Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesListView.Items.Clear()));
-                Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesFileCountTextblock.Text = "0"));
-
-                // Foreach blockstates file
-                foreach (string fileIn in App.CurrentProjectData.BlockstatesList)
+                await Task.Run(() =>
                 {
-                    if(!string.IsNullOrWhiteSpace(filterText))
+                    // Clear content
+                    Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesListView.Items.Clear()));
+                    Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesFileCountTextblock.Text = "0"));
+
+                    // Foreach blockstates file
+                    foreach (string fileIn in App.CurrentProjectData.BlockstatesList)
                     {
-                        if(Path.GetFileName(fileIn).Contains(filterText))
+                        // Check if cancellation have been requested
+                        if (cancellationToken.IsCancellationRequested) return;
+
+                        if (!string.IsNullOrWhiteSpace(filterText))
+                        {
+                            if (Path.GetFileName(fileIn).Contains(filterText))
+                            {
+                                Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline))));
+                                Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesFileCountTextblock.Text = int.Parse(BlockstatesFileCountTextblock.Text) + 1 + ""));
+                            }
+                        }
+                        else
                         {
                             Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline))));
                             Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesFileCountTextblock.Text = int.Parse(BlockstatesFileCountTextblock.Text) + 1 + ""));
                         }
                     }
-                    else
-                    {
-                        Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline))));
-                        Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesFileCountTextblock.Text = int.Parse(BlockstatesFileCountTextblock.Text) + 1 + ""));
-                    }
-                }
 
-                
-            });
+
+                }, cancellationToken);
+            }
+            catch (OperationCanceledException e)
+            {
+
+            }
 
             BlockstatesLoadingStackPanel.Visibility = Visibility.Hidden;
         }
@@ -211,21 +232,48 @@ namespace Forge_Modding_Helper_3.Windows
         {
             if (ModelsLoadingStackPanel != null)
             {
+                // Manage cancellation token
+                if (modelsTokenSource != null) modelsTokenSource.Cancel();
+                modelsTokenSource = new CancellationTokenSource();
+                var cancellationToken = modelsTokenSource.Token;
+
                 ModelsLoadingStackPanel.Visibility = Visibility.Visible;
 
                 // Run it async
-                await Task.Run(() =>
+                try
                 {
-                    // Clear content
-                    Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Clear()));
-                    Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsFileCountTextblock.Text = "0"));
-
-                    // Foreach blockstates file
-                    foreach (string fileIn in App.CurrentProjectData.ModelsList)
+                    await Task.Run(() =>
                     {
-                        if (!string.IsNullOrWhiteSpace(filterText))
+                        // Clear content
+                        Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Clear()));
+                        Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsFileCountTextblock.Text = "0"));
+
+                        // Foreach models file
+                        foreach (string fileIn in App.CurrentProjectData.ModelsList)
                         {
-                            if (Path.GetFileName(fileIn).Contains(filterText))
+                            // Check if cancellation have been requested
+                            if (cancellationToken.IsCancellationRequested) return;
+
+                            if (!string.IsNullOrWhiteSpace(filterText))
+                            {
+                                if (Path.GetFileName(fileIn).Contains(filterText))
+                                {
+                                    if (fileIn.Contains("item"))
+                                    {
+                                        Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Diamond))));
+                                    }
+                                    else if (fileIn.Contains("block"))
+                                    {
+                                        Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Cube))));
+                                    }
+                                    else
+                                    {
+                                        Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline))));
+                                    }
+                                    Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsFileCountTextblock.Text = int.Parse(ModelsFileCountTextblock.Text) + 1 + ""));
+                                }
+                            }
+                            else
                             {
                                 if (fileIn.Contains("item"))
                                 {
@@ -242,25 +290,13 @@ namespace Forge_Modding_Helper_3.Windows
                                 Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsFileCountTextblock.Text = int.Parse(ModelsFileCountTextblock.Text) + 1 + ""));
                             }
                         }
-                        else
-                        {
-                            if (fileIn.Contains("item"))
-                            {
-                                Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Diamond))));
-                            }
-                            else if (fileIn.Contains("block"))
-                            {
-                                Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Cube))));
-                            }
-                            else
-                            {
-                                Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.FileCodeOutline))));
-                            }
-                            Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsFileCountTextblock.Text = int.Parse(ModelsFileCountTextblock.Text) + 1 + ""));
-                        }
-                    }
 
-                });
+                    }, cancellationToken);
+                }
+                catch (OperationCanceledException e)
+                {
+
+                }
 
                 ModelsLoadingStackPanel.Visibility = Visibility.Hidden;
             }
@@ -276,34 +312,49 @@ namespace Forge_Modding_Helper_3.Windows
         {
             if (TexturesLoadingStackPanel != null)
             {
+                // Manage cancellation token
+                if (texturesTokenSource != null) texturesTokenSource.Cancel();
+                texturesTokenSource = new CancellationTokenSource();
+                var cancellationToken = texturesTokenSource.Token;
+
                 TexturesLoadingStackPanel.Visibility = Visibility.Visible;
 
                 // Run it async
-                await Task.Run(() =>
+                try
                 {
-                    // Clear content
-                    Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesListView.Items.Clear()));
-                    Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = "0"));
-
-                    // Foreach blockstates file
-                    foreach (string fileIn in App.CurrentProjectData.TexturesList)
+                    await Task.Run(() =>
                     {
-                        if (!string.IsNullOrWhiteSpace(filterText))
+                        // Clear content
+                        Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesListView.Items.Clear()));
+                        Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = "0"));
+
+                        // Foreach blockstates file
+                        foreach (string fileIn in App.CurrentProjectData.TexturesList)
                         {
-                            if (Path.GetFileName(fileIn).Contains(filterText))
+                            // Check if cancellation have been requested
+                            if (cancellationToken.IsCancellationRequested) return;
+
+                            if (!string.IsNullOrWhiteSpace(filterText))
+                            {
+                                if (Path.GetFileName(fileIn).Contains(filterText))
+                                {
+                                    Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Image))));
+                                    Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = int.Parse(TexturesFileCountTextblock.Text) + 1 + ""));
+                                }
+                            }
+                            else
                             {
                                 Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Image))));
                                 Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = int.Parse(TexturesFileCountTextblock.Text) + 1 + ""));
                             }
                         }
-                        else
-                        {
-                            Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesListView.Items.Add(new FileEntry(fileIn, FontAwesomeIcon.Image))));
-                            Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = int.Parse(TexturesFileCountTextblock.Text) + 1 + ""));
-                        }
-                    }
 
-                });
+                    }, cancellationToken);
+                }
+                catch(OperationCanceledException e)
+                {
+
+                }
 
                 TexturesLoadingStackPanel.Visibility = Visibility.Hidden;
             }
