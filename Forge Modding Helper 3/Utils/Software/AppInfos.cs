@@ -33,6 +33,19 @@ namespace Forge_Modding_Helper_3.Utils
         }
 
         /// <summary>
+        /// Allow to get the current version of the software
+        /// </summary>
+        /// <returns>String with the compacted version</returns>
+        public static string GetApplicationVersionCompact()
+        {
+            // If the version is stable, we display only the version number
+            if (isStable) return System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
+
+            // Else we display the version number and the pre-release number
+            return System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString() + "-" + "PRE" + pre_release_number;
+        }
+
+        /// <summary>
         /// Allow to get the application's data directory in the user's APPDATA
         /// </summary>
         /// <returns>Application's data directory</returns>

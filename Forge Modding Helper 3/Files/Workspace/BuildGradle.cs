@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Forge_Modding_Helper_3.Objects;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -7,7 +8,7 @@ namespace Forge_Modding_Helper_3
     // This class allow to configure build.gradle file
     public class BuildGradle
     {
-        private Dictionary<string, string> mod_infos = new Dictionary<string, string> { };
+        private ModInfos ModInfos = new ModInfos();
         private string folder = "";
 
         /// <summary>
@@ -15,17 +16,9 @@ namespace Forge_Modding_Helper_3
         /// </summary>
         /// <param name="mod_infos">Dictionnary with all mod infos</param>
         /// <param name="generation_foler">Output folder</param>
-        public BuildGradle(Dictionary<string, string> mod_infos, string generation_foler)
+        public BuildGradle(ModInfos _ModInfos, string generation_foler)
         {
-            // Checking correct values
-            foreach(KeyValuePair<string, string> entry in mod_infos)
-            {
-                if(!string.IsNullOrWhiteSpace(entry.Value))
-                {
-                    this.mod_infos.Add(entry.Key, entry.Value);
-                }
-            }
-
+            this.ModInfos = _ModInfos;
             this.folder = generation_foler;
         }
 
@@ -36,6 +29,7 @@ namespace Forge_Modding_Helper_3
         {
             string[] lines = File.ReadAllLines(this.folder + @"\build.gradle");
             string[] output = new string[lines.Length];
+            bool isDataSectionReaded = false;
 
             for (int i = 0; i < lines.Length; i++)
             {
@@ -44,38 +38,47 @@ namespace Forge_Modding_Helper_3
                 if (line.Contains("version ="))
                 {
                     string str = StringUtils.getBetween(line, "version = '", "'");
-                    output[i] = line.Replace(str, this.mod_infos["mod_version"]);
+                    output[i] = line.Replace(str, this.ModInfos.ModVersion);
                 }
                 else if (line.Contains("group ="))
                 {
                     string str = StringUtils.getBetween(line, "group = '", "'");
-                    output[i] = line.Replace(str, this.mod_infos["mod_group"]);
+                    output[i] = line.Replace(str, this.ModInfos.ModGroup);
                 }
                 else if (line.Contains("archivesBaseName ="))
                 {
                     string str = StringUtils.getBetween(line, "archivesBaseName = '", "'");
-                    output[i] = line.Replace(str, this.mod_infos["mod_id"]);
+                    output[i] = line.Replace(str, this.ModInfos.ModID);
                 }
                 else if(line.Contains("Specification-Title"))
                 {
                     string str = StringUtils.getBetween(line, "\"Specification-Title\": \"", "\"");
-                    output[i] = line.Replace(str, this.mod_infos["mod_id"]);
+                    output[i] = line.Replace(str, this.ModInfos.ModID);
                 }
                 else if (line.Contains("Specification-Vendor"))
                 {
                     string str = StringUtils.getBetween(line, "\"Specification-Vendor\": \"", "\"");
-                    output[i] = line.Replace(str, this.mod_infos["mod_authors"]);
+                    output[i] = line.Replace(str, this.ModInfos.ModAuthors);
                 }
                 else if (line.Contains("Implementation-Vendor"))
                 {
                     string str = StringUtils.getBetween(line, "\"Implementation-Vendor\" :\"", "\"");
-                    output[i] = line.Replace(str, this.mod_infos["mod_authors"]);
+                    output[i] = line.Replace(str, this.ModInfos.ModAuthors);
+                }
+                else if (line.Contains("data {"))
+                {
+                    isDataSectionReaded = true;
+                    output[i] = line;
+                }
+                else if (line.Contains("examplemod {") && isDataSectionReaded)
+                {
+                    output[i] = line.Replace("examplemod", this.ModInfos.ModID);
                 }
                 else
                 {
                     output[i] = line;
                 }
-            }
+            }            
 
             File.Delete(this.folder + @"\build.gradle");
             File.AppendAllLines(this.folder + @"\build.gradle", output);

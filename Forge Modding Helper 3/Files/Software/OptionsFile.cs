@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Forge_Modding_Helper_3.Objects;
+﻿using System.IO;
 using Forge_Modding_Helper_3.Utils;
 using Newtonsoft.Json;
 
@@ -15,20 +9,50 @@ namespace Forge_Modding_Helper_3.Files
         // Data-file path
         private static string FilePath = Path.Combine(AppInfos.getApplicationDataDirectory(), "options.json");
         // Data object
-        private static OptionsData data = new OptionsData("Français");
+        private static OptionsData data = new OptionsData("en_us");
 
         // Selected language
-        private static string language = "Français";
+        private static string language = "en_us";
 
+        // Selected theme
+        private static string theme = "dark";
+
+        /// <summary>
+        /// Get current language
+        /// </summary>
+        /// <returns>Current language file name without extension</returns>
         public static string getCurrentLanguage()
         {
             return language;
         }
 
+        /// <summary>
+        /// Set current language
+        /// </summary>
+        /// <returns>Set language file name (without extension)</returns>
         public static void setCurrentLanguage(string lang)
         {
             language = lang;
             data.language = lang;
+        }
+
+        /// <summary>
+        /// Get current theme
+        /// </summary>
+        /// <returns>Current theme file name without extension</returns>
+        public static string GetCurrentTheme()
+        {
+            return theme;
+        }
+
+        /// <summary>
+        /// Set current theme
+        /// </summary>
+        /// <returns>Set theme file name (without extension)</returns>
+        public static void SetCurrentTheme(string themeIn)
+        {
+            theme = themeIn;
+            data.theme = themeIn;
         }
 
         /// <summary>
@@ -50,6 +74,11 @@ namespace Forge_Modding_Helper_3.Files
                     language = jsonContentFormatted.language;
                     success = true;
                 }
+
+                if (jsonContentFormatted.theme != null)
+                {
+                    theme = jsonContentFormatted.theme;
+                }
             }
 
             return success;
@@ -65,7 +94,7 @@ namespace Forge_Modding_Helper_3.Files
 
             if (language != "")
             {
-                OptionsData data = new OptionsData(language);
+                OptionsData data = new OptionsData(language, theme);
                 string jsonContent = JsonConvert.SerializeObject(data, Formatting.Indented);
                 File.WriteAllText(FilePath, jsonContent);
 
@@ -80,9 +109,22 @@ namespace Forge_Modding_Helper_3.Files
     {
         public string language { get; set; }
 
+        public string theme { get; set; }
+
+        public OptionsData()
+        {
+            this.language = language;
+        }
+
         public OptionsData(string language)
         {
             this.language = language;
+        }
+
+        public OptionsData(string language, string theme)
+        {
+            this.language = language;
+            this.theme = theme;
         }
     }
 }

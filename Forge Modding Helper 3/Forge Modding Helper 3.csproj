@@ -35,8 +35,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -70,6 +70,24 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ConsoleControl.WPF, Version=1.3.0.0, Culture=neutral, PublicKeyToken=bb812711dbc508e1, processorArchitecture=MSIL">
       <HintPath>..\packages\ConsoleControl.WPF.1.3.0\lib\net40-client\ConsoleControl.WPF.dll</HintPath>
@@ -77,12 +95,18 @@
     <Reference Include="ConsoleControlAPI, Version=1.3.0.0, Culture=neutral, PublicKeyToken=7c86b8a36b9c33e2, processorArchitecture=MSIL">
       <HintPath>..\packages\ConsoleControlAPI.1.3.0\lib\net40\ConsoleControlAPI.dll</HintPath>
     </Reference>
+    <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="Leow.TextEditor">
       <HintPath>..\..\Leow.TextEditor.dll</HintPath>
     </Reference>
+    <Reference Include="McModAPIVersions, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\McModAPIVersions.1.1.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -111,47 +135,53 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Files\OptionsFile.cs" />
-    <Compile Include="Files\RecentWorkspaces.cs" />
+    <Compile Include="Files\Software\LastWorkspaces.cs" />
+    <Compile Include="Files\Software\OptionsFile.cs" />
+    <Compile Include="Files\Software\ThemeFile.cs" />
+    <Compile Include="Files\Software\TranslationFile.cs" />
+    <Compile Include="Files\Workspace\ProjectFile.cs" />
+    <Compile Include="Objects\FileEntry.cs" />
     <Compile Include="Objects\Workspace.cs" />
-    <Compile Include="Files\BuildGradle.cs" />
-    <Compile Include="Utils\AppInfos.cs" />
+    <Compile Include="Files\Workspace\BuildGradle.cs" />
+    <Compile Include="Utils\Software\AppInfos.cs" />
     <Compile Include="Utils\DirectoryUtils.cs" />
-    <Compile Include="Utils\ForgeVersionsUtils.cs" />
-    <Compile Include="Files\ModToml.cs" />
+    <Compile Include="Files\Workspace\ModToml.cs" />
+    <Compile Include="Objects\ModInfos.cs" />
+    <Compile Include="Objects\Project.cs" />
+    <Compile Include="Utils\UI\StringToImageConverter.cs" />
     <Compile Include="Utils\StringUtils.cs" />
-    <Compile Include="Utils\UITextTranslator.cs" />
-    <Compile Include="Utils\UIUtils.cs" />
+    <Compile Include="Utils\UI\UITextTranslator.cs" />
+    <Compile Include="Utils\UI\UIUtils.cs" />
     <Compile Include="Windows\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\AddTranslationFileDialog.xaml.cs">
+    <Compile Include="Windows\Files\AddTranslationFileDialog.xaml.cs">
       <DependentUpon>AddTranslationFileDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\OptionWindow.xaml.cs">
       <DependentUpon>OptionWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\ProjectScanWindow.xaml.cs">
-      <DependentUpon>ProjectScanWindow.xaml</DependentUpon>
+    <Compile Include="Windows\Forge\ForgeProjectScanWindow.xaml.cs">
+      <DependentUpon>ForgeProjectScanWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\RenameDialog.xaml.cs">
+    <Compile Include="Windows\Files\RenameDialog.xaml.cs">
       <DependentUpon>RenameDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\WelcomeWindow.xaml.cs">
       <DependentUpon>WelcomeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\WorkspaceManager.xaml.cs">
-      <DependentUpon>WorkspaceManager.xaml</DependentUpon>
+    <Compile Include="Windows\Forge\ForgeProjectExplorer.xaml.cs">
+      <DependentUpon>ForgeProjectExplorer.xaml</DependentUpon>
     </Compile>
     <Page Include="Windows\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AddTranslationFileDialog.xaml">
+    <Page Include="Windows\Files\AddTranslationFileDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AssistantCreator.xaml">
+    <Page Include="Windows\Forge\ForgeAssistantCreator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,8 +193,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Windows\AssistantCreator.xaml.cs">
-      <DependentUpon>AssistantCreator.xaml</DependentUpon>
+    <Compile Include="Windows\Forge\ForgeAssistantCreator.xaml.cs">
+      <DependentUpon>ForgeAssistantCreator.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -174,11 +204,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ProjectScanWindow.xaml">
+    <Page Include="Windows\Forge\ForgeProjectScanWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\RenameDialog.xaml">
+    <Page Include="Windows\Files\RenameDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -186,7 +216,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\WorkspaceManager.xaml">
+    <Page Include="Windows\Forge\ForgeProjectExplorer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -215,8 +245,21 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="Resources\Languages\french.json" />
-    <EmbeddedResource Include="Resources\Languages\english.json" />
+    <Content Include="Resources\Languages\fr_fr.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Languages\en_us.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Themes\dracula.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Themes\dark.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Themes\light.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -263,26 +306,7 @@
     <Resource Include="Resources\Pictures\forge_logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Pictures\code_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Pictures\picture_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Pictures\models_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Pictures\java_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Pictures\code_file_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Pictures\search_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Pictures\block_icon.png" />
-    <EmbeddedResource Include="Resources\Pictures\item_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Pictures\github_white.png" />

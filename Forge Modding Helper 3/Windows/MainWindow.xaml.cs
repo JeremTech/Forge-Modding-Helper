@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Files.Software;
 using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows;
 
@@ -16,7 +17,7 @@ namespace Forge_Modding_Helper_3
             version_label.Content = AppInfos.GetApplicationVersionString();
 
             // Checking files
-            if(!File.Exists(Path.Combine(AppInfos.getApplicationDataDirectory(), "options.json")))
+            if (!File.Exists(Path.Combine(AppInfos.getApplicationDataDirectory(), "options.json")))
                 OptionsFile.WriteDataFile();
 
             // Load options
@@ -25,19 +26,21 @@ namespace Forge_Modding_Helper_3
             // Loadings translations
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this);
+            updateLoadingStatut(UITextTranslator.getTranslation("loading.label.loading"), 0);
 
-            // Checking app folders
-            updateLoadingStatut("Vérification des dossiers d'application...", 20);
+            // Loading theme
+            App.LoadThemeFile(OptionsFile.GetCurrentTheme());
 
             // Load last workspaces
-            updateLoadingStatut("Récupération des espaces de travail récents...", 40);
+            updateLoadingStatut(UITextTranslator.getTranslation("loading.retrieving_workspaces"), 40);
             WelcomeWindow welcomeWindow = new WelcomeWindow();
 
             // Update welcome UI depending on the presence of recent projects or not
-            if (RecentWorkspaces.ReadDataFile())
+            LastWorkspaces.ReadData();
+            if (LastWorkspaces.LastWorkspacesData.Count > 0)
             {
                 welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
-                welcomeWindow.listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+                welcomeWindow.listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
             }
             else
             {

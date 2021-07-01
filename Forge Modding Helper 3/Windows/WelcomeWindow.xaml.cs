@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Forge_Modding_Helper_3.Files;
+using Forge_Modding_Helper_3.Files.Software;
+using Forge_Modding_Helper_3.Files.Workspace_Data;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Microsoft.VisualBasic.FileIO;
@@ -93,10 +95,10 @@ namespace Forge_Modding_Helper_3.Windows
                     {
                         Workspace workspace = listbox_recent_workspaces.SelectedItem as Workspace;
                         FileSystem.DeleteDirectory(this.selectedProjectPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
-                        RecentWorkspaces.RecentWorkspacesList.Remove(workspace);
-                        RecentWorkspaces.WriteDataFile();
+                        LastWorkspaces.LastWorkspacesData.Remove(workspace);
+                        LastWorkspaces.WriteData();
                         listbox_recent_workspaces.ItemsSource = null;
-                        listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
+                        listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
                     }
                     else
                     {
@@ -111,26 +113,8 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private void refresh_mod_list_button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.refresh"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
-
-            if (msgResult == MessageBoxResult.Yes)
-            {
-                int lenght = RecentWorkspaces.RecentWorkspacesList.Count;
-                Workspace[] workspaces = new Workspace[lenght];
-                RecentWorkspaces.RecentWorkspacesList.CopyTo(workspaces, 0);
-
-                foreach (Workspace workspace in workspaces)
-                {
-                    if (!Directory.Exists(workspace.path))
-                    {
-                        RecentWorkspaces.RecentWorkspacesList.Remove(workspace);
-                    }
-                }
-
-                RecentWorkspaces.WriteDataFile();
-                listbox_recent_workspaces.ItemsSource = null;
-                listbox_recent_workspaces.ItemsSource = RecentWorkspaces.RecentWorkspacesList;
-            }
+            LastWorkspaces.RefreshData();
+            listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;  
         }
 
         private void import_mod_button_Click(object sender, RoutedEventArgs e)
@@ -182,8 +166,8 @@ namespace Forge_Modding_Helper_3.Windows
             // Verifying selection
             if (listbox_recent_workspaces.SelectedItem != null)
             {
-                Workspace workspace = listbox_recent_workspaces.SelectedItem as Workspace;
-                this.selectedProjectPath = workspace != null ? workspace.path : "";
+                ProjectFile workspace = listbox_recent_workspaces.SelectedItem as ProjectFile;
+                this.selectedProjectPath = workspace != null ? workspace.ProjectPath : "";
             }
             else
             {
@@ -201,6 +185,14 @@ namespace Forge_Modding_Helper_3.Windows
                 open_mod_button.IsEnabled = false;
                 delete_mod_button.IsEnabled = false;
             }
+        }
+
+        /// <summary>
+        /// Function called
+        /// </summary>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.listbox_recent_workspaces.ItemsSource = null;
         }
     }
 }

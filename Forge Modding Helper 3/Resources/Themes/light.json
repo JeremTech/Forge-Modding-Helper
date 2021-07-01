@@ -1,0 +1,9 @@
+﻿{
+    "name": "Light",
+    "PrimaryBackgroundColor": "White",
+    "SecondaryBackgroundColor": "#d6d6d6",
+    "InputsBackgroundColor": "#c6c6c6",
+    "FontColorPrimary": "Black",
+    "FontColorSecondary": "#3c3c3c",
+    "BorderColor": "#1ed39c"
+}

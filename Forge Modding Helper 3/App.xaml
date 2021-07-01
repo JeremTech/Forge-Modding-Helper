@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:Forge_Modding_Helper_3"
              StartupUri="Windows/MainWindow.xaml">
     <Application.Resources>
-         
+        <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#FF2D2D30"/>
+        <SolidColorBrush x:Key="SecondaryBackgroundColor" Color="#FF252526"/>
+        <SolidColorBrush x:Key="InputsBackgroundColor" Color="#FF333337"/>
+        <SolidColorBrush x:Key="FontColorPrimary" Color="White"/>
+        <SolidColorBrush x:Key="FontColorSecondary" Color="#FFB0B0B0"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#FF37ADE7"/>
     </Application.Resources>
 </Application>

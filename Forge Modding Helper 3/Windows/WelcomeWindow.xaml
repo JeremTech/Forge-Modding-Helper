@@ -3,50 +3,90 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows"
+        xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows" xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Forge Modding Helper - Bienvenue" Height="505.875" Width="638" ResizeMode="CanMinimize" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen">
-    <Grid x:Name="main_grid" Background="#FF2D2D30">
-        <Image HorizontalAlignment="Left" Height="71" Margin="129,21,0,0" VerticalAlignment="Top" Width="70" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
-        <Label Content="Forge Modding Helper" HorizontalAlignment="Left" Margin="205,17,0,0" VerticalAlignment="Top" Foreground="White" FontSize="28" Width="300"/>
-        <Label x:Name="version_label" Content="v0.0.0.0" Margin="354,56,0,0" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Left" HorizontalContentAlignment="Right" Width="161" FontSize="13"/>
-        <Button x:Name="new_mod_button" Content="Nouveau" HorizontalAlignment="Left" Margin="455,210,0,0" VerticalAlignment="Top" Width="140" Height="24" Click="new_mod_button_Click" Tag="welcome.button.new"/>
-        <Label x:Name="label" Content="Espaces de travail récents" HorizontalAlignment="Left" Margin="10,106,0,0" VerticalAlignment="Top" Foreground="White" Width="226" FontSize="16" Tag="welcome.label.recents_workspaces"/>
-        <Separator HorizontalAlignment="Left" Height="13" Margin="14,133,0,0" VerticalAlignment="Top" Width="254" Background="White"/>
+        Title="Forge Modding Helper - Welcome" Height="505.875" Width="638" ResizeMode="CanMinimize" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+    
+    
+    <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}">
 
-        <ListBox x:Name="listbox_recent_workspaces" HorizontalAlignment="Left" Height="300" Margin="11,151,0,0" VerticalAlignment="Top" Width="394" Background="#FF3E3E42" SelectionChanged="listbox_recent_workspaces_SelectionChanged">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Grid x:Name="HeaderGrid" Grid.Row="0" HorizontalAlignment="Center">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="315"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="0" Height="70" Width="70" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
+            
+            <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10, 15">
+                <Label Content="Forge Modding Helper" Foreground="{DynamicResource FontColorPrimary}" FontSize="28"/>
+                <Label x:Name="version_label" Content="v0.0.0.0" Margin="0, -7, 0, 0" HorizontalAlignment="Right" Foreground="{DynamicResource FontColorPrimary}" FontSize="13"/>
+            </StackPanel>
+
+        </Grid>
+        
+        <!-- Workspaces explorer -->
+        <Grid x:Name="WorkspacesExplorerGrid" Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="220"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Title and separator -->
+            <StackPanel Margin="5, 0" Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <fa:ImageAwesome Icon="ClockOutline" Width="20" Height="20" Margin="7, 0, 2, 0" Foreground="{DynamicResource FontColorPrimary}"/>
+                <Label x:Name="latest_workspace_label" Content="Latest workspaces" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" FontSize="16" Tag="welcome.label.recents_workspaces"/>
+            </StackPanel>
+            <Border HorizontalAlignment="Left" Margin="10, 0" Grid.Row="1" Grid.ColumnSpan="2" BorderThickness="1" Width="254" BorderBrush="{DynamicResource FontColorPrimary}"/>
+
+            <!-- Recent workspaces list -->
+            <ListBox x:Name="listbox_recent_workspaces" Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 10" Background="{DynamicResource InputsBackgroundColor}" SelectionChanged="listbox_recent_workspaces_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="[" Foreground="White"/>
-                            <Label Content="{Binding minecraft_version}" HorizontalAlignment="Left" Foreground="White" Margin="-9, 0, -9, 0"/>
-                            <Label Content="]" Foreground="White"/>
-                            <Label Content="{Binding mod_name}" Foreground="White" FontWeight="Bold" Margin="-5, 0, 0, 0"/>
+                            <Image Source="{Binding ModLogo}" Width="40" Height="40" Margin="0, 2, 5, 0"/>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="[" Foreground="{DynamicResource FontColorPrimary}"/>
+                                    <Label Content="{Binding MCVersion}" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Margin="-9, 0, -9, 0"/>
+                                    <Label Content="]" Foreground="{DynamicResource FontColorPrimary}"/>
+                                    <Label Content="{Binding ModName}" Foreground="{DynamicResource FontColorPrimary}" FontWeight="Bold" Margin="-5, 0, 0, 0"/>
+                                </StackPanel>
+                                <Label Content="{Binding ModDescription}" HorizontalContentAlignment="Left" FontStyle="Italic" Foreground="{DynamicResource FontColorPrimary}" Margin="0, -5, 0, 0"/>
+                            </StackPanel>
                         </StackPanel>
-                        <Label Content="{Binding description}" HorizontalContentAlignment="Left" FontStyle="Italic" Foreground="White" Margin="0, -5, 0, 0"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Label x:Name="label_no_workspace_found" Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Aucun espace de travail récent n'a été trouvé" Foreground="{DynamicResource FontColorSecondary}"/>
 
-        <Label Content="© 2017 - 2020 Jerem'Tech" HorizontalAlignment="Left" Margin="205,57,0,0" VerticalAlignment="Top" Width="149" Foreground="White"/>
-        <Label x:Name="label_no_workspace_found" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Aucun espace de travail récent n'a été trouvé" Margin="14,158,0,0" VerticalAlignment="Top" Foreground="#FFC9C9C9" HorizontalAlignment="Left" Width="391" Height="294"/>
-        <Button x:Name="open_mod_button" Content="Ouvrir" HorizontalAlignment="Left" Margin="455,243,0,0" VerticalAlignment="Top" Width="140" Height="24" Tag="welcome.button.open" Click="open_mod_button_Click" IsEnabled="False"/>
-        <Separator HorizontalAlignment="Left" Height="14" Margin="300,298,0,0" VerticalAlignment="Top" Width="256" Background="White" RenderTransformOrigin="0.5,0.5">
-            <Separator.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="90"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Separator.RenderTransform>
-        </Separator>
-        <Button x:Name="delete_mod_button" Content="Supprimer" HorizontalAlignment="Left" Margin="455,277,0,0" VerticalAlignment="Top" Width="140" Height="24" Tag="welcome.button.delete" IsEnabled="False" Click="delete_mod_button_Click"/>
-        <Button x:Name="refresh_mod_list_button" Content="Actualiser la liste" HorizontalAlignment="Left" Margin="455,341,0,0" VerticalAlignment="Top" Width="140" Height="24" Tag="welcome.button.refresh" Click="refresh_mod_list_button_Click"/>
-        <Button x:Name="import_mod_button" Content="Importer" HorizontalAlignment="Left" Margin="455,309,0,0" VerticalAlignment="Top" Width="140" Height="24" Tag="welcome.button.import" Click="import_mod_button_Click"/>
-        <Button x:Name="options_mod_button" Content="Options" HorizontalAlignment="Left" Margin="455,372,0,0" VerticalAlignment="Top" Width="140" Height="24" Tag="welcome.button.options" Click="options_mod_button_Click"/>
+            <!-- Buttons -->
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
 
+                <Button x:Name="new_mod_button" Content="New" Width="140" Height="24" Margin="0, 4" Click="new_mod_button_Click" Tag="welcome.button.new"/>
+                <Button x:Name="open_mod_button" Content="Open" Width="140" Height="24" Margin="0, 4" Tag="welcome.button.open" Click="open_mod_button_Click" IsEnabled="False"/>
+                <Button x:Name="delete_mod_button" Content="Delete" Width="140" Height="24" Margin="0, 4" Tag="welcome.button.delete" IsEnabled="False" Click="delete_mod_button_Click"/>
+                <Button x:Name="import_mod_button" Content="Import" Width="140" Height="24" Margin="0, 4" Tag="welcome.button.import" Click="import_mod_button_Click"/>
+                <Button x:Name="refresh_mod_list_button" Content="Refresh list" Width="140" Height="24" Margin="0, 4" Tag="welcome.button.refresh" Click="refresh_mod_list_button_Click"/>
+                <Button x:Name="options_mod_button" Content="Settings" Width="140" Height="24" Margin="0, 4" Tag="welcome.button.options" Click="options_mod_button_Click"/>
+
+            </StackPanel>
+            
+        </Grid>
+       
     </Grid>
 </Window>

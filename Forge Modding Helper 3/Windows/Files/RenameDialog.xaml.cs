@@ -31,7 +31,7 @@ namespace Forge_Modding_Helper_3.Windows
 
             // Loading translations
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
-            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
             this.Title = UITextTranslator.getTranslation("dialog.rename.title");
 
             this.filePath = filePath;
@@ -44,12 +44,12 @@ namespace Forge_Modding_Helper_3.Windows
 
         private void textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (rename_button != null)
+            if (RenameButton != null)
             {
                 if (!string.IsNullOrWhiteSpace(this.new_name_textBox.Text) && this.new_name_textBox.Text != System.IO.Path.GetFileName(filePath))
-                    rename_button.IsEnabled = true;
+                    RenameButton.IsEnabled = true;
                 else
-                    rename_button.IsEnabled = false;
+                    RenameButton.IsEnabled = false;
             }
         }
 

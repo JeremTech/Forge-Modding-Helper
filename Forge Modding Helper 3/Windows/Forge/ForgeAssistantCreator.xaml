@@ -1,0 +1,415 @@
+﻿<Window x:Class="Forge_Modding_Helper_3.AssistantCreator"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Forge_Modding_Helper_3"
+        mc:Ignorable="d" Height="548.361" Width="570" WindowStartupLocation="CenterScreen" Title="Assistant Creator - Forge Modding Helper" Closing="Window_Closing" Initialized="Window_Initialized" ResizeMode="CanMinimize">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Style.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                    <Setter Property="Background" Value="{DynamicResource PrimaryBackgroundColor}"/>
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="{DynamicResource SecondaryBackgroundColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+    <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Orientation="Vertical" Grid.Row="0" VerticalAlignment="Top">
+            <DockPanel VerticalAlignment="Top">
+                <Image x:Name="logo" HorizontalAlignment="Left" Height="30" Width="30" Margin="10, 10, 5, 10" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
+                <Label x:Name="label" Content="Assistant Creator" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" FontSize="18"/>
+                <Label x:Name="step_label" Content="Step X on X" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" Foreground="{DynamicResource FontColorPrimary}"/>
+            </DockPanel>
+            <ProgressBar x:Name="step_progressbar" HorizontalAlignment="Stretch" Height="10" VerticalAlignment="Bottom" Foreground="#FF3E60D4"/>
+        </StackPanel>
+
+        <!-- Grid container -->
+        <Grid x:Name="grid_container" Background="{DynamicResource PrimaryBackgroundColor}" Grid.Row="1" VerticalAlignment="Stretch">
+
+            <!-- First grid -->
+            <Grid x:Name="first_grid" Panel.ZIndex="10" Background="{DynamicResource PrimaryBackgroundColor}" Visibility="Visible" VerticalAlignment="Stretch" Margin="10">
+
+                <StackPanel Orientation="Vertical">
+                    <TextBlock x:Name="label_welcome" Tag="assistant_creator.label.welcome" HorizontalAlignment="Stretch" Foreground="{DynamicResource FontColorPrimary}" TextWrapping="WrapWithOverflow" Text="Welcome !&#xA;We will create for you a workspace with the settings which you will define in the next pages."/>
+
+                    <!-- Supported minecraft versions -->
+                    <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0">
+                        <Label x:Name="label_supported_mc_versions" Tag="assistant_creator.label.welcome.supported_mc_versions" Foreground="{DynamicResource FontColorPrimary}" Content="Supported Minecraft versions :" />
+                        <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.13 : 1.13.2" />
+                        <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.14 : 1.14.4"/>
+                        <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.15 : 1.15.2"/>
+                        <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.16 : 1.16.3 / 1.16.4 / 1.16.5"/>
+                    </StackPanel>
+
+                    <!-- Output folder selection -->
+                    <GroupBox x:Name="groupBox_output_folder" Tag="assistant_creator.group.welcome.output_directory" Foreground="{DynamicResource FontColorPrimary}" Header="Output folder" Padding="5" Margin="0, 70, 0 ,0">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock x:Name="label_welcome_output_directory" Tag="assistant_creator.label.welcome.output_directory_message" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="WrapWithOverflow" Margin="0, 0, 0, 7" Text="Select an output folder where the workspace will be generated :" Foreground="{DynamicResource FontColorPrimary}"/>
+                                <TextBox x:Name="textbox_directory"  Grid.Row="1" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" IsReadOnly="True"/>
+                                <Button x:Name="button_browse_directory"  Grid.Row="1" Grid.Column="1" Content="..." Padding="7, 0, 7, 0" Margin="4, 0, 0, 0" Click="button_browse_directory_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
+                    <Label x:Name="label_invalid_workspace_folder" Grid.Row="2" Grid.ColumnSpan="2" Foreground="Red" Visibility="Hidden" HorizontalContentAlignment="Center" Content="Ce dossier contient déjà un espace de travail Forge !"/>
+                </StackPanel>
+                <TextBlock x:Name="label_internet_required" Tag="assistant_creator.label.welcome.internet" TextWrapping="WrapWithOverflow" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10" Foreground="{DynamicResource FontColorPrimary}" Text="You must be connected to Internet during all the creation process."/>
+            </Grid>
+            
+
+            <!-- Second grid -->
+            <Grid x:Name="second_grid" Panel.ZIndex="9" Background="{DynamicResource PrimaryBackgroundColor}" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                
+                <!-- Step header -->
+                <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0" Grid.Row="0">
+                    <TextBlock x:Name="label_step2_description" Tag="assistant_creator.label.step2.description" TextAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" Text="Let's get started with basics information about your mod."/>
+                    <Separator Height="16" Width="200" VerticalAlignment="Top"/>
+                </StackPanel>
+
+                <!-- Mod name -->
+                <StackPanel Grid.Row="1">
+                    <DockPanel>
+                        <Label x:Name="mod_name_label" Tag="assistant_creator.label.step2.mod_name" DockPanel.Dock="Left" Foreground="{DynamicResource FontColorPrimary}" Content="Mod name :"/>
+                        <Image x:Name="mod_name_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                    </DockPanel>
+                    <TextBox x:Name="mod_name_textbox" Tag="mod_name" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" DockPanel.Dock="Bottom" Foreground="{DynamicResource FontColorPrimary}" Background="{DynamicResource InputsBackgroundColor}" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Mod authors -->
+                <StackPanel Grid.Row="2">
+                    <DockPanel>
+                        <Label x:Name="mod_authors_label" Tag="assistant_creator.label.step2.mod_authors" Foreground="{DynamicResource FontColorPrimary}" DockPanel.Dock="Left" Content="Mod author(s) :"/>
+                        <Image x:Name="mod_authors_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                    </DockPanel>
+                    <TextBox x:Name="mod_authors_textbox" Tag="mod_authors" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" DockPanel.Dock="Bottom" Foreground="{DynamicResource FontColorPrimary}" Background="{DynamicResource InputsBackgroundColor}" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Mod version / Mod license -->
+                <Grid Grid.Row="3">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Mod version -->
+                    <StackPanel Grid.Column="0" Margin="0, 0, 10, 0">
+                        <DockPanel>
+                            <Label x:Name="mod_version_label" Tag="assistant_creator.label.step2.mod_version" DockPanel.Dock="Left" Foreground="{DynamicResource FontColorPrimary}" Content="Mod Version :" />
+                            <Image x:Name="mod_version_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/check.png"/>
+                        </DockPanel>
+                        <TextBox x:Name="mod_version_textbox"  Tag="mod_version" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="{DynamicResource FontColorPrimary}" Background="{DynamicResource InputsBackgroundColor}" DockPanel.Dock="Bottom" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus" Text="1.0.0.0"/>
+                    </StackPanel>
+
+                    <!-- Mod license -->
+                    <StackPanel Grid.Column="1" Margin="10, 0, 0, 0">
+                        <DockPanel>
+                            <Label x:Name="mod_license_label" Tag="assistant_creator.label.step2.mod_license" DockPanel.Dock="Left" Foreground="{DynamicResource FontColorPrimary}" Content="Mod license :" />
+                            <Image x:Name="mod_license_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                            <Image x:Name="mod_license_help" HorizontalAlignment="Right" Height="20" Width="20" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/help_icon.png" MouseLeftButtonUp="mod_license_help_MouseLeftButtonUp"/>
+                        </DockPanel>
+                        <TextBox x:Name="mod_license_textbox"  Tag="mod_license" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="{DynamicResource FontColorPrimary}" Background="{DynamicResource InputsBackgroundColor}" DockPanel.Dock="Bottom" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                    </StackPanel>
+
+                </Grid>
+
+                <!-- Mod description -->
+                <StackPanel Grid.Row="4">
+                    <DockPanel>
+                        <Label x:Name="mod_description_label" Tag="assistant_creator.label.step2.mod_description" Foreground="{DynamicResource FontColorPrimary}" Content="Mod description :"/>
+                    </DockPanel>
+                    <TextBox x:Name="mod_description_textbox" Tag="mod_description" TextWrapping="Wrap" Height="70"  Margin="0, 5, 0, 0" HorizontalAlignment="Stretch" AcceptsReturn="True" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" TextChanged="Optional_TextBox_TextChanged"/>
+                </StackPanel>
+
+            </Grid>
+
+
+            <!-- Third grid -->
+            <Grid x:Name="third_grid" Panel.ZIndex="8" Background="{DynamicResource PrimaryBackgroundColor}" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Step header -->
+                <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0" Grid.Row="0">
+                    <TextBlock x:Name="label_step3_description" Tag="assistant_creator.label.step3.description" TextAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" Text="We need now some advanced details about your mod."/>
+                    <Separator Height="16" Width="200" VerticalAlignment="Top"/>
+                </StackPanel>
+
+                <!-- Mod id -->
+                <StackPanel Grid.Row="1">
+                    <DockPanel>
+                        <Label x:Name="mod_id_label" Tag="assistant_creator.label.step3.mod_id" DockPanel.Dock="Left" Foreground="{DynamicResource FontColorPrimary}" Content="Mod ID :"/>
+                        <Image x:Name="mod_id_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                    </DockPanel>
+                    <TextBox x:Name="mod_id_textbox" Tag="mod_id" Height="20"  Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="{DynamicResource FontColorPrimary}" Background="{DynamicResource InputsBackgroundColor}" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Mod group -->
+                <StackPanel Grid.Row="2">
+                    <DockPanel>
+                        <Label x:Name="mod_group_label" Tag="assistant_creator.label.step3.mod_group" DockPanel.Dock="Left" Foreground="{DynamicResource FontColorPrimary}" Content="&quot;Mod Group&quot; :"/>
+                        <Image x:Name="mod_group_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                    </DockPanel>
+                    <TextBox x:Name="mod_group_textbox" Tag="mod_group" Height="20"  Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="{DynamicResource FontColorPrimary}" Background="{DynamicResource InputsBackgroundColor}" TextChanged="TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Fourth grid -->
+            <Grid x:Name="fourth_grid" Panel.ZIndex="7" Background="{DynamicResource PrimaryBackgroundColor}" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <!-- Step header -->
+                <StackPanel Orientation="Vertical" Margin="0, 10, 0, 10" Grid.Row="0">
+                    <TextBlock x:Name="label_step4_description" Tag="assistant_creator.label.step4.description" TextAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" Text="Choose the version wich you want to use."/>
+                    <Separator Height="16" Width="200" VerticalAlignment="Top"/>
+                </StackPanel>
+
+                <!-- Minecraft version -->
+                <StackPanel Grid.Row="1">
+                    <DockPanel>
+                        <Label x:Name="mineraft_version_label" Tag="assistant_creator.label.step4.minecraft_version" DockPanel.Dock="Left" Foreground="{DynamicResource FontColorPrimary}" Content="Minecraft version :"/>
+                        <ComboBox x:Name="forge_version_comboBox" DockPanel.Dock="Left" Width="120" Margin="10, 0" SelectionChanged="ComboBox_SelectionChanged"/>
+                        <Image x:Name="minecraft_version_image" HorizontalAlignment="Right" Height="26" Width="26" DockPanel.Dock="Right" Source="/Forge Modding Helper 3;component/Resources/Pictures/uncheck.png"/>
+                    </DockPanel>
+                </StackPanel>
+
+                <!-- Version list -->
+                <DockPanel Grid.Row="2">
+                    <Label x:Name="forge_version_label" Tag="assistant_creator.label.step4.forge_version" Content="Forge version :" DockPanel.Dock="Left" Foreground="{DynamicResource FontColorPrimary}"/>
+                    <ProgressBar x:Name="loading_versions_progressbar" Height="16" Width="100" IsIndeterminate="True" DockPanel.Dock="Right" HorizontalAlignment="Right" Visibility="Hidden"/>
+                </DockPanel>
+
+                <ListBox x:Name="forge_version_list" Grid.Row="3" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" AlternationCount="2" SelectionChanged="forge_version_list_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <DockPanel Grid.Column="0">
+                                    <Label Content="{Binding Version}" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}"/>
+                                    <Image Source="{Binding Image, TargetNullValue={x:Null}}" HorizontalAlignment="Left" Height="15" Width="15"/>
+                                </DockPanel>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- Selected version -->
+                <StackPanel Orientation="Horizontal" Grid.Row="4" Margin="0, 5, 0, 0">
+                    <Label x:Name="selected_version_desc_label" Tag="assistant_creator.label.step4.selected_version" Content="Selected version :" Foreground="{DynamicResource FontColorPrimary}"/>
+                    <Label x:Name="selected_version_label" Foreground="{DynamicResource FontColorPrimary}" Margin=" -5, 0, 0, 0"/>
+                </StackPanel>
+                
+            </Grid>
+
+            <!-- Fifth grid -->
+            <Grid x:Name="fifth_grid" Panel.ZIndex="7" Background="{DynamicResource PrimaryBackgroundColor}" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Step header -->
+                <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0" Grid.Row="0">
+                    <TextBlock x:Name="label_step5_description" Tag="assistant_creator.label.step5.description" TextAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" Text="You can here give optional details about your mod."/>
+                    <Separator Height="16" Width="200" VerticalAlignment="Top"/>
+                </StackPanel>
+
+                <!-- Display url -->
+                <StackPanel Grid.Row="1">
+                    <DockPanel>
+                        <Label x:Name="display_url_label" Tag="assistant_creator.label.step5.mod_website" DockPanel.Dock="Left" Foreground="{DynamicResource FontColorPrimary}" Content="Mod website link :"/>
+                    </DockPanel>
+                    <TextBox x:Name="display_url_textbox" Tag="display_url" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" Foreground="{DynamicResource FontColorPrimary}" Background="{DynamicResource InputsBackgroundColor}" TextChanged="Optional_TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Issue tracker -->
+                <StackPanel Grid.Row="2">
+                    <DockPanel>
+                        <Label x:Name="issue_tracker_label" Tag="assistant_creator.label.step5.issue_tracker" Foreground="{DynamicResource FontColorPrimary}" DockPanel.Dock="Left" Content="Mod bug tracker link :"/>
+                    </DockPanel>
+                    <TextBox x:Name="issue_tracker_textbox" Tag="issue_tracker" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" DockPanel.Dock="Bottom" Foreground="{DynamicResource FontColorPrimary}" Background="{DynamicResource InputsBackgroundColor}" TextChanged="Optional_TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Update Json -->
+                <StackPanel Grid.Row="3">
+                    <DockPanel>
+                        <Label x:Name="update_json_label" Tag="assistant_creator.label.step5.update_json" Foreground="{DynamicResource FontColorPrimary}" DockPanel.Dock="Left" Content="Mod Updates json file link :"/>
+                    </DockPanel>
+                    <TextBox x:Name="update_json_textbox" Tag="update_json" Height="20" Margin="0, 5, 0, 0" TextWrapping="Wrap" DockPanel.Dock="Bottom" Foreground="{DynamicResource FontColorPrimary}" Background="{DynamicResource InputsBackgroundColor}" TextChanged="Optional_TextBox_TextChanged" LostFocus="TextBox_LostFocus"/>
+                </StackPanel>
+
+                <!-- Mod logo -->
+                <StackPanel Grid.Row="4">
+                    <DockPanel>
+                        <Label x:Name="mod_logo_label" Tag="assistant_creator.label.step5.mod_logo" Foreground="{DynamicResource FontColorPrimary}" DockPanel.Dock="Left" Content="Mod logo :"/>
+                    </DockPanel>
+                    <Grid x:Name="mod_logo_grid" Margin="0, 5, 0, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="mod_logo_image" HorizontalAlignment="Left" Height="90" Width="90" Grid.Column="0"/>
+                        <Border BorderBrush="#FF00DFFF" HorizontalAlignment="Left" BorderThickness="1" Height="90" Width="90" Grid.Column="0"/>
+
+                        <!-- Mod logo path -->
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5, 0, 0, 0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock x:Name="mod_logo_path_label" Tag="assistant_creator.label.step5.mod_logo.path" Grid.Row="0" Grid.ColumnSpan="2" TextWrapping="WrapWithOverflow" Margin="0, 0, 0, 7" Text="Path to the mod logo :" Foreground="{DynamicResource FontColorPrimary}"/>
+                                <TextBox x:Name="logo_path_textbox" Height="20" TextWrapping="Wrap" Grid.Row="1" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" IsReadOnly="True"/>
+                                <Button x:Name="browse_logo_button"  Grid.Row="1" Grid.Column="1" Content="..." Padding="7, 0, 7, 0" Margin="4, 0, 0, 0" Click="Browse_logo_button_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                    
+                </StackPanel>
+                
+            </Grid>
+
+            <!-- Sixth grid -->
+            <Grid x:Name="sixth_grid" Panel.ZIndex="6" Background="{DynamicResource PrimaryBackgroundColor}" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <!-- Step header -->
+                <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0" Grid.Row="0">
+                    <TextBlock x:Name="label_pregen_description" Tag="assistant_creator.label.step6.description" TextAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" TextWrapping="Wrap" Text="Perfect ! We now have all informations about your mod. So we will go to generate it workspace."/>
+                    <Separator Height="16" Width="200" VerticalAlignment="Top"/>
+                </StackPanel>
+
+                <!-- Checkboxes -->
+                <StackPanel Grid.Row="1">
+                    <Label x:Name="label_custom_generation" Tag="assistant_creator.label.step6.custom_gen" Margin="0, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" Content="Edit generation :"/>
+                    <CheckBox x:Name="download_forge_checkBox" Tag="assistant_creator.checkbox.step6.downloading_forge" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="True" IsEnabled="False" Content="Downloading and unpacking Forge"/>
+                    <CheckBox x:Name="build_gradle_checkBox" Tag="assistant_creator.checkbox.step6.build_gradle" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="True" Content="Configuring build.gradle"/>
+                    <CheckBox x:Name="mod_toml_checkBox" Tag="assistant_creator.checkbox.step6.mod_toml" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="True" Content="Configuring mod.toml"/>
+                    <CheckBox x:Name="code_packages_checkBox" Tag="assistant_creator.checkbox.step6.code_package" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="True" Content="Generation of code packages"/>
+                    <CheckBox x:Name="assets_packages_checkBox" Tag="assistant_creator.checkbox.step6.assets_package" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="True" Content="Generation of assets packages"/>
+                    <CheckBox x:Name="fr_lang_file_checkBox" Tag="assistant_creator.checkbox.step6.lang_file" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="{Binding IsChecked, ElementName=assets_packages_checkBox, Mode=OneWay}" IsEnabled="{Binding IsChecked, ElementName=assets_packages_checkBox, Mode=OneWay}" Content="Generation of fr__fr.lang file"/>
+                </StackPanel>
+
+                <!-- Warning labels -->
+                <StackPanel Grid.Row="2">
+                    <TextBlock x:Name="label_pregen_internet" Tag="assistant_creator.label.step6.internet" Margin="0, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" Text="You must be connected to Internet during all the generation process."/>
+                    <TextBlock x:Name="label_pregen_next" Tag="assistant_creator.label.step6.next_message" Foreground="{DynamicResource FontColorPrimary}" Text="Click on Next to generate your workspace."/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Generation grid -->
+            <Grid x:Name="generation_grid" Panel.ZIndex="5" Background="{DynamicResource PrimaryBackgroundColor}" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Progress header -->
+                <StackPanel Grid.Row="0">
+                    <Label x:Name="progress_label" Margin="0, 0, 0, 3" Foreground="{DynamicResource FontColorPrimary}" Content="Statut : ..."/>
+                    <ProgressBar x:Name="progress_progressbar" Height="17"/>
+                </StackPanel>
+
+                <!-- Event listbox -->
+                <ListBox x:Name="progress_listBox" Grid.Row="1" Background="{DynamicResource InputsBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}"  AlternationCount="2" BorderBrush="#FF4CD3CB"/>
+
+            </Grid>
+
+            <!-- Finish grid -->
+            <Grid x:Name="finish_grid" Panel.ZIndex="4" Background="{DynamicResource PrimaryBackgroundColor}" Visibility="Hidden" VerticalAlignment="Stretch" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel VerticalAlignment="Center">
+                    <Image x:Name="finish_image" Height="90" Width="90" Source="/Forge Modding Helper 3;component/Resources/Pictures/check.png"/>
+                    <TextBlock x:Name="label_finish" Tag="assistant_creator.label.finish.description" Foreground="{DynamicResource FontColorPrimary}" TextWrapping="Wrap" TextAlignment="Center" Margin="0, 10, 0, 0" Text="Nous avons terminé de créer votre espace de travail ! Il ne vous reste plus qu'à importer le projet gradle dans votre IDE favori !"/>
+                </StackPanel>
+
+                <TextBlock x:Name="label_finish_close" Tag="assistant_creator.label.finish.close" Foreground="{DynamicResource FontColorPrimary}" TextWrapping="Wrap" Text="Click on Finish to exit." Grid.Row="1" VerticalAlignment="Bottom"/>
+            </Grid>
+        </Grid>
+
+        <!-- Footer -->
+        <StackPanel Orientation="Vertical" Grid.Row="2" VerticalAlignment="Center" Margin="6">
+            <DockPanel VerticalAlignment="Top" LastChildFill="False">
+                <Label x:Name="missing_infos_label" Tag="assistant_creator.label.missing_infos" Foreground="#FFFF7777" Background="{x:Null}" Visibility="Hidden" Content="Missing informations"/>
+
+                <Grid HorizontalAlignment="Stretch" DockPanel.Dock="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Buttons -->
+                    <Button x:Name="previous_button" Content="&lt; Previous" Click="Previous_button_Click" IsEnabled="False" Grid.Column="0" Panel.ZIndex="1" Margin="3, 0, 3, 0" Width="80" Tag="assistant_creator.button.previous"/>
+                    <Button x:Name="next_button" Content="Next &gt;" Click="Next_button_Click"  Panel.ZIndex="2" Width="80"  Grid.Column="1" Margin="3, 0, 3, 0" Tag="assistant_creator.button.next"/>
+                    <Button x:Name="cancel_button" Content="Cancel" Click="Cancel_button_Click"  Panel.ZIndex="3" Width="80"  Grid.Column="2" Margin="3, 0, 3, 0" Tag="assistant_creator.button.cancel"/>
+                    <Button x:Name="finish_button" Tag="assistant_creator.button.finish" Content="Finish" Panel.ZIndex="0" Width="80"  Grid.Column="2" Margin="3, 0, 3, 0" Click="finish_button_Click" Visibility="Hidden"/>
+                </Grid>
+
+            </DockPanel>
+        </StackPanel>
+
+    </Grid>
+</Window>
