@@ -53,10 +53,11 @@
                         <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.14 : 1.14.4"/>
                         <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.15 : 1.15.2"/>
                         <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.16 : 1.16.3 / 1.16.4 / 1.16.5"/>
+                        <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.17 : 1.17.1"/>
                     </StackPanel>
 
                     <!-- Output folder selection -->
-                    <GroupBox x:Name="groupBox_output_folder" Tag="assistant_creator.group.welcome.output_directory" Foreground="{DynamicResource FontColorPrimary}" Header="Output folder" Padding="5" Margin="0, 70, 0 ,0">
+                    <GroupBox x:Name="groupBox_output_folder" Tag="assistant_creator.group.welcome.output_directory" Foreground="{DynamicResource FontColorPrimary}" Header="Output folder" Padding="5" Margin="0, 60, 0 ,0">
                         <StackPanel>
                             <Grid>
                                 <Grid.ColumnDefinitions>
