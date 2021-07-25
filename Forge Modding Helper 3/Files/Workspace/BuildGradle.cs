@@ -52,17 +52,20 @@ namespace Forge_Modding_Helper_3
                 }
                 else if(line.Contains("Specification-Title"))
                 {
-                    string str = StringUtils.getBetween(line, "\"Specification-Title\": \"", "\"");
+                    string str = StringUtils.getBetween(line, "\"", ",").Replace(" ", "");
+                    str = StringUtils.getBetween(str, "Specification-Title\":\"", "\"");
                     output[i] = line.Replace(str, this.ModInfos.ModID);
                 }
                 else if (line.Contains("Specification-Vendor"))
                 {
-                    string str = StringUtils.getBetween(line, "\"Specification-Vendor\": \"", "\"");
+                    string str = StringUtils.getBetween(line, "\"", ",").Replace(" ", "");
+                    str = StringUtils.getBetween(str, "Specification-Vendor\":\"", "\"");
                     output[i] = line.Replace(str, this.ModInfos.ModAuthors);
                 }
                 else if (line.Contains("Implementation-Vendor"))
                 {
-                    string str = StringUtils.getBetween(line, "\"Implementation-Vendor\" :\"", "\"");
+                    string str = StringUtils.getBetween(line, "\"", ",").Replace(" ", "");
+                    str = StringUtils.getBetween(str, "Implementation-Vendor\":\"", "\"");
                     output[i] = line.Replace(str, this.ModInfos.ModAuthors);
                 }
                 else if (line.Contains("data {"))

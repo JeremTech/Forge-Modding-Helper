@@ -214,7 +214,7 @@ namespace Forge_Modding_Helper_3.Windows
 
                 }, cancellationToken);
             }
-            catch (OperationCanceledException e)
+            catch (OperationCanceledException)
             {
 
             }
@@ -293,7 +293,7 @@ namespace Forge_Modding_Helper_3.Windows
 
                     }, cancellationToken);
                 }
-                catch (OperationCanceledException e)
+                catch (OperationCanceledException)
                 {
 
                 }
@@ -351,7 +351,7 @@ namespace Forge_Modding_Helper_3.Windows
 
                     }, cancellationToken);
                 }
-                catch(OperationCanceledException e)
+                catch(OperationCanceledException)
                 {
 
                 }
