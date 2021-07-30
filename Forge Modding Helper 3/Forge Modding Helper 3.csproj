@@ -140,6 +140,7 @@
     <Compile Include="Files\Software\ThemeFile.cs" />
     <Compile Include="Files\Software\TranslationFile.cs" />
     <Compile Include="Files\Workspace\ProjectFile.cs" />
+    <Compile Include="Generators\VersionGenerator.cs" />
     <Compile Include="Objects\FileEntry.cs" />
     <Compile Include="Objects\Workspace.cs" />
     <Compile Include="Files\Workspace\BuildGradle.cs" />
