@@ -1,6 +1,7 @@
 ﻿using FontAwesome.WPF;
 using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Files.Software;
+using Forge_Modding_Helper_3.Generators;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Microsoft.VisualBasic.FileIO;
@@ -33,6 +34,8 @@ namespace Forge_Modding_Helper_3.Windows
         private CancellationTokenSource modelsTokenSource;
         private CancellationTokenSource texturesTokenSource;
 
+        // Workspace Generator
+        private WorkspaceGenerator workspaceGenerator;
 
         /// <summary>
         /// Constructor
@@ -48,6 +51,9 @@ namespace Forge_Modding_Helper_3.Windows
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
             this.Title = UITextTranslator.getTranslation("project_explorer.title");
             this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
+
+            // Initialize workspace generator
+            workspaceGenerator = WorkspaceGenerator.GetGenerator(App.CurrentProjectData.ModData.ModMinecraftVersion);
         }
 
         #region ModSettings section
@@ -157,8 +163,8 @@ namespace Forge_Modding_Helper_3.Windows
             await App.CurrentProjectData.WriteModData();
 
             // Update build.gradle and mod.toml
-            new BuildGradle(App.CurrentProjectData.ModData, App.CurrentProjectData.ProjectDirectory).generateFile();
-            new ModToml(App.CurrentProjectData.ModData, App.CurrentProjectData.ProjectDirectory).generateFile();
+            workspaceGenerator.GenerateBuildGradle();
+            workspaceGenerator.GenerateModToml();
 
             // Update UI
             this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.saved_modifications");

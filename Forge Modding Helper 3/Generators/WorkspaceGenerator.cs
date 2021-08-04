@@ -11,27 +11,27 @@ namespace Forge_Modding_Helper_3.Generators
     /// <summary>
     /// Parent class for generators
     /// </summary>
-    public class VersionGenerator
+    public class WorkspaceGenerator
     {
         /// <summary>
         /// Get generator for a specified version
         /// </summary>
         /// <param name="mcVersion">Targeted minecraft version</param>
         /// <returns>Generator or null if it not exist</returns>
-        public static VersionGenerator GetGenerator(string mcVersion)
+        public static WorkspaceGenerator GetGenerator(string mcVersion)
         {
             switch(mcVersion)
             {
                 case "1.15.2":
-                    break;
+                    return new Generator115();
 
                 case "1.16.3":
                 case "1.16.4":
                 case "1.16.5":
-                    break;
+                    return new Generator116();
 
                 case "1.17.1":
-                    break;
+                    return new Generator117();
             }
 
             return null;
