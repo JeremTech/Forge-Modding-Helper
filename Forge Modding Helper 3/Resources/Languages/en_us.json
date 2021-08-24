@@ -105,6 +105,7 @@
 
     "project_explorer.title": "Project Explorer - Forge Modding Helper",
     "project_explorer.alert.delete": "Are you sure you want to move %N element(s) to trash ?",
+    "project_explorer.alert.import": "Are you sure you want to import this %N element(s) ?",
     "project_explorer.alert.close": "Are you sure you want to close this workspace ?",
     "project_explorer.sidebar.home": "Home",
     "project_explorer.sidebar.mod_settings": "Mod settings",
@@ -148,6 +149,7 @@
     "project_explorer.export.forge_version": "Forge version",
     "project_explorer.export.mappings_version": "Mappings version",
     "project_explorer.export.export": "Export mod",
+    "project_explorer.files.importation": "Importation of ",
 
     "options.title": "Settings - Forge Modding Helper",
     "options.header.title": "Settings",
@@ -173,6 +175,15 @@
     "dialog.translation.add.add": "Add",
     "dialog.translation.add.cancel": "Cancel",
     "dialog.translation.add.alert.error": "This translation file already exist. So it will be replaced.\nContinue ?",
+
+    "dialog.import.title": "Import files",
+    "dialog.import.listheader.import": "Import",
+    "dialog.import.listheader.input_name": "Input name",
+    "dialog.import.listheader.output_name": "Output name",
+    "dialog.import.listheader.subfolder": "Subfolder destination",
+    "dialog.import.root": "<Root>",
+    "dialog.import.import": "Import",
+    "dialog.import.cancel": "Cancel",
 
     "feature.not_available": "This feature is not available yet."
   }

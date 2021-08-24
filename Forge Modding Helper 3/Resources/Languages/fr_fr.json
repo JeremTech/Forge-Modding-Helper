@@ -103,6 +103,7 @@
 
     "project_explorer.title": "Explorateur de projet - Forge Modding Helper",
     "project_explorer.alert.delete": "Etes-vous sûr de vouloir déplacer %N élément(s) vers la corbeille ?",
+    "project_explorer.alert.import": "Etes-vous sûr de vouloir importer ces %N élément(s) ?",
     "project_explorer.alert.close": "Etes-vous sûr de vouloir fermer cet espace de travail ?",
     "project_explorer.sidebar.home": "Accueil",
     "project_explorer.sidebar.mod_settings": "Paramètres du mod",
@@ -146,6 +147,7 @@
     "project_explorer.export.forge_version": "Version de Forge",
     "project_explorer.export.mappings_version": "Version des mappings",
     "project_explorer.export.export": "Exporter le mod",
+    "project_explorer.files.importation": "Importation de ",
 
     "options.title": "Options - Forge Modding Helper",
     "options.header.title": "Options",
@@ -171,6 +173,15 @@
     "dialog.translation.add.add": "Ajouter",
     "dialog.translation.add.cancel": "Annuler",
     "dialog.translation.add.alert.error": "Le fichier de traduction que vous souhaitez ajouter existe déjà. Il sera donc remplacer.\nSouhaitez-vous poursuivre ?",
+
+    "dialog.import.title": "Importation de fichiers",
+    "dialog.import.listheader.import": "Importer",
+    "dialog.import.listheader.input_name": "Nom d'origine",
+    "dialog.import.listheader.output_name": "Nom de sortie",
+    "dialog.import.listheader.subfolder": "Sous-dossier de destination",
+    "dialog.import.root": "<Racine>",
+    "dialog.import.import": "Importer",
+    "dialog.import.cancel": "Annuler",
 
     "feature.not_available": "Cette fonctionnalité n'est pas encore disponible."
   }

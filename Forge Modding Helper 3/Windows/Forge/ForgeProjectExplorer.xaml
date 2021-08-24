@@ -326,14 +326,14 @@
         </Grid>
 
         <!-- Blockstates grid -->
-        <Grid x:Name="BlockstatesGrid" Grid.Column="2" Visibility="Hidden" IsVisibleChanged="GridIsVisibleChanged">
+        <Grid x:Name="BlockstatesGrid" Grid.Column="2" Visibility="Visible" IsVisibleChanged="GridIsVisibleChanged">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            
+
             <!-- Search bar and buttons -->
             <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10">
                 <Grid Grid.Row="0" Background="{DynamicResource InputsBackgroundColor}">
@@ -358,14 +358,14 @@
                             <fa:ImageAwesome Foreground="DarkGreen" Icon="Refresh" Margin="4"/>
                         </Button>
                     </StackPanel>
-                
+
                 </Grid>
             </Border>
-            
+
             <!-- Listview -->
             <Border Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10, 0">
-                <ListView x:Name="BlockstatesListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
-                    
+                <ListView x:Name="BlockstatesListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged" AllowDrop="True" Drop="BlockstatesListViewDrop">
+
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5">
@@ -374,22 +374,22 @@
                                     <RowDefinition Height="70"/>
                                     <RowDefinition Height="20"/>
                                 </Grid.RowDefinitions>
-                                
+
                                 <fa:ImageAwesome Grid.Row="0" Icon="{Binding Icon}" Foreground="{DynamicResource FontColorPrimary}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56"/>
                                 <TextBlock Grid.Row="1" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" MaxWidth="128" FontSize="13"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                    
+
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Columns="7" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
-                    
+
                 </ListView>
             </Border>
-            
+
             <!-- Status bar -->
             <Grid Grid.Row="2" Background="{DynamicResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
 
