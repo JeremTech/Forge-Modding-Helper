@@ -405,6 +405,25 @@ namespace Forge_Modding_Helper_3.Windows
                 TexturesLoadingStackPanel.Visibility = Visibility.Hidden;
             }
         }
+
+        /// <summary>
+        /// Function called when files are dropped into blockstates listview
+        /// </summary>
+        private async void TexturesListViewDrop(object sender, DragEventArgs e)
+        {
+            // Check if this is files
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Get all files
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                // Show importation dialog
+                new ImportFileDialog(files, "textures").ShowDialog();
+
+                await App.CurrentProjectData.ScanTextures();
+                await RefreshTexturesListView(TexturesSearchTextbox.Text);
+            }
+        }
         #endregion
 
         #region Translations section
