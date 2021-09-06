@@ -242,32 +242,11 @@ namespace Forge_Modding_Helper_3.Windows
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
                 // Show importation dialog
-                new ImportFileDialog(files).ShowDialog();
+                new ImportFileDialog(files, "blockstates").ShowDialog();
 
                 await App.CurrentProjectData.ScanBlockstates();
                 await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);                
             }
-        }
-
-        /// <summary>
-        /// Import blockstates files
-        /// </summary>
-        /// <param name="files">Path of files to import</param>
-        private async Task BlockstatesImportFiles(string[] files)
-        {
-            BlockstatesLoadingStackPanel.Visibility = Visibility.Visible;
-
-            await Task.Run(() =>
-            {
-                // For each files
-                foreach (string file in files)
-                {
-                    Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesLoadingStatusTextblock.Text = UITextTranslator.getTranslation("project_explorer.files.importation") + Path.GetFileName(file)));
-                    File.Copy(file, Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\assets", App.CurrentProjectData.ModData.ModID, "blockstates", Path.GetFileName(file)));
-                }
-            });
-
-            BlockstatesLoadingStackPanel.Visibility = Visibility.Hidden;
         }
         #endregion
 
@@ -360,36 +339,13 @@ namespace Forge_Modding_Helper_3.Windows
             {
                 // Get all files
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                
+                // Show importation dialog
+                new ImportFileDialog(files, "models").ShowDialog();
 
-                // Display confirmation message
-                if (MessageBox.Show(UITextTranslator.getTranslation("project_explorer.alert.import").Replace("%N", files.Length.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    await ModelsImportFiles(files);
-                    await App.CurrentProjectData.ScanBlockstates();
-                    await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);
-                }
+                await App.CurrentProjectData.ScanModels();
+                await RefreshModelsListView(ModelsSearchTextbox.Text);
             }
-        }
-
-        /// <summary>
-        /// Import blockstates files
-        /// </summary>
-        /// <param name="files">Path of files to import</param>
-        private async Task ModelsImportFiles(string[] files)
-        {
-            BlockstatesLoadingStackPanel.Visibility = Visibility.Visible;
-
-            await Task.Run(() =>
-            {
-                // For each files
-                foreach (string file in files)
-                {
-                    Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesLoadingStatusTextblock.Text = UITextTranslator.getTranslation("project_explorer.files.importation") + Path.GetFileName(file)));
-                    File.Copy(file, Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\assets", App.CurrentProjectData.ModData.ModID, "blockstates", Path.GetFileName(file)));
-                }
-            });
-
-            BlockstatesLoadingStackPanel.Visibility = Visibility.Hidden;
         }
         #endregion
 

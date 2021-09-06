@@ -326,7 +326,7 @@
         </Grid>
 
         <!-- Blockstates grid -->
-        <Grid x:Name="BlockstatesGrid" Grid.Column="2" Visibility="Visible" IsVisibleChanged="GridIsVisibleChanged">
+        <Grid x:Name="BlockstatesGrid" Grid.Column="2" Visibility="Hidden" IsVisibleChanged="GridIsVisibleChanged">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
@@ -462,7 +462,7 @@
 
             <!-- Listview -->
             <Border Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10, 0">
-                <ListView x:Name="ModelsListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
+                <ListView x:Name="ModelsListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged" AllowDrop="True" Drop="ModelsListViewDrop">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
