@@ -6,6 +6,7 @@ using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows.Files;
 using Microsoft.VisualBasic.FileIO;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -819,6 +820,57 @@ namespace Forge_Modding_Helper_3.Windows
                 else if (senderButton.Name.Contains("Textures"))
                 {
                     // Refresh textures listView content
+                    await RefreshTexturesListView(TexturesSearchTextbox.Text);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Function called by blockstates / models / textures importation button
+        /// </summary>
+        private async void ImportationButtonClick(object sender, RoutedEventArgs e)
+        {
+            Button senderButton = sender as Button;
+
+            // Check if sender is not null
+            if (senderButton != null)
+            {
+                // File dialog
+                OpenFileDialog filesDialog = new OpenFileDialog();
+                filesDialog.Title = UITextTranslator.getTranslation("file_dialog.import.title");
+                filesDialog.Filter = UITextTranslator.getTranslation("file_dialog.import.filter") + " (*.*)|*.*";
+                filesDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                filesDialog.Multiselect = true;
+                filesDialog.ShowDialog();
+
+                // If this is the blockstates refresh button
+                if (senderButton.Name.Contains("Blockstates"))
+                {
+                    // Show importation dialog
+                    new ImportFileDialog(filesDialog.FileNames, "blockstates").ShowDialog();
+
+                    // Refresh blockstates listView content
+                    await App.CurrentProjectData.ScanBlockstates();
+                    await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);
+                }
+                // If this is the models refresh button
+                else if (senderButton.Name.Contains("Models"))
+                {
+                    // Show importation dialog
+                    new ImportFileDialog(filesDialog.FileNames, "models").ShowDialog();
+
+                    // Refresh models listView content
+                    await App.CurrentProjectData.ScanModels();
+                    await RefreshModelsListView(ModelsSearchTextbox.Text);
+                }
+                // If this is the textures refresh button
+                else if (senderButton.Name.Contains("Textures"))
+                {
+                    // Show importation dialog
+                    new ImportFileDialog(filesDialog.FileNames, "textures").ShowDialog();
+
+                    // Refresh textures listView content
+                    await App.CurrentProjectData.ScanTextures();
                     await RefreshTexturesListView(TexturesSearchTextbox.Text);
                 }
             }

@@ -325,6 +325,9 @@
   <ItemGroup>
     <Resource Include="Resources\Pictures\help_icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
 </Project>

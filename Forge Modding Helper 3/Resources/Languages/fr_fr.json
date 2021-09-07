@@ -183,6 +183,9 @@
     "dialog.import.import": "Importer",
     "dialog.import.cancel": "Annuler",
 
+    "file_dialog.import.filter": "Tous les fichiers",
+    "file_dialog.import.title": "Importer des fichiers",
+
     "feature.not_available": "Cette fonctionnalité n'est pas encore disponible."
   }
 }

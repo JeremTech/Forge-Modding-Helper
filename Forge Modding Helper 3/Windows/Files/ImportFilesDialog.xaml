@@ -19,7 +19,7 @@
 
         <!-- Header -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10, 0">
-            <fa:ImageAwesome HorizontalAlignment="Left" Icon="Copy" Width="25" Height="25" Foreground="{DynamicResource FontColorPrimary}"/>
+            <fa:ImageAwesome HorizontalAlignment="Left" Icon="Download" Width="25" Height="25" Foreground="{DynamicResource FontColorPrimary}"/>
             <TextBlock x:Name="ImportFilesTitleTextblock" Text="Import files" HorizontalAlignment="Left" Margin="10, 0" FontSize="16" VerticalAlignment="Center" Foreground="{StaticResource FontColorPrimary}" Tag="dialog.import.title"/>
         </StackPanel>
         <Border Grid.Row="1" BorderThickness="1" BorderBrush="{DynamicResource FontColorPrimary}"/>

@@ -341,7 +341,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
 
                     <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" Margin="5"/>
@@ -349,10 +349,13 @@
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Button x:Name="BlockstatesRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
-                            <fa:ImageAwesome Foreground="DarkCyan" Icon="Pencil" Margin="4, 5"/>
+                            <fa:ImageAwesome Foreground="DarkCyan" Icon="Pencil" Margin="4"/>
                         </Button>
                         <Button x:Name="BlockstatesDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
                             <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
+                        </Button>
+                        <Button x:Name="BlockstatesImportationButton" Width="30" Click="ImportationButtonClick">
+                            <fa:ImageAwesome Foreground="DarkBlue" Icon="Download" Margin="4"/>
                         </Button>
                         <Button x:Name="BlockstatesRefreshButton" Width="30" Click="RefreshButtonClick">
                             <fa:ImageAwesome Foreground="DarkGreen" Icon="Refresh" Margin="4"/>
@@ -439,7 +442,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
 
                     <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" Margin="5"/>
@@ -451,6 +454,9 @@
                         </Button>
                         <Button x:Name="ModelsDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
                             <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
+                        </Button>
+                        <Button x:Name="ModelsImportationButton" Width="30" Click="ImportationButtonClick">
+                            <fa:ImageAwesome Foreground="DarkBlue" Icon="Download" Margin="4"/>
                         </Button>
                         <Button x:Name="ModelsRefreshButton" Width="30" Click="RefreshButtonClick">
                             <fa:ImageAwesome Foreground="DarkGreen" Icon="Refresh" Margin="4"/>
@@ -537,7 +543,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
 
                     <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" Margin="5"/>
@@ -549,6 +555,9 @@
                         </Button>
                         <Button x:Name="TexturesDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
                             <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
+                        </Button>
+                        <Button x:Name="TexturesImportationButton" Width="30" Click="ImportationButtonClick">
+                            <fa:ImageAwesome Foreground="DarkBlue" Icon="Download" Margin="4"/>
                         </Button>
                         <Button x:Name="TexturesRefreshButton" Width="30" Click="RefreshButtonClick">
                             <fa:ImageAwesome Foreground="DarkGreen" Icon="Refresh" Margin="4"/>
