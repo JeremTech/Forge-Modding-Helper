@@ -843,35 +843,39 @@ namespace Forge_Modding_Helper_3.Windows
                 filesDialog.Multiselect = true;
                 filesDialog.ShowDialog();
 
-                // If this is the blockstates refresh button
-                if (senderButton.Name.Contains("Blockstates"))
+                // Check if there are files
+                if(filesDialog.FileNames.Length > 0)
                 {
-                    // Show importation dialog
-                    new ImportFileDialog(filesDialog.FileNames, "blockstates").ShowDialog();
+                    // If this is the blockstates importation button
+                    if (senderButton.Name.Contains("Blockstates"))
+                    {
+                        // Show importation dialog
+                        new ImportFileDialog(filesDialog.FileNames, "blockstates").ShowDialog();
 
-                    // Refresh blockstates listView content
-                    await App.CurrentProjectData.ScanBlockstates();
-                    await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);
-                }
-                // If this is the models refresh button
-                else if (senderButton.Name.Contains("Models"))
-                {
-                    // Show importation dialog
-                    new ImportFileDialog(filesDialog.FileNames, "models").ShowDialog();
+                        // Refresh blockstates listView content
+                        await App.CurrentProjectData.ScanBlockstates();
+                        await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);
+                    }
+                    // If this is the models importation button
+                    else if (senderButton.Name.Contains("Models"))
+                    {
+                        // Show importation dialog
+                        new ImportFileDialog(filesDialog.FileNames, "models").ShowDialog();
 
-                    // Refresh models listView content
-                    await App.CurrentProjectData.ScanModels();
-                    await RefreshModelsListView(ModelsSearchTextbox.Text);
-                }
-                // If this is the textures refresh button
-                else if (senderButton.Name.Contains("Textures"))
-                {
-                    // Show importation dialog
-                    new ImportFileDialog(filesDialog.FileNames, "textures").ShowDialog();
+                        // Refresh models listView content
+                        await App.CurrentProjectData.ScanModels();
+                        await RefreshModelsListView(ModelsSearchTextbox.Text);
+                    }
+                    // If this is the textures importation button
+                    else if (senderButton.Name.Contains("Textures"))
+                    {
+                        // Show importation dialog
+                        new ImportFileDialog(filesDialog.FileNames, "textures").ShowDialog();
 
-                    // Refresh textures listView content
-                    await App.CurrentProjectData.ScanTextures();
-                    await RefreshTexturesListView(TexturesSearchTextbox.Text);
+                        // Refresh textures listView content
+                        await App.CurrentProjectData.ScanTextures();
+                        await RefreshTexturesListView(TexturesSearchTextbox.Text);
+                    }
                 }
             }
         }
