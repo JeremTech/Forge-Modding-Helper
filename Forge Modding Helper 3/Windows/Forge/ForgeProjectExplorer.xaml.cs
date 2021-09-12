@@ -742,6 +742,43 @@ namespace Forge_Modding_Helper_3.Windows
             }
         }
 
+        private void EditButtonClick(object sender, RoutedEventArgs e)
+        {
+            Button senderButton = sender as Button;
+
+            // Check if sender is not null
+            if (senderButton != null)
+            {
+                // If this is the blockstates edit button
+                if (senderButton.Name.Contains("Blockstates"))
+                {
+                    // Check selected items count
+                    if (BlockstatesListView.SelectedItems.Count == 1)
+                    {
+                        new JsonEditor(((FileEntry)BlockstatesListView.SelectedItem).FilePath).ShowDialog();
+                    }
+                }
+                // If this is the models edit button
+                else if (senderButton.Name.Contains("Models"))
+                {
+                    // Check selected items count
+                    if (ModelsListView.SelectedItems.Count == 1)
+                    {
+                        new JsonEditor(((FileEntry)ModelsListView.SelectedItem).FilePath).ShowDialog();
+                    }
+                }
+                // If this is the textures edit button
+                else if (senderButton.Name.Contains("Textures"))
+                {
+                    // Check selected items count
+                    if (TexturesListView.SelectedItems.Count == 1)
+                    {
+                        new JsonEditor(((FileEntry)TexturesListView.SelectedItem).FilePath).ShowDialog();
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Function called by blockstates / models / textures rename buttons
         /// </summary>
@@ -898,15 +935,25 @@ namespace Forge_Modding_Helper_3.Windows
                     {
                         // Enable delete button
                         BlockstatesDeleteButton.IsEnabled = true;
-                        // If only 1 item is selected, enable rename button
-                        if(senderListView.SelectedItems.Count == 1) BlockstatesRenameButton.IsEnabled = true;
-                        else BlockstatesRenameButton.IsEnabled = false;
+
+                        // If only 1 item is selected, enable rename and edit button
+                        if (senderListView.SelectedItems.Count == 1)
+                        {
+                            BlockstatesRenameButton.IsEnabled = true;
+                            BlockstatesEditButton.IsEnabled = true;
+                        }
+                        else
+                        {
+                            BlockstatesRenameButton.IsEnabled = false;
+                            BlockstatesEditButton.IsEnabled = false;
+                        }
                     }
                     // Disable buttons
                     else
                     {
                         BlockstatesDeleteButton.IsEnabled = false;
                         BlockstatesRenameButton.IsEnabled = false;
+                        BlockstatesEditButton.IsEnabled = false;
                     }
                 }
                 // If this is the models listview
@@ -918,14 +965,23 @@ namespace Forge_Modding_Helper_3.Windows
                         // Enable delete button
                         ModelsDeleteButton.IsEnabled = true;
                         // If only 1 item is selected, enable rename button
-                        if (senderListView.SelectedItems.Count == 1) ModelsRenameButton.IsEnabled = true;
-                        else ModelsRenameButton.IsEnabled = false;
+                        if (senderListView.SelectedItems.Count == 1)
+                        {
+                            ModelsRenameButton.IsEnabled = true;
+                            ModelsEditButton.IsEnabled = true;
+                        }
+                        else
+                        {
+                            ModelsRenameButton.IsEnabled = false;
+                            ModelsEditButton.IsEnabled = false;
+                        }
                     }
                     // Disable buttons
                     else
                     {
                         ModelsDeleteButton.IsEnabled = false;
                         ModelsRenameButton.IsEnabled = false;
+                        ModelsEditButton.IsEnabled = false;
                     }
                 }
                 // If this is the textures listview
@@ -937,8 +993,14 @@ namespace Forge_Modding_Helper_3.Windows
                         // Enable delete button
                         TexturesDeleteButton.IsEnabled = true;
                         // If only 1 item is selected, enable rename button
-                        if (senderListView.SelectedItems.Count == 1) TexturesRenameButton.IsEnabled = true;
-                        else TexturesRenameButton.IsEnabled = false;
+                        if (senderListView.SelectedItems.Count == 1)
+                        {
+                            TexturesRenameButton.IsEnabled = true;
+                        }
+                        else
+                        {
+                            TexturesRenameButton.IsEnabled = false;
+                        }
                     }
                     // Disable buttons
                     else

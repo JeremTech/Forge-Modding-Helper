@@ -151,6 +151,15 @@
     "project_explorer.export.export": "Export mod",
     "project_explorer.files.importation": "Importation of ",
 
+    "json_editor.title": "Json Editor",
+    "json_editor.menu.save": "Save",
+    "json_editor.menu.copy": "Copy",
+    "json_editor.menu.paste": "Paste",
+    "json_editor.menu.cut": "Cut",
+    "json_editor.modifications_saved": "Modifications saved !",
+    "json_editor.modifications_unsaved": "Unsaved modifications !",
+    "json_editor.alert.close": "Are you sure you want to close without save changes ?",
+
     "options.title": "Settings - Forge Modding Helper",
     "options.header.title": "Settings",
     "options.label.ui_language": "Language",

@@ -341,7 +341,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
 
                     <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" Margin="5"/>
@@ -349,7 +349,10 @@
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Button x:Name="BlockstatesRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
-                            <fa:ImageAwesome Foreground="DarkCyan" Icon="Pencil" Margin="4"/>
+                            <fa:ImageAwesome Foreground="DarkCyan" Icon="ICursor" Margin="4"/>
+                        </Button>
+                        <Button x:Name="BlockstatesEditButton" Width="30" Click="EditButtonClick" IsEnabled="False">
+                            <fa:ImageAwesome Foreground="Black" Icon="Edit" Margin="4"/>
                         </Button>
                         <Button x:Name="BlockstatesDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
                             <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
@@ -442,7 +445,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
 
                     <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" Margin="5"/>
@@ -450,7 +453,10 @@
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Button x:Name="ModelsRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
-                            <fa:ImageAwesome Foreground="DarkCyan" Icon="Pencil" Margin="4, 5"/>
+                            <fa:ImageAwesome Foreground="DarkCyan" Icon="ICursor" Margin="4"/>
+                        </Button>
+                        <Button x:Name="ModelsEditButton" Width="30" Click="EditButtonClick" IsEnabled="False">
+                            <fa:ImageAwesome Foreground="Black" Icon="Edit" Margin="4"/>
                         </Button>
                         <Button x:Name="ModelsDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
                             <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
@@ -551,7 +557,7 @@
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Button x:Name="TexturesRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
-                            <fa:ImageAwesome Foreground="DarkCyan" Icon="Pencil" Margin="4, 5"/>
+                            <fa:ImageAwesome Foreground="DarkCyan" Icon="ICursor" Margin="4"/>
                         </Button>
                         <Button x:Name="TexturesDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
                             <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>

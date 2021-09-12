@@ -1,0 +1,46 @@
+﻿<Window x:Class="Forge_Modding_Helper_3.Windows.JsonEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor"
+        mc:Ignorable="d"
+        Title="Forge Modding Helper - Json Editor" Height="505" Width="638" WindowStartupLocation="CenterScreen" Icon="/Forge Modding Helper 3;component/Resources/Pictures/icon.png" Loaded="Window_Loaded" Closing="Window_Closing">
+
+    <!-- Command binding -->
+    <Window.CommandBindings>
+        <CommandBinding Command="Save" Executed="EditMenuSave_Click"/>
+    </Window.CommandBindings>
+
+    <!-- Main grid -->
+    <Grid x:Name="MainGrid" Background="{DynamicResource PrimaryBackgroundColor}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Menu -->
+        <Menu x:Name="EditMenu" Grid.Row="0">
+            <MenuItem x:Name="EditMenuSave" Header="Save" Command="Save" Click="EditMenuSave_Click"/>
+            <MenuItem x:Name="EditMenuCopy" Header="Copy" Command="Copy"/>
+            <MenuItem x:Name="EditMenuPaste" Header="Paste" Command="Paste"/>
+            <MenuItem x:Name="EditMenuCut" Header="Cut" Command="Cut"/>
+        </Menu>
+        
+        <!-- Text Editor -->
+        <TextEditor:TextEditor x:Name="TextEditor" Grid.Row="1" BorderThickness="0" Background="{DynamicResource SecondaryBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}" HorizontalLinesBrush="#FF686868" SelectionBrush="#FFD1A100" TextChanged="TextEditor_TextChanged"/>
+
+        <!-- Border -->
+        <Border Grid.Row="2" BorderThickness="1" BorderBrush="#FF686868"/>
+
+        <!-- Footer -->
+        <StatusBar x:Name="StatusBar" Grid.Row="3" Background="{DynamicResource PrimaryBackgroundColor}">
+            <Image x:Name="StatusImage" Source="/Forge Modding Helper 3;component/Resources/Pictures/check.png"/>
+            <Label x:Name="StatusLabel" Content="Modifications saved !" Foreground="{DynamicResource FontColorPrimary}"/>
+        </StatusBar>
+        
+    </Grid>
+</Window>
