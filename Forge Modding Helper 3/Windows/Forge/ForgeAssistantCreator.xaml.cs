@@ -146,6 +146,12 @@ namespace Forge_Modding_Helper_3
                             third_grid.Visibility = Visibility.Visible;
                             missing_infos_label.Visibility = Visibility.Hidden;
 
+                            // Suggest ModID if no ModId is already writed
+                            if(string.IsNullOrWhiteSpace(this.mod_id_textbox.Text))
+                            {
+                                this.mod_id_textbox.Text = StringUtils.CreateModIDFromModName(this.mod_infos["mod_name"]);
+                            }
+
                             // Increase and update step number
                             this.step++;
                             this.updateStep(this.step);
