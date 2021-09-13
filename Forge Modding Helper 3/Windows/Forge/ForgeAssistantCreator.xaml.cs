@@ -146,10 +146,16 @@ namespace Forge_Modding_Helper_3
                             third_grid.Visibility = Visibility.Visible;
                             missing_infos_label.Visibility = Visibility.Hidden;
 
-                            // Suggest ModID if no ModId is already writed
+                            // Suggest ModID if no ModID is already writed
                             if(string.IsNullOrWhiteSpace(this.mod_id_textbox.Text))
                             {
                                 this.mod_id_textbox.Text = StringUtils.CreateModIDFromModName(this.mod_infos["mod_name"]);
+                            }
+
+                            // Suggest ModGroup if no ModGroup is already writed
+                            if (string.IsNullOrWhiteSpace(this.mod_group_textbox.Text))
+                            {
+                                this.mod_group_textbox.Text = StringUtils.CreateModGroupFromModIDAndAuthor(this.mod_infos["mod_id"], this.mod_infos["mod_authors"]);
                             }
 
                             // Increase and update step number

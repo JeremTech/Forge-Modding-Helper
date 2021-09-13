@@ -52,6 +52,26 @@ namespace Forge_Modding_Helper_3
         }
 
         /// <summary>
+        /// Generate ModID from mod name
+        /// </summary>
+        /// <param name="_modName">Mod name</param>
+        /// <returns>Generated ModID</returns>
+        public static string CreateModGroupFromModIDAndAuthor(string _modID, string _modAuthor)
+        {
+            // Result
+            string result = "net.";
+
+            // Format and add mod author
+            result += RemoveSpecialCharacters(_modAuthor.Split(',')[0].ToLower().Replace("_", ""));
+
+            // Add ModID
+            result += "." + _modID;
+
+            // Return result
+            return result;
+        }
+
+        /// <summary>
         /// Get string between two other string
         /// </summary>
         public static string getBetween(this string strSource, string strStart, string strEnd)
