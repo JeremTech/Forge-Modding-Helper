@@ -344,7 +344,6 @@
                     <CheckBox x:Name="mod_toml_checkBox" Tag="assistant_creator.checkbox.step6.mod_toml" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="True" Content="Configuring mod.toml"/>
                     <CheckBox x:Name="code_packages_checkBox" Tag="assistant_creator.checkbox.step6.code_package" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="True" Content="Generation of code packages"/>
                     <CheckBox x:Name="assets_packages_checkBox" Tag="assistant_creator.checkbox.step6.assets_package" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="True" Content="Generation of assets packages"/>
-                    <CheckBox x:Name="fr_lang_file_checkBox" Tag="assistant_creator.checkbox.step6.lang_file" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="{Binding IsChecked, ElementName=assets_packages_checkBox, Mode=OneWay}" IsEnabled="{Binding IsChecked, ElementName=assets_packages_checkBox, Mode=OneWay}" Content="Generation of fr__fr.lang file"/>
                 </StackPanel>
 
                 <!-- Warning labels -->

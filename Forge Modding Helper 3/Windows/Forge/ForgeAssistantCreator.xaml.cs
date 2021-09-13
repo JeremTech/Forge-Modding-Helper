@@ -454,19 +454,6 @@ namespace Forge_Modding_Helper_3
         /// </summary>
         private void generate_files()
         {
-            // Generate blank fr language file
-            if (fr_lang_file_checkBox.IsChecked == true)
-            {
-                if(!Directory.Exists(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\lang"))
-                {
-                    update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_lang_folder") + " \"" + this.folder + @"\src\main\assets" + "\"...");
-                    Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\lang");
-                }
-
-                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_lang_file"));
-                File.WriteAllText(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\lang\fr_fr.json", "{" + Environment.NewLine + Environment.NewLine + "}");
-            }
-
             // Generate build.gradle file
             if (build_gradle_checkBox.IsChecked == true)
             {
