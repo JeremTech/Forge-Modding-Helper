@@ -528,8 +528,6 @@ namespace Forge_Modding_Helper_3
 
             if (textBox != null)
             {
-                textBox.Text = textBox.Text.RemoveSpecialCharacters();
-
                 this.mod_infos[textBox.Tag.ToString()] = textBox.Text;
                 Image img = (Image)this.FindName(textBox.Tag + "_image");
 
