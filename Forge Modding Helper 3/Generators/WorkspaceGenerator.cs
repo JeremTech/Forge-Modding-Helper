@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Forge_Modding_Helper_3.Generators
 {
@@ -68,21 +69,21 @@ namespace Forge_Modding_Helper_3.Generators
                 }
                 else if (line.Contains("Specification-Title"))
                 {
-                    string str = StringUtils.getBetween(line, "\"", ",").Replace(" ", "");
+                    string str = line.Replace(" ", "");
                     str = StringUtils.getBetween(str, "Specification-Title\":\"", "\"");
-                    output[i] = line.Replace(str, App.CurrentProjectData.ModData.ModID);
+                    output[i] = "                " + line.Replace(" ", "").Replace(":", " : ").Replace(str, App.CurrentProjectData.ModData.ModID);
                 }
                 else if (line.Contains("Specification-Vendor"))
                 {
-                    string str = StringUtils.getBetween(line, "\"", ",").Replace(" ", "");
+                    string str = line.Replace(" ", "");
                     str = StringUtils.getBetween(str, "Specification-Vendor\":\"", "\"");
-                    output[i] = line.Replace(str, App.CurrentProjectData.ModData.ModAuthors);
+                    output[i] = "                " + line.Replace(" ", ""). Replace(":", " : ").Replace(str, App.CurrentProjectData.ModData.ModAuthors);
                 }
                 else if (line.Contains("Implementation-Vendor"))
                 {
-                    string str = StringUtils.getBetween(line, "\"", ",").Replace(" ", "");
+                    string str = line.Replace(" ", "");
                     str = StringUtils.getBetween(str, "Implementation-Vendor\":\"", "\"");
-                    output[i] = line.Replace(str, App.CurrentProjectData.ModData.ModAuthors);
+                    output[i] = "                " + line.Replace(" ", "").Replace(":", " : ").Replace(str, App.CurrentProjectData.ModData.ModAuthors);
                 }
                 else if (line.Contains("data {"))
                 {
