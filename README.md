@@ -5,7 +5,9 @@
 [![License](https://img.shields.io/github/license/jeremtech/Forge-Modding-Helper?style=flat-square)](https://github.com/JeremTech/Forge-Modding-Helper/blob/master/LICENSE)
 
 Forge Modding Helper is an utility software to manage Forge's Workspace.
-Forge Modding Helper is available for Windows 10 and 11, and the .Net Framework 4.7.1 is required.
+
+## Compatibility 
+Forge Modding Helper is available for Windows 10 and 11, and the .Net Framework 4.7.2 is required.
 
 ## Version
 
