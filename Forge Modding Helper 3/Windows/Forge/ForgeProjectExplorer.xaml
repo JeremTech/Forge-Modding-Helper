@@ -333,7 +333,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            
+
             <!-- Search bar and buttons -->
             <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10">
                 <Grid Grid.Row="0" Background="{DynamicResource InputsBackgroundColor}">
@@ -341,7 +341,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
 
                     <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" Margin="5"/>
@@ -349,23 +349,29 @@
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Button x:Name="BlockstatesRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
-                            <fa:ImageAwesome Foreground="DarkCyan" Icon="Pencil" Margin="4, 5"/>
+                            <fa:ImageAwesome Foreground="DarkCyan" Icon="ICursor" Margin="4"/>
+                        </Button>
+                        <Button x:Name="BlockstatesEditButton" Width="30" Click="EditButtonClick" IsEnabled="False">
+                            <fa:ImageAwesome Foreground="Black" Icon="Edit" Margin="4"/>
                         </Button>
                         <Button x:Name="BlockstatesDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
                             <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
+                        </Button>
+                        <Button x:Name="BlockstatesImportationButton" Width="30" Click="ImportationButtonClick">
+                            <fa:ImageAwesome Foreground="DarkBlue" Icon="Download" Margin="4"/>
                         </Button>
                         <Button x:Name="BlockstatesRefreshButton" Width="30" Click="RefreshButtonClick">
                             <fa:ImageAwesome Foreground="DarkGreen" Icon="Refresh" Margin="4"/>
                         </Button>
                     </StackPanel>
-                
+
                 </Grid>
             </Border>
-            
+
             <!-- Listview -->
             <Border Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10, 0">
-                <ListView x:Name="BlockstatesListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
-                    
+                <ListView x:Name="BlockstatesListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged" AllowDrop="True" Drop="BlockstatesListViewDrop">
+
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="5">
@@ -374,22 +380,22 @@
                                     <RowDefinition Height="70"/>
                                     <RowDefinition Height="20"/>
                                 </Grid.RowDefinitions>
-                                
+
                                 <fa:ImageAwesome Grid.Row="0" Icon="{Binding Icon}" Foreground="{DynamicResource FontColorPrimary}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56"/>
                                 <TextBlock Grid.Row="1" Text="{Binding FileName}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" MaxWidth="128" FontSize="13"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                    
+
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Columns="7" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
-                    
+
                 </ListView>
             </Border>
-            
+
             <!-- Status bar -->
             <Grid Grid.Row="2" Background="{DynamicResource SecondaryBackgroundColor}" Margin="0, 5, 0, 0">
 
@@ -439,7 +445,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
 
                     <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" Margin="5"/>
@@ -447,10 +453,16 @@
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Button x:Name="ModelsRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
-                            <fa:ImageAwesome Foreground="DarkCyan" Icon="Pencil" Margin="4, 5"/>
+                            <fa:ImageAwesome Foreground="DarkCyan" Icon="ICursor" Margin="4"/>
+                        </Button>
+                        <Button x:Name="ModelsEditButton" Width="30" Click="EditButtonClick" IsEnabled="False">
+                            <fa:ImageAwesome Foreground="Black" Icon="Edit" Margin="4"/>
                         </Button>
                         <Button x:Name="ModelsDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
                             <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
+                        </Button>
+                        <Button x:Name="ModelsImportationButton" Width="30" Click="ImportationButtonClick">
+                            <fa:ImageAwesome Foreground="DarkBlue" Icon="Download" Margin="4"/>
                         </Button>
                         <Button x:Name="ModelsRefreshButton" Width="30" Click="RefreshButtonClick">
                             <fa:ImageAwesome Foreground="DarkGreen" Icon="Refresh" Margin="4"/>
@@ -462,7 +474,7 @@
 
             <!-- Listview -->
             <Border Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10, 0">
-                <ListView x:Name="ModelsListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
+                <ListView x:Name="ModelsListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged" AllowDrop="True" Drop="ModelsListViewDrop">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -537,7 +549,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="25"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
 
                     <fa:ImageAwesome Icon="Search" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" Margin="5"/>
@@ -545,10 +557,13 @@
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <Button x:Name="TexturesRenameButton" Width="30" Click="RenameButtonClick" IsEnabled="False">
-                            <fa:ImageAwesome Foreground="DarkCyan" Icon="Pencil" Margin="4, 5"/>
+                            <fa:ImageAwesome Foreground="DarkCyan" Icon="ICursor" Margin="4"/>
                         </Button>
                         <Button x:Name="TexturesDeleteButton" Width="30" Click="DeleteButtonClick" IsEnabled="False">
                             <fa:ImageAwesome Foreground="#FF0000" Icon="Trash" Margin="4"/>
+                        </Button>
+                        <Button x:Name="TexturesImportationButton" Width="30" Click="ImportationButtonClick">
+                            <fa:ImageAwesome Foreground="DarkBlue" Icon="Download" Margin="4"/>
                         </Button>
                         <Button x:Name="TexturesRefreshButton" Width="30" Click="RefreshButtonClick">
                             <fa:ImageAwesome Foreground="DarkGreen" Icon="Refresh" Margin="4"/>
@@ -560,7 +575,7 @@
 
             <!-- Listview -->
             <Border Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Margin="10, 0">
-                <ListView x:Name="TexturesListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged">
+                <ListView x:Name="TexturesListView" Background="{DynamicResource InputsBackgroundColor}" BorderThickness="0" HorizontalContentAlignment="Center" SelectionChanged="ListViewSelectionChanged" AllowDrop="True" Drop="TexturesListViewDrop">
 
                     <ListView.ItemTemplate>
                         <DataTemplate>

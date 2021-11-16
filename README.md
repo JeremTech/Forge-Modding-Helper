@@ -5,7 +5,9 @@
 [![License](https://img.shields.io/github/license/jeremtech/Forge-Modding-Helper?style=flat-square)](https://github.com/JeremTech/Forge-Modding-Helper/blob/master/LICENSE)
 
 Forge Modding Helper is an utility software to manage Forge's Workspace.
-Forge Modding Helper is only available for Windows 10, and the .Net Framework 4.7.1 is required.
+
+## Compatibility 
+Forge Modding Helper is available for Windows 10 and 11, and the .Net Framework 4.7.2 is required.
 
 ## Version
 
@@ -18,7 +20,7 @@ Latest version | Latest stable version
 - [x] Workspace creation wizard
 - [x] Existing workspace importation
 - [x] Easy mod settings edition
-- [x] Explore assets (models, textures, blockstates)
+- [x] Explore and manage assets (models, textures, blockstates)
 - [x] Easy language file editing 
 - [x] Easy mod publication
 - [x] English and french translation
@@ -29,13 +31,20 @@ Latest version | Latest stable version
 - [x] Minecraft Forge 1.17 : 1.17.1
 - [x] Minecraft Forge 1.16 : 1.16.3, 1.16.4, 1.16.5
 - [x] Minecraft Forge 1.15 : 1.15.2
-- [x] Minecraft Forge 1.14 : 1.14.4
-- [x] Minecraft Forge 1.13 : 1.13.2
 
 ## Report bug or submit ideas
 
 You can report bugs or submit ideas in the [issues section](https://github.com/JeremTech/Forge-Modding-Helper/issues). Please check if your bug or idea have not already posted.
 You can also see in real-time the progression of the next update on the [Forge Modding Helper Trello](https://trello.com/b/4C7TwCta/forge-modding-helper) (in french).
+
+## Screenshots
+
+### Assistant Creator
+![Assistant Creator](/assets/images/assistant_creator.png)
+
+### Project Explorer
+![Project Explorer - Mod settings](/assets/images/project_explorer_mod_settings.png)
+![Project Explorer - Models](/assets/images/project_explorer_models.png)
 
 ## Contributing
 

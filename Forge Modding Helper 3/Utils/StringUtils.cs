@@ -28,6 +28,52 @@ namespace Forge_Modding_Helper_3
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Generate ModID from mod name
+        /// </summary>
+        /// <param name="_modName">Mod name</param>
+        /// <returns>Generated ModID</returns>
+        public static string CreateModIDFromModName(string _modName)
+        {
+            // Result
+            string result = "";
+
+            // Remove specials characters
+            result = RemoveSpecialCharacters(_modName);
+
+            // Remove uppercase
+            result = result.ToLower();
+
+            // Replace spaces with '_'
+            result = result.Replace(' ', '_');
+
+            // Return result
+            return result;
+        }
+
+        /// <summary>
+        /// Generate ModID from mod name
+        /// </summary>
+        /// <param name="_modName">Mod name</param>
+        /// <returns>Generated ModID</returns>
+        public static string CreateModGroupFromModIDAndAuthor(string _modID, string _modAuthor)
+        {
+            // Result
+            string result = "net.";
+
+            // Format and add mod author
+            result += RemoveSpecialCharacters(_modAuthor.Split(',')[0].ToLower().Replace("_", ""));
+
+            // Add ModID
+            result += "." + _modID;
+
+            // Return result
+            return result;
+        }
+
+        /// <summary>
+        /// Get string between two other string
+        /// </summary>
         public static string getBetween(this string strSource, string strStart, string strEnd)
         {
             if (strSource.Contains(strStart) && strSource.Contains(strEnd))
@@ -41,9 +87,12 @@ namespace Forge_Modding_Helper_3
             return "";
         }
 
-        public static String FormateTranslationText(this string str)
+        /// <summary>
+        /// Format translation text for a correct displaying
+        /// </summary>
+        public static string FormateTranslationText(this string str)
         {
-            String output = str;
+            string output = str;
 
             if(!string.IsNullOrWhiteSpace(output))
                 output.Replace("\n", Environment.NewLine);

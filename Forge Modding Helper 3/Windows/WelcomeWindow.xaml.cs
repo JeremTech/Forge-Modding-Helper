@@ -93,10 +93,8 @@ namespace Forge_Modding_Helper_3.Windows
                 {
                     if (Directory.Exists(this.selectedProjectPath))
                     {
-                        Workspace workspace = listbox_recent_workspaces.SelectedItem as Workspace;
                         FileSystem.DeleteDirectory(this.selectedProjectPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
-                        LastWorkspaces.LastWorkspacesData.Remove(workspace);
-                        LastWorkspaces.WriteData();
+                        LastWorkspaces.RefreshData();
                         listbox_recent_workspaces.ItemsSource = null;
                         listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
                     }
@@ -114,7 +112,8 @@ namespace Forge_Modding_Helper_3.Windows
         private void refresh_mod_list_button_Click(object sender, RoutedEventArgs e)
         {
             LastWorkspaces.RefreshData();
-            listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;  
+            listbox_recent_workspaces.ItemsSource = null;
+            listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
         }
 
         private void import_mod_button_Click(object sender, RoutedEventArgs e)

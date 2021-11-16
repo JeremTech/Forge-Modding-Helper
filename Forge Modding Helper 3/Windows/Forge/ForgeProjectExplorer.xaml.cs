@@ -1,9 +1,12 @@
 ﻿using FontAwesome.WPF;
 using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Files.Software;
+using Forge_Modding_Helper_3.Generators;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
+using Forge_Modding_Helper_3.Windows.Files;
 using Microsoft.VisualBasic.FileIO;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,6 +36,8 @@ namespace Forge_Modding_Helper_3.Windows
         private CancellationTokenSource modelsTokenSource;
         private CancellationTokenSource texturesTokenSource;
 
+        // Workspace Generator
+        private WorkspaceGenerator workspaceGenerator;
 
         /// <summary>
         /// Constructor
@@ -48,6 +53,9 @@ namespace Forge_Modding_Helper_3.Windows
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
             this.Title = UITextTranslator.getTranslation("project_explorer.title");
             this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
+
+            // Initialize workspace generator
+            workspaceGenerator = WorkspaceGenerator.GetGenerator(App.CurrentProjectData.ModData.ModMinecraftVersion);
         }
 
         #region ModSettings section
@@ -157,8 +165,8 @@ namespace Forge_Modding_Helper_3.Windows
             await App.CurrentProjectData.WriteModData();
 
             // Update build.gradle and mod.toml
-            new BuildGradle(App.CurrentProjectData.ModData, App.CurrentProjectData.ProjectDirectory).generateFile();
-            new ModToml(App.CurrentProjectData.ModData, App.CurrentProjectData.ProjectDirectory).generateFile();
+            workspaceGenerator.GenerateBuildGradle();
+            workspaceGenerator.GenerateModToml();
 
             // Update UI
             this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.saved_modifications");
@@ -180,6 +188,7 @@ namespace Forge_Modding_Helper_3.Windows
             var cancellationToken = blockstatesTokenSource.Token;
 
             BlockstatesLoadingStackPanel.Visibility = Visibility.Visible;
+            BlockstatesLoadingStatusTextblock.Text = UITextTranslator.getTranslation("project_explorer.blockstates.loading_files");
 
             // Run it async
             try
@@ -220,6 +229,25 @@ namespace Forge_Modding_Helper_3.Windows
             }
 
             BlockstatesLoadingStackPanel.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// Function called when files are dropped into blockstates listview
+        /// </summary>
+        private async void BlockstatesListViewDrop(object sender, DragEventArgs e)
+        {
+            // Check if this is files
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Get all files
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                // Show importation dialog
+                new ImportFileDialog(files, "blockstates").ShowDialog();
+
+                await App.CurrentProjectData.ScanBlockstates();
+                await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);                
+            }
         }
         #endregion
 
@@ -301,6 +329,25 @@ namespace Forge_Modding_Helper_3.Windows
                 ModelsLoadingStackPanel.Visibility = Visibility.Hidden;
             }
         }
+
+        /// <summary>
+        /// Function called when files are dropped into blockstates listview
+        /// </summary>
+        private async void ModelsListViewDrop(object sender, DragEventArgs e)
+        {
+            // Check if this is files
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Get all files
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                
+                // Show importation dialog
+                new ImportFileDialog(files, "models").ShowDialog();
+
+                await App.CurrentProjectData.ScanModels();
+                await RefreshModelsListView(ModelsSearchTextbox.Text);
+            }
+        }
         #endregion
 
         #region Textures section
@@ -357,6 +404,25 @@ namespace Forge_Modding_Helper_3.Windows
                 }
 
                 TexturesLoadingStackPanel.Visibility = Visibility.Hidden;
+            }
+        }
+
+        /// <summary>
+        /// Function called when files are dropped into blockstates listview
+        /// </summary>
+        private async void TexturesListViewDrop(object sender, DragEventArgs e)
+        {
+            // Check if this is files
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Get all files
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                // Show importation dialog
+                new ImportFileDialog(files, "textures").ShowDialog();
+
+                await App.CurrentProjectData.ScanTextures();
+                await RefreshTexturesListView(TexturesSearchTextbox.Text);
             }
         }
         #endregion
@@ -676,6 +742,43 @@ namespace Forge_Modding_Helper_3.Windows
             }
         }
 
+        private void EditButtonClick(object sender, RoutedEventArgs e)
+        {
+            Button senderButton = sender as Button;
+
+            // Check if sender is not null
+            if (senderButton != null)
+            {
+                // If this is the blockstates edit button
+                if (senderButton.Name.Contains("Blockstates"))
+                {
+                    // Check selected items count
+                    if (BlockstatesListView.SelectedItems.Count == 1)
+                    {
+                        new JsonEditor(((FileEntry)BlockstatesListView.SelectedItem).FilePath).ShowDialog();
+                    }
+                }
+                // If this is the models edit button
+                else if (senderButton.Name.Contains("Models"))
+                {
+                    // Check selected items count
+                    if (ModelsListView.SelectedItems.Count == 1)
+                    {
+                        new JsonEditor(((FileEntry)ModelsListView.SelectedItem).FilePath).ShowDialog();
+                    }
+                }
+                // If this is the textures edit button
+                else if (senderButton.Name.Contains("Textures"))
+                {
+                    // Check selected items count
+                    if (TexturesListView.SelectedItems.Count == 1)
+                    {
+                        new JsonEditor(((FileEntry)TexturesListView.SelectedItem).FilePath).ShowDialog();
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Function called by blockstates / models / textures rename buttons
         /// </summary>
@@ -760,6 +863,61 @@ namespace Forge_Modding_Helper_3.Windows
         }
 
         /// <summary>
+        /// Function called by blockstates / models / textures importation button
+        /// </summary>
+        private async void ImportationButtonClick(object sender, RoutedEventArgs e)
+        {
+            Button senderButton = sender as Button;
+
+            // Check if sender is not null
+            if (senderButton != null)
+            {
+                // File dialog
+                OpenFileDialog filesDialog = new OpenFileDialog();
+                filesDialog.Title = UITextTranslator.getTranslation("file_dialog.import.title");
+                filesDialog.Filter = UITextTranslator.getTranslation("file_dialog.import.filter") + " (*.*)|*.*";
+                filesDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                filesDialog.Multiselect = true;
+                filesDialog.ShowDialog();
+
+                // Check if there are files
+                if(filesDialog.FileNames.Length > 0)
+                {
+                    // If this is the blockstates importation button
+                    if (senderButton.Name.Contains("Blockstates"))
+                    {
+                        // Show importation dialog
+                        new ImportFileDialog(filesDialog.FileNames, "blockstates").ShowDialog();
+
+                        // Refresh blockstates listView content
+                        await App.CurrentProjectData.ScanBlockstates();
+                        await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);
+                    }
+                    // If this is the models importation button
+                    else if (senderButton.Name.Contains("Models"))
+                    {
+                        // Show importation dialog
+                        new ImportFileDialog(filesDialog.FileNames, "models").ShowDialog();
+
+                        // Refresh models listView content
+                        await App.CurrentProjectData.ScanModels();
+                        await RefreshModelsListView(ModelsSearchTextbox.Text);
+                    }
+                    // If this is the textures importation button
+                    else if (senderButton.Name.Contains("Textures"))
+                    {
+                        // Show importation dialog
+                        new ImportFileDialog(filesDialog.FileNames, "textures").ShowDialog();
+
+                        // Refresh textures listView content
+                        await App.CurrentProjectData.ScanTextures();
+                        await RefreshTexturesListView(TexturesSearchTextbox.Text);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Founction called whan the selection is changed in blockstates / models / textures listViews
         /// </summary>
         private void ListViewSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -777,15 +935,25 @@ namespace Forge_Modding_Helper_3.Windows
                     {
                         // Enable delete button
                         BlockstatesDeleteButton.IsEnabled = true;
-                        // If only 1 item is selected, enable rename button
-                        if(senderListView.SelectedItems.Count == 1) BlockstatesRenameButton.IsEnabled = true;
-                        else BlockstatesRenameButton.IsEnabled = false;
+
+                        // If only 1 item is selected, enable rename and edit button
+                        if (senderListView.SelectedItems.Count == 1)
+                        {
+                            BlockstatesRenameButton.IsEnabled = true;
+                            BlockstatesEditButton.IsEnabled = true;
+                        }
+                        else
+                        {
+                            BlockstatesRenameButton.IsEnabled = false;
+                            BlockstatesEditButton.IsEnabled = false;
+                        }
                     }
                     // Disable buttons
                     else
                     {
                         BlockstatesDeleteButton.IsEnabled = false;
                         BlockstatesRenameButton.IsEnabled = false;
+                        BlockstatesEditButton.IsEnabled = false;
                     }
                 }
                 // If this is the models listview
@@ -797,14 +965,23 @@ namespace Forge_Modding_Helper_3.Windows
                         // Enable delete button
                         ModelsDeleteButton.IsEnabled = true;
                         // If only 1 item is selected, enable rename button
-                        if (senderListView.SelectedItems.Count == 1) ModelsRenameButton.IsEnabled = true;
-                        else ModelsRenameButton.IsEnabled = false;
+                        if (senderListView.SelectedItems.Count == 1)
+                        {
+                            ModelsRenameButton.IsEnabled = true;
+                            ModelsEditButton.IsEnabled = true;
+                        }
+                        else
+                        {
+                            ModelsRenameButton.IsEnabled = false;
+                            ModelsEditButton.IsEnabled = false;
+                        }
                     }
                     // Disable buttons
                     else
                     {
                         ModelsDeleteButton.IsEnabled = false;
                         ModelsRenameButton.IsEnabled = false;
+                        ModelsEditButton.IsEnabled = false;
                     }
                 }
                 // If this is the textures listview
@@ -816,8 +993,14 @@ namespace Forge_Modding_Helper_3.Windows
                         // Enable delete button
                         TexturesDeleteButton.IsEnabled = true;
                         // If only 1 item is selected, enable rename button
-                        if (senderListView.SelectedItems.Count == 1) TexturesRenameButton.IsEnabled = true;
-                        else TexturesRenameButton.IsEnabled = false;
+                        if (senderListView.SelectedItems.Count == 1)
+                        {
+                            TexturesRenameButton.IsEnabled = true;
+                        }
+                        else
+                        {
+                            TexturesRenameButton.IsEnabled = false;
+                        }
                     }
                     // Disable buttons
                     else

@@ -140,6 +140,10 @@
     <Compile Include="Files\Software\ThemeFile.cs" />
     <Compile Include="Files\Software\TranslationFile.cs" />
     <Compile Include="Files\Workspace\ProjectFile.cs" />
+    <Compile Include="Generators\Generator115.cs" />
+    <Compile Include="Generators\Generator116.cs" />
+    <Compile Include="Generators\Generator117.cs" />
+    <Compile Include="Generators\WorkspaceGenerator.cs" />
     <Compile Include="Objects\FileEntry.cs" />
     <Compile Include="Objects\Workspace.cs" />
     <Compile Include="Files\Workspace\BuildGradle.cs" />
@@ -157,6 +161,12 @@
     </Compile>
     <Compile Include="Windows\Files\AddTranslationFileDialog.xaml.cs">
       <DependentUpon>AddTranslationFileDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Files\ImportFilesDialog.xaml.cs">
+      <DependentUpon>ImportFilesDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\JsonEditor.xaml.cs">
+      <DependentUpon>JsonEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\OptionWindow.xaml.cs">
       <DependentUpon>OptionWindow.xaml</DependentUpon>
@@ -181,7 +191,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\Files\ImportFilesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\Forge\ForgeAssistantCreator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\JsonEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -313,6 +331,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Pictures\help_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />

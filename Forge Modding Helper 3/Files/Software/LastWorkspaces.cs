@@ -124,7 +124,8 @@ namespace Forge_Modding_Helper_3.Files.Software
             }
 
             // Overwrite recents workspaces
-            LastWorkspacesData = workspaces;
+            LastWorkspacesData.Clear();
+            LastWorkspacesData.AddRange(workspaces);
 
             // Write new data file
             WriteData();

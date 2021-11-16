@@ -49,15 +49,13 @@
                     <!-- Supported minecraft versions -->
                     <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0">
                         <Label x:Name="label_supported_mc_versions" Tag="assistant_creator.label.welcome.supported_mc_versions" Foreground="{DynamicResource FontColorPrimary}" Content="Supported Minecraft versions :" />
-                        <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.13 : 1.13.2" />
-                        <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.14 : 1.14.4"/>
                         <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.15 : 1.15.2"/>
                         <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.16 : 1.16.3 / 1.16.4 / 1.16.5"/>
                         <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.17 : 1.17.1"/>
                     </StackPanel>
 
                     <!-- Output folder selection -->
-                    <GroupBox x:Name="groupBox_output_folder" Tag="assistant_creator.group.welcome.output_directory" Foreground="{DynamicResource FontColorPrimary}" Header="Output folder" Padding="5" Margin="0, 60, 0 ,0">
+                    <GroupBox x:Name="groupBox_output_folder" Tag="assistant_creator.group.welcome.output_directory" Foreground="{DynamicResource FontColorPrimary}" Header="Output folder" Padding="5" Margin="0, 50, 0 ,0">
                         <StackPanel>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -346,7 +344,6 @@
                     <CheckBox x:Name="mod_toml_checkBox" Tag="assistant_creator.checkbox.step6.mod_toml" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="True" Content="Configuring mod.toml"/>
                     <CheckBox x:Name="code_packages_checkBox" Tag="assistant_creator.checkbox.step6.code_package" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="True" Content="Generation of code packages"/>
                     <CheckBox x:Name="assets_packages_checkBox" Tag="assistant_creator.checkbox.step6.assets_package" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="True" Content="Generation of assets packages"/>
-                    <CheckBox x:Name="fr_lang_file_checkBox" Tag="assistant_creator.checkbox.step6.lang_file" Margin="15, 0, 0, 5" Foreground="{DynamicResource FontColorPrimary}" IsChecked="{Binding IsChecked, ElementName=assets_packages_checkBox, Mode=OneWay}" IsEnabled="{Binding IsChecked, ElementName=assets_packages_checkBox, Mode=OneWay}" Content="Generation of fr__fr.lang file"/>
                 </StackPanel>
 
                 <!-- Warning labels -->
