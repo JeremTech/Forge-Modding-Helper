@@ -49,7 +49,7 @@ namespace Forge_Modding_Helper_3.Properties
                 }
                 return resourceMan;
             }
-        }
+        } 
 
         /// <summary>
         ///   Remplace la propriété CurrentUICulture du thread actuel pour toutes
