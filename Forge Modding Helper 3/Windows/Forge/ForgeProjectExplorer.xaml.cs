@@ -39,6 +39,9 @@ namespace Forge_Modding_Helper_3.Windows
         // Workspace Generator
         private WorkspaceGenerator workspaceGenerator;
 
+        // Current section opened
+        private string currentSectionOpenedTag;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -52,7 +55,11 @@ namespace Forge_Modding_Helper_3.Windows
             UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
             this.Title = UITextTranslator.getTranslation("project_explorer.title");
+            this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.saved_modifications");
             this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
+
+            // Initialize data
+            currentSectionOpenedTag = "Home";
 
             // Initialize workspace generator
             workspaceGenerator = WorkspaceGenerator.GetGenerator(App.CurrentProjectData.ModData.ModMinecraftVersion);
@@ -524,16 +531,12 @@ namespace Forge_Modding_Helper_3.Windows
         }
         #endregion
 
-        #region Global UI functions
+        #region UI functions
         /// <summary>
         /// Refresh all UI components who contains mod infos
         /// </summary>
         private void RefreshInterfaceModInfos()
         {
-            // Side bar text infos
-            this.ModNameSideBarTextBlock.Text = App.CurrentProjectData.ModData.ModName;
-            this.ModVersionSideBarTextBlock.Text = App.CurrentProjectData.ModData.ModVersion;
-
             // Mod logo (side bar, mod settings)
             if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
             {
@@ -544,13 +547,11 @@ namespace Forge_Modding_Helper_3.Windows
                     image.CacheOption = BitmapCacheOption.OnLoad;
                     image.StreamSource = stream;
                     image.EndInit();
-                    this.ModLogoSideBarImage.Source = image;
                     this.ModSettingsModLogoImage.Source = image;
                 }
             }
             else
             {
-                this.ModLogoSideBarImage.Source = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/icon.png", UriKind.Relative));
                 this.ModSettingsModLogoImage.Source = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/icon.png", UriKind.Relative));
             }
 
@@ -590,6 +591,9 @@ namespace Forge_Modding_Helper_3.Windows
             {
                 if(SelectedButton.Tag != null)
                 {
+                    // Set selected section tag 
+                    currentSectionOpenedTag = SelectedButton.Tag.ToString();
+
                     // Reset all buttons border
                     SideBarHomeButtonBorder.Background = null;
                     SideBarModSettingsButtonBorder.Background = null;
@@ -623,6 +627,30 @@ namespace Forge_Modding_Helper_3.Windows
                     }
 
                 }
+            }
+        }
+
+        /// <summary>
+        /// Function called when mouse left button is pressed on Options button in the side bar
+        /// </summary>
+        private void SideBarOptionsButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            new OptionWindow().ShowDialog();
+
+            // Reload translations
+            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
+            this.Title = UITextTranslator.getTranslation("project_explorer.title");
+
+            // Reload font color if needed of mod settings statut label
+            if(!string.Equals(((SolidColorBrush)ModSettingsStatusLabel.Foreground).Color.ToString(), "#FFFF0000"))
+                this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
+
+            // Reload color for the selected border
+            Border SelectedBorder = (Border)this.FindName("SideBar" + currentSectionOpenedTag + "ButtonBorder");
+            if (SelectedBorder != null)
+            {
+                SelectedBorder.Background = (Brush)App.Current.FindResource("BorderColor");
             }
         }
 

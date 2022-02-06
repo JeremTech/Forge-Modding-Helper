@@ -25,7 +25,6 @@ namespace Forge_Modding_Helper_3.Objects
             // For .png.mcmeta files
             if (this.FileName.EndsWith(".png")) this.FileName = Path.GetFileNameWithoutExtension(this.FileName);
             this.Icon = fileIcon;
-
         }
     }
 }

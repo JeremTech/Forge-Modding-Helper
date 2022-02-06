@@ -114,6 +114,7 @@
     "project_explorer.sidebar.textures": "Textures",
     "project_explorer.sidebar.translations": "Translations",
     "project_explorer.sidebar.export": "Export",
+    "project_explorer.sidebar.options": "Options",
     "project_explorer.mod_settings.authors": "Mod author(s)",
     "project_explorer.mod_settings.license": "Mod license",
     "project_explorer.mod_settings.credits": "Mod credits",
