@@ -35,6 +35,7 @@ namespace Forge_Modding_Helper_3.Generators
                     return new Generator117();
 
                 case "1.18.1":
+                case "1.18.2":
                     return new Generator118();
             }
 
