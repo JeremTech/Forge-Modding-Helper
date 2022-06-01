@@ -9,6 +9,7 @@ using Microsoft.VisualBasic.FileIO;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -65,6 +66,16 @@ namespace Forge_Modding_Helper_3.Windows
             workspaceGenerator = WorkspaceGenerator.GetGenerator(App.CurrentProjectData.ModData.ModMinecraftVersion);
         }
 
+        #region Home Section
+        /// <summary>
+        /// Function called when open explorer button on home section is clicked
+        /// </summary>
+        private void HomeOpenExplorerButtonClick(object sender, RoutedEventArgs e)
+        {
+            Process.Start(App.CurrentProjectData.ProjectDirectory);
+        }
+        #endregion 
+
         #region ModSettings section
         /// <summary>
         /// Function called when text is changed in mod settings textboxes
@@ -95,41 +106,16 @@ namespace Forge_Modding_Helper_3.Windows
             // Check the user selection
             if (!String.IsNullOrWhiteSpace(fileDialog.FileName))
             {
-                using (var stream = File.OpenRead(fileDialog.FileName))
-                {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.StreamSource = stream;
-                    image.EndInit();
-                    this.ModSettingsModLogoImage.Source = image;
+                // Deleting existing logo
+                if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"))) FileSystem.DeleteFile(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                // Copying new logo
+                File.Copy(fileDialog.FileName, App.CurrentProjectData.ProjectDirectory + @"\src\main\resources\logo.png");
+                // Update mod data 
+                App.CurrentProjectData.ModData.ModLogo = "logo.png";
+            }
 
-                    // Deleting existing logo
-                    if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"))) FileSystem.DeleteFile(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
-                    // Copying new logo
-                    File.Copy(fileDialog.FileName, App.CurrentProjectData.ProjectDirectory + @"\src\main\resources\logo.png");
-                    // Update mod data 
-                    App.CurrentProjectData.ModData.ModLogo = "logo.png";
-                    // Refresh UI
-                    RefreshInterfaceModInfos();
-                }
-            }
-            else if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
-            {
-                using (var stream = File.OpenRead(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
-                {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.StreamSource = stream;
-                    image.EndInit();
-                    this.ModSettingsModLogoImage.Source = image;
-                }
-            }
-            else
-            {
-                this.ModSettingsModLogoImage.Source = null;
-            }
+            // Refresh UI 
+            RefreshInterfaceModInfos();
         }
 
         /// <summary>
@@ -547,15 +533,28 @@ namespace Forge_Modding_Helper_3.Windows
                     image.CacheOption = BitmapCacheOption.OnLoad;
                     image.StreamSource = stream;
                     image.EndInit();
+                    this.HomeModLogoImage.Source = image;
                     this.ModSettingsModLogoImage.Source = image;
+                    this.HomeModLogoImageBorder.Visibility = Visibility.Visible;
                 }
             }
             else
             {
                 this.ModSettingsModLogoImage.Source = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/icon.png", UriKind.Relative));
+                this.HomeModLogoImageBorder.Visibility = Visibility.Collapsed;
             }
 
-            // Mod settings grid
+            // Home section
+            this.HomeModNameTextblock.Text = App.CurrentProjectData.ModData.ModName;
+            this.HomeWorkspaceFolderTextblock.Text = App.CurrentProjectData.ProjectDirectory;
+            this.TexturesInfoDisplay.InfoContent = App.CurrentProjectData.TexturesList.Count.ToString();
+            this.ModelsInfoDisplay.InfoContent = App.CurrentProjectData.ModelsList.Count.ToString();
+            this.JavaFilesInfoDisplay.InfoContent = App.CurrentProjectData.JavaFilesList.Count.ToString();
+            this.MinecraftVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModMinecraftVersion;
+            this.ForgeVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModAPIVersion;
+            this.MappingsVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModMappingsVersion.Replace("(MCP)", "");
+
+            // Mod settings section
             this.ModSettingsModNameTextbox.Text = App.CurrentProjectData.ModData.ModName;
             this.ModSettingsModDescriptionTextbox.Text = App.CurrentProjectData.ModData.ModDescription;
             this.ModSettingsModAuthorsTextbox.Text = App.CurrentProjectData.ModData.ModAuthors;
@@ -571,7 +570,7 @@ namespace Forge_Modding_Helper_3.Windows
             this.ModSettingsModidTextbox.Text = App.CurrentProjectData.ModData.ModID;
             this.ModSettingsModgroupTextbox.Text = App.CurrentProjectData.ModData.ModGroup;
 
-            // Mod exportation
+            // Mod exportation section
             this.ModNameExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModName;
             this.ModVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModVersion;
             this.ModAuthorsExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModAuthors;
