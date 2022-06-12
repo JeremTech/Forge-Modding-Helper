@@ -108,8 +108,8 @@
     <Reference Include="Leow.TextEditor">
       <HintPath>..\..\Forge Modding Helper\Leow.TextEditor.dll</HintPath>
     </Reference>
-    <Reference Include="McModAPIVersions, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\McModAPIVersions.1.4.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
+    <Reference Include="McModAPIVersions, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\McModAPIVersions.1.5.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -152,6 +152,7 @@
     <Compile Include="Files\Workspace\ProjectFile.cs" />
     <Compile Include="Generators\Generator115.cs" />
     <Compile Include="Generators\Generator116.cs" />
+    <Compile Include="Generators\Generator119.cs" />
     <Compile Include="Generators\Generator118.cs" />
     <Compile Include="Generators\Generator117.cs" />
     <Compile Include="Generators\WorkspaceGenerator.cs" />
