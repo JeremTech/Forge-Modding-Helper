@@ -285,6 +285,8 @@
     <Resource Include="Resources\Icons\forge_icon.png" />
     <Resource Include="Resources\Icons\mappings_icon.png" />
     <Resource Include="Resources\Icons\minecraft_icon.png" />
+    <Resource Include="Resources\Icons\lines_code_icon.png" />
+    <Resource Include="Resources\Icons\version_icon.png" />
     <Content Include="Resources\Languages\fr_fr.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

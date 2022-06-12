@@ -53,7 +53,7 @@ namespace Forge_Modding_Helper_3.Windows
             RefreshInterfaceModInfos();
 
             // Load translations
-            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
             this.Title = UITextTranslator.getTranslation("project_explorer.title");
             this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.saved_modifications");
@@ -550,6 +550,8 @@ namespace Forge_Modding_Helper_3.Windows
             this.TexturesInfoDisplay.InfoContent = App.CurrentProjectData.TexturesList.Count.ToString();
             this.ModelsInfoDisplay.InfoContent = App.CurrentProjectData.ModelsList.Count.ToString();
             this.JavaFilesInfoDisplay.InfoContent = App.CurrentProjectData.JavaFilesList.Count.ToString();
+            this.LinesCountInfoDisplay.InfoContent = App.CurrentProjectData.CodeLinesCount.ToString();
+            this.ModVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModVersion;
             this.MinecraftVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModMinecraftVersion;
             this.ForgeVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModAPIVersion;
             this.MappingsVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModMappingsVersion.Replace("(MCP)", "");
@@ -637,7 +639,7 @@ namespace Forge_Modding_Helper_3.Windows
             new OptionWindow().ShowDialog();
 
             // Reload translations
-            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
             this.Title = UITextTranslator.getTranslation("project_explorer.title");
 

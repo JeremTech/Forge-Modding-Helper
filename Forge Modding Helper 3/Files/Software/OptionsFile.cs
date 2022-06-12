@@ -8,20 +8,23 @@ namespace Forge_Modding_Helper_3.Files
     {
         // Data-file path
         private static string FilePath = Path.Combine(AppInfos.getApplicationDataDirectory(), "options.json");
-        // Data object
-        private static OptionsData data = new OptionsData("en_us");
+        // Data object with default values
+        private static OptionsData data = new OptionsData();
 
         // Selected language
         private static string language = "en_us";
-
         // Selected theme
         private static string theme = "dark";
+        // Count blank code lines ?
+        private static bool countBlankCodeLines = false;
+        // Count code lines at project startup ?
+        private static bool countCodeLinesAtProjectOpening = true;
 
         /// <summary>
         /// Get current language
         /// </summary>
         /// <returns>Current language file name without extension</returns>
-        public static string getCurrentLanguage()
+        public static string GetCurrentLanguage()
         {
             return language;
         }
@@ -30,10 +33,10 @@ namespace Forge_Modding_Helper_3.Files
         /// Set current language
         /// </summary>
         /// <returns>Set language file name (without extension)</returns>
-        public static void setCurrentLanguage(string lang)
+        public static void SetCurrentLanguage(string lang)
         {
             language = lang;
-            data.language = lang;
+            data.Language = lang;
         }
 
         /// <summary>
@@ -52,79 +55,128 @@ namespace Forge_Modding_Helper_3.Files
         public static void SetCurrentTheme(string themeIn)
         {
             theme = themeIn;
-            data.theme = themeIn;
+            data.Theme = themeIn;
+        }
+
+        /// <summary>
+        /// Get CountBlankCodeLines option
+        /// </summary>
+        public static bool GetCountBlankCodeLinesOption()
+        {
+            return countBlankCodeLines;
+        }
+
+        /// <summary>
+        /// Set CountBlankCodeLines option
+        /// </summary>
+        /// <param name="_countBlankCodeLines">New value</param>
+        public static void SetCountBlankCodeLinesOption(bool _countBlankCodeLines)
+        {
+            countBlankCodeLines = _countBlankCodeLines;
+        }
+
+        /// <summary>
+        /// Get CountCodeLinesAtProjectOpening option
+        /// </summary>
+        public static bool GetCountCodeLinesAtProjectOpeningOption()
+        {
+            return countCodeLinesAtProjectOpening;
+        }
+
+        /// <summary>
+        /// Set CountCodeLinesAtProjectOpening option
+        /// </summary>
+        /// <param name="_countCodeLinesAtProjectOpening">New value</param>
+        public static void SetCountCodeLinesAtProjectOpeningOption(bool _countCodeLinesAtProjectOpening)
+        {
+            countCodeLinesAtProjectOpening = _countCodeLinesAtProjectOpening;
         }
 
         /// <summary>
         /// Read the data file 
         /// </summary>
-        /// <returns><code>true</code> if success, <code>false</code> if fail</returns>
-        public static bool ReadDataFile()
+        public static void ReadDataFile()
         {
-            bool success = false;
-
             if (File.Exists(FilePath))
             {
                 string jsonContent = File.ReadAllText(FilePath);
                 OptionsData jsonContentFormatted = JsonConvert.DeserializeObject<OptionsData>(jsonContent);
+                data = jsonContentFormatted;
 
-                if (jsonContentFormatted.language != null)
-                {
-                    data = jsonContentFormatted;
-                    language = jsonContentFormatted.language;
-                    success = true;
-                }
+                if (!string.IsNullOrEmpty(jsonContentFormatted.Language))
+                    language = jsonContentFormatted.Language;
 
-                if (jsonContentFormatted.theme != null)
-                {
-                    theme = jsonContentFormatted.theme;
-                }
+                if (!string.IsNullOrEmpty(jsonContentFormatted.Theme))
+                    theme = jsonContentFormatted.Theme;
+
+                if(jsonContentFormatted.CountBlankCodeLines.HasValue)
+                    countBlankCodeLines = jsonContentFormatted.CountBlankCodeLines.Value;
+
+                if(jsonContentFormatted.CountCodeLinesAtProjectOpening.HasValue)
+                    countCodeLinesAtProjectOpening = jsonContentFormatted.CountCodeLinesAtProjectOpening.Value;
             }
-
-            return success;
         }
 
         /// <summary>
         /// Write the data file 
         /// </summary>
-        /// <returns><code>true</code> if success, <code>false</code> if fail</returns>
-        public static bool WriteDataFile()
+        public static void WriteDataFile()
         {
-            bool success = false;
-
-            if (language != "")
+            if (!string.IsNullOrEmpty(language) && !string.IsNullOrEmpty(theme))
             {
-                OptionsData data = new OptionsData(language, theme);
+                OptionsData data = new OptionsData(language, theme, countBlankCodeLines, countCodeLinesAtProjectOpening);
                 string jsonContent = JsonConvert.SerializeObject(data, Formatting.Indented);
                 File.WriteAllText(FilePath, jsonContent);
-
-                success = true;
             }
-
-            return success;
         }
     }
 
     public class OptionsData
     {
-        public string language { get; set; }
+        /// <summary>
+        /// Define software language
+        /// </summary>
+        public string Language { get; set; }
 
-        public string theme { get; set; }
+        /// <summary>
+        /// Define software theme
+        /// </summary>
+        public string Theme { get; set; }
 
+        /// <summary>
+        /// Define if blank lines must be counted or not
+        /// </summary>
+        public bool? CountBlankCodeLines { get; set; }
+
+        /// <summary>
+        /// Define if the number of code lines is calculated at project opening
+        /// </summary>
+        public bool? CountCodeLinesAtProjectOpening { get; set; }
+
+        /// <summary>
+        /// Default constructor which set values to default
+        /// </summary>
         public OptionsData()
         {
-            this.language = language;
+            this.Language = "en_us";
+            this.Theme = "dark";
+            this.CountBlankCodeLines = false;
+            this.CountCodeLinesAtProjectOpening = true;
         }
 
-        public OptionsData(string language)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="_language">Software language</param>
+        /// <param name="_theme">Software theme</param>
+        /// <param name="_countBlankCodeLines">Count blank code lines or not</param>
+        /// <param name="_countCodeLinesAtProjectOpening">Count code lines at project opening or not</param>
+        public OptionsData(string _language, string _theme, bool _countBlankCodeLines, bool _countCodeLinesAtProjectOpening)
         {
-            this.language = language;
-        }
-
-        public OptionsData(string language, string theme)
-        {
-            this.language = language;
-            this.theme = theme;
+            this.Language = _language;
+            this.Theme = _theme;
+            this.CountBlankCodeLines = _countBlankCodeLines;
+            this.CountCodeLinesAtProjectOpening = _countCodeLinesAtProjectOpening;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Forge_Modding_Helper_3.Windows
             InitializeComponent();
 
             // Loading translations
-            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
             this.Title = UITextTranslator.getTranslation("dialog.rename.title");
 

@@ -32,7 +32,7 @@ namespace Forge_Modding_Helper_3.Windows
             filePath = _filePath;
 
             // Load translations
-            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
             this.Title = UITextTranslator.getTranslation("json_editor.title") + " - " + System.IO.Path.GetFileName(_filePath);
             this.EditMenuSave.Header = UITextTranslator.getTranslation("json_editor.menu.save");

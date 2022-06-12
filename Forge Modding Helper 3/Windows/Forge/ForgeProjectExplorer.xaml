@@ -202,15 +202,17 @@
                         <controls:DashboardInfoDisplay x:Name="TexturesInfoDisplay" InfoTitle="Textures" InfoContent="---" InfoColor="DarkSlateGray" Height="105" InfoImageSource="/Resources/Icons/picture_icon.png" Tag="project_explorer.home.textures"/>
                         <controls:DashboardInfoDisplay x:Name="ModelsInfoDisplay" InfoTitle="Models" InfoContent="---" InfoColor="DarkSlateBlue" Height="105" InfoImageSource="/Resources/Icons/model_icon.png" Tag="project_explorer.home.models"/>
                         <controls:DashboardInfoDisplay x:Name="JavaFilesInfoDisplay" InfoTitle="Java files" InfoContent="---" InfoColor="#FF8A7736" Height="105" InfoImageSource="/Resources/Icons/code_file_icon.png" Tag="project_explorer.home.java_files"/>
+                        <controls:DashboardInfoDisplay x:Name="LinesCountInfoDisplay" InfoTitle="Lines of code" InfoContent="---" InfoColor="#004B50" Height="105" InfoImageSource="/Resources/Icons/lines_code_icon.png" Tag="project_explorer.home.lines_count"/>
                     </UniformGrid>
 
                     <!-- Right column -->
                     <UniformGrid Grid.Column="2" Rows="4">
+                        <controls:DashboardInfoDisplay x:Name="ModVersionInfoDisplay" InfoTitle="Mod version" InfoContent="---" InfoColor="#0063B1" Height="105" InfoImageSource="/Resources/Icons/version_icon.png" Tag="project_explorer.home.mod_version"/>
                         <controls:DashboardInfoDisplay x:Name="MinecraftVersionInfoDisplay" InfoTitle="Minecraft version" InfoContent="---"  InfoColor="DarkOliveGreen" Height="105" InfoImageSource="/Resources/Icons/minecraft_icon.png" Tag="project_explorer.home.minecraft_version"/>
                         <controls:DashboardInfoDisplay x:Name="ForgeVersionInfoDisplay" InfoTitle="Forge version" InfoContent="---"  InfoColor="DarkRed" Height="105" InfoImageSource="/Resources/Icons/forge_icon.png" Tag="project_explorer.home.forge_version"/>
                         <controls:DashboardInfoDisplay x:Name="MappingsVersionInfoDisplay" InfoTitle="Mappings version" InfoContent="---" InfoColor="DarkSalmon" Height="105" InfoImageSource="/Resources/Icons/mappings_icon.png" Tag="project_explorer.home.mappings_version"/>
                     </UniformGrid>
-
+                    
                 </Grid>
             </Grid>
         </Grid>

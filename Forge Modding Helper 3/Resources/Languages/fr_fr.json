@@ -117,6 +117,8 @@
     "project_explorer.home.textures": "Textures",
     "project_explorer.home.models": "Modèles",
     "project_explorer.home.java_files": "Fichiers java",
+    "project_explorer.home.lines_count": "Lignes de code",
+    "project_explorer.home.mod_version": "Version du mod",
     "project_explorer.home.minecraft_version": "Version de Minecraft",
     "project_explorer.home.forge_version": "Version de Forge",
     "project_explorer.home.mappings_version": "Version des mappings",
@@ -168,8 +170,12 @@
 
     "options.title": "Options - Forge Modding Helper",
     "options.header.title": "Options",
-    "options.label.ui_language": "Langue de l'interface",
-    "options.label.ui_theme": "Thème de l'interface",
+    "options.groupbox.general": "Général",
+    "options.groupbox.project_scan": "Scan de projet",
+    "options.label.ui_language": "Langue",
+    "options.label.ui_theme": "Thème",
+    "options.label.count_blank_code_lines": "Compter les lignes de code vides",
+    "options.label.count_code_lines_project_opening": "Compter les lignes de code à l'ouverture d'un projet",
     "options.button.about": "A propos",
     "options.button.report_bug": "Signaler un bug",
 

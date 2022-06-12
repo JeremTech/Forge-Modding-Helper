@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Forge_Modding_Helper_3.Files;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -70,6 +71,42 @@ namespace Forge_Modding_Helper_3.Utils
             }
 
             return fileList;
+        }
+
+        /// <summary>
+        /// Return the number of code lines in a directory (including all it sub-directory)
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static int CountCodeLines(string path)
+        {
+            int countResult = 0;
+            List<string> codeFileList = DirectoryUtils.DeepFileListing(path);
+
+            foreach (string codeFile in codeFileList)
+            {
+                if (File.Exists(codeFile))
+                {
+                    using (var reader = File.OpenText(codeFile))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (string.IsNullOrWhiteSpace(line))
+                            {
+                                if (OptionsFile.GetCountBlankCodeLinesOption())
+                                    countResult++;
+                            }
+                            else
+                            {
+                                countResult++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return countResult;
         }
     }
 }

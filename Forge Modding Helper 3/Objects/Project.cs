@@ -48,6 +48,11 @@ namespace Forge_Modding_Helper_3.Objects
         public List<string> JavaFilesList { get; set; }
 
         /// <summary>
+        /// Number of code lines
+        /// </summary>
+        public int CodeLinesCount { get; set; }
+
+        /// <summary>
         /// Basic constructor
         /// </summary>
         public Project(string directory)
@@ -165,6 +170,19 @@ namespace Forge_Modding_Helper_3.Objects
             await Task.Factory.StartNew(() =>
             {
                 JavaFilesList = DirectoryUtils.DeepFileListing(Path.Combine(this.ProjectDirectory, "src\\main\\java"));
+            });
+        }
+
+        /// <summary>
+        /// Count the number of code lines of the project
+        /// </summary>
+        /// <returns></returns>
+        public async Task CountCodeLines()
+        {
+            // Run it async
+            await Task.Factory.StartNew(() =>
+            {
+                CodeLinesCount = DirectoryUtils.CountCodeLines(Path.Combine(this.ProjectDirectory, "src\\main\\java"));
             });
         }
 

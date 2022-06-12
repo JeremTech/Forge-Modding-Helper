@@ -62,7 +62,7 @@ namespace Forge_Modding_Helper_3.Utils
                 translationFile = JsonConvert.DeserializeObject<TranslationFile>(fileContent);
 
                 // Rewrite option files
-                OptionsFile.setCurrentLanguage("en_us");
+                OptionsFile.SetCurrentLanguage("en_us");
                 OptionsFile.WriteDataFile();
             }
         }
@@ -116,6 +116,9 @@ namespace Forge_Modding_Helper_3.Utils
             {
                 if (group.Tag != null && group.Tag is string && !string.IsNullOrWhiteSpace(group.Tag.ToString()))
                     group.Header = getTranslation((String)group.Tag);
+
+                // Translate inner components
+                UpdateComponentsTranslations(group);
             }
 
             // Updating info display controls

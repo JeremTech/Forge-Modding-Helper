@@ -24,7 +24,7 @@ namespace Forge_Modding_Helper_3
             OptionsFile.ReadDataFile();
 
             // Loadings translations
-            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this);
             updateLoadingStatut(UITextTranslator.getTranslation("loading.label.loading"), 0);
 
