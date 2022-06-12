@@ -20,7 +20,7 @@
         <Label x:Name="loading_label" Content="Loading..." HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="409" Foreground="White" Tag="loading.label.loading"/>
         <Label Content="Forge Modding Helper" HorizontalAlignment="Left" Margin="100,24,0,0" VerticalAlignment="Top" Foreground="White" FontSize="28" Grid.ColumnSpan="3" Width="301"/>
         <Label x:Name="version_label" Content="v0.0.0.0" Margin="25,61,28,0" VerticalAlignment="Top" Foreground="White" Grid.Column="2" FontSize="14" HorizontalContentAlignment="Right"/>
-        <Label Content="© 2017 - 2021 Jerem'Tech" HorizontalAlignment="Left" Margin="89,173,0,0" VerticalAlignment="Top" Width="149" Foreground="White" Grid.Column="2"/>
+        <Label Content="© 2017 - 2022 Jerem'Tech" HorizontalAlignment="Left" Margin="89,173,0,0" VerticalAlignment="Top" Width="149" Foreground="White" Grid.Column="2"/>
 
     </Grid>
 </Window>

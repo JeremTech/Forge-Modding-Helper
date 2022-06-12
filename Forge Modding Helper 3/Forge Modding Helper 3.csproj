@@ -106,10 +106,10 @@
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Leow.TextEditor">
-      <HintPath>..\Leow.TextEditor.dll</HintPath>
+      <HintPath>..\..\Forge Modding Helper\Leow.TextEditor.dll</HintPath>
     </Reference>
-    <Reference Include="McModAPIVersions, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\McModAPIVersions.1.3.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
+    <Reference Include="McModAPIVersions, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\McModAPIVersions.1.4.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
