@@ -108,8 +108,8 @@
     <Reference Include="Leow.TextEditor">
       <HintPath>..\..\Forge Modding Helper\Leow.TextEditor.dll</HintPath>
     </Reference>
-    <Reference Include="McModAPIVersions, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\McModAPIVersions.1.5.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
+    <Reference Include="McModAPIVersions, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\McModAPIVersions.1.6.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
