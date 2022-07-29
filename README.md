@@ -28,6 +28,7 @@ Latest version | Latest stable version
 
 ## Supported Minecraft Forge Versions
 
+- [x] Minecraft Forge 1.19 : 1.19, 1.19.1
 - [x] Minecraft Forge 1.18 : 1.18.1, 1.18.2
 - [x] Minecraft Forge 1.17 : 1.17.1
 - [x] Minecraft Forge 1.16 : 1.16.3, 1.16.4, 1.16.5
