@@ -40,6 +40,7 @@ namespace Forge_Modding_Helper_3.Generators
 
                 case "1.19":
                 case "1.19.1":
+                case "1.19.2":
                     return new Generator119();
             }
 
