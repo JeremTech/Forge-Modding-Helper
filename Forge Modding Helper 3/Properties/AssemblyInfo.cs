@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jerem'Tech")]
 [assembly: AssemblyProduct("Forge Modding Helper 3")]
-[assembly: AssemblyCopyright("Copyright © Jerem'Tech 2022")]
+[assembly: AssemblyCopyright("Copyright © Jerem'Tech 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
