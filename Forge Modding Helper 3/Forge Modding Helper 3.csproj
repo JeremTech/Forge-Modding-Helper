@@ -108,12 +108,12 @@
     <Reference Include="Leow.TextEditor">
       <HintPath>..\..\Forge Modding Helper\Leow.TextEditor.dll</HintPath>
     </Reference>
-    <Reference Include="McModAPIVersions, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\McModAPIVersions.1.8.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
+    <Reference Include="McModAPIVersions, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\McModAPIVersions.1.9.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -142,6 +142,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\DashboardInfoDisplay.xaml.cs">
+      <DependentUpon>DashboardInfoDisplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Files\Software\LastWorkspaces.cs" />
     <Compile Include="Files\Software\OptionsFile.cs" />
     <Compile Include="Files\Software\ThemeFile.cs" />
@@ -192,6 +195,10 @@
     <Compile Include="Windows\Forge\ForgeProjectExplorer.xaml.cs">
       <DependentUpon>ForgeProjectExplorer.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\DashboardInfoDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -273,6 +280,14 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Resource Include="Resources\Icons\picture_icon.png" />
+    <Resource Include="Resources\Icons\model_icon.png" />
+    <Resource Include="Resources\Icons\code_file_icon.png" />
+    <Resource Include="Resources\Icons\forge_icon.png" />
+    <Resource Include="Resources\Icons\mappings_icon.png" />
+    <Resource Include="Resources\Icons\minecraft_icon.png" />
+    <Resource Include="Resources\Icons\lines_code_icon.png" />
+    <Resource Include="Resources\Icons\version_icon.png" />
     <Content Include="Resources\Languages\fr_fr.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -326,9 +341,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Pictures\cancel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Pictures\minecraft_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Pictures\forge_logo.png" />

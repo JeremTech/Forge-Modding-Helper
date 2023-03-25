@@ -27,7 +27,7 @@ namespace Forge_Modding_Helper_3.Windows
         private void Window_Initialized(object sender, EventArgs e)
         {
             // Loadings translations
-            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
             this.Title = UITextTranslator.getTranslation("about.title");
 

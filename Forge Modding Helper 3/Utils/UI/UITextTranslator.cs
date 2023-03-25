@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Forge_Modding_Helper_3.Controls;
 using Forge_Modding_Helper_3.Files;
 using Newtonsoft.Json;
 
@@ -61,7 +62,7 @@ namespace Forge_Modding_Helper_3.Utils
                 translationFile = JsonConvert.DeserializeObject<TranslationFile>(fileContent);
 
                 // Rewrite option files
-                OptionsFile.setCurrentLanguage("en_us");
+                OptionsFile.SetCurrentLanguage("en_us");
                 OptionsFile.WriteDataFile();
             }
         }
@@ -115,6 +116,18 @@ namespace Forge_Modding_Helper_3.Utils
             {
                 if (group.Tag != null && group.Tag is string && !string.IsNullOrWhiteSpace(group.Tag.ToString()))
                     group.Header = getTranslation((String)group.Tag);
+
+                // Translate inner components
+                UpdateComponentsTranslations(group);
+            }
+
+            // Updating info display controls
+            IEnumerable<DashboardInfoDisplay> infoDisplays = UIUtils.FindVisualChildren<DashboardInfoDisplay>(window);
+
+            foreach (DashboardInfoDisplay infoDisplay in infoDisplays)
+            {
+                if (infoDisplay.Tag != null && infoDisplay.Tag is string && !string.IsNullOrWhiteSpace(infoDisplay.Tag.ToString()))
+                    infoDisplay.InfoTitle = getTranslation((String)infoDisplay.Tag);
             }
         }
 

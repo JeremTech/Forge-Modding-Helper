@@ -5,16 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows" xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Settings - Forge Modding Helper" Height="346" Width="318" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" Closed="Window_Closed">
+        Title="Settings - Forge Modding Helper" Height="410" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Initialized="Window_Initialized" Closed="Window_Closed">
     <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="1"/>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="85"/>
+            <RowDefinition Height="15"/>
             <RowDefinition Height="1"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
@@ -25,34 +24,66 @@
             <fa:ImageAwesome HorizontalAlignment="Left" Icon="Wrench" Width="25" Height="25" Foreground="{DynamicResource FontColorPrimary}"/>
             <TextBlock x:Name="AddTranslationTitleTextblock" Text="Settings" HorizontalAlignment="Left" Margin="10, 0" FontSize="16" VerticalAlignment="Center" Foreground="{DynamicResource FontColorPrimary}" Tag="options.header.title"/>
         </StackPanel>
-        <Border Grid.Row="1" BorderThickness="1" BorderBrush="{DynamicResource FontColorPrimary}" Grid.ColumnSpan="2"/>
 
+        <!-- General options -->
+        <GroupBox x:Name="general_groupbox" Grid.Row="1" Header="General" Foreground="{DynamicResource FontColorPrimary}" Tag="options.groupbox.general" Margin="5, 0">
+            <Grid x:Name="general_groupbox_grid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-        <!-- UI Language -->
-        <TextBlock x:Name="ui_language_textblock" Grid.Row="2" Text="Language :" FlowDirection="LeftToRight" Margin="10,7,5,4" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Tag="options.label.ui_language"/>
-        <ComboBox x:Name="ui_language_comboBox" Grid.Row="3" Margin="10, 0, 10, 0" FlowDirection="LeftToRight" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="33" SelectionChanged="ui_language_comboBox_SelectionChanged" Grid.ColumnSpan="2">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <Label Content="{Binding Path=Value}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+                <!-- UI language option -->
+                <TextBlock x:Name="ui_language_textblock" Grid.Column="0" Grid.Row="0" Text="Language :" FlowDirection="LeftToRight" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="{DynamicResource FontColorPrimary}" Tag="options.label.ui_language"/>
+                <ComboBox x:Name="ui_language_comboBox" Grid.Column="1" Grid.Row="0" Margin="10, 0" FlowDirection="LeftToRight" VerticalAlignment="Center" HorizontalAlignment="Stretch" Height="35" SelectionChanged="ui_language_comboBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=Value}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
-        <!-- UI Theme -->
-        <TextBlock x:Name="ui_theme_textblock" Grid.Row="4" Text="Theme :" FlowDirection="LeftToRight" Margin="10,0,5,4" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Tag="options.label.ui_theme"/>
-        <ComboBox x:Name="ui_theme_comboBox" Grid.Row="5" Margin="10, 0, 10, 0" FlowDirection="LeftToRight" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="33" SelectionChanged="ui_theme_comboBox_SelectionChanged" Grid.ColumnSpan="2">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <Label Content="{Binding Path=Value}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+                <!-- UI theme option -->
+                <TextBlock x:Name="ui_theme_textblock" Grid.Column="0" Grid.Row="1" Text="Theme :" FlowDirection="LeftToRight" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="{DynamicResource FontColorPrimary}" Tag="options.label.ui_theme"/>
+                <ComboBox x:Name="ui_theme_comboBox" Grid.Column="1" Grid.Row="1" Margin="10, 0" FlowDirection="LeftToRight" VerticalAlignment="Center" HorizontalAlignment="Stretch" Height="35" SelectionChanged="ui_theme_comboBox_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=Value}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+        </GroupBox>
 
-        <Border Grid.Row="6" BorderBrush="{DynamicResource FontColorPrimary}" BorderThickness="1" Grid.ColumnSpan="2"/>
+        <!-- Project scan options -->
+        <GroupBox x:Name="project_scan_groupbox" Grid.Row="3" Header="Project scan" Foreground="{DynamicResource FontColorPrimary}" Tag="options.groupbox.project_scan" Margin="5, 0">
+            <Grid x:Name="project_scan_groupbox_grid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <CheckBox x:Name="CountBlankCodeLines_CheckBox" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="CountBlankCodeLines_TextBlock" Grid.Column="1" Grid.Row="0" Margin="10, 0" Text="Count blank code lines" FlowDirection="LeftToRight" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Tag="options.label.count_blank_code_lines"/>
+
+                <CheckBox x:Name="CountCodeLinesAtProjectStartup_CheckBox" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBlock x:Name="CountCodeLinesAtProjectOpening_TextBlock" Grid.Column="1" Grid.Row="1" Margin="10, 0" Text="Count code lines at project opening" FlowDirection="LeftToRight" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Tag="options.label.count_code_lines_project_opening"/>
+            </Grid>
+        </GroupBox>
+
+        <Border Grid.Row="5" BorderBrush="{DynamicResource FontColorPrimary}" BorderThickness="1" Grid.ColumnSpan="2"/>
 
         <!-- Buttons -->
-        <Button x:Name="about_button" Grid.Row="7" Margin="10,15,10,0" Content="About" VerticalAlignment="Top" Height="28" Tag="options.button.about" Click="about_button_Click" Grid.ColumnSpan="2"/>
-        <Button x:Name="report_bug_button" Grid.Row="8" Margin="10,10,10,0" Content="Report bug" VerticalAlignment="Top" Height="28" Tag="options.button.report_bug" Click="report_bug_button_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="about_button" Grid.Row="6" Margin="10,15,10,0" Content="About" VerticalAlignment="Top" Height="28" Tag="options.button.about" Click="about_button_Click" Grid.ColumnSpan="2"/>
+        <Button x:Name="report_bug_button" Grid.Row="7" Margin="10,10,10,0" Content="Report bug" VerticalAlignment="Top" Height="28" Tag="options.button.report_bug" Click="report_bug_button_Click" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

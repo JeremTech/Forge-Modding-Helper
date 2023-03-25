@@ -9,6 +9,7 @@ using Microsoft.VisualBasic.FileIO;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -39,6 +40,9 @@ namespace Forge_Modding_Helper_3.Windows
         // Workspace Generator
         private WorkspaceGenerator workspaceGenerator;
 
+        // Current section opened
+        private string currentSectionOpenedTag;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -49,14 +53,28 @@ namespace Forge_Modding_Helper_3.Windows
             RefreshInterfaceModInfos();
 
             // Load translations
-            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
             this.Title = UITextTranslator.getTranslation("project_explorer.title");
+            this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.saved_modifications");
             this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
+
+            // Initialize data
+            currentSectionOpenedTag = "Home";
 
             // Initialize workspace generator
             workspaceGenerator = WorkspaceGenerator.GetGenerator(App.CurrentProjectData.ModData.ModMinecraftVersion);
         }
+
+        #region Home Section
+        /// <summary>
+        /// Function called when open explorer button on home section is clicked
+        /// </summary>
+        private void HomeOpenExplorerButtonClick(object sender, RoutedEventArgs e)
+        {
+            Process.Start(App.CurrentProjectData.ProjectDirectory);
+        }
+        #endregion 
 
         #region ModSettings section
         /// <summary>
@@ -88,41 +106,16 @@ namespace Forge_Modding_Helper_3.Windows
             // Check the user selection
             if (!String.IsNullOrWhiteSpace(fileDialog.FileName))
             {
-                using (var stream = File.OpenRead(fileDialog.FileName))
-                {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.StreamSource = stream;
-                    image.EndInit();
-                    this.ModSettingsModLogoImage.Source = image;
+                // Deleting existing logo
+                if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"))) FileSystem.DeleteFile(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                // Copying new logo
+                File.Copy(fileDialog.FileName, App.CurrentProjectData.ProjectDirectory + @"\src\main\resources\logo.png");
+                // Update mod data 
+                App.CurrentProjectData.ModData.ModLogo = "logo.png";
+            }
 
-                    // Deleting existing logo
-                    if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"))) FileSystem.DeleteFile(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
-                    // Copying new logo
-                    File.Copy(fileDialog.FileName, App.CurrentProjectData.ProjectDirectory + @"\src\main\resources\logo.png");
-                    // Update mod data 
-                    App.CurrentProjectData.ModData.ModLogo = "logo.png";
-                    // Refresh UI
-                    RefreshInterfaceModInfos();
-                }
-            }
-            else if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
-            {
-                using (var stream = File.OpenRead(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
-                {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.StreamSource = stream;
-                    image.EndInit();
-                    this.ModSettingsModLogoImage.Source = image;
-                }
-            }
-            else
-            {
-                this.ModSettingsModLogoImage.Source = null;
-            }
+            // Refresh UI 
+            RefreshInterfaceModInfos();
         }
 
         /// <summary>
@@ -524,16 +517,12 @@ namespace Forge_Modding_Helper_3.Windows
         }
         #endregion
 
-        #region Global UI functions
+        #region UI functions
         /// <summary>
         /// Refresh all UI components who contains mod infos
         /// </summary>
         private void RefreshInterfaceModInfos()
         {
-            // Side bar text infos
-            this.ModNameSideBarTextBlock.Text = App.CurrentProjectData.ModData.ModName;
-            this.ModVersionSideBarTextBlock.Text = App.CurrentProjectData.ModData.ModVersion;
-
             // Mod logo (side bar, mod settings)
             if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
             {
@@ -544,17 +533,30 @@ namespace Forge_Modding_Helper_3.Windows
                     image.CacheOption = BitmapCacheOption.OnLoad;
                     image.StreamSource = stream;
                     image.EndInit();
-                    this.ModLogoSideBarImage.Source = image;
+                    this.HomeModLogoImage.Source = image;
                     this.ModSettingsModLogoImage.Source = image;
+                    this.HomeModLogoImageBorder.Visibility = Visibility.Visible;
                 }
             }
             else
             {
-                this.ModLogoSideBarImage.Source = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/icon.png", UriKind.Relative));
                 this.ModSettingsModLogoImage.Source = new BitmapImage(new Uri("/Forge Modding Helper 3;component/Resources/Pictures/icon.png", UriKind.Relative));
+                this.HomeModLogoImageBorder.Visibility = Visibility.Collapsed;
             }
 
-            // Mod settings grid
+            // Home section
+            this.HomeModNameTextblock.Text = App.CurrentProjectData.ModData.ModName;
+            this.HomeWorkspaceFolderTextblock.Text = App.CurrentProjectData.ProjectDirectory;
+            this.TexturesInfoDisplay.InfoContent = App.CurrentProjectData.TexturesList.Count.ToString();
+            this.ModelsInfoDisplay.InfoContent = App.CurrentProjectData.ModelsList.Count.ToString();
+            this.JavaFilesInfoDisplay.InfoContent = App.CurrentProjectData.JavaFilesList.Count.ToString();
+            this.LinesCountInfoDisplay.InfoContent = App.CurrentProjectData.CodeLinesCount.ToString();
+            this.ModVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModVersion;
+            this.MinecraftVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModMinecraftVersion;
+            this.ForgeVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModAPIVersion;
+            this.MappingsVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModMappingsVersion.Replace("(MCP)", "");
+
+            // Mod settings section
             this.ModSettingsModNameTextbox.Text = App.CurrentProjectData.ModData.ModName;
             this.ModSettingsModDescriptionTextbox.Text = App.CurrentProjectData.ModData.ModDescription;
             this.ModSettingsModAuthorsTextbox.Text = App.CurrentProjectData.ModData.ModAuthors;
@@ -570,7 +572,7 @@ namespace Forge_Modding_Helper_3.Windows
             this.ModSettingsModidTextbox.Text = App.CurrentProjectData.ModData.ModID;
             this.ModSettingsModgroupTextbox.Text = App.CurrentProjectData.ModData.ModGroup;
 
-            // Mod exportation
+            // Mod exportation section
             this.ModNameExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModName;
             this.ModVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModVersion;
             this.ModAuthorsExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModAuthors;
@@ -590,6 +592,9 @@ namespace Forge_Modding_Helper_3.Windows
             {
                 if(SelectedButton.Tag != null)
                 {
+                    // Set selected section tag 
+                    currentSectionOpenedTag = SelectedButton.Tag.ToString();
+
                     // Reset all buttons border
                     SideBarHomeButtonBorder.Background = null;
                     SideBarModSettingsButtonBorder.Background = null;
@@ -623,6 +628,30 @@ namespace Forge_Modding_Helper_3.Windows
                     }
 
                 }
+            }
+        }
+
+        /// <summary>
+        /// Function called when mouse left button is pressed on Options button in the side bar
+        /// </summary>
+        private void SideBarOptionsButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            new OptionWindow().ShowDialog();
+
+            // Reload translations
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
+            UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
+            this.Title = UITextTranslator.getTranslation("project_explorer.title");
+
+            // Reload font color if needed of mod settings statut label
+            if(!string.Equals(((SolidColorBrush)ModSettingsStatusLabel.Foreground).Color.ToString(), "#FFFF0000"))
+                this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
+
+            // Reload color for the selected border
+            Border SelectedBorder = (Border)this.FindName("SideBar" + currentSectionOpenedTag + "ButtonBorder");
+            if (SelectedBorder != null)
+            {
+                SelectedBorder.Background = (Brush)App.Current.FindResource("BorderColor");
             }
         }
 

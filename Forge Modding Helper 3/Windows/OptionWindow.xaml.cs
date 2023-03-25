@@ -29,11 +29,6 @@ namespace Forge_Modding_Helper_3.Windows
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            // Loadings translations
-            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
-            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
-            this.Title = UITextTranslator.getTranslation("options.title");
-
             // Reading option file
             OptionsFile.ReadDataFile();
 
@@ -48,8 +43,8 @@ namespace Forge_Modding_Helper_3.Windows
             // Filling language combobox
             ui_language_comboBox.ItemsSource = languagesFilesList;
             string currentLanguage;
-            languagesFilesList.TryGetValue(OptionsFile.getCurrentLanguage(), out currentLanguage);
-            ui_language_comboBox.SelectedItem = new KeyValuePair<string, string>(OptionsFile.getCurrentLanguage(), currentLanguage);
+            languagesFilesList.TryGetValue(OptionsFile.GetCurrentLanguage(), out currentLanguage);
+            ui_language_comboBox.SelectedItem = new KeyValuePair<string, string>(OptionsFile.GetCurrentLanguage(), currentLanguage);
 
             // Listing available themes files
             foreach (string fileName in UIUtils.GetAllAvailableThemesFiles())
@@ -65,19 +60,29 @@ namespace Forge_Modding_Helper_3.Windows
             string currentTheme;
             themesFilesList.TryGetValue(OptionsFile.GetCurrentTheme(), out currentTheme);
             ui_theme_comboBox.SelectedItem = new KeyValuePair<string, string>(OptionsFile.GetCurrentTheme(), currentTheme);
+
+            // Set project scan options checkboxes
+            CountBlankCodeLines_CheckBox.IsChecked = OptionsFile.GetCountBlankCodeLinesOption();
+            CountCodeLinesAtProjectStartup_CheckBox.IsChecked = OptionsFile.GetCountCodeLinesAtProjectOpeningOption();
+
+            // Loadings translations
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
+            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            UITextTranslator.UpdateComponentsTranslations(this.general_groupbox_grid);
+            UITextTranslator.UpdateComponentsTranslations(this.project_scan_groupbox_grid);
+            this.Title = UITextTranslator.getTranslation("options.title");
         }
 
         private void ui_language_comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(ui_language_comboBox.SelectedItem != null)
             {
-                OptionsFile.setCurrentLanguage(((KeyValuePair<string, string>)ui_language_comboBox.SelectedItem).Key);
-                UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+                OptionsFile.SetCurrentLanguage(((KeyValuePair<string, string>)ui_language_comboBox.SelectedItem).Key);
+                UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
                 UITextTranslator.UpdateComponentsTranslations(this.main_grid);
                 this.Title = UITextTranslator.getTranslation("options.title");
             }
         }
-
 
         private void ui_theme_comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -90,6 +95,8 @@ namespace Forge_Modding_Helper_3.Windows
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            OptionsFile.SetCountBlankCodeLinesOption(CountBlankCodeLines_CheckBox.IsChecked.Value);
+            OptionsFile.SetCountCodeLinesAtProjectOpeningOption(CountCodeLinesAtProjectStartup_CheckBox.IsChecked.Value);
             OptionsFile.WriteDataFile();
         }
 

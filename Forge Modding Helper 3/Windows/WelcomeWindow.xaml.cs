@@ -151,7 +151,7 @@ namespace Forge_Modding_Helper_3.Windows
         {
             new OptionWindow().ShowDialog();
 
-            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this);
             this.Title = UITextTranslator.getTranslation("welcome.title");
         }
