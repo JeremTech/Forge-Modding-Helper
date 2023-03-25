@@ -21,7 +21,7 @@ namespace Forge_Modding_Helper_3.Windows
             this.showProjectWindow = showProjectWindow;
 
             // Loadings translations
-            UITextTranslator.LoadTranslationFile(OptionsFile.getCurrentLanguage());
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
         }
 
@@ -34,7 +34,11 @@ namespace Forge_Modding_Helper_3.Windows
             await Task.WhenAll(new Task[] { App.CurrentProjectData.ScanBuildGradle(), App.CurrentProjectData.ScanModToml() });
 
             // Launch and wait all others scanning tasks
-            await Task.WhenAll(new Task[] {App.CurrentProjectData.ScanTextures(), App.CurrentProjectData.ScanBlockstates(), App.CurrentProjectData.ScanModels(), App.CurrentProjectData.ScanJavaFiles()});
+            await Task.WhenAll(new Task[] { App.CurrentProjectData.ScanTextures(), App.CurrentProjectData.ScanBlockstates(), App.CurrentProjectData.ScanModels(), App.CurrentProjectData.ScanJavaFiles() });
+
+            // Launch and wait code lines counting task
+            if(OptionsFile.GetCountCodeLinesAtProjectOpeningOption())
+                await Task.WhenAll(new Task[] { App.CurrentProjectData.CountCodeLines() });
 
             // Writing mod data
             await App.CurrentProjectData.WriteModData();

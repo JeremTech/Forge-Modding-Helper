@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Forge_Modding_Helper_3.Windows" 
         xmlns:fa="http://schemas.fontawesome.io/icons/" 
-        xmlns:utils="clr-namespace:Forge_Modding_Helper_3.Utils" xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor" xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF"
+        xmlns:utils="clr-namespace:Forge_Modding_Helper_3.Utils" xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor" xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF" xmlns:controls="clr-namespace:Forge_Modding_Helper_3.Controls"
         mc:Ignorable="d"
         Title="Project Explorer" Height="720" Width="1340" Icon="/Forge Modding Helper 3;component/Resources/Pictures/icon.png" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Closing="Window_Closing">
 
@@ -38,22 +38,12 @@
         <Grid x:Name="SideBarGrid" Grid.Column="0" Background="{DynamicResource SecondaryBackgroundColor}">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="205"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
-            
-            <!-- Menu header -->
-            <StackPanel x:Name="SideBarHeaderStackPanel" Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" Margin="0, 30, 0, 0">
-                <Image x:Name="ModLogoSideBarImage" Width="100" Height="100" Source="/Forge Modding Helper 3;component/Resources/Pictures/icon.png"/>
-                <TextBlock x:Name="ModNameSideBarTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="20" TextAlignment="Center" Margin="0, 10, 0, 3" Text="MyMod"/>
-                <StackPanel x:Name="SideBarModVersionStackPanel" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Foreground="{DynamicResource FontColorSecondary}" FontSize="16" TextAlignment="Center" Text="v"/>
-                    <TextBlock x:Name="ModVersionSideBarTextBlock" Foreground="{DynamicResource FontColorSecondary}" FontSize="16" TextAlignment="Center" Text="1.0.0.0"/>
-                </StackPanel>
-            </StackPanel>
-            
-            <!-- Menu buttons -->
-            <StackPanel Grid.Row="1" x:Name="SideBarButtonsStackPanel" VerticalAlignment="Center">
+
+            <!-- Navigation buttons -->
+            <StackPanel Grid.Row="0" x:Name="SideBarButtonsStackPanel" VerticalAlignment="Center">
 
                 <!-- Home button -->
                 <Grid x:Name="SideBarHomeButton" Tag="Home" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
@@ -141,6 +131,23 @@
 
             </StackPanel>
 
+            <!-- Footer -->
+            <StackPanel Grid.Row="1" x:Name="SideBarButtonsStackPanels" VerticalAlignment="Bottom">
+
+                <!-- Options button -->
+                <Grid x:Name="SideBarOptionsButton" MouseLeftButtonDown="SideBarOptionsButtonMouseLeftButtonDown">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="65"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+
+                    <fa:ImageAwesome Grid.Column="0" HorizontalAlignment="Center" Icon="Wrench" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
+                    <TextBlock Grid.Column="1" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Options" Tag="project_explorer.sidebar.options"/>
+                </Grid>
+            </StackPanel>
         </Grid>
         
         <!-- Separator between side bar and right grids -->
@@ -150,10 +157,64 @@
         
         <!-- Home grid -->
         <Grid x:Name="HomeGrid" Grid.Column="2" Visibility="Visible">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <fa:ImageAwesome HorizontalAlignment="Center" Icon="ExclamationCircle" Width="60" Height="60" Foreground="{DynamicResource FontColorPrimary}" Margin="0, 0, 0, 20"/>
-                <TextBlock x:Name="HomeLabelNoAvailable" Foreground="{DynamicResource FontColorPrimary}" TextAlignment="Center" FontSize="20" Text="This feature is not available yet." Tag="feature.not_available"/>
-            </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left content (mod informations and stats) -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Mod logo, mod name, general buttons -->
+                <DockPanel Grid.Row="0" Margin="15">
+                    
+                    <!-- Mod logo -->
+                    <Border x:Name="HomeModLogoImageBorder" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" Height="120" Width="120" Margin="0, 0, 15, 0">
+                        <Image x:Name="HomeModLogoImage"/>
+                    </Border>
+
+                    <!-- Mod name and buttons -->
+                    <DockPanel HorizontalAlignment="Stretch" DockPanel.Dock="Left">
+                        <TextBlock x:Name="HomeModNameTextblock" Grid.Row="0" FontSize="20" Foreground="{DynamicResource FontColorPrimary}" Padding="5" DockPanel.Dock="Top"/>
+                        <TextBlock x:Name="HomeWorkspaceFolderTextblock" Grid.Row="1" FontSize="14" Foreground="{DynamicResource FontColorPrimary}" Padding="5" DockPanel.Dock="Top"/>
+                        <UniformGrid HorizontalAlignment="Stretch" DockPanel.Dock="Bottom" Rows="1" Height="30">
+                            <Button Content="Open project folder" Background="#FFFFD14E" FontWeight="Bold" Click="HomeOpenExplorerButtonClick" Tag="project_explorer.home.open_project_folder"/>
+                            <Button Content="Available soon" Margin="10, 0, 0, 0" FontWeight="Bold" Visibility="Collapsed"/>
+                        </UniformGrid>
+                    </DockPanel>
+                </DockPanel>
+                
+                <!-- Mod stats -->
+                <Grid Grid.Row="1" Margin="15">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="28"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Left column -->
+                    <UniformGrid Grid.Column="0" Rows="4">
+                        <controls:DashboardInfoDisplay x:Name="TexturesInfoDisplay" InfoTitle="Textures" InfoContent="---" InfoColor="DarkSlateGray" Height="105" InfoImageSource="/Resources/Icons/picture_icon.png" Tag="project_explorer.home.textures"/>
+                        <controls:DashboardInfoDisplay x:Name="ModelsInfoDisplay" InfoTitle="Models" InfoContent="---" InfoColor="DarkSlateBlue" Height="105" InfoImageSource="/Resources/Icons/model_icon.png" Tag="project_explorer.home.models"/>
+                        <controls:DashboardInfoDisplay x:Name="JavaFilesInfoDisplay" InfoTitle="Java files" InfoContent="---" InfoColor="#FF8A7736" Height="105" InfoImageSource="/Resources/Icons/code_file_icon.png" Tag="project_explorer.home.java_files"/>
+                        <controls:DashboardInfoDisplay x:Name="LinesCountInfoDisplay" InfoTitle="Lines of code" InfoContent="---" InfoColor="#004B50" Height="105" InfoImageSource="/Resources/Icons/lines_code_icon.png" Tag="project_explorer.home.lines_count"/>
+                    </UniformGrid>
+
+                    <!-- Right column -->
+                    <UniformGrid Grid.Column="2" Rows="4">
+                        <controls:DashboardInfoDisplay x:Name="ModVersionInfoDisplay" InfoTitle="Mod version" InfoContent="---" InfoColor="#0063B1" Height="105" InfoImageSource="/Resources/Icons/version_icon.png" Tag="project_explorer.home.mod_version"/>
+                        <controls:DashboardInfoDisplay x:Name="MinecraftVersionInfoDisplay" InfoTitle="Minecraft version" InfoContent="---"  InfoColor="DarkOliveGreen" Height="105" InfoImageSource="/Resources/Icons/minecraft_icon.png" Tag="project_explorer.home.minecraft_version"/>
+                        <controls:DashboardInfoDisplay x:Name="ForgeVersionInfoDisplay" InfoTitle="Forge version" InfoContent="---"  InfoColor="DarkRed" Height="105" InfoImageSource="/Resources/Icons/forge_icon.png" Tag="project_explorer.home.forge_version"/>
+                        <controls:DashboardInfoDisplay x:Name="MappingsVersionInfoDisplay" InfoTitle="Mappings version" InfoContent="---" InfoColor="DarkSalmon" Height="105" InfoImageSource="/Resources/Icons/mappings_icon.png" Tag="project_explorer.home.mappings_version"/>
+                    </UniformGrid>
+                    
+                </Grid>
+            </Grid>
         </Grid>
 
         <!-- ModSettings grid -->
@@ -319,7 +380,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock x:Name="ModSettingsStatusLabel" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" FontSize="13" Margin="0, 0, 20, 0" Text="All modifications have been saved." Tag="project_explorer.mod_settings.saved_modifications"/>
+                <TextBlock x:Name="ModSettingsStatusLabel" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" FontSize="13" Margin="0, 0, 20, 0" Text="All modifications have been saved."/>
                 <Button x:Name="ModSettingsSaveButton" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Content="Save modifications" Padding="5" Margin="20, 0, 0, 0" Width="300" FontSize="14" Click="ModSettingsSaveButtonClick" Tag="project_explorer.mod_settings.save_modifications"/>
             </Grid>
             
