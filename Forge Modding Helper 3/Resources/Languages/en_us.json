@@ -86,6 +86,7 @@
     "assistant_creator.step": "Step",
     "assistant_creator.close_message": "Are you sure you want to cancel the workspace creation ?",
     "assistant_creator.alert.no_connection": "Error : Unable to retrieve remote informations.\nPlease check your Internet connection.",
+    "assistant_creator.alert.no_forge_version": "Error : No Minecraft Forge version was found for this Minecraft version.",
     "assistant_creator.alert.no_generator": "Error : Unable to find generator for this version.\nApplication will now closing.",
 
     "project_scan.wait_message": "Please wait while your project is scanned...",

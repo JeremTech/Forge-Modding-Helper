@@ -108,8 +108,8 @@
     <Reference Include="Leow.TextEditor">
       <HintPath>..\Leow.TextEditor.dll</HintPath>
     </Reference>
-    <Reference Include="McModAPIVersions, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\McModAPIVersions.1.9.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
+    <Reference Include="McVersionsLib, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\McVersionsLib.1.0.0.1\lib\netstandard2.0\McVersionsLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">

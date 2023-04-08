@@ -12,10 +12,11 @@ using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows;
-using McModAPIVersions;
 using System.Threading.Tasks;
 using Forge_Modding_Helper_3.Files.Software;
 using Forge_Modding_Helper_3.Generators;
+using McVersionsLib.Forge;
+using McVersionsLib.Core;
 
 namespace Forge_Modding_Helper_3
 {
@@ -275,16 +276,15 @@ namespace Forge_Modding_Helper_3
                         client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
                         client.DownloadFileCompleted += new AsyncCompletedEventHandler(client_DownloadFileCompleted);
 
-                        string dlLink = "";
+                        string dlLink = McForgeUtils.BuildMinecraftForgeMDKDownloadLink(this.mod_infos["forge_version"]);
                         try
                         {
-                            dlLink = McForge.GetMDKDownloadLink(this.mod_infos["forge_version"].Split('-')[0], this.mod_infos["forge_version"].Split('-')[1]);
-                        } 
+                            client.DownloadFileAsync(new Uri(dlLink), this.folder + @"\mdk.zip");
+                        }
                         catch(VersionNotFoundException)
                         {
                             update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.downloading_forge.error") + this.mod_infos["forge_version"] + " !");
                         }
-                        client.DownloadFileAsync(new Uri(dlLink), this.folder + @"\mdk.zip");
 
                         break;
                     }
@@ -627,12 +627,15 @@ namespace Forge_Modding_Helper_3
                 try
                 {
                     // Retrieve all available Forge version for the wanted Minecraft version
-                    AvailableForgeVersions = McForge.GetAvailableVersions(mcVersion);
-                    LatestForgeVersion = McForge.GetLatestVersion(mcVersion);
-                    RecommendedForgeVersion = McForge.GetRecommendedVersion(mcVersion);
+                    AvailableForgeVersions = McForgeVersions.GetAllMinecraftForgeVersions(mcVersion, true);
+                    LatestForgeVersion = McForgeVersions.GetLatestMinecraftForgeVersion(mcVersion, true);
+                    RecommendedForgeVersion = McForgeVersions.GetRecommendedMinecraftForgeVersion(mcVersion, true);
                 }
-                catch (VersionNotFoundException) { }
-                catch (Exception) 
+                catch (VersionNotFoundException) 
+                {
+                    MessageBox.Show(UITextTranslator.getTranslation("assistant_creator.alert.no_forge_version"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (WebException) 
                 {
                     // If we can't retrieve remote informations 
                     MessageBox.Show(UITextTranslator.getTranslation("assistant_creator.alert.no_connection"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);

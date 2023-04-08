@@ -84,6 +84,7 @@
     "assistant_creator.step": "Etape",
     "assistant_creator.close_message": "Souhaitez-vous vraiment annuler la création de l'espace de travail ?",
     "assistant_creator.alert.no_connection": "Erreur : impossible de récupérer les informations distantes.\nMerci de vérifier votre connexion à Internet.",
+    "assistant_creator.alert.no_forge_version": "Erreur : aucune version de Minecraft Forge n'a été trouvée pour cette version de Minecraft.",
     "assistant_creator.alert.no_generator": "Erreur : aucun générateur n'a été trouvé pour cette version.\nL'application va se fermer.",
 
     "project_scan.wait_message": "Merci de patientez pendant le scan de votre projet....",
