@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Forge_Modding_Helper_3</RootNamespace>
     <AssemblyName>Forge Modding Helper 3</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -106,7 +106,7 @@
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
     <Reference Include="Leow.TextEditor">
-      <HintPath>..\..\Forge Modding Helper\Leow.TextEditor.dll</HintPath>
+      <HintPath>..\Leow.TextEditor.dll</HintPath>
     </Reference>
     <Reference Include="McModAPIVersions, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\McModAPIVersions.1.9.0\lib\netstandard2.0\McModAPIVersions.dll</HintPath>
