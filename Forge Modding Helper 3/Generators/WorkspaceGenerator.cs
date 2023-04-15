@@ -23,14 +23,6 @@ namespace Forge_Modding_Helper_3.Generators
         {
             switch(mcVersion)
             {
-                case "1.15.2":
-                    return new Generator115();
-
-                case "1.16.3":
-                case "1.16.4":
-                case "1.16.5":
-                    return new Generator116();
-
                 case "1.17.1":
                     return new Generator117();
 
