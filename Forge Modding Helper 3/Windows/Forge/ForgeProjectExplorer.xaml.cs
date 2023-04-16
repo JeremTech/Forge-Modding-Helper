@@ -508,12 +508,22 @@ namespace Forge_Modding_Helper_3.Windows
         #endregion
 
         #region Exportation section
-        private void ExportationButtonClick(object sender, RoutedEventArgs e)
+        private async void ExportationButtonClick(object sender, RoutedEventArgs e)
         {
             this.ModExportationConsoleControl.FontSize = 10;
-            this.ModExportationConsoleControl.StartProcess("cmd.exe", string.Empty);
-            this.ModExportationConsoleControl.WriteInput("cd " + App.CurrentProjectData.ProjectDirectory, Color.FromRgb(255, 240, 0), false);
-            this.ModExportationConsoleControl.WriteInput("gradlew build", Color.FromRgb(255, 240, 0), true);
+            this.ModExportationConsoleControl.ClearOutput();
+            this.ModExportationConsoleControl.StartProcess("cmd.exe", "/k \"cd /d " + App.CurrentProjectData.ProjectDirectory + "\"");
+            this.ModExportationConsoleControl.WriteInput("gradlew build --no-daemon & exit", Color.FromRgb(255, 240, 0), true);
+            this.SideBarExportationProgressBar.Visibility = Visibility.Visible;
+
+            // Wait for task's end
+            await Task.Run(() => 
+            { 
+                while (this.ModExportationConsoleControl.ProcessInterface.IsProcessRunning) { }
+            });
+
+            // Hide progressBar
+            this.SideBarExportationProgressBar.Visibility = Visibility.Collapsed;
         }
         #endregion
 
