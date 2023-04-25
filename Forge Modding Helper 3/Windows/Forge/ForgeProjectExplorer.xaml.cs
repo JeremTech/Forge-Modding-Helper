@@ -508,8 +508,21 @@ namespace Forge_Modding_Helper_3.Windows
         #endregion
 
         #region Exportation section
+        /// <summary>
+        /// Event called when "Export" button is clicked
+        /// </summary>
         private async void ExportationButtonClick(object sender, RoutedEventArgs e)
         {
+            string destinationFilePath = Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh", "versions", App.CurrentProjectData.ModData.ModID + "-" + App.CurrentProjectData.ModData.ModVersion + ".jar");
+
+            // Show warning if the version has been already builded
+            if (File.Exists(destinationFilePath))
+            {
+                if (MessageBox.Show(UITextTranslator.getTranslation("project_explorer.export.error.file_already_exist"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    return;
+            }
+
+            // Configure console and run build task
             this.ModExportationConsoleControl.FontSize = 10;
             this.ModExportationConsoleControl.ClearOutput();
             this.ModExportationConsoleControl.StartProcess("cmd.exe", "/k \"cd /d " + App.CurrentProjectData.ProjectDirectory + "\"");
@@ -520,10 +533,51 @@ namespace Forge_Modding_Helper_3.Windows
             await Task.Run(() => 
             { 
                 while (this.ModExportationConsoleControl.ProcessInterface.IsProcessRunning) { }
+
+                // Manage versions history
+                ManageVersionHistoryAfterExportation();
             });
 
             // Hide progressBar
             this.SideBarExportationProgressBar.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Manage version history after exportation
+        /// </summary>
+        private async void ManageVersionHistoryAfterExportation()
+        {
+            string ouputFilePath = Path.Combine(App.CurrentProjectData.ProjectDirectory, "build", "libs", string.Concat(App.CurrentProjectData.ModData.ModID, "-", App.CurrentProjectData.ModData.ModVersion, ".jar"));
+            string destinationFilePath = Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh", "versions", string.Concat(App.CurrentProjectData.ModData.ModID, "-", App.CurrentProjectData.ModData.ModVersion, ".jar"));
+
+            // If the output file is not found, show error and stop process here
+            if (!File.Exists(ouputFilePath))
+            {
+                this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.error.output_file_not_found")), Color.FromRgb(255, 0, 0));
+                return;
+            }
+
+            // Refresh mod versions history data
+            await App.CurrentProjectData.ModVersionsHistoryData.ReadData();
+
+            // Deleting previous generated build for this mod version if necessary
+            if (File.Exists(destinationFilePath))
+            {
+                this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.deleting_previous_file")), Color.FromRgb(255, 240, 0));
+                File.Delete(destinationFilePath);
+                App.CurrentProjectData.ModVersionsHistoryData.RemoveVersionFromHistory(App.CurrentProjectData.ModData.ModVersion);
+            }
+
+            // Moving file to fmh/versions folder
+            this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.moving_generated_file")), Color.FromRgb(255, 240, 0));
+            File.Move(ouputFilePath, destinationFilePath);
+
+            this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.updating_versions_history")), Color.FromRgb(255, 240, 0));
+
+            App.CurrentProjectData.ModVersionsHistoryData.AddVersionToHistory(App.CurrentProjectData.ModData.ModVersion, App.CurrentProjectData.ModData.ModMinecraftVersion, DateTime.Now, App.CurrentProjectData.ModData.ModID + "-" + App.CurrentProjectData.ModData.ModVersion + ".jar");
+            await App.CurrentProjectData.ModVersionsHistoryData.WriteData();
+
+            this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.exportation_success")), Color.FromRgb(0, 255, 0));
         }
         #endregion
 

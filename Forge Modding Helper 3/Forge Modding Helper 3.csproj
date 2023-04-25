@@ -149,13 +149,14 @@
     <Compile Include="Files\Software\OptionsFile.cs" />
     <Compile Include="Files\Software\ThemeFile.cs" />
     <Compile Include="Files\Software\TranslationFile.cs" />
+    <Compile Include="Files\Workspace\ModVersionsHistoryFile.cs" />
     <Compile Include="Files\Workspace\ProjectFile.cs" />
     <Compile Include="Generators\Generator119.cs" />
     <Compile Include="Generators\Generator118.cs" />
     <Compile Include="Generators\Generator117.cs" />
     <Compile Include="Generators\WorkspaceGenerator.cs" />
     <Compile Include="Objects\FileEntry.cs" />
-    <Compile Include="Objects\Workspace.cs" />
+    <Compile Include="Objects\WorkspaceEntry.cs" />
     <Compile Include="Files\Workspace\BuildGradle.cs" />
     <Compile Include="Utils\Software\AppInfos.cs" />
     <Compile Include="Utils\DirectoryUtils.cs" />

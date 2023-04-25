@@ -237,7 +237,7 @@ namespace Forge_Modding_Helper_3
                 case 5:
                     {
                         // Saving in recent workspaces
-                        LastWorkspaces.LastWorkspacesData.Add(new Workspace(this.folder, DateTime.Now));
+                        LastWorkspaces.LastWorkspacesData.Add(new WorkspaceEntry(this.folder, DateTime.Now));
                         LastWorkspaces.WriteData();
 
                         // Write project data

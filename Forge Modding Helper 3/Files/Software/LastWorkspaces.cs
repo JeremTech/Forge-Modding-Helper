@@ -20,7 +20,7 @@ namespace Forge_Modding_Helper_3.Files.Software
         /// <summary>
         /// List of last workspaces paths
         /// </summary>
-        public static List<Workspace> LastWorkspacesData = new List<Workspace>();
+        public static List<WorkspaceEntry> LastWorkspacesData = new List<WorkspaceEntry>();
 
         /// <summary>
         /// List of last workspaces project file
@@ -36,13 +36,13 @@ namespace Forge_Modding_Helper_3.Files.Software
         /// Add a workspace to the last workspaces list. If it already exist, it's updated
         /// </summary>
         /// <param name="workspace">Workspace to add</param>
-        public static void AddRecentWorkspace(Workspace workspace)
+        public static void AddRecentWorkspace(WorkspaceEntry workspace)
         {
             int lenght = LastWorkspacesData.Count;
-            Workspace[] workspaces = new Workspace[lenght];
+            WorkspaceEntry[] workspaces = new WorkspaceEntry[lenght];
             LastWorkspacesData.CopyTo(workspaces, 0);
 
-            foreach (Workspace work in workspaces)
+            foreach (WorkspaceEntry work in workspaces)
             {
                 if (work.path == workspace.path)
                 {
@@ -63,7 +63,7 @@ namespace Forge_Modding_Helper_3.Files.Software
             // Check if file exist
             if(File.Exists(FilePath))
             {
-                List<Workspace> jsonData = JsonConvert.DeserializeObject<List<Workspace>>(File.ReadAllText(FilePath));
+                List<WorkspaceEntry> jsonData = JsonConvert.DeserializeObject<List<WorkspaceEntry>>(File.ReadAllText(FilePath));
 
                 if (jsonData.Count > 0)
                 {
@@ -74,7 +74,7 @@ namespace Forge_Modding_Helper_3.Files.Software
                 LastWorkspacesProjectFile.Clear();
 
                 // Read project files of each recents workspaces
-                foreach(Workspace _workspace in LastWorkspacesData)
+                foreach(WorkspaceEntry _workspace in LastWorkspacesData)
                 {
                     // Create project file if project file doesn't exist (workspaces from previous version of FMH)
                     if(!File.Exists(Path.Combine(_workspace.path, "fmh\\project.fmh")) && DirectoryUtils.CheckFolderIsForgeWorkspace(_workspace.path))
@@ -112,14 +112,14 @@ namespace Forge_Modding_Helper_3.Files.Software
             // Read data file
             ReadData();
 
-            List<Workspace> workspaces = new List<Workspace>();
+            List<WorkspaceEntry> workspaces = new List<WorkspaceEntry>();
 
-            foreach (Workspace workspace in LastWorkspacesData)
+            foreach (WorkspaceEntry workspace in LastWorkspacesData)
             {
                 // Check directory validity and if workspace is not already registered
                 if (Directory.Exists(workspace.path) && DirectoryUtils.CheckFolderIsForgeWorkspace(workspace.path) && !workspaces.Exists(w => w.path == workspace.path))
                 {
-                    workspaces.Add(new Workspace(workspace.path, workspace.lastUpdated));
+                    workspaces.Add(new WorkspaceEntry(workspace.path, workspace.lastUpdated));
                 }
             }
 

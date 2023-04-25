@@ -160,6 +160,12 @@
     "project_explorer.export.forge_version": "Forge version",
     "project_explorer.export.mappings_version": "Mappings version",
     "project_explorer.export.export": "Export mod",
+    "project_explorer.export.error.file_already_exist": "This version has been already builded. It will be replaced after the build.\n\nDo you want to continue ?",
+    "project_explorer.export.error.output_file_not_found": "Output file not found. Unable to update versions history",
+    "project_explorer.export.info.deleting_previous_file": "Deleting previous generetad file for this version in fmh\\versions...",
+    "project_explorer.export.info.moving_generated_file": "Moving generated file to fmh\\versions...",
+    "project_explorer.export.info.updating_versions_history": "Updating versions history...",
+    "project_explorer.export.info.exportation_success": "Exportation successfull !",
     "project_explorer.files.importation": "Importation of ",
 
     "json_editor.title": "Json Editor",

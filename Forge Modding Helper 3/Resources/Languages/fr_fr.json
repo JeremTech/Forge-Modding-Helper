@@ -1,5 +1,5 @@
 {
-    "name": "Français",
+  "name": "Français",
   "entries": {
     "loading.label.loading": "Chargement...",
     "loading.retrieving_workspaces": "Récupération des espaces de travail récents...",
@@ -158,6 +158,12 @@
     "project_explorer.export.forge_version": "Version de Forge",
     "project_explorer.export.mappings_version": "Version des mappings",
     "project_explorer.export.export": "Exporter le mod",
+    "project_explorer.export.error.file_already_exist": "Cette version a déjà été générée. Elle sera donc remplacée à la suite de la génération.\n\nSouhaitez-vous continuer ?",
+    "project_explorer.export.error.output_file_not_found": "Le fichier de sortie n'a pas été trouvé. Impossible de mettre à jour l'historique des versions",
+    "project_explorer.export.info.deleting_previous_file": "Suppression du fichier précédement généré pour cette version dans fmh\\versions...",
+    "project_explorer.export.info.moving_generated_file": "Déplacement du fichier généré vers fmh\\versions...",
+    "project_explorer.export.info.updating_versions_history": "Mise à jour de l'historique des versions...",
+    "project_explorer.export.info.exportation_success": "Exportation réalisée avec succès !",
     "project_explorer.files.importation": "Importation de ",
 
     "json_editor.title": "Editeur de Json",

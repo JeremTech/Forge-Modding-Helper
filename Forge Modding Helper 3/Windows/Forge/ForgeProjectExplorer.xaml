@@ -843,7 +843,7 @@
 
             </Grid>
 
-            <WPF:ConsoleControl x:Name="ModExportationConsoleControl" Grid.Column="0" Margin="10"/>
+            <WPF:ConsoleControl x:Name="ModExportationConsoleControl" Grid.Column="0" Margin="10" IsInputEnabled="False"/>
 
         </Grid>
         

@@ -28,10 +28,15 @@ namespace Forge_Modding_Helper_3.Windows
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Check if fmh folder exist in workspace directory
-            if (!Directory.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh"))) Directory.CreateDirectory(Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh"));
+            if (!Directory.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh"))) 
+                Directory.CreateDirectory(Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh"));
+
+            // Check if fmh/versions folder exist in workspace directory
+            if (!Directory.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"fmh\versions")))
+                Directory.CreateDirectory(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"fmh\versions"));
 
             // Launch and wait mod infos scanning tasks
-            await Task.WhenAll(new Task[] { App.CurrentProjectData.ScanBuildGradle(), App.CurrentProjectData.ScanModToml() });
+            await Task.WhenAll(new Task[] { App.CurrentProjectData.ScanBuildGradle(), App.CurrentProjectData.ScanModToml(), App.CurrentProjectData.ModVersionsHistoryData.ReadData() });
 
             // Launch and wait all others scanning tasks
             await Task.WhenAll(new Task[] { App.CurrentProjectData.ScanTextures(), App.CurrentProjectData.ScanBlockstates(), App.CurrentProjectData.ScanModels(), App.CurrentProjectData.ScanJavaFiles() });
@@ -47,7 +52,7 @@ namespace Forge_Modding_Helper_3.Windows
             // Once scan finished
             if (this.showProjectWindow)
             {
-                LastWorkspaces.AddRecentWorkspace(new Workspace(App.CurrentProjectData.ProjectDirectory, DateTime.Now));
+                LastWorkspaces.AddRecentWorkspace(new WorkspaceEntry(App.CurrentProjectData.ProjectDirectory, DateTime.Now));
                 new ProjectExplorer().Show();
             }
 

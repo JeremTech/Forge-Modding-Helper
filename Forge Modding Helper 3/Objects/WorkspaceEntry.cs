@@ -10,13 +10,13 @@ using System.Windows.Media.Imaging;
 namespace Forge_Modding_Helper_3.Objects
 {
     // This class represent a workspace
-    public class Workspace
+    public class WorkspaceEntry
     {
         public string path { get; set; }
         public DateTime lastUpdated { get; set; }
 
         // Constructor
-        public Workspace(string _path, DateTime _lastUpdated)
+        public WorkspaceEntry(string _path, DateTime _lastUpdated)
         {
             this.path = _path;
             this.lastUpdated = _lastUpdated;
