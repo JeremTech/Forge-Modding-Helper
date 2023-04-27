@@ -577,6 +577,9 @@ namespace Forge_Modding_Helper_3.Windows
             App.CurrentProjectData.ModVersionsHistoryData.AddVersionToHistory(App.CurrentProjectData.ModData.ModVersion, App.CurrentProjectData.ModData.ModMinecraftVersion, DateTime.Now, App.CurrentProjectData.ModData.ModID + "-" + App.CurrentProjectData.ModData.ModVersion + ".jar");
             await App.CurrentProjectData.ModVersionsHistoryData.WriteData();
 
+            // Refresh mod data
+            Dispatcher.Invoke(() => RefreshInterfaceModInfos());
+
             this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.exportation_success")), Color.FromRgb(0, 255, 0));
         }
         #endregion
@@ -585,7 +588,7 @@ namespace Forge_Modding_Helper_3.Windows
         /// <summary>
         /// Refresh all UI components who contains mod infos
         /// </summary>
-        private void RefreshInterfaceModInfos()
+        private async void RefreshInterfaceModInfos()
         {
             // Mod logo (side bar, mod settings)
             if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
@@ -643,6 +646,10 @@ namespace Forge_Modding_Helper_3.Windows
             this.ForgeVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModAPIVersion;
             this.MinecraftVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModMinecraftVersion;
             this.MappingsVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModMappingsVersion;
+
+            // Mod history
+            var modVersionsHistoryData = await App.CurrentProjectData.ModVersionsHistoryData.GetModVersionsHistory();
+            HomeModVersionsHistoryListView.ItemsSource = modVersionsHistoryData.OrderByDescending(v => v.VersionDateTime);
         }
 
         /// <summary>

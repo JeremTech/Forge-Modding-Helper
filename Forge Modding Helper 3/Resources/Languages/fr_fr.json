@@ -123,6 +123,7 @@
     "project_explorer.home.minecraft_version": "Version de Minecraft",
     "project_explorer.home.forge_version": "Version de Forge",
     "project_explorer.home.mappings_version": "Version des mappings",
+    "project_explorer.home.versions_history": "Historique des versions",
     "project_explorer.mod_settings.authors": "Auteur(s) du mod",
     "project_explorer.mod_settings.license": "Licence du mod",
     "project_explorer.mod_settings.credits": "Crédits du mod",

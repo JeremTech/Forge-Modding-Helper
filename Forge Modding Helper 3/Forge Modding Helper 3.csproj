@@ -163,6 +163,7 @@
     <Compile Include="Files\Workspace\ModToml.cs" />
     <Compile Include="Objects\ModInfos.cs" />
     <Compile Include="Objects\Project.cs" />
+    <Compile Include="Utils\UI\DateToStringConverter.cs" />
     <Compile Include="Utils\UI\StringToImageConverter.cs" />
     <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Utils\UI\UITextTranslator.cs" />

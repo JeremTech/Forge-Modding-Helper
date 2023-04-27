@@ -12,6 +12,7 @@
     <Window.Resources>
         
         <utils:StringToImageConverter x:Key="StringToImageConverter"/>
+        <utils:DateToStringConverter x:Key="DateToStringConverter"/>
 
         <Style TargetType="{x:Type ListBoxItem}">
             <Style.Triggers>
@@ -218,6 +219,35 @@
                     
                 </Grid>
             </Grid>
+
+            <!-- Right content (versions history) -->
+            <Grid Grid.Column="1" Margin="15">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="HomeModVersionTextblock" Grid.Row="0" FontSize="20" Foreground="{DynamicResource FontColorPrimary}" TextAlignment="Center" VerticalAlignment="Center" Text="Versions history" Tag="project_explorer.home.versions_history"/>
+
+                <ListView x:Name="HomeModVersionsHistoryListView" Grid.Row="1" Background="{DynamicResource SecondaryBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="240"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="{Binding ModVersion}" FontSize="15" Grid.Column="0" TextAlignment="Left" Foreground="{DynamicResource FontColorPrimary}"/>
+                                <TextBlock Text="{Binding Path=VersionDateTime, Converter={StaticResource DateToStringConverter}}" FontSize="13" Grid.Column="1" TextAlignment="Right" FontStyle="Italic" Foreground="{DynamicResource FontColorPrimary}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                
+            </Grid>
+
         </Grid>
 
         <!-- ModSettings grid -->

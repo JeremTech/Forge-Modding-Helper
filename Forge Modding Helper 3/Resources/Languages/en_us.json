@@ -125,6 +125,7 @@
     "project_explorer.home.minecraft_version": "Minecraft version",
     "project_explorer.home.forge_version": "Forge version",
     "project_explorer.home.mappings_version": "Mappings version",
+    "project_explorer.home.versions_history": "Versions history",
     "project_explorer.mod_settings.authors": "Mod author(s)",
     "project_explorer.mod_settings.license": "Mod license",
     "project_explorer.mod_settings.credits": "Mod credits",
