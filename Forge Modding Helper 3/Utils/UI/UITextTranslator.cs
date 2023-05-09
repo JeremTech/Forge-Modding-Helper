@@ -4,13 +4,21 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows;
 using System.Windows.Controls;
 using Forge_Modding_Helper_3.Controls;
 using Forge_Modding_Helper_3.Files;
 using Newtonsoft.Json;
+using Application = System.Windows.Application;
+using Button = System.Windows.Controls.Button;
+using CheckBox = System.Windows.Controls.CheckBox;
+using GroupBox = System.Windows.Controls.GroupBox;
+using Label = System.Windows.Controls.Label;
+using ListBox = System.Windows.Controls.ListBox;
+using ListView = System.Windows.Controls.ListView;
+using MenuItem = System.Windows.Controls.MenuItem;
+using MessageBox = System.Windows.MessageBox;
 
 namespace Forge_Modding_Helper_3.Utils
 {
@@ -128,6 +136,19 @@ namespace Forge_Modding_Helper_3.Utils
             {
                 if (infoDisplay.Tag != null && infoDisplay.Tag is string && !string.IsNullOrWhiteSpace(infoDisplay.Tag.ToString()))
                     infoDisplay.InfoTitle = getTranslation((String)infoDisplay.Tag);
+            }
+
+            // Updating context menus items header from listbox
+            foreach (var listbox in UIUtils.FindVisualChildren<ListBox>(window))
+            {
+                if (listbox.ContextMenu != null)
+                {
+                    foreach (MenuItem contextMenuItem in listbox.ContextMenu.Items)
+                    {
+                        if (contextMenuItem.Tag != null && contextMenuItem.Tag is string && !string.IsNullOrWhiteSpace(contextMenuItem.Tag.ToString()))
+                            contextMenuItem.Header = getTranslation((String)contextMenuItem.Tag);
+                    }
+                }
             }
         }
 

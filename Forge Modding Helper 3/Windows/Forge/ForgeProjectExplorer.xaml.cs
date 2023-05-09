@@ -1,6 +1,7 @@
 ﻿using FontAwesome.WPF;
 using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Files.Software;
+using Forge_Modding_Helper_3.Files.Workspace;
 using Forge_Modding_Helper_3.Generators;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
@@ -74,7 +75,43 @@ namespace Forge_Modding_Helper_3.Windows
         {
             Process.Start(App.CurrentProjectData.ProjectDirectory);
         }
-        #endregion 
+
+        /// <summary>
+        /// Function called when "Delete" is clicked in context menu of the versions history listview
+        /// </summary>
+        private async void HomeContextMenuVersionsHistory_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (HomeModVersionsHistoryListView.SelectedItems.Count != 1)
+                return;
+
+            var selectedVersion = (ModVersionHistoryEntry)HomeModVersionsHistoryListView.SelectedItem;
+            if (MessageBox.Show(string.Format(UITextTranslator.getTranslation("project_explorer.home.confirm_delete"), selectedVersion.ModVersion), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                File.Delete(Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh", "versions", selectedVersion.FileName));
+                App.CurrentProjectData.ModVersionsHistoryData.RemoveVersionFromHistory(selectedVersion.ModVersion);
+                await App.CurrentProjectData.ModVersionsHistoryData.WriteData();
+                RefreshInterfaceModInfos();
+            }
+        }
+
+        /// <summary>
+        /// Function called when "Open location" is clicked in context menu of the versions history listview
+        /// </summary>
+        private void HomeContextMenuVersionsHistory_OpenLocation_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedVersion = (ModVersionHistoryEntry)HomeModVersionsHistoryListView.SelectedItem;
+            var filePath = Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh", "versions", selectedVersion.FileName);
+
+            if (File.Exists(filePath))
+            {
+                Process.Start("explorer.exe", "/select, " + filePath);
+            }
+            else
+            {
+                MessageBox.Show(string.Format(UITextTranslator.getTranslation("project_explorer.home.version_not_found"), filePath), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+        #endregion
 
         #region ModSettings section
         /// <summary>

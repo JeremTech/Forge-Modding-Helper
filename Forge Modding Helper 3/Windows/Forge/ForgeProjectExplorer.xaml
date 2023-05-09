@@ -230,8 +230,15 @@
 
                 <TextBlock x:Name="HomeModVersionTextblock" Grid.Row="0" FontSize="20" Foreground="{DynamicResource FontColorPrimary}" TextAlignment="Center" VerticalAlignment="Center" Text="Versions history" Tag="project_explorer.home.versions_history"/>
 
-                <ListView x:Name="HomeModVersionsHistoryListView" Grid.Row="1" Background="{DynamicResource SecondaryBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}">
-                    <ListView.ItemTemplate>
+                <ListBox x:Name="HomeModVersionsHistoryListView" AlternationCount="2" Grid.Row="1" BorderBrush="{DynamicResource BorderColor}" Background="{DynamicResource SecondaryBackgroundColor}" Foreground="{DynamicResource FontColorPrimary}">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem x:Name="HomeContextMenuVersionsHistory_Delete" Header="Delete selected version" Click="HomeContextMenuVersionsHistory_Delete_Click" Tag="project_explorer.home.delete_selected_version"/>
+                            <MenuItem x:Name="HomeContextMenuVersionsHistory_OpenLocation" Header="Open location of selected version" Click="HomeContextMenuVersionsHistory_OpenLocation_Click" Tag="project_explorer.home.open_location_selected_version"/>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="5">
                                 <Grid.ColumnDefinitions>
@@ -243,8 +250,8 @@
                                 <TextBlock Text="{Binding Path=VersionDateTime, Converter={StaticResource DateToStringConverter}}" FontSize="13" Grid.Column="1" TextAlignment="Right" FontStyle="Italic" Foreground="{DynamicResource FontColorPrimary}"/>
                             </Grid>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 
             </Grid>
 
