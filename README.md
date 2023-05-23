@@ -7,7 +7,7 @@
 Forge Modding Helper is an utility software to manage Forge's Workspace.
 
 ## Compatibility 
-Forge Modding Helper is available for Windows 10 and 11, and the .Net Framework 4.7.2 is required.
+Forge Modding Helper is available for Windows 10 and 11, and the .Net Framework 4.8 or older is required.
 
 ## Version
 
@@ -19,6 +19,7 @@ Latest version | Latest stable version
 
 - [x] Workspace creation wizard
 - [x] Existing workspace importation
+- [x] Show workspace's statistics
 - [x] Easy mod settings edition
 - [x] Explore and manage assets (models, textures, blockstates)
 - [x] Easy language file editing 
@@ -31,8 +32,6 @@ Latest version | Latest stable version
 - [x] Minecraft Forge 1.19 : 1.19, 1.19.1, 1.19.2, 1.19.3, 1.19.4
 - [x] Minecraft Forge 1.18 : 1.18.1, 1.18.2
 - [x] Minecraft Forge 1.17 : 1.17.1
-- [x] Minecraft Forge 1.16 : 1.16.3, 1.16.4, 1.16.5
-- [x] Minecraft Forge 1.15 : 1.15.2
 
 ## Report bug or submit ideas
 
@@ -45,12 +44,16 @@ You can also see in real-time the progression of the next update on the [Forge M
 ![Assistant Creator](/assets/images/assistant_creator.png)
 
 ### Project Explorer
+![Project Explorer - Home](/assets/images/project_explorer_home.png)
 ![Project Explorer - Mod settings](/assets/images/project_explorer_mod_settings.png)
 ![Project Explorer - Models](/assets/images/project_explorer_models.png)
 
 ## Contributing
 
 You are welcome to support this project by opening pull requests. Read more about contributing in the [contributing guidelines](https://github.com/JeremTech/Forge-Modding-Helper/blob/master/contributing.md). Before your code can be used, you must sign the [Forge Modding Helper CLA](https://cla-assistant.io/jeremtech/Forge-Modding-Helper).
+
+## License
+Forge Modding Helper is licensed under the [GPL-3.0 License](LICENSE).
 
 ## Disclaimer
 THIS IS NOT AN OFFICIAL MINECRAFT PRODUCT. THIS ISN'T APPROVED BY OR ASSOCIATED WITH MOJANG STUDIOS OR MICROSOFT.
