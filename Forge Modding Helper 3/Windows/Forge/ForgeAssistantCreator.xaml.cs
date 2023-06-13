@@ -473,6 +473,9 @@ namespace Forge_Modding_Helper_3
                 workspaceGenerator.GenerateBuildGradle();
             }
 
+            // Generate gradle properties (for MC 1.20+)
+            workspaceGenerator.GenerateGradleProperties();
+
             // Generate mod.toml file
             if (mod_toml_checkBox.IsChecked == true)
             {

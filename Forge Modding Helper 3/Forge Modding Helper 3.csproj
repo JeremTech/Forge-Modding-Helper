@@ -151,6 +151,7 @@
     <Compile Include="Files\Software\TranslationFile.cs" />
     <Compile Include="Files\Workspace\ModVersionsHistoryFile.cs" />
     <Compile Include="Files\Workspace\ProjectFile.cs" />
+    <Compile Include="Generators\Generator120.cs" />
     <Compile Include="Generators\Generator119.cs" />
     <Compile Include="Generators\Generator118.cs" />
     <Compile Include="Generators\Generator117.cs" />

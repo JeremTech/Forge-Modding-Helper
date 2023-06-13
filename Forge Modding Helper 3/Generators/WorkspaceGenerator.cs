@@ -36,6 +36,10 @@ namespace Forge_Modding_Helper_3.Generators
                 case "1.19.3":
                 case "1.19.4":
                     return new Generator119();
+
+                case "1.20":
+                case "1.20.1":
+                    return new Generator120();
             }
 
             return null;
@@ -45,7 +49,7 @@ namespace Forge_Modding_Helper_3.Generators
         /// Generate build.gradle file
         /// Default implementation of this function
         /// </summary>
-        public void GenerateBuildGradle()
+        public virtual void GenerateBuildGradle()
         {
             string[] lines = File.ReadAllLines(App.CurrentProjectData.ProjectDirectory + @"\build.gradle");
             string[] output = new string[lines.Length];
@@ -111,7 +115,7 @@ namespace Forge_Modding_Helper_3.Generators
         /// Generate mod.toml file
         /// Default implementation of this function
         /// </summary>
-        public void GenerateModToml()
+        public virtual void GenerateModToml()
         {
             // modloader
             string modToml = "modLoader=\"javafml\"";
@@ -169,6 +173,11 @@ side = ""BOTH""";
 
             File.Delete(App.CurrentProjectData.ProjectDirectory + @"\src\main\resources\META-INF\mods.toml");
             File.WriteAllText(App.CurrentProjectData.ProjectDirectory + @"\src\main\resources\META-INF\mods.toml", modToml);
+        }
+
+        public virtual void GenerateGradleProperties()
+        {
+            return;
         }
     }
 }
