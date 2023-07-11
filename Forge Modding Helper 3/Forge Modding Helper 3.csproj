@@ -54,8 +54,6 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Leow.TextEditor">
       <HintPath>..\Leow.TextEditor.dll</HintPath>
     </Reference>

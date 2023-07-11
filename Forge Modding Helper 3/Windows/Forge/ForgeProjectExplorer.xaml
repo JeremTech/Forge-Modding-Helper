@@ -1,4 +1,4 @@
-﻿<Window x:Class="Forge_Modding_Helper_3.Windows.ProjectExplorer"
+﻿<Window x:Class="Forge_Modding_Helper_3.Windows.ForgeProjectExplorer"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,14 @@
         xmlns:fa="http://schemas.fontawesome.io/icons/" 
         xmlns:utils="clr-namespace:Forge_Modding_Helper_3.Utils" xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor" xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF" xmlns:controls="clr-namespace:Forge_Modding_Helper_3.Controls"
         mc:Ignorable="d"
-        Title="Project Explorer" Height="720" Width="1340" Icon="/Forge Modding Helper 3;component/Resources/Pictures/icon.png" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Closing="Window_Closing">
+        Title="Project Explorer" 
+        Height="720" 
+        Width="1340" 
+        Icon="/Forge Modding Helper 3;component/Resources/Pictures/icon.png" 
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="CanMinimize" 
+        Closing="Window_Closing"
+        Background="{DynamicResource SecondaryBackgroundColor}">
 
     <Window.Resources>
         
@@ -24,10 +31,10 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
+
     </Window.Resources>
-    
-    <Grid x:Name="MainGrid" Background="{DynamicResource PrimaryBackgroundColor}">
+
+    <Grid x:Name="MainGrid" Background="{DynamicResource PrimaryBackgroundColor}" Visibility="Hidden">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="230"/>

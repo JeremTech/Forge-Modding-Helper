@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FMH.Workspace.Entities;
+using FMH.Workspace.Data;
 
 namespace FMH.Workspace.WorkspaceManager
 {
@@ -18,6 +18,21 @@ namespace FMH.Workspace.WorkspaceManager
         /// Mod properties
         /// </summary>
         ModProperties ModProperties { get; set; }
+
+        /// <summary>
+        /// Mod versions history
+        /// </summary>
+        ModVersionsHistory ModVersionsHistory { get; set; }
+
+        /// <summary>
+        /// Assets properties
+        /// </summary>
+        AssetsProperties AssetsProperties { get; set; }
+
+        /// <summary>
+        /// Source code properties
+        /// </summary>
+        SourceCodeProperties SourceCodeProperties { get; set; }
 
         /// <summary>
         /// Read data from mod.toml file

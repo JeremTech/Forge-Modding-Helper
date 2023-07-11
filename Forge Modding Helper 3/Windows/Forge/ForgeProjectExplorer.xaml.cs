@@ -1,10 +1,12 @@
-﻿using FontAwesome.WPF;
+﻿using FMH.Workspace.Data;
+using FMH.Workspace.WorkspaceManager;
+using FontAwesome.WPF;
 using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Files.Software;
-using Forge_Modding_Helper_3.Files.Workspace;
 using Forge_Modding_Helper_3.Generators;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
+using Forge_Modding_Helper_3.Windows.Dialogs;
 using Forge_Modding_Helper_3.Windows.Files;
 using Microsoft.VisualBasic.FileIO;
 using Microsoft.Win32;
@@ -26,7 +28,7 @@ namespace Forge_Modding_Helper_3.Windows
     /// <summary>
     /// Project Explorer window back-end
     /// </summary>
-    public partial class ProjectExplorer : Window
+    public partial class ForgeProjectExplorer : Window
     {
         /// <summary>
         /// Allow to know if window is closing or not
@@ -38,8 +40,8 @@ namespace Forge_Modding_Helper_3.Windows
         private CancellationTokenSource modelsTokenSource;
         private CancellationTokenSource texturesTokenSource;
 
-        // Workspace Generator
-        private WorkspaceGenerator workspaceGenerator;
+        // Worskpace Manager
+        private IWorkspaceManager _workspaceManager;
 
         // Current section opened
         private string currentSectionOpenedTag;
@@ -47,11 +49,10 @@ namespace Forge_Modding_Helper_3.Windows
         /// <summary>
         /// Constructor
         /// </summary>
-        public ProjectExplorer()
+        public ForgeProjectExplorer(string projectPath, string projectMcVersion)
         {
             // Initialize UI
             InitializeComponent();
-            RefreshInterfaceModInfos();
 
             // Load translations
             UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
@@ -63,9 +64,56 @@ namespace Forge_Modding_Helper_3.Windows
             // Initialize data
             currentSectionOpenedTag = "Home";
 
-            // Initialize workspace generator
-            workspaceGenerator = WorkspaceGenerator.GetGenerator(App.CurrentProjectData.ModData.ModMinecraftVersion);
+            // Initialize workspace manager
+            _workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(projectMcVersion, projectPath);
+
+            this.Loaded += ProjectExplorer_Loaded;
         }
+
+        #region Loading project
+        private void ProjectExplorer_Loaded(object sender, RoutedEventArgs e)
+        {
+            ReloadProject();
+            RefreshInterfaceModInfos();
+        }
+
+        /// <summary>
+        /// Reload current project data
+        /// </summary>
+        private async void ReloadProject()
+        {
+            // Showing loading dialog
+            var loadingDialog = new LoadingDialog("Chargement des données...");
+            loadingDialog.Owner = this;
+            loadingDialog.Topmost = true;
+            loadingDialog.Show();
+
+            // Read data
+            await Task.Run(() =>
+            {
+                // Workspace general data
+                _workspaceManager.ReadBuildGradle();
+                _workspaceManager.ReadGradleProperties();
+                _workspaceManager.ReadModToml();
+                _workspaceManager.ModVersionsHistory.ReadVersionsHistory();
+
+                // Assets data
+                _workspaceManager.AssetsProperties = new AssetsProperties(_workspaceManager.WorkspaceProperties.WorkspacePath, _workspaceManager.ModProperties.ModID);
+                _workspaceManager.AssetsProperties.RetrieveAllTexturesFiles();
+                _workspaceManager.AssetsProperties.RetrieveAllModelsFiles();
+                _workspaceManager.AssetsProperties.RetrieveAllBlockstatesFiles();
+
+                // Source code data
+                _workspaceManager.SourceCodeProperties = new SourceCodeProperties(_workspaceManager.WorkspaceProperties.WorkspacePath);
+                _workspaceManager.SourceCodeProperties.RetrieveAllJavaFiles();
+                _workspaceManager.SourceCodeProperties.CountCodeLines(true);
+            });
+
+            // Showing main grid and closing loading dialog
+            MainGrid.Visibility = Visibility.Visible;
+            loadingDialog.Close();
+        }
+        #endregion
 
         #region Home Section
         /// <summary>
@@ -73,7 +121,7 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private void HomeOpenExplorerButtonClick(object sender, RoutedEventArgs e)
         {
-            Process.Start(App.CurrentProjectData.ProjectDirectory);
+            Process.Start(_workspaceManager.WorkspaceProperties.WorkspacePath);
         }
 
         /// <summary>
@@ -87,9 +135,14 @@ namespace Forge_Modding_Helper_3.Windows
             var selectedVersion = (ModVersionHistoryEntry)HomeModVersionsHistoryListView.SelectedItem;
             if (MessageBox.Show(string.Format(UITextTranslator.getTranslation("project_explorer.home.confirm_delete"), selectedVersion.ModVersion), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                File.Delete(Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh", "versions", selectedVersion.FileName));
-                App.CurrentProjectData.ModVersionsHistoryData.RemoveVersionFromHistory(selectedVersion.ModVersion);
-                await App.CurrentProjectData.ModVersionsHistoryData.WriteData();
+                File.Delete(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions", selectedVersion.FileName));
+
+                _workspaceManager.ModVersionsHistory.RemoveVersionFromHistory(selectedVersion.ModVersion);
+                await Task.Run(() =>
+                {
+                    _workspaceManager.ModVersionsHistory.WriteData();
+                });
+
                 RefreshInterfaceModInfos();
             }
         }
@@ -100,7 +153,7 @@ namespace Forge_Modding_Helper_3.Windows
         private void HomeContextMenuVersionsHistory_OpenLocation_Click(object sender, RoutedEventArgs e)
         {
             var selectedVersion = (ModVersionHistoryEntry)HomeModVersionsHistoryListView.SelectedItem;
-            var filePath = Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh", "versions", selectedVersion.FileName);
+            var filePath = Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions", selectedVersion.FileName);
 
             if (File.Exists(filePath))
             {
@@ -144,11 +197,11 @@ namespace Forge_Modding_Helper_3.Windows
             if (!String.IsNullOrWhiteSpace(fileDialog.FileName))
             {
                 // Deleting existing logo
-                if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"))) FileSystem.DeleteFile(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                if (File.Exists(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, @"src\main\resources\logo.png"))) FileSystem.DeleteFile(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
                 // Copying new logo
-                File.Copy(fileDialog.FileName, App.CurrentProjectData.ProjectDirectory + @"\src\main\resources\logo.png");
+                File.Copy(fileDialog.FileName, _workspaceManager.WorkspaceProperties.WorkspacePath + @"\src\main\resources\logo.png");
                 // Update mod data 
-                App.CurrentProjectData.ModData.ModLogo = "logo.png";
+                _workspaceManager.ModProperties.ModLogo = "logo.png";
             }
 
             // Refresh UI 
@@ -164,8 +217,8 @@ namespace Forge_Modding_Helper_3.Windows
             MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.mod_settings.alerte.delete_logo_message"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if(result == MessageBoxResult.Yes) 
             {
-                App.CurrentProjectData.ModData.ModLogo = "";
-                FileSystem.DeleteFile(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                _workspaceManager.ModProperties.ModLogo = "";
+                FileSystem.DeleteFile(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
                 RefreshInterfaceModInfos();
             }
         }
@@ -176,27 +229,31 @@ namespace Forge_Modding_Helper_3.Windows
         private async void ModSettingsSaveButtonClick(object sender, RoutedEventArgs e)
         {
             // Save changes in ModData object
-            App.CurrentProjectData.ModData.ModName = this.ModSettingsModNameTextbox.Text;
-            App.CurrentProjectData.ModData.ModDescription = this.ModSettingsModDescriptionTextbox.Text;
-            App.CurrentProjectData.ModData.ModAuthors = this.ModSettingsModAuthorsTextbox.Text;
-            App.CurrentProjectData.ModData.ModLicense = this.ModSettingsModLicenseTextbox.Text;
-            App.CurrentProjectData.ModData.ModCredits = this.ModSettingsModCreditsTextbox.Text;
-            App.CurrentProjectData.ModData.ModWebsite = this.ModSettingsModWebsiteTextbox.Text;
-            App.CurrentProjectData.ModData.ModIssueTracker = this.ModSettingsModBugTrackerURLTextbox.Text;
-            App.CurrentProjectData.ModData.ModUpdateJSONURL = this.ModSettingsModUpdateJsonURLTextbox.Text;
-            App.CurrentProjectData.ModData.ModVersion = this.ModSettingsModVersionTextbox.Text;
-            App.CurrentProjectData.ModData.ModMinecraftVersion = this.ModSettingsMinecraftVersionTextbox.Text;
-            App.CurrentProjectData.ModData.ModAPIVersion = this.ModSettingsForgeVersionTextbox.Text;
-            App.CurrentProjectData.ModData.ModMappingsVersion = this.ModSettingsMappingsVersionTextbox.Text;
-            App.CurrentProjectData.ModData.ModID = this.ModSettingsModidTextbox.Text;
-            App.CurrentProjectData.ModData.ModGroup = this.ModSettingsModgroupTextbox.Text;
+            _workspaceManager.ModProperties.ModName = this.ModSettingsModNameTextbox.Text;
+            _workspaceManager.ModProperties.ModDescription = this.ModSettingsModDescriptionTextbox.Text;
+            _workspaceManager.ModProperties.ModAuthors = this.ModSettingsModAuthorsTextbox.Text;
+            _workspaceManager.ModProperties.ModLicense = this.ModSettingsModLicenseTextbox.Text;
+            _workspaceManager.ModProperties.ModCredits = this.ModSettingsModCreditsTextbox.Text;
+            _workspaceManager.ModProperties.ModWebsite = this.ModSettingsModWebsiteTextbox.Text;
+            _workspaceManager.ModProperties.ModIssueTracker = this.ModSettingsModBugTrackerURLTextbox.Text;
+            _workspaceManager.ModProperties.ModUpdateJSONURL = this.ModSettingsModUpdateJsonURLTextbox.Text;
+            _workspaceManager.ModProperties.ModVersion = this.ModSettingsModVersionTextbox.Text;
+            _workspaceManager.ModProperties.ModMinecraftVersion = this.ModSettingsMinecraftVersionTextbox.Text;
+            _workspaceManager.ModProperties.ModAPIVersion = this.ModSettingsForgeVersionTextbox.Text;
+            _workspaceManager.ModProperties.ModMappingsVersion = this.ModSettingsMappingsVersionTextbox.Text;
+            _workspaceManager.ModProperties.ModID = this.ModSettingsModidTextbox.Text;
+            _workspaceManager.ModProperties.ModGroup = this.ModSettingsModgroupTextbox.Text;
+
+            // Update workspace's files
+            await Task.Run(() =>
+            {
+                _workspaceManager.WriteBuildGradle();
+                _workspaceManager.WriteModToml();
+                _workspaceManager.WriteGradleProperties();
+            });
 
             // Write mod data json files
-            await App.CurrentProjectData.WriteModData();
-
-            // Update build.gradle and mod.toml
-            workspaceGenerator.GenerateBuildGradle();
-            workspaceGenerator.GenerateModToml();
+            //await App.CurrentProjectData.WriteModData();
 
             // Update UI
             this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.saved_modifications");
@@ -230,7 +287,7 @@ namespace Forge_Modding_Helper_3.Windows
                     Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => BlockstatesFileCountTextblock.Text = "0"));
 
                     // Foreach blockstates file
-                    foreach (string fileIn in App.CurrentProjectData.BlockstatesList)
+                    foreach (string fileIn in _workspaceManager.AssetsProperties.BlockstatesFiles)
                     {
                         // Check if cancellation have been requested
                         if (cancellationToken.IsCancellationRequested) return;
@@ -275,7 +332,7 @@ namespace Forge_Modding_Helper_3.Windows
                 // Show importation dialog
                 new ImportFileDialog(files, "blockstates").ShowDialog();
 
-                await App.CurrentProjectData.ScanBlockstates();
+                await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllBlockstatesFiles(); });
                 await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);                
             }
         }
@@ -307,7 +364,7 @@ namespace Forge_Modding_Helper_3.Windows
                         Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => ModelsFileCountTextblock.Text = "0"));
 
                         // Foreach models file
-                        foreach (string fileIn in App.CurrentProjectData.ModelsList)
+                        foreach (string fileIn in _workspaceManager.AssetsProperties.ModelsFiles)
                         {
                             // Check if cancellation have been requested
                             if (cancellationToken.IsCancellationRequested) return;
@@ -374,7 +431,7 @@ namespace Forge_Modding_Helper_3.Windows
                 // Show importation dialog
                 new ImportFileDialog(files, "models").ShowDialog();
 
-                await App.CurrentProjectData.ScanModels();
+                await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllModelsFiles(); });
                 await RefreshModelsListView(ModelsSearchTextbox.Text);
             }
         }
@@ -406,7 +463,7 @@ namespace Forge_Modding_Helper_3.Windows
                         Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = "0"));
 
                         // Foreach blockstates file
-                        foreach (string fileIn in App.CurrentProjectData.TexturesList)
+                        foreach (string fileIn in _workspaceManager.AssetsProperties.TexturesFiles)
                         {
                             // Check if cancellation have been requested
                             if (cancellationToken.IsCancellationRequested) return;
@@ -451,7 +508,7 @@ namespace Forge_Modding_Helper_3.Windows
                 // Show importation dialog
                 new ImportFileDialog(files, "textures").ShowDialog();
 
-                await App.CurrentProjectData.ScanTextures();
+                await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllTexturesFiles(); });
                 await RefreshTexturesListView(TexturesSearchTextbox.Text);
             }
         }
@@ -467,7 +524,7 @@ namespace Forge_Modding_Helper_3.Windows
 
             // Clearing listbox
             TranslationsFilesListBox.Items.Clear();
-            List<string> fileList = Directory.EnumerateFiles(Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang")).ToList();
+            List<string> fileList = Directory.EnumerateFiles(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "src\\main\\resources\\assets", _workspaceManager.ModProperties.ModID, "lang")).ToList();
 
             // Run it async
             await Task.Run(() =>
@@ -489,9 +546,9 @@ namespace Forge_Modding_Helper_3.Windows
             // Run it async
             await Task.Run(() =>
             {
-                if (Application.Current.Dispatcher.Invoke(() => TranslationsFilesListBox.SelectedItem != null) && File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang", Application.Current.Dispatcher.Invoke(() => TranslationsFilesListBox.SelectedItem.ToString()))))
+                if (Application.Current.Dispatcher.Invoke(() => TranslationsFilesListBox.SelectedItem != null) && File.Exists(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "src\\main\\resources\\assets", _workspaceManager.ModProperties.ModID, "lang", Application.Current.Dispatcher.Invoke(() => TranslationsFilesListBox.SelectedItem.ToString()))))
                 {
-                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TranslationsTextEditor.Text = File.ReadAllText(Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang", TranslationsFilesListBox.SelectedItem.ToString()))));
+                    Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TranslationsTextEditor.Text = File.ReadAllText(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "src\\main\\resources\\assets", _workspaceManager.ModProperties.ModID, "lang", TranslationsFilesListBox.SelectedItem.ToString()))));
                     Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TranslationsDeleteButton.IsEnabled = true));
                 }
                 else
@@ -511,7 +568,7 @@ namespace Forge_Modding_Helper_3.Windows
         {
             if (TranslationsFilesListBox.SelectedItem != null)
             {
-                File.WriteAllText(Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang", TranslationsFilesListBox.SelectedItem.ToString()), TranslationsTextEditor.Text);
+                File.WriteAllText(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "src\\main\\resources\\assets", _workspaceManager.ModProperties.ModID, "lang", TranslationsFilesListBox.SelectedItem.ToString()), TranslationsTextEditor.Text);
             }
         }
 
@@ -520,7 +577,7 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private async void TranslationsAddButtonClick(object sender, RoutedEventArgs e)
         {
-            new AddTranslationFileDialog(Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang")).ShowDialog();
+            new AddTranslationFileDialog(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "src\\main\\resources\\assets", _workspaceManager.ModProperties.ModID, "lang")).ShowDialog();
             await RefreshTranslationsList();
         }
 
@@ -529,7 +586,7 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private async void TranslationsDeleteButtonClick(object sender, RoutedEventArgs e)
         {
-            string filePath = Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, "lang", TranslationsFilesListBox.SelectedItem.ToString());
+            string filePath = Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "src\\main\\resources\\assets", _workspaceManager.ModProperties.ModID, "lang", TranslationsFilesListBox.SelectedItem.ToString());
 
             if (TranslationsFilesListBox.SelectedItem != null && File.Exists(filePath))
             {
@@ -550,7 +607,7 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private async void ExportationButtonClick(object sender, RoutedEventArgs e)
         {
-            string destinationFilePath = Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh", "versions", App.CurrentProjectData.ModData.ModID + "-" + App.CurrentProjectData.ModData.ModVersion + ".jar");
+            string destinationFilePath = Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions", _workspaceManager.ModProperties.ModID + "-" + _workspaceManager.ModProperties.ModVersion + ".jar");
 
             // Show warning if the version has been already builded
             if (File.Exists(destinationFilePath))
@@ -562,7 +619,7 @@ namespace Forge_Modding_Helper_3.Windows
             // Configure console and run build task
             this.ModExportationConsoleControl.FontSize = 10;
             this.ModExportationConsoleControl.ClearOutput();
-            this.ModExportationConsoleControl.StartProcess("cmd.exe", "/k \"cd /d " + App.CurrentProjectData.ProjectDirectory + "\"");
+            this.ModExportationConsoleControl.StartProcess("cmd.exe", "/k \"cd /d " + _workspaceManager.WorkspaceProperties.WorkspacePath + "\"");
             this.ModExportationConsoleControl.WriteInput("gradlew build --no-daemon & exit", Color.FromRgb(255, 240, 0), true);
             this.SideBarExportationProgressBar.Visibility = Visibility.Visible;
 
@@ -584,8 +641,8 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private async void ManageVersionHistoryAfterExportation()
         {
-            string ouputFilePath = Path.Combine(App.CurrentProjectData.ProjectDirectory, "build", "libs", string.Concat(App.CurrentProjectData.ModData.ModID, "-", App.CurrentProjectData.ModData.ModVersion, ".jar"));
-            string destinationFilePath = Path.Combine(App.CurrentProjectData.ProjectDirectory, "fmh", "versions", string.Concat(App.CurrentProjectData.ModData.ModID, "-", App.CurrentProjectData.ModData.ModVersion, ".jar"));
+            string ouputFilePath = Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "build", "libs", string.Concat(_workspaceManager.ModProperties.ModID, "-", _workspaceManager.ModProperties.ModVersion, ".jar"));
+            string destinationFilePath = Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions", string.Concat(_workspaceManager.ModProperties.ModID, "-", _workspaceManager.ModProperties.ModVersion, ".jar"));
 
             // If the output file is not found, show error and stop process here
             if (!File.Exists(ouputFilePath))
@@ -595,14 +652,14 @@ namespace Forge_Modding_Helper_3.Windows
             }
 
             // Refresh mod versions history data
-            await App.CurrentProjectData.ModVersionsHistoryData.ReadData();
+            _workspaceManager.ModVersionsHistory.ReadVersionsHistory();
 
             // Deleting previous generated build for this mod version if necessary
             if (File.Exists(destinationFilePath))
             {
                 this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.deleting_previous_file")), Color.FromRgb(255, 240, 0));
                 File.Delete(destinationFilePath);
-                App.CurrentProjectData.ModVersionsHistoryData.RemoveVersionFromHistory(App.CurrentProjectData.ModData.ModVersion);
+                _workspaceManager.ModVersionsHistory.RemoveVersionFromHistory(_workspaceManager.ModProperties.ModVersion);
             }
 
             // Moving file to fmh/versions folder
@@ -611,8 +668,8 @@ namespace Forge_Modding_Helper_3.Windows
 
             this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.updating_versions_history")), Color.FromRgb(255, 240, 0));
 
-            App.CurrentProjectData.ModVersionsHistoryData.AddVersionToHistory(App.CurrentProjectData.ModData.ModVersion, App.CurrentProjectData.ModData.ModMinecraftVersion, DateTime.Now, App.CurrentProjectData.ModData.ModID + "-" + App.CurrentProjectData.ModData.ModVersion + ".jar");
-            await App.CurrentProjectData.ModVersionsHistoryData.WriteData();
+            _workspaceManager.ModVersionsHistory.AddVersionToHistory(_workspaceManager.ModProperties.ModVersion, _workspaceManager.ModProperties.ModMinecraftVersion, DateTime.Now, _workspaceManager.ModProperties.ModID + "-" + _workspaceManager.ModProperties.ModVersion + ".jar");
+            _workspaceManager.ModVersionsHistory.WriteData();
 
             // Refresh mod data
             Dispatcher.Invoke(() => RefreshInterfaceModInfos());
@@ -628,9 +685,9 @@ namespace Forge_Modding_Helper_3.Windows
         private async void RefreshInterfaceModInfos()
         {
             // Mod logo (side bar, mod settings)
-            if (File.Exists(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
+            if (File.Exists(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, @"src\main\resources\logo.png")))
             {
-                using (var stream = File.OpenRead(Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\logo.png")))
+                using (var stream = File.OpenRead(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, @"src\main\resources\logo.png")))
                 {
                     var image = new BitmapImage();
                     image.BeginInit();
@@ -649,44 +706,44 @@ namespace Forge_Modding_Helper_3.Windows
             }
 
             // Home section
-            this.HomeModNameTextblock.Text = App.CurrentProjectData.ModData.ModName;
-            this.HomeWorkspaceFolderTextblock.Text = App.CurrentProjectData.ProjectDirectory;
-            this.TexturesInfoDisplay.InfoContent = App.CurrentProjectData.TexturesList.Count.ToString();
-            this.ModelsInfoDisplay.InfoContent = App.CurrentProjectData.ModelsList.Count.ToString();
-            this.JavaFilesInfoDisplay.InfoContent = App.CurrentProjectData.JavaFilesList.Count.ToString();
-            this.LinesCountInfoDisplay.InfoContent = App.CurrentProjectData.CodeLinesCount.ToString();
-            this.ModVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModVersion;
-            this.MinecraftVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModMinecraftVersion;
-            this.ForgeVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModAPIVersion;
-            this.MappingsVersionInfoDisplay.InfoContent = App.CurrentProjectData.ModData.ModMappingsVersion.Replace("(MCP)", "");
+            this.HomeModNameTextblock.Text = _workspaceManager.ModProperties.ModName;
+            this.HomeWorkspaceFolderTextblock.Text = _workspaceManager.WorkspaceProperties.WorkspacePath;
+            this.TexturesInfoDisplay.InfoContent = _workspaceManager.AssetsProperties.TexturesFiles.Count.ToString();
+            this.ModelsInfoDisplay.InfoContent = _workspaceManager.AssetsProperties.ModelsFiles.Count.ToString();
+            this.JavaFilesInfoDisplay.InfoContent = _workspaceManager.SourceCodeProperties.JavaFiles.Count.ToString();
+            this.LinesCountInfoDisplay.InfoContent = _workspaceManager.SourceCodeProperties.CodeLinesCount.ToString();
+            this.ModVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModVersion;
+            this.MinecraftVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModMinecraftVersion;
+            this.ForgeVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModAPIVersion;
+            this.MappingsVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModMappingsVersion.Replace("(MCP)", "");
 
             // Mod settings section
-            this.ModSettingsModNameTextbox.Text = App.CurrentProjectData.ModData.ModName;
-            this.ModSettingsModDescriptionTextbox.Text = App.CurrentProjectData.ModData.ModDescription;
-            this.ModSettingsModAuthorsTextbox.Text = App.CurrentProjectData.ModData.ModAuthors;
-            this.ModSettingsModLicenseTextbox.Text = App.CurrentProjectData.ModData.ModLicense;
-            this.ModSettingsModCreditsTextbox.Text = App.CurrentProjectData.ModData.ModCredits;
-            this.ModSettingsModWebsiteTextbox.Text = App.CurrentProjectData.ModData.ModWebsite;
-            this.ModSettingsModBugTrackerURLTextbox.Text = App.CurrentProjectData.ModData.ModIssueTracker;
-            this.ModSettingsModUpdateJsonURLTextbox.Text = App.CurrentProjectData.ModData.ModUpdateJSONURL;
-            this.ModSettingsModVersionTextbox.Text = App.CurrentProjectData.ModData.ModVersion;
-            this.ModSettingsMinecraftVersionTextbox.Text = App.CurrentProjectData.ModData.ModMinecraftVersion;
-            this.ModSettingsForgeVersionTextbox.Text = App.CurrentProjectData.ModData.ModAPIVersion;
-            this.ModSettingsMappingsVersionTextbox.Text = App.CurrentProjectData.ModData.ModMappingsVersion;
-            this.ModSettingsModidTextbox.Text = App.CurrentProjectData.ModData.ModID;
-            this.ModSettingsModgroupTextbox.Text = App.CurrentProjectData.ModData.ModGroup;
+            this.ModSettingsModNameTextbox.Text = _workspaceManager.ModProperties.ModName;
+            this.ModSettingsModDescriptionTextbox.Text = _workspaceManager.ModProperties.ModDescription;
+            this.ModSettingsModAuthorsTextbox.Text = _workspaceManager.ModProperties.ModAuthors;
+            this.ModSettingsModLicenseTextbox.Text = _workspaceManager.ModProperties.ModLicense;
+            this.ModSettingsModCreditsTextbox.Text = _workspaceManager.ModProperties.ModCredits;
+            this.ModSettingsModWebsiteTextbox.Text = _workspaceManager.ModProperties.ModWebsite;
+            this.ModSettingsModBugTrackerURLTextbox.Text = _workspaceManager.ModProperties.ModIssueTracker;
+            this.ModSettingsModUpdateJsonURLTextbox.Text = _workspaceManager.ModProperties.ModUpdateJSONURL;
+            this.ModSettingsModVersionTextbox.Text = _workspaceManager.ModProperties.ModVersion;
+            this.ModSettingsMinecraftVersionTextbox.Text = _workspaceManager.ModProperties.ModMinecraftVersion;
+            this.ModSettingsForgeVersionTextbox.Text = _workspaceManager.ModProperties.ModAPIVersion;
+            this.ModSettingsMappingsVersionTextbox.Text = _workspaceManager.ModProperties.ModMappingsVersion;
+            this.ModSettingsModidTextbox.Text = _workspaceManager.ModProperties.ModID;
+            this.ModSettingsModgroupTextbox.Text = _workspaceManager.ModProperties.ModGroup;
 
             // Mod exportation section
-            this.ModNameExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModName;
-            this.ModVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModVersion;
-            this.ModAuthorsExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModAuthors;
-            this.ForgeVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModAPIVersion;
-            this.MinecraftVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModMinecraftVersion;
-            this.MappingsVersionExportationRecapTextBlock.Text = App.CurrentProjectData.ModData.ModMappingsVersion;
+            this.ModNameExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModName;
+            this.ModVersionExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModVersion;
+            this.ModAuthorsExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModAuthors;
+            this.ForgeVersionExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModAPIVersion;
+            this.MinecraftVersionExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModMinecraftVersion;
+            this.MappingsVersionExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModMappingsVersion;
 
             // Mod history
-            var modVersionsHistoryData = await App.CurrentProjectData.ModVersionsHistoryData.GetModVersionsHistory();
-            HomeModVersionsHistoryListView.ItemsSource = modVersionsHistoryData.OrderByDescending(v => v.VersionDateTime);
+            await Task.Run(() => { _workspaceManager.ModVersionsHistory.ReadVersionsHistory(); });
+            HomeModVersionsHistoryListView.ItemsSource = _workspaceManager.ModVersionsHistory.VersionHistory.OrderByDescending(v => v.VersionDateTime);
         }
 
         /// <summary>
@@ -821,7 +878,7 @@ namespace Forge_Modding_Helper_3.Windows
                             }
 
                             // Refresh blockstates list
-                            await App.CurrentProjectData.ScanBlockstates();
+                            await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllBlockstatesFiles(); });
                             await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);
                         }
                     }
@@ -846,7 +903,7 @@ namespace Forge_Modding_Helper_3.Windows
                             }
 
                             // Refresh models list
-                            await App.CurrentProjectData.ScanModels();
+                            await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllModelsFiles(); });
                             await RefreshModelsListView(ModelsSearchTextbox.Text);
                         }
                     }
@@ -871,7 +928,7 @@ namespace Forge_Modding_Helper_3.Windows
                             }
 
                             // Refresh textures list
-                            await App.CurrentProjectData.ScanTextures();
+                            await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllTexturesFiles(); });
                             await RefreshTexturesListView(TexturesSearchTextbox.Text);
                         }
                     }
@@ -935,7 +992,7 @@ namespace Forge_Modding_Helper_3.Windows
                         // Show rename dialog
                         new RenameDialog(((FileEntry)BlockstatesListView.SelectedItem).FilePath).ShowDialog();
                         // Refresh blockstates list
-                        await App.CurrentProjectData.ScanBlockstates();
+                        await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllBlockstatesFiles(); });
                         await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);
                     }
                 }
@@ -948,7 +1005,7 @@ namespace Forge_Modding_Helper_3.Windows
                         // Show rename dialog
                         new RenameDialog(((FileEntry)ModelsListView.SelectedItem).FilePath).ShowDialog();
                         // Refresh models list
-                        await App.CurrentProjectData.ScanModels();
+                        await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllModelsFiles(); });
                         await RefreshModelsListView(ModelsSearchTextbox.Text);
                     }
                 }
@@ -961,7 +1018,7 @@ namespace Forge_Modding_Helper_3.Windows
                         // Show rename dialog
                         new RenameDialog(((FileEntry)TexturesListView.SelectedItem).FilePath).ShowDialog();
                         // Refresh textures list
-                        await App.CurrentProjectData.ScanTextures();
+                        await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllTexturesFiles(); });
                         await RefreshTexturesListView(TexturesSearchTextbox.Text);
                     }
                 }
@@ -982,18 +1039,21 @@ namespace Forge_Modding_Helper_3.Windows
                 if (senderButton.Name.Contains("Blockstates"))
                 {
                     // Refresh blockstates listView content
+                    await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllBlockstatesFiles(); });
                     await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);
                 }
                 // If this is the models refresh button
                 else if (senderButton.Name.Contains("Models"))
                 {
                     // Refresh models listView content
+                    await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllModelsFiles(); });
                     await RefreshModelsListView(ModelsSearchTextbox.Text);
                 }
                 // If this is the textures refresh button
                 else if (senderButton.Name.Contains("Textures"))
                 {
                     // Refresh textures listView content
+                    await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllTexturesFiles(); });
                     await RefreshTexturesListView(TexturesSearchTextbox.Text);
                 }
             }
@@ -1027,7 +1087,7 @@ namespace Forge_Modding_Helper_3.Windows
                         new ImportFileDialog(filesDialog.FileNames, "blockstates").ShowDialog();
 
                         // Refresh blockstates listView content
-                        await App.CurrentProjectData.ScanBlockstates();
+                        await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllBlockstatesFiles(); });
                         await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);
                     }
                     // If this is the models importation button
@@ -1037,7 +1097,7 @@ namespace Forge_Modding_Helper_3.Windows
                         new ImportFileDialog(filesDialog.FileNames, "models").ShowDialog();
 
                         // Refresh models listView content
-                        await App.CurrentProjectData.ScanModels();
+                        await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllModelsFiles(); });
                         await RefreshModelsListView(ModelsSearchTextbox.Text);
                     }
                     // If this is the textures importation button
@@ -1047,7 +1107,7 @@ namespace Forge_Modding_Helper_3.Windows
                         new ImportFileDialog(filesDialog.FileNames, "textures").ShowDialog();
 
                         // Refresh textures listView content
-                        await App.CurrentProjectData.ScanTextures();
+                        await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllTexturesFiles(); });
                         await RefreshTexturesListView(TexturesSearchTextbox.Text);
                     }
                 }
@@ -1226,7 +1286,7 @@ namespace Forge_Modding_Helper_3.Windows
                 WelcomeWindow welcomeWindow = new WelcomeWindow();
 
                 // rewrite project file
-                App.CurrentProjectData.WriteProjectFile();
+                //App.CurrentProjectData.WriteProjectFile();
 
                 // Refresh recent project list
                 LastWorkspaces.RefreshData();

@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FMH.Workspace.Entities;
+using FMH.Workspace.Data;
 
 namespace FMH.Workspace.WorkspaceManager
 {
-    public class WorkspaceManagerHelper
+    public static class WorkspaceManagerHelper
     {
         /// <summary>
         /// Return the corresponding workspace manager for the specified Minecraft version
         /// </summary>
         /// <param name="mcVersion">Targeted minecraft version</param>
+        /// <param name="workspacePath">Workspace path</param>
         /// <returns>Corresponding workspace manager, <c>null</c> if not found</returns>
-        public IWorkspaceManager GetWorkspaceManager(string mcVersion)
+        public static IWorkspaceManager GetWorkspaceManager(string mcVersion, string workspacePath)
         {
             IWorkspaceManager workspaceManager;
 
@@ -31,8 +32,12 @@ namespace FMH.Workspace.WorkspaceManager
             }
 
             // Set default values
-            workspaceManager.WorkspaceProperties = new WorkspaceProperties();
+            workspaceManager.WorkspaceProperties = new WorkspaceProperties()
+            {
+                WorkspacePath = workspacePath
+            };
             workspaceManager.ModProperties = new ModProperties();
+            workspaceManager.ModVersionsHistory = new ModVersionsHistory(workspacePath);
 
             return workspaceManager;
         }

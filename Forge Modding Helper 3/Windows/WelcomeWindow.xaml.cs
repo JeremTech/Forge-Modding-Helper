@@ -29,7 +29,7 @@ namespace Forge_Modding_Helper_3.Windows
     public partial class WelcomeWindow : Window
     {
         // Selected project path
-        private string selectedProjectPath = "";
+        private ProjectFile _selectedProjectData;
 
         public WelcomeWindow()
         {
@@ -66,11 +66,11 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private void open_mod_button_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(this.selectedProjectPath))
+            if (_selectedProjectData != null)
             {
-                if (Directory.Exists(this.selectedProjectPath))
+                if (Directory.Exists(_selectedProjectData.ProjectPath))
                 {
-                    new ProjectScanWindow(this.selectedProjectPath).Show();
+                    new ForgeProjectExplorer(_selectedProjectData.ProjectPath, _selectedProjectData.MCVersion).Show();
                     this.Close();
                 }
                 else
@@ -85,15 +85,15 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private void delete_mod_button_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(this.selectedProjectPath))
+            if (_selectedProjectData != null)
             {
                 MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.delete"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (msgResult == MessageBoxResult.Yes)
                 {
-                    if (Directory.Exists(this.selectedProjectPath))
+                    if (Directory.Exists(_selectedProjectData.ProjectPath))
                     {
-                        FileSystem.DeleteDirectory(this.selectedProjectPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                        FileSystem.DeleteDirectory(_selectedProjectData.ProjectPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
                         LastWorkspaces.RefreshData();
                         listbox_recent_workspaces.ItemsSource = null;
                         listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
@@ -166,15 +166,15 @@ namespace Forge_Modding_Helper_3.Windows
             if (listbox_recent_workspaces.SelectedItem != null)
             {
                 ProjectFile workspace = listbox_recent_workspaces.SelectedItem as ProjectFile;
-                this.selectedProjectPath = workspace != null ? workspace.ProjectPath : "";
+                this._selectedProjectData = workspace ?? null;
             }
             else
             {
-                this.selectedProjectPath = "";
+                this._selectedProjectData = null;
             }
 
             // Update project buttons
-            if (!string.IsNullOrWhiteSpace(this.selectedProjectPath))
+            if (_selectedProjectData != null)
             {
                 open_mod_button.IsEnabled = true;
                 delete_mod_button.IsEnabled = true;

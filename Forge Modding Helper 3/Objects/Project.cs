@@ -1,4 +1,4 @@
-﻿using Forge_Modding_Helper_3.Files.Workspace;
+﻿using FMH.Workspace.Data;
 using Forge_Modding_Helper_3.Files.Workspace_Data;
 using Forge_Modding_Helper_3.Utils;
 using Newtonsoft.Json;
@@ -26,7 +26,7 @@ namespace Forge_Modding_Helper_3.Objects
         /// <summary>
         /// Mod versions history data
         /// </summary>
-        public ModVersionsHistoryFile ModVersionsHistoryData { get; set; }
+        public ModVersionsHistory ModVersionsHistoryData { get; set; }
 
         /// <summary>
         /// Project directory
@@ -65,7 +65,7 @@ namespace Forge_Modding_Helper_3.Objects
         {
             this.ProjectDirectory = directory;
             this.ModData = new ModInfos();
-            this.ModVersionsHistoryData = new ModVersionsHistoryFile();
+            this.ModVersionsHistoryData = new ModVersionsHistory(directory);
         }
 
         /// <summary>
@@ -75,13 +75,13 @@ namespace Forge_Modding_Helper_3.Objects
         {
             this.ProjectDirectory = directory;
             this.ModData = data;
-            this.ModVersionsHistoryData = new ModVersionsHistoryFile();
+            this.ModVersionsHistoryData = new ModVersionsHistory(directory);
         }
 
         /// <summary>
         /// Constructor with modData and mod history data
         /// </summary>
-        public Project(string directory, ModInfos data, ModVersionsHistoryFile modVersionsHistoryData)
+        public Project(string directory, ModInfos data, ModVersionsHistory modVersionsHistoryData)
         {
             this.ProjectDirectory = directory;
             this.ModData = data;

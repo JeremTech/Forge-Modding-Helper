@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using FMH.Workspace.Entities;
+using FMH.Workspace.Data;
 using StringExtensions;
 
 namespace FMH.Workspace.WorkspaceManager
@@ -12,8 +12,30 @@ namespace FMH.Workspace.WorkspaceManager
     /// </summary>
     public class WorkspaceManagerV1 : IWorkspaceManager
     {
+        /// <summary>
+        /// Workspace properties
+        /// </summary>
         public WorkspaceProperties WorkspaceProperties { get; set; }
+
+        /// <summary>
+        /// Mod properties
+        /// </summary>
         public ModProperties ModProperties { get; set; }
+
+        /// <summary>
+        /// Mod version history
+        /// </summary>
+        public ModVersionsHistory ModVersionsHistory { get; set; }
+
+        /// <summary>
+        /// Assets properties
+        /// </summary>
+        public AssetsProperties AssetsProperties { get; set; }
+
+        /// <summary>
+        /// Source code properties
+        /// </summary>
+        public SourceCodeProperties SourceCodeProperties { get; set; }
 
         /// <summary>
         /// Read data from build.gralde file
