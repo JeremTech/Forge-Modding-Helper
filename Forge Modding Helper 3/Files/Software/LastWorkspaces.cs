@@ -1,4 +1,4 @@
-﻿using Forge_Modding_Helper_3.Files.Workspace_Data;
+﻿using FMH.Workspace.Data;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows;
@@ -23,9 +23,9 @@ namespace Forge_Modding_Helper_3.Files.Software
         public static List<WorkspaceEntry> LastWorkspacesData = new List<WorkspaceEntry>();
 
         /// <summary>
-        /// List of last workspaces project file
+        /// List of last workspaces properties
         /// </summary>
-        public static List<ProjectFile> LastWorkspacesProjectFile = new List<ProjectFile>();
+        public static List<WorkspaceProperties> LastWorkspacesProjectFile = new List<WorkspaceProperties>();
 
         /// <summary>
         /// File path
@@ -44,7 +44,7 @@ namespace Forge_Modding_Helper_3.Files.Software
 
             foreach (WorkspaceEntry work in workspaces)
             {
-                if (work.path == workspace.path)
+                if (work.WorkspacePath == workspace.WorkspacePath)
                 {
                     LastWorkspacesData.Remove(work);
                     break;
@@ -67,26 +67,7 @@ namespace Forge_Modding_Helper_3.Files.Software
 
                 if (jsonData.Count > 0)
                 {
-                    LastWorkspacesData = jsonData.OrderByDescending(element => element.lastUpdated).ToList();
-                }
-
-                // Clear project files data
-                LastWorkspacesProjectFile.Clear();
-
-                // Read project files of each recents workspaces
-                foreach(WorkspaceEntry _workspace in LastWorkspacesData)
-                {
-                    // Create project file if project file doesn't exist (workspaces from previous version of FMH)
-                    if(!File.Exists(Path.Combine(_workspace.path, "fmh\\project.fmh")) && DirectoryUtils.CheckFolderIsForgeWorkspace(_workspace.path))
-                    {
-                        new ProjectScanWindow(_workspace.path, false).ShowDialog();
-                    }
-
-                    // Check if project folder is always correct and if it's not a duplication
-                    if (DirectoryUtils.CheckFolderIsForgeWorkspace(_workspace.path) && !LastWorkspacesProjectFile.Exists(wp => wp.ProjectPath == _workspace.path)) 
-                    {
-                        LastWorkspacesProjectFile.Add(JsonConvert.DeserializeObject<ProjectFile>(File.ReadAllText(Path.Combine(_workspace.path, "fmh\\project.fmh"))));
-                    }
+                    LastWorkspacesData = jsonData.OrderByDescending(element => element.LastUpdated).ToList();
                 }
             }
         }
@@ -99,7 +80,7 @@ namespace Forge_Modding_Helper_3.Files.Software
             // If there are last workspaces
             if (LastWorkspacesData.Count > 0)
             {
-                File.WriteAllText(FilePath, JsonConvert.SerializeObject(LastWorkspacesData.OrderByDescending(element => element.lastUpdated), Formatting.Indented));
+                File.WriteAllText(FilePath, JsonConvert.SerializeObject(LastWorkspacesData.OrderByDescending(element => element.LastUpdated), Formatting.Indented));
             }
         }
 
@@ -117,9 +98,9 @@ namespace Forge_Modding_Helper_3.Files.Software
             foreach (WorkspaceEntry workspace in LastWorkspacesData)
             {
                 // Check directory validity and if workspace is not already registered
-                if (Directory.Exists(workspace.path) && DirectoryUtils.CheckFolderIsForgeWorkspace(workspace.path) && !workspaces.Exists(w => w.path == workspace.path))
+                if (Directory.Exists(workspace.WorkspacePath) && DirectoryUtils.CheckFolderIsForgeWorkspace(workspace.WorkspacePath) && !workspaces.Exists(w => w.WorkspacePath == workspace.WorkspacePath))
                 {
-                    workspaces.Add(new WorkspaceEntry(workspace.path, workspace.lastUpdated));
+                    workspaces.Add(new WorkspaceEntry(workspace.WorkspacePath, workspace.LastUpdated, workspace.WorkspaceModAPI, workspace.WorkspaceMcVersion));
                 }
             }
 

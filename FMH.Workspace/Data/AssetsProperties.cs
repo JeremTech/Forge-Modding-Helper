@@ -37,14 +37,21 @@ namespace FMH.Workspace.Data
         /// Constructor
         /// </summary>
         /// <param name="workspacePath">Workspace path</param>
-        /// <param name="modId">ModId</param>
-        public AssetsProperties(string workspacePath, string modId) 
+        public AssetsProperties(string workspacePath) 
         {
             this._workspacePath = workspacePath;
-            this._modId = modId;
             this.TexturesFiles = new List<string>();
             this.ModelsFiles = new List<string>();
             this.BlockstatesFiles = new List<string>();
+        }
+
+        /// <summary>
+        /// Update modId
+        /// </summary>
+        /// <param name="modId">New modId</param>
+        public void SetModId(string modId)
+        {
+            this._modId = modId;
         }
 
         /// <summary>

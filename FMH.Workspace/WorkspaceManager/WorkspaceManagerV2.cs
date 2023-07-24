@@ -56,35 +56,47 @@ namespace FMH.Workspace.WorkspaceManager
 
             foreach (var line in fileLines) 
             {
-                if (line.Contains("minecraft_version"))
-                    this.ModProperties.ModMinecraftVersion = line.Split('=')[1];
+                var infoLine = line.Split("=");
 
-                if (line.Contains("forge_version"))
-                    this.ModProperties.ModAPIVersion = line.Split('=')[1];
+                if (string.Equals(infoLine[0], "minecraft_version"))
+                    this.ModProperties.ModMinecraftVersion = line.Split('=')[1]
+                                                                 .Replace("[", string.Empty)
+                                                                 .Replace("]", string.Empty)
+                                                                 .Replace("(", string.Empty)
+                                                                 .Replace(")", string.Empty)
+                                                                 .Replace(",", string.Empty);
 
-                if (line.Contains("mapping_version"))
+                if (string.Equals(infoLine[0], "forge_version"))
+                    this.ModProperties.ModAPIVersion = line.Split('=')[1]
+                                                           .Replace("[", string.Empty)
+                                                           .Replace("]", string.Empty)
+                                                           .Replace("(", string.Empty)
+                                                           .Replace(")", string.Empty)
+                                                           .Replace(",", string.Empty);
+
+                if (string.Equals(infoLine[0], "mapping_version"))
                     this.ModProperties.ModMappingsVersion = line.Split('=')[1];
 
-                if (line.Contains("mod_id"))
+                if (string.Equals(infoLine[0], "mod_id"))
                     this.ModProperties.ModID = line.Split('=')[1];
 
-                if (line.Contains("mod_name"))
+                if (string.Equals(infoLine[0], "mod_name"))
                     this.ModProperties.ModName = line.Split('=')[1];
 
-                if (line.Contains("mod_license"))
+                if (string.Equals(infoLine[0], "mod_license"))
                     this.ModProperties.ModLicense = line.Split('=')[1];
 
-                if (line.Contains("mod_version"))
+                if (string.Equals(infoLine[0], "mod_version"))
                     this.ModProperties.ModVersion = line.Split('=')[1];
 
-                if (line.Contains("mod_group_id"))
+                if (string.Equals(infoLine[0], "mod_group_id"))
                     this.ModProperties.ModGroup = line.Split('=')[1];
 
-                if (line.Contains("mod_authors"))
+                if (string.Equals(infoLine[0], "mod_authors"))
                     this.ModProperties.ModAuthors = line.Split('=')[1];
 
-                if (line.Contains("mod_description"))
-                    this.ModProperties.ModAuthors = line.Split('=')[1];
+                if (string.Equals(infoLine[0], "mod_description"))
+                    this.ModProperties.ModDescription = line.Split('=')[1];
             }
         }
 
@@ -120,7 +132,7 @@ namespace FMH.Workspace.WorkspaceManager
         {
             StringBuilder outputText = new StringBuilder();
             string filePath = Path.Combine(WorkspaceProperties.WorkspacePath, "gradle.properties");
-            string forgeVersionShort = ModProperties.ModAPIVersion.Split('-')[1];
+            string forgeVersionShort = ModProperties.ModAPIVersion;
             string forgeVersionRange = forgeVersionShort.Split('.')[0];
 
             // Default memory used for gradle commands

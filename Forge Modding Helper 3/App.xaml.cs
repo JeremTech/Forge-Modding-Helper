@@ -20,11 +20,6 @@ namespace Forge_Modding_Helper_3
     public partial class App : Application
     {
         /// <summary>
-        /// Current project object
-        /// </summary>
-        public static Project CurrentProjectData { get; set; }
-
-        /// <summary>
         /// Load theme from file
         /// </summary>
         /// <param name="fileName">File name of theme (without extension)</param>

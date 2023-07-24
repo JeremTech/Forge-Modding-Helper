@@ -3,30 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace FMH.Workspace.Data
 {
     public class WorkspaceProperties
     {
         /// <summary>
-        /// Mod name
-        /// </summary>
-        public string ModName { get; set; }
-
-        /// <summary>
-        /// Mod description
-        /// </summary>
-        public string ModDescription { get; set; }
-
-        /// <summary>
-        /// Mod logo
-        /// </summary>
-        public string ModLogo { get; set; }
-
-        /// <summary>
         /// Modding API
         /// </summary>
-        public string ModAPI { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ModAPIType ModAPI { get; set; }
 
         /// <summary>
         /// API Version
@@ -37,6 +25,11 @@ namespace FMH.Workspace.Data
         /// Minecraft version
         /// </summary>
         public string MCVersion { get; set; }
+
+        /// <summary>
+        /// ModId
+        /// </summary>
+        public string ModId { get; set; }
 
         /// <summary>
         /// Software version of the last workspace's opening
@@ -51,6 +44,7 @@ namespace FMH.Workspace.Data
         /// <summary>
         /// Workspace path
         /// </summary>
+        [JsonIgnore]
         public string WorkspacePath { get; set; }
     }
 }

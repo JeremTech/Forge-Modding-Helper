@@ -14,9 +14,10 @@ using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows;
 using System.Threading.Tasks;
 using Forge_Modding_Helper_3.Files.Software;
-using Forge_Modding_Helper_3.Generators;
 using McVersionsLib.Forge;
 using McVersionsLib.Core;
+using FMH.Workspace.WorkspaceManager;
+using FMH.Workspace.Data;
 
 namespace Forge_Modding_Helper_3
 {
@@ -50,8 +51,9 @@ namespace Forge_Modding_Helper_3
             {"minecraft_version", ""},
             {"forge_version", ""}
         };
-        // Version generator
-        private WorkspaceGenerator workspaceGenerator;
+
+        // Workspace manager
+        private IWorkspaceManager _workspaceManager;
 
         public AssistantCreator()
         {
@@ -195,11 +197,12 @@ namespace Forge_Modding_Helper_3
                     {
                         if(!String.IsNullOrWhiteSpace(this.mod_infos["minecraft_version"]) && !String.IsNullOrWhiteSpace(this.mod_infos["forge_version"]))
                         {
-                            // Get adapted workspace generator
-                            workspaceGenerator = WorkspaceGenerator.GetGenerator(this.mod_infos["minecraft_version"]);
+                            // Setup adapted workspace manager
+                            _workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(this.mod_infos["minecraft_version"], folder);
+                            _workspaceManager.AssetsProperties.SetModId(this.mod_infos["mod_id"]);
 
                             // If no generator have been found, critical error and application exit
-                            if(workspaceGenerator == null)
+                            if (_workspaceManager == null)
                             {
                                 MessageBox.Show(UITextTranslator.getTranslation("assistant_creator.alert.no_generator"));
                                 App.Current.Shutdown();
@@ -236,26 +239,27 @@ namespace Forge_Modding_Helper_3
                     }
                 case 5:
                     {
-                        // Saving in recent workspaces
-                        LastWorkspaces.LastWorkspacesData.Add(new WorkspaceEntry(this.folder, DateTime.Now));
-                        LastWorkspaces.WriteData();
-
-                        // Write project data
-                        App.CurrentProjectData = new Project(this.folder);
-                        App.CurrentProjectData.ModData.ModName = this.mod_infos["mod_name"];
-                        App.CurrentProjectData.ModData.ModAuthors = this.mod_infos["mod_authors"];
-                        App.CurrentProjectData.ModData.ModVersion = this.mod_infos["mod_version"];
-                        App.CurrentProjectData.ModData.ModLicense = this.mod_infos["mod_license"];
-                        App.CurrentProjectData.ModData.ModDescription = this.mod_infos["mod_description"];
-                        App.CurrentProjectData.ModData.ModID = this.mod_infos["mod_id"];
-                        App.CurrentProjectData.ModData.ModGroup = this.mod_infos["mod_group"];
-                        App.CurrentProjectData.ModData.ModLogo = this.mod_infos["mod_logo"];
-                        App.CurrentProjectData.ModData.ModCredits = this.mod_infos["mod_credits"];
-                        App.CurrentProjectData.ModData.ModWebsite = this.mod_infos["display_url"];
-                        App.CurrentProjectData.ModData.ModIssueTracker = this.mod_infos["issue_tracker"];
-                        App.CurrentProjectData.ModData.ModUpdateJSONURL = this.mod_infos["update_json"];
-                        App.CurrentProjectData.ModData.ModMinecraftVersion = this.mod_infos["minecraft_version"];
-                        App.CurrentProjectData.ModData.ModAPIVersion = this.mod_infos["forge_version"];
+                        // Save mod data
+                        _workspaceManager.ModProperties.ModName = this.mod_infos["mod_name"];
+                        _workspaceManager.ModProperties.ModAuthors = this.mod_infos["mod_authors"];
+                        _workspaceManager.ModProperties.ModVersion = this.mod_infos["mod_version"];
+                        _workspaceManager.ModProperties.ModLicense = this.mod_infos["mod_license"];
+                        _workspaceManager.ModProperties.ModDescription = this.mod_infos["mod_description"];
+                        _workspaceManager.ModProperties.ModID = this.mod_infos["mod_id"];
+                        _workspaceManager.ModProperties.ModGroup = this.mod_infos["mod_group"];
+                        _workspaceManager.ModProperties.ModLogo = this.mod_infos["mod_logo"];
+                        _workspaceManager.ModProperties.ModCredits = this.mod_infos["mod_credits"];
+                        _workspaceManager.ModProperties.ModWebsite = this.mod_infos["display_url"];
+                        _workspaceManager.ModProperties.ModIssueTracker = this.mod_infos["issue_tracker"];
+                        _workspaceManager.ModProperties.ModUpdateJSONURL = this.mod_infos["update_json"];
+                        _workspaceManager.ModProperties.ModMinecraftVersion = this.mod_infos["minecraft_version"];
+                        _workspaceManager.ModProperties.ModAPIVersion = this.mod_infos["forge_version"].Split('-')[1];
+                        
+                        _workspaceManager.WorkspaceProperties.MCVersion = this.mod_infos["minecraft_version"];
+                        _workspaceManager.WorkspaceProperties.ModAPI = ModAPIType.Forge;
+                        _workspaceManager.WorkspaceProperties.SoftwareVersion = AppInfos.GetApplicationVersionCompact();
+                        _workspaceManager.WorkspaceProperties.APIVersion = this.mod_infos["forge_version"];
+                        _workspaceManager.WorkspaceProperties.LastOpened = DateTime.Now;
 
                         // Update UI components
                         sixth_grid.Visibility = Visibility.Hidden;
@@ -285,6 +289,10 @@ namespace Forge_Modding_Helper_3
                         {
                             update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.downloading_forge.error") + this.mod_infos["forge_version"] + " !");
                         }
+
+                        // Saving in recent workspaces
+                        LastWorkspaces.LastWorkspacesData.Add(new WorkspaceEntry(this.folder, DateTime.Now, _workspaceManager.WorkspaceProperties.ModAPI, _workspaceManager.WorkspaceProperties.MCVersion));
+                        LastWorkspaces.WriteData();
 
                         break;
                     }
@@ -429,11 +437,7 @@ namespace Forge_Modding_Helper_3
             if(code_packages_checkBox.IsChecked == true)
             {
                 update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.deleting_example") + " \"" + this.folder + @"\src\main\java" + "\"...");
-                
-                File.Delete(this.folder + @"\src\main\java\com\example\examplemod\ExampleMod.java");
-                Directory.Delete(this.folder + @"\src\main\java\com\example\examplemod");
-                Directory.Delete(this.folder + @"\src\main\java\com\example");
-                Directory.Delete(this.folder + @"\src\main\java\com");
+                Directory.Delete(this.folder + @"\src\main\java\com", true);
 
                 update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_code_package") + " \"" + this.folder + @"\src\main\java" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\java\" + this.mod_infos["mod_group"].Replace(".", @"\"));
@@ -470,18 +474,19 @@ namespace Forge_Modding_Helper_3
             if (build_gradle_checkBox.IsChecked == true)
             {
                 update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.configurate_build_gradle_file") + " \"" + this.folder + "\"...");
-                workspaceGenerator.GenerateBuildGradle();
+                _workspaceManager.WriteBuildGradle();
+                _workspaceManager.WriteGradleProperties();
             }
-
-            // Generate gradle properties (for MC 1.20+)
-            workspaceGenerator.GenerateGradleProperties();
 
             // Generate mod.toml file
             if (mod_toml_checkBox.IsChecked == true)
             {
                 update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.configurate_toml_file") + " \"" + this.folder + @"\src\main\resources\META-INF\""...");
-                workspaceGenerator.GenerateModToml();
+                _workspaceManager.WriteModToml();
             }
+
+            // Generate project file
+            WorkspaceManagerHelper.WriteProjectFile(_workspaceManager.WorkspaceProperties);
 
             // Copy mod logo (if gave by the user)
             if (!string.IsNullOrEmpty(this.mod_infos["mod_logo"]))
@@ -497,6 +502,9 @@ namespace Forge_Modding_Helper_3
                     update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.copy_mod_logo_error"));
                 }
             }
+            
+            // Write workspace data
+            WorkspaceManagerHelper.WriteWorkspaceData(_workspaceManager);
         }
 
         /// <summary>
@@ -746,7 +754,7 @@ namespace Forge_Modding_Helper_3
         /// </summary>
         private void finish_button_Click(object sender, RoutedEventArgs e)
         {
-            new ProjectScanWindow(this.folder).Show();
+            new ForgeProjectExplorer(_workspaceManager.WorkspaceProperties.WorkspacePath);
             this.Close();
         }
         #endregion

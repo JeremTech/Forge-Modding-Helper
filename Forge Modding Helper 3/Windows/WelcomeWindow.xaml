@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="Forge Modding Helper - Welcome" Height="505.875" Width="638" ResizeMode="CanMinimize" Initialized="Window_Initialized" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+        Title="Forge Modding Helper - Welcome" Height="505.875" Width="638" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     
     
     <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}">
@@ -58,15 +58,10 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding ModLogo}" Width="40" Height="40" Margin="0, 2, 5, 0"/>
+                            <Image Source="{Binding WorkspaceLogoPath}" Width="30" Height="30" Margin="5"/>
                             <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="[" Foreground="{DynamicResource FontColorPrimary}"/>
-                                    <Label Content="{Binding MCVersion}" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}" Margin="-9, 0, -9, 0"/>
-                                    <Label Content="]" Foreground="{DynamicResource FontColorPrimary}"/>
-                                    <Label Content="{Binding ModName}" Foreground="{DynamicResource FontColorPrimary}" FontWeight="Bold" Margin="-5, 0, 0, 0"/>
-                                </StackPanel>
-                                <Label Content="{Binding ModDescription}" HorizontalContentAlignment="Left" FontStyle="Italic" Foreground="{DynamicResource FontColorPrimary}" Margin="0, -5, 0, 0"/>
+                                <Label Content="{Binding WorkspaceName}" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}"/>
+                                <Label Content="{Binding WorkspacePath}" HorizontalContentAlignment="Left" FontStyle="Italic" Foreground="{DynamicResource FontColorPrimary}" Margin="0, -10, 0, 0"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>

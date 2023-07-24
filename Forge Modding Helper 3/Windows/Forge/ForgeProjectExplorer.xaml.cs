@@ -3,7 +3,6 @@ using FMH.Workspace.WorkspaceManager;
 using FontAwesome.WPF;
 using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Files.Software;
-using Forge_Modding_Helper_3.Generators;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Forge_Modding_Helper_3.Windows.Dialogs;
@@ -49,7 +48,7 @@ namespace Forge_Modding_Helper_3.Windows
         /// <summary>
         /// Constructor
         /// </summary>
-        public ForgeProjectExplorer(string projectPath, string projectMcVersion)
+        public ForgeProjectExplorer(string projectPath)
         {
             // Initialize UI
             InitializeComponent();
@@ -65,7 +64,7 @@ namespace Forge_Modding_Helper_3.Windows
             currentSectionOpenedTag = "Home";
 
             // Initialize workspace manager
-            _workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(projectMcVersion, projectPath);
+            _workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(projectPath);
 
             this.Loaded += ProjectExplorer_Loaded;
         }
@@ -98,7 +97,8 @@ namespace Forge_Modding_Helper_3.Windows
                 _workspaceManager.ModVersionsHistory.ReadVersionsHistory();
 
                 // Assets data
-                _workspaceManager.AssetsProperties = new AssetsProperties(_workspaceManager.WorkspaceProperties.WorkspacePath, _workspaceManager.ModProperties.ModID);
+                _workspaceManager.AssetsProperties = new AssetsProperties(_workspaceManager.WorkspaceProperties.WorkspacePath);
+                _workspaceManager.AssetsProperties.SetModId(_workspaceManager.ModProperties.ModID);
                 _workspaceManager.AssetsProperties.RetrieveAllTexturesFiles();
                 _workspaceManager.AssetsProperties.RetrieveAllModelsFiles();
                 _workspaceManager.AssetsProperties.RetrieveAllBlockstatesFiles();
@@ -138,10 +138,7 @@ namespace Forge_Modding_Helper_3.Windows
                 File.Delete(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions", selectedVersion.FileName));
 
                 _workspaceManager.ModVersionsHistory.RemoveVersionFromHistory(selectedVersion.ModVersion);
-                await Task.Run(() =>
-                {
-                    _workspaceManager.ModVersionsHistory.WriteData();
-                });
+                await Task.Run(() => { _workspaceManager.ModVersionsHistory.WriteData(); });
 
                 RefreshInterfaceModInfos();
             }
@@ -250,10 +247,8 @@ namespace Forge_Modding_Helper_3.Windows
                 _workspaceManager.WriteBuildGradle();
                 _workspaceManager.WriteModToml();
                 _workspaceManager.WriteGradleProperties();
+                WorkspaceManagerHelper.WriteWorkspaceData(_workspaceManager);
             });
-
-            // Write mod data json files
-            //await App.CurrentProjectData.WriteModData();
 
             // Update UI
             this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.saved_modifications");
@@ -330,7 +325,7 @@ namespace Forge_Modding_Helper_3.Windows
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
                 // Show importation dialog
-                new ImportFileDialog(files, "blockstates").ShowDialog();
+                new ImportFileDialog(files, "blockstates", _workspaceManager.WorkspaceProperties.WorkspacePath, _workspaceManager.ModProperties.ModID).ShowDialog();
 
                 await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllBlockstatesFiles(); });
                 await RefreshBlockstatesListView(BlockstatesSearchTextbox.Text);                
@@ -429,7 +424,7 @@ namespace Forge_Modding_Helper_3.Windows
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 
                 // Show importation dialog
-                new ImportFileDialog(files, "models").ShowDialog();
+                new ImportFileDialog(files, "models", _workspaceManager.WorkspaceProperties.WorkspacePath, _workspaceManager.ModProperties.ModID).ShowDialog();
 
                 await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllModelsFiles(); });
                 await RefreshModelsListView(ModelsSearchTextbox.Text);
@@ -506,7 +501,7 @@ namespace Forge_Modding_Helper_3.Windows
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
                 // Show importation dialog
-                new ImportFileDialog(files, "textures").ShowDialog();
+                new ImportFileDialog(files, "textures", _workspaceManager.WorkspaceProperties.WorkspacePath, _workspaceManager.ModProperties.ModID).ShowDialog();
 
                 await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllTexturesFiles(); });
                 await RefreshTexturesListView(TexturesSearchTextbox.Text);
@@ -664,6 +659,8 @@ namespace Forge_Modding_Helper_3.Windows
 
             // Moving file to fmh/versions folder
             this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.moving_generated_file")), Color.FromRgb(255, 240, 0));
+            if (!Directory.Exists(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions")))
+                Directory.CreateDirectory(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions"));
             File.Move(ouputFilePath, destinationFilePath);
 
             this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.updating_versions_history")), Color.FromRgb(255, 240, 0));
@@ -1084,7 +1081,7 @@ namespace Forge_Modding_Helper_3.Windows
                     if (senderButton.Name.Contains("Blockstates"))
                     {
                         // Show importation dialog
-                        new ImportFileDialog(filesDialog.FileNames, "blockstates").ShowDialog();
+                        new ImportFileDialog(filesDialog.FileNames, "blockstates", _workspaceManager.WorkspaceProperties.WorkspacePath, _workspaceManager.ModProperties.ModID).ShowDialog();
 
                         // Refresh blockstates listView content
                         await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllBlockstatesFiles(); });
@@ -1094,7 +1091,7 @@ namespace Forge_Modding_Helper_3.Windows
                     else if (senderButton.Name.Contains("Models"))
                     {
                         // Show importation dialog
-                        new ImportFileDialog(filesDialog.FileNames, "models").ShowDialog();
+                        new ImportFileDialog(filesDialog.FileNames, "models", _workspaceManager.WorkspaceProperties.WorkspacePath, _workspaceManager.ModProperties.ModID).ShowDialog();
 
                         // Refresh models listView content
                         await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllModelsFiles(); });
@@ -1104,7 +1101,7 @@ namespace Forge_Modding_Helper_3.Windows
                     else if (senderButton.Name.Contains("Textures"))
                     {
                         // Show importation dialog
-                        new ImportFileDialog(filesDialog.FileNames, "textures").ShowDialog();
+                        new ImportFileDialog(filesDialog.FileNames, "textures", _workspaceManager.WorkspaceProperties.WorkspacePath, _workspaceManager.ModProperties.ModID).ShowDialog();
 
                         // Refresh textures listView content
                         await Task.Run(() => { _workspaceManager.AssetsProperties.RetrieveAllTexturesFiles(); });
@@ -1285,8 +1282,10 @@ namespace Forge_Modding_Helper_3.Windows
                 // Configuring welcome window
                 WelcomeWindow welcomeWindow = new WelcomeWindow();
 
-                // rewrite project file
-                //App.CurrentProjectData.WriteProjectFile();
+                // Write workspacedata
+                WorkspaceManagerHelper.WriteWorkspaceData(_workspaceManager);
+                // Generate project file
+                WorkspaceManagerHelper.WriteProjectFile(_workspaceManager.WorkspaceProperties);
 
                 // Refresh recent project list
                 LastWorkspaces.RefreshData();

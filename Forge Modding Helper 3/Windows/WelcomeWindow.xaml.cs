@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using FMH.Workspace.Data;
 using Forge_Modding_Helper_3.Files;
 using Forge_Modding_Helper_3.Files.Software;
-using Forge_Modding_Helper_3.Files.Workspace_Data;
 using Forge_Modding_Helper_3.Objects;
 using Forge_Modding_Helper_3.Utils;
 using Microsoft.VisualBasic.FileIO;
@@ -29,23 +19,26 @@ namespace Forge_Modding_Helper_3.Windows
     public partial class WelcomeWindow : Window
     {
         // Selected project path
-        private ProjectFile _selectedProjectData;
+        private WorkspaceEntry _selectedWorkspace;
 
         public WelcomeWindow()
         {
             InitializeComponent();
+
+            this.Loaded += WelcomeWindow_Loaded;
         }
 
-        /// <summary>
-        /// Function called at the window initialization
-        /// </summary>
-        private void Window_Initialized(object sender, EventArgs e)
+        private void WelcomeWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            /// Update version label content
             version_label.Content = AppInfos.GetApplicationVersionString();
 
             // Loading translations
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
             this.Title = UITextTranslator.getTranslation("welcome.title");
+
+            // Loading last workspaces
+            RefreshLastProjectData(); 
         }
 
         #region Buttons
@@ -66,11 +59,11 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private void open_mod_button_Click(object sender, RoutedEventArgs e)
         {
-            if (_selectedProjectData != null)
+            if (_selectedWorkspace != null)
             {
-                if (Directory.Exists(_selectedProjectData.ProjectPath))
+                if (Directory.Exists(_selectedWorkspace.WorkspacePath))
                 {
-                    new ForgeProjectExplorer(_selectedProjectData.ProjectPath, _selectedProjectData.MCVersion).Show();
+                    new ForgeProjectExplorer(_selectedWorkspace.WorkspacePath).Show();
                     this.Close();
                 }
                 else
@@ -85,18 +78,16 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private void delete_mod_button_Click(object sender, RoutedEventArgs e)
         {
-            if (_selectedProjectData != null)
+            if (_selectedWorkspace != null)
             {
                 MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.delete"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (msgResult == MessageBoxResult.Yes)
                 {
-                    if (Directory.Exists(_selectedProjectData.ProjectPath))
+                    if (Directory.Exists(_selectedWorkspace.WorkspacePath))
                     {
-                        FileSystem.DeleteDirectory(_selectedProjectData.ProjectPath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
-                        LastWorkspaces.RefreshData();
-                        listbox_recent_workspaces.ItemsSource = null;
-                        listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
+                        FileSystem.DeleteDirectory(_selectedWorkspace.WorkspacePath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+                        RefreshLastProjectData();
                     }
                     else
                     {
@@ -111,9 +102,7 @@ namespace Forge_Modding_Helper_3.Windows
         /// </summary>
         private void refresh_mod_list_button_Click(object sender, RoutedEventArgs e)
         {
-            LastWorkspaces.RefreshData();
-            listbox_recent_workspaces.ItemsSource = null;
-            listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
+            RefreshLastProjectData();
         }
 
         private void import_mod_button_Click(object sender, RoutedEventArgs e)
@@ -126,7 +115,7 @@ namespace Forge_Modding_Helper_3.Windows
             {
                 if (DirectoryUtils.CheckFolderIsForgeWorkspace(dialog.SelectedPath))
                 {
-                    string buildGradle = File.ReadAllText(System.IO.Path.Combine(dialog.SelectedPath, "build.gradle"));
+                    string buildGradle = File.ReadAllText(Path.Combine(dialog.SelectedPath, "build.gradle"));
                     string forge_version = buildGradle.getBetween("minecraft 'net.minecraftforge:forge:", "'");
                     string minecraft_version = forge_version.getBetween("", "-");
 
@@ -165,16 +154,16 @@ namespace Forge_Modding_Helper_3.Windows
             // Verifying selection
             if (listbox_recent_workspaces.SelectedItem != null)
             {
-                ProjectFile workspace = listbox_recent_workspaces.SelectedItem as ProjectFile;
-                this._selectedProjectData = workspace ?? null;
+                WorkspaceEntry workspace = listbox_recent_workspaces.SelectedItem as WorkspaceEntry;
+                this._selectedWorkspace = workspace ?? null;
             }
             else
             {
-                this._selectedProjectData = null;
+                this._selectedWorkspace = null;
             }
 
             // Update project buttons
-            if (_selectedProjectData != null)
+            if (_selectedWorkspace != null)
             {
                 open_mod_button.IsEnabled = true;
                 delete_mod_button.IsEnabled = true;
@@ -192,6 +181,13 @@ namespace Forge_Modding_Helper_3.Windows
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.listbox_recent_workspaces.ItemsSource = null;
+        }
+
+        private void RefreshLastProjectData()
+        {
+            LastWorkspaces.RefreshData();
+            this.listbox_recent_workspaces.ItemsSource = null;
+            listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesData;
         }
     }
 }

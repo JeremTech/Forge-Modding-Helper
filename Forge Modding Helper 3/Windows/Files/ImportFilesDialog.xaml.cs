@@ -22,9 +22,16 @@ namespace Forge_Modding_Helper_3.Windows.Files
     /// </summary>
     public partial class ImportFileDialog : Window
     {
-        public ImportFileDialog(string[] filesToImport, string assetsFolder)
+        private string _workspacePath;
+        private string _modId;
+
+        public ImportFileDialog(string[] filesToImport, string assetsFolder, string workspacePath, string modId)
         {
             InitializeComponent();
+
+            // Set properties
+            _workspacePath = workspacePath;
+            _modId = modId;
 
             // Load translations
             UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
@@ -33,8 +40,8 @@ namespace Forge_Modding_Helper_3.Windows.Files
 
             // Get Subdirectories names
             int i = 0;
-            string[] subfoldersNames = new string[Directory.GetDirectories(System.IO.Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, assetsFolder)).Length + 1];
-            foreach (string folder in Directory.GetDirectories(System.IO.Path.Combine(App.CurrentProjectData.ProjectDirectory, "src\\main\\resources\\assets", App.CurrentProjectData.ModData.ModID, assetsFolder)))
+            string[] subfoldersNames = new string[Directory.GetDirectories(System.IO.Path.Combine(_workspacePath, "src\\main\\resources\\assets", _modId, assetsFolder)).Length + 1];
+            foreach (string folder in Directory.GetDirectories(System.IO.Path.Combine(_workspacePath, "src\\main\\resources\\assets", _modId, assetsFolder)))
             {
                 subfoldersNames[i] = System.IO.Path.GetFileName(folder);
                 i++;
@@ -91,11 +98,11 @@ namespace Forge_Modding_Helper_3.Windows.Files
                     // If selected folder is not root
                     if(element.SubFolderDestination != UITextTranslator.getTranslation("dialog.import.root"))
                     {
-                        File.Copy(element.OriginalFilePath, System.IO.Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\assets", App.CurrentProjectData.ModData.ModID, element.AssetsFolder, element.SubFolderDestination, element.FinalName));
+                        File.Copy(element.OriginalFilePath, System.IO.Path.Combine(_workspacePath, "src\\main\\resources\\assets", _modId, element.AssetsFolder, element.SubFolderDestination, element.FinalName));
                     }
                     else
                     {
-                        File.Copy(element.OriginalFilePath, System.IO.Path.Combine(App.CurrentProjectData.ProjectDirectory, @"src\main\resources\assets", App.CurrentProjectData.ModData.ModID, element.AssetsFolder, element.FinalName));
+                        File.Copy(element.OriginalFilePath, System.IO.Path.Combine(_workspacePath, "src\\main\\resources\\assets", _modId, element.AssetsFolder, element.FinalName));
                     }
                 }
             }
