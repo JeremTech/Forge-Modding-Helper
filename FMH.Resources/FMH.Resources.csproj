@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Icons\code_file_icon.png" />
+    <None Remove="Icons\forge_icon.png" />
+    <None Remove="Icons\lines_code_icon.png" />
+    <None Remove="Icons\mappings_icon.png" />
+    <None Remove="Icons\minecraft_icon.png" />
+    <None Remove="Icons\model_icon.png" />
+    <None Remove="Icons\picture_icon.png" />
+    <None Remove="Icons\version_icon.png" />
+    <None Remove="Languages\en_us.json" />
+    <None Remove="Languages\fr_fr.json" />
+    <None Remove="Pictures\background.png" />
+    <None Remove="Pictures\bug_icon.png" />
+    <None Remove="Pictures\cancel.png" />
+    <None Remove="Pictures\check.png" />
+    <None Remove="Pictures\forge_logo.png" />
+    <None Remove="Pictures\github_white.png" />
+    <None Remove="Pictures\help_icon.png" />
+    <None Remove="Pictures\icon.png" />
+    <None Remove="Pictures\java_icon.png" />
+    <None Remove="Pictures\logo.ico" />
+    <None Remove="Pictures\star_icon.png" />
+    <None Remove="Pictures\uncheck.png" />
+    <None Remove="Pictures\warning.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Languages\en_us.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Languages\fr_fr.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\code_file_icon.png" />
+    <Resource Include="Icons\forge_icon.png" />
+    <Resource Include="Icons\lines_code_icon.png" />
+    <Resource Include="Icons\mappings_icon.png" />
+    <Resource Include="Icons\minecraft_icon.png" />
+    <Resource Include="Icons\model_icon.png" />
+    <Resource Include="Icons\picture_icon.png" />
+    <Resource Include="Icons\version_icon.png" />
+    <Resource Include="Pictures\background.png" />
+    <Resource Include="Pictures\bug_icon.png" />
+    <Resource Include="Pictures\cancel.png" />
+    <Resource Include="Pictures\check.png" />
+    <Resource Include="Pictures\forge_logo.png" />
+    <Resource Include="Pictures\github_white.png" />
+    <Resource Include="Pictures\help_icon.png" />
+    <Resource Include="Pictures\icon.png" />
+    <Resource Include="Pictures\java_icon.png" />
+    <Resource Include="Pictures\logo.ico" />
+    <Resource Include="Pictures\star_icon.png" />
+    <Resource Include="Pictures\uncheck.png" />
+    <Resource Include="Pictures\warning.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Themes\dark.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Themes\dracula.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Themes\light.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

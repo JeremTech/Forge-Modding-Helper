@@ -1,0 +1,48 @@
+﻿<Window x:Class="FMH.Core.UI.Common.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="About"
+        Height="356"
+        Width="451"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Initialized="Window_Initialized"
+        Icon="/FMH.Resources;component/Pictures/icon.png">
+    
+    <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}" Margin="0,0,0,-4">
+
+        <!-- Header -->
+        <Image x:Name="image" HorizontalAlignment="Left" Height="90" Margin="20,20,0,0" VerticalAlignment="Top" Width="90" Source="/FMH.Resources;component/Pictures/icon.png" Stretch="Fill"/>
+        <Label Content="Forge Modding Helper" HorizontalAlignment="Left" Margin="120,15,0,0" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" FontSize="28" Width="300"/>
+        <Label Content="© 2017 - 2023 Jerem'Tech" HorizontalAlignment="Left" Margin="120,58,0,0" VerticalAlignment="Top" Width="149" Foreground="{DynamicResource FontColorPrimary}"/>
+
+        <!-- General informations section -->
+        <StackPanel HorizontalAlignment="Left" Height="89" Margin="20,128,0,0" VerticalAlignment="Top" Width="415">
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                <Label x:Name="version_desc_label" Content="Version :" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag="about.label.version"/>
+                <Label x:Name="version_label" Content="0.0.0.0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                <Label x:Name="contributors_desc_label" Content="Contributor : " HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag="about.label.contributors"/>
+                <Label x:Name="contributors_label" Content="Jerem'Tech" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                <Label x:Name="repository_desc_label" Content="Github :" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag="about.label.repository"/>
+                <Image x:Name="github_image" HorizontalAlignment="Left" Height="15" VerticalAlignment="Top" Width="15" Margin="3, 6, 2, 0" Source="/FMH.Resources;component/Pictures/github_white.png" Stretch="Fill"/>
+                <TextBox x:Name="textBox" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="0, 2, 0, 0" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Text="https://github.com/JeremTech/Forge-Modding-Helper" Background="{x:Null}" Foreground="#FF598EFF" BorderBrush="{x:Null}" SelectionBrush="#FF535B6A"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- External librairies section -->
+        <StackPanel HorizontalAlignment="Left" Height="85" Margin="20,220,0,0" VerticalAlignment="Top" Width="415">
+            <Label x:Name="librairies_desc_label" Content="Used librairies :" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag="about.label.librairies"/>
+            <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                <Label Content="• Newtonsoft.Json v13.0.3&#xA;• ConsoleControl.WPF v1.3.0&#xA;• McVersionsLib v1.0.0.1" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
+                <Label Content="• ConsoleControlAPI v1.3.0&#xA;• Leow.TextEditor v0.4.7541.19769&#xA;• FontAwesome.WPF v4.7.0.9" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</Window>

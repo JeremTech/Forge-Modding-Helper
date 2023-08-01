@@ -1,11 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Forge Modding Helper 3", "Forge Modding Helper 3\Forge Modding Helper 3.csproj", "{DCFAFFA3-A3E6-452B-B548-CFD06127D4A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMH.Workspace", "FMH.Workspace\FMH.Workspace.csproj", "{661C407C-49D0-47FE-964A-D9049BFBCB91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMH.Workspace", "FMH.Workspace\FMH.Workspace.csproj", "{661C407C-49D0-47FE-964A-D9049BFBCB91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMH.Core", "FMH.Core\FMH.Core.csproj", "{788FB488-15FE-4146-BF52-AE9554199D86}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMH.Resources", "FMH.Resources\FMH.Resources.csproj", "{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +16,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DCFAFFA3-A3E6-452B-B548-CFD06127D4A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DCFAFFA3-A3E6-452B-B548-CFD06127D4A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DCFAFFA3-A3E6-452B-B548-CFD06127D4A9}.Debug|x64.ActiveCfg = Debug|x64
-		{DCFAFFA3-A3E6-452B-B548-CFD06127D4A9}.Debug|x64.Build.0 = Debug|x64
-		{DCFAFFA3-A3E6-452B-B548-CFD06127D4A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DCFAFFA3-A3E6-452B-B548-CFD06127D4A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DCFAFFA3-A3E6-452B-B548-CFD06127D4A9}.Release|x64.ActiveCfg = Release|x64
-		{DCFAFFA3-A3E6-452B-B548-CFD06127D4A9}.Release|x64.Build.0 = Release|x64
 		{661C407C-49D0-47FE-964A-D9049BFBCB91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{661C407C-49D0-47FE-964A-D9049BFBCB91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{661C407C-49D0-47FE-964A-D9049BFBCB91}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -31,6 +24,22 @@ Global
 		{661C407C-49D0-47FE-964A-D9049BFBCB91}.Release|Any CPU.Build.0 = Release|Any CPU
 		{661C407C-49D0-47FE-964A-D9049BFBCB91}.Release|x64.ActiveCfg = Release|Any CPU
 		{661C407C-49D0-47FE-964A-D9049BFBCB91}.Release|x64.Build.0 = Release|Any CPU
+		{788FB488-15FE-4146-BF52-AE9554199D86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{788FB488-15FE-4146-BF52-AE9554199D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{788FB488-15FE-4146-BF52-AE9554199D86}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{788FB488-15FE-4146-BF52-AE9554199D86}.Debug|x64.Build.0 = Debug|Any CPU
+		{788FB488-15FE-4146-BF52-AE9554199D86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{788FB488-15FE-4146-BF52-AE9554199D86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{788FB488-15FE-4146-BF52-AE9554199D86}.Release|x64.ActiveCfg = Release|Any CPU
+		{788FB488-15FE-4146-BF52-AE9554199D86}.Release|x64.Build.0 = Release|Any CPU
+		{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}.Debug|x64.Build.0 = Debug|Any CPU
+		{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}.Release|x64.ActiveCfg = Release|Any CPU
+		{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
