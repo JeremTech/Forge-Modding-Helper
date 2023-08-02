@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FMH.Core.Objects;
 using FMH.Core.Utils;
+using FMH.Core.Utils.Software;
 using FMH.Workspace.Data;
 using Newtonsoft.Json;
 
@@ -26,7 +27,7 @@ namespace FMH.Core.Files.Software
         /// <summary>
         /// File path
         /// </summary>
-        private static string FilePath = Path.Combine(App.getApplicationDataDirectory(), "workspaces.json");
+        private static string FilePath = Path.Combine(SoftwareDataManager.GetCurrentVersionDataDirectory(), "workspaces.json");
 
         /// <summary>
         /// Add a workspace to the last workspaces list. If it already exist, it's updated

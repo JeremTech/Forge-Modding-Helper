@@ -128,7 +128,7 @@ namespace FMH.Core.UI.Common
                     string forge_version = buildGradle.getBetween("minecraft 'net.minecraftforge:forge:", "'");
                     string minecraft_version = forge_version.getBetween("", "-");
 
-                    if (!App.getSupportedMinecraftVersions().Contains(minecraft_version))
+                    if (!App.GetSupportedMinecraftVersions().Contains(minecraft_version))
                     {
                         MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.import.error.unsupported"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
                     }

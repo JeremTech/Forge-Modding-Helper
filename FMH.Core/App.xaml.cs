@@ -32,10 +32,10 @@ namespace FMH.Core
         public static String GetApplicationVersionString()
         {
             // If the version is stable, we display only the version number
-            if (isStable) return "v" + System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
+            if (isStable) return "v" + Assembly.GetEntryAssembly().GetName().Version.ToString();
 
             // Else we display the version number and the pre-release number
-            return "v" + System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString() + " - " + "Pre-Release " + pre_release_number;
+            return "v" + Assembly.GetEntryAssembly().GetName().Version.ToString() + " - " + "Pre-Release " + pre_release_number;
         }
 
         /// <summary>
@@ -45,17 +45,17 @@ namespace FMH.Core
         public static string GetApplicationVersionCompact()
         {
             // If the version is stable, we display only the version number
-            if (isStable) return System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString();
+            if (isStable) return Assembly.GetEntryAssembly().GetName().Version.ToString();
 
             // Else we display the version number and the pre-release number
-            return System.Reflection.Assembly.GetEntryAssembly().GetName().Version.ToString() + "-" + "PRE" + pre_release_number;
+            return Assembly.GetEntryAssembly().GetName().Version.ToString() + "-" + "PRE" + pre_release_number;
         }
 
         /// <summary>
         /// Allow to get the application's data directory in the user's APPDATA
         /// </summary>
         /// <returns>Application's data directory</returns>
-        public static String getApplicationDataDirectory()
+        public static string GetApplicationDataDirectory()
         {
             // Creating folder if not exist 
             Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JeremTech", "Forge Modding Helper"));
@@ -63,7 +63,7 @@ namespace FMH.Core
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JeremTech", "Forge Modding Helper");
         }
 
-        public static List<String> getSupportedMinecraftVersions()
+        public static List<String> GetSupportedMinecraftVersions()
         {
             return supportedMcVersions;
         }

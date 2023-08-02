@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FMH.Core.Utils.Software;
 using Newtonsoft.Json;
 
 namespace FMH.Core.Files.Software
@@ -11,7 +12,7 @@ namespace FMH.Core.Files.Software
     public class OptionsFile
     {
         // Data-file path
-        private static string FilePath = Path.Combine(App.getApplicationDataDirectory(), "options.json");
+        private static string FilePath = Path.Combine(SoftwareDataManager.GetCurrentVersionDataDirectory(), "options.json");
         // Data object with default values
         private static OptionsData data = new OptionsData();
 
@@ -128,6 +129,9 @@ namespace FMH.Core.Files.Software
         {
             if (!string.IsNullOrEmpty(language) && !string.IsNullOrEmpty(theme))
             {
+                if(!Directory.Exists(SoftwareDataManager.GetCurrentVersionDataDirectory()))
+                    Directory.CreateDirectory(SoftwareDataManager.GetCurrentVersionDataDirectory());
+
                 OptionsData data = new OptionsData(language, theme, countBlankCodeLines, countCodeLinesAtProjectOpening);
                 string jsonContent = JsonConvert.SerializeObject(data, Formatting.Indented);
                 File.WriteAllText(FilePath, jsonContent);

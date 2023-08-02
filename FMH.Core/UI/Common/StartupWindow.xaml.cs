@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FMH.Core.Files.Software;
+using FMH.Core.UI.Dialogs;
+using FMH.Core.Utils.Software;
 using FMH.Core.Utils.UI;
 
 namespace FMH.Core.UI.Common
@@ -25,10 +27,26 @@ namespace FMH.Core.UI.Common
         {
             // Initialization
             InitializeComponent();
+            
+            // Events
+            Loaded += StartupWindow_Loaded;
+        }
+
+        private void StartupWindow_Loaded(object sender, RoutedEventArgs e)
+        {
             version_label.Content = App.GetApplicationVersionString();
 
+            // Previous version settings importations
+            if (SoftwareVersionUpgrader.ExistPreviousVersionData()
+                && !SoftwareVersionUpgrader.ExistCurrentVersionData())
+            {
+                var settingsImportationWindow = new UpgradeSettingsDialog();
+                settingsImportationWindow.Owner = this;
+                settingsImportationWindow.ShowDialog();
+            }
+
             // Checking files
-            if (!File.Exists(Path.Combine(App.getApplicationDataDirectory(), "options.json")))
+            if (!File.Exists(Path.Combine(SoftwareDataManager.GetCurrentVersionDataDirectory(), "options.json")))
                 OptionsFile.WriteDataFile();
 
             // Load options

@@ -1,0 +1,39 @@
+﻿<Window x:Class="FMH.Core.UI.Dialogs.UpgradeSettingsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FMH.Core.UI.Dialogs"
+        mc:Ignorable="d"
+        Title="Import settings from a previous version" 
+        Height="175" 
+        Width="400"
+        ResizeMode="NoResize"
+        Icon="/FMH.Resources;component/Pictures/icon.png" 
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource PrimaryBackgroundColor}">
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height ="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <RadioButton x:Name="radioButtonOptionPreviousVersion" Foreground="{DynamicResource FontColorPrimary}" GroupName="ImportationOption" IsChecked="True" Content="Import settings from a previous version"/>
+
+            <StackPanel Orientation="Horizontal" Margin="30, 10, 0, 0">
+                <TextBlock Foreground="{DynamicResource FontColorPrimary}" VerticalAlignment="Center" Text="Previous version : "/>
+                <ComboBox x:Name="previousVersionComboBox" Margin="10, 0" Width="220" IsEnabled="{Binding IsChecked, ElementName=radioButtonOptionPreviousVersion}"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <RadioButton x:Name="radioButtonOptionNone" Grid.Row="1" Foreground="{DynamicResource FontColorPrimary}" GroupName="ImportationOption" Content="Do not import settings"/>
+        
+        <Button x:Name="OkButton" Grid.Row="2" Content="Ok" Height="25" Width="70"/>
+
+    </Grid>
+</Window>
