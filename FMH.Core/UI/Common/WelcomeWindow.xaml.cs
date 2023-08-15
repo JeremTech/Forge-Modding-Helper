@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FMH.Core.Files.Software;
 using FMH.Core.Objects;
+using FMH.Core.UI.Dialogs;
 using FMH.Core.UI.Forge;
 using FMH.Core.Utils;
 using FMH.Core.Utils.UI;
@@ -116,31 +117,17 @@ namespace FMH.Core.UI.Common
 
         private void import_mod_button_Click(object sender, RoutedEventArgs e)
         {
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            dialog.ShowNewFolderButton = false;
-            dialog.ShowDialog();
+            var importProjectDialog = new ImportProjectDialog();
+            importProjectDialog.Owner = this;
+            importProjectDialog.ShowDialog();
 
-            if (Directory.Exists(dialog.SelectedPath))
+            if(importProjectDialog.DialogResult.HasValue && importProjectDialog.DialogResult.Value)
             {
-                if (DirectoryUtils.CheckFolderIsForgeWorkspace(dialog.SelectedPath))
+                var lastWorkspace = LastWorkspaces.LastWorkspacesData.OrderByDescending(w => w.LastUpdated).FirstOrDefault();
+                if(lastWorkspace != null)
                 {
-                    string buildGradle = File.ReadAllText(Path.Combine(dialog.SelectedPath, "build.gradle"));
-                    string forge_version = buildGradle.getBetween("minecraft 'net.minecraftforge:forge:", "'");
-                    string minecraft_version = forge_version.getBetween("", "-");
-
-                    if (!App.GetSupportedMinecraftVersions().Contains(minecraft_version))
-                    {
-                        MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.import.error.unsupported"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    else
-                    {
-                        //new ProjectScanWindow(dialog.SelectedPath).Show();
-                        //this.Close();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.import.error.invalid"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
+                    new ForgeProjectExplorer(lastWorkspace.WorkspacePath).Show();
+                    this.Close();
                 }
             }
         }

@@ -218,6 +218,15 @@
     "dialog.import.import": "Importer",
     "dialog.import.cancel": "Annuler",
 
+    "dialog.import_project.title": "Importer un projet existant",
+    "dialog.import_project.project_mc_version": "Version de Minecraft du projet :",
+    "dialog.import_project.project_path": "Chemin du dossier du projet :",
+    "dialog.import_project.checks_working": "Vérification du projet...",
+    "dialog.import_project.checks_success": "Le projet est compatible avec Forge Modding Helper !",
+    "dialog.import_project.checks_failed": "Le projet n'est pas compatible avec Forge Modding Helper.",
+    "dialog.import_project.import": "Importer",
+    "dialog.import_project.cancel": "Annuler",
+
     "file_dialog.import.filter": "Tous les fichiers",
     "file_dialog.import.title": "Importer des fichiers",
 

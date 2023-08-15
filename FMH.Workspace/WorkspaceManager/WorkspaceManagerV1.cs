@@ -40,61 +40,86 @@ namespace FMH.Workspace.WorkspaceManager
         /// <summary>
         /// Read data from build.gralde file
         /// </summary>
-        public void ReadBuildGradle()
+        /// <returns><c>true</c> if success, else <c>false</c></returns>
+        public bool ReadBuildGradle()
         {
             string filePath = Path.Combine(WorkspaceProperties.WorkspacePath, "build.gradle");
             string fileContent = File.ReadAllText(filePath);
 
-            this.ModProperties.ModVersion = fileContent.Between("version = '", "'", StringComparison.CurrentCulture);
-            this.ModProperties.ModGroup = fileContent.Between("group = '", "'", StringComparison.CurrentCulture);
-            this.ModProperties.ModAPIVersion = fileContent.Between("minecraft 'net.minecraftforge:forge:", "'", StringComparison.CurrentCulture);
-            this.ModProperties.ModMinecraftVersion = this.ModProperties.ModAPIVersion.Between("", "-", StringComparison.CurrentCulture);
-
-            // Mappings
-            switch (fileContent.Between("mappings channel: '", "'", StringComparison.CurrentCulture))
+            try
             {
-                // Case 'snapshot' or 'stable', this is MCP mappings
-                case "snapshot":
-                    this.ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'snapshot', version: '", "'", StringComparison.CurrentCulture) + " (MCP)";
-                    break;
-                case "stable":
-                    this.ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'stable', version: '", "'", StringComparison.CurrentCulture) + " (MCP)";
-                    break;
+                this.ModProperties.ModVersion = fileContent.Between("version = '", "'", StringComparison.CurrentCulture);
+                this.ModProperties.ModGroup = fileContent.Between("group = '", "'", StringComparison.CurrentCulture);
+                this.ModProperties.ModAPIVersion = fileContent.Between("minecraft 'net.minecraftforge:forge:", "'", StringComparison.CurrentCulture);
+                this.WorkspaceProperties.MCVersion = this.ModProperties.ModAPIVersion;
+                this.ModProperties.ModMinecraftVersion = this.ModProperties.ModAPIVersion.Between("", "-", StringComparison.CurrentCulture);
+                this.WorkspaceProperties.MCVersion = this.ModProperties.ModMinecraftVersion;
 
-                // Case official, this is mojang mappings
-                case "official":
-                    this.ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'official', version: '", "'", StringComparison.CurrentCulture) + " (Mojang)";
-                    break;
+                // Mappings
+                switch (fileContent.Between("mappings channel: '", "'", StringComparison.CurrentCulture))
+                {
+                    // Case 'snapshot' or 'stable', this is MCP mappings
+                    case "snapshot":
+                        this.ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'snapshot', version: '", "'", StringComparison.CurrentCulture) + " (MCP)";
+                        break;
+                    case "stable":
+                        this.ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'stable', version: '", "'", StringComparison.CurrentCulture) + " (MCP)";
+                        break;
+
+                    // Case official, this is mojang mappings
+                    case "official":
+                        this.ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'official', version: '", "'", StringComparison.CurrentCulture) + " (Mojang)";
+                        break;
+                }
+
+                this.WorkspaceProperties.ModAPI = ModAPIType.Forge;
+
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 
         /// <summary>
         /// Read data from gradle.properties file
-        /// </summary>
-        public void ReadGradleProperties()
+        /// </summly>
+        /// <returns><c>true</c> if success, else <c>false</c></returns>
+        public bool ReadGradleProperties()
         {
             // No data to read for this file
-            return;
+            return true;
         }
 
         /// <summary>
         /// Read data from mod.toml file
         /// </summary>
-        public void ReadModToml()
+        /// <returns><c>true</c> if success, else <c>false</c></returns>
+        public bool ReadModToml()
         {
             string filePath = Path.Combine(WorkspaceProperties.WorkspacePath, @"src\main\resources\META-INF\mods.toml");
             string fileContent = File.ReadAllText(filePath);
 
-            this.ModProperties.ModLicense = fileContent.Between("license=\"", "\"", StringComparison.CurrentCulture);
-            this.ModProperties.ModID = fileContent.Between("modId=\"", "\"", StringComparison.CurrentCulture);
-            this.ModProperties.ModName = fileContent.Between("displayName=\"", "\"", StringComparison.CurrentCulture);
-            this.ModProperties.ModDescription = fileContent.Between("description='''", "'''", StringComparison.CurrentCulture).Trim();
-            this.ModProperties.ModLogo = fileContent.Between("logoFile=\"", "\"", StringComparison.CurrentCulture);
-            this.ModProperties.ModCredits = fileContent.Between("credits=\"", "\"", StringComparison.CurrentCulture);
-            this.ModProperties.ModAuthors = fileContent.Between("authors=\"", "\"", StringComparison.CurrentCulture);
-            this.ModProperties.ModWebsite = fileContent.Between("displayURL=\"", "\"", StringComparison.CurrentCulture);
-            this.ModProperties.ModUpdateJSONURL = fileContent.Between("updateJSONURL=\"", "\"", StringComparison.CurrentCulture);
-            this.ModProperties.ModIssueTracker = fileContent.Between("issueTrackerURL=\"", "\"", StringComparison.CurrentCulture);
+            try
+            {
+                this.ModProperties.ModLicense = fileContent.Between("license=\"", "\"", StringComparison.CurrentCulture);
+                this.ModProperties.ModID = fileContent.Between("modId=\"", "\"", StringComparison.CurrentCulture);
+                this.ModProperties.ModName = fileContent.Between("displayName=\"", "\"", StringComparison.CurrentCulture);
+                this.ModProperties.ModDescription = fileContent.Between("description='''", "'''", StringComparison.CurrentCulture).Trim();
+                this.ModProperties.ModLogo = fileContent.Between("logoFile=\"", "\"", StringComparison.CurrentCulture);
+                this.ModProperties.ModCredits = fileContent.Between("credits=\"", "\"", StringComparison.CurrentCulture);
+                this.ModProperties.ModAuthors = fileContent.Between("authors=\"", "\"", StringComparison.CurrentCulture);
+                this.ModProperties.ModWebsite = fileContent.Between("displayURL=\"", "\"", StringComparison.CurrentCulture);
+                this.ModProperties.ModUpdateJSONURL = fileContent.Between("updateJSONURL=\"", "\"", StringComparison.CurrentCulture);
+                this.ModProperties.ModIssueTracker = fileContent.Between("issueTrackerURL=\"", "\"", StringComparison.CurrentCulture);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -237,6 +262,40 @@ namespace FMH.Workspace.WorkspaceManager
 
             // Replace mod.toml file
             File.WriteAllText(filePath, outputText.ToString());
+        }
+
+        /// <summary>
+        /// Check if the workspace is valid for Forge Modding Helper
+        /// </summary>
+        /// <param name="supportedMinecraftVersions">Supported minecraft versions</param>
+        /// <returns><c>true</c> if this is a valid workspace, else <c>false</c></returns>
+        public bool CheckWorkspaceValidity(List<string> supportedMinecraftVersions)
+        {
+            // Check configs files
+            if (!File.Exists(Path.Combine(WorkspaceProperties.WorkspacePath, @"src\main\resources\META-INF\mods.toml"))
+                || !File.Exists(Path.Combine(WorkspaceProperties.WorkspacePath, "build.gradle")))
+                return false;
+
+            // Read files
+            if (!ReadModToml()
+                || !ReadBuildGradle())
+                return false;
+
+            // Check mandatory data
+            if (string.IsNullOrEmpty(ModProperties.ModID)
+                || string.IsNullOrEmpty(ModProperties.ModGroup)
+                || string.IsNullOrEmpty(ModProperties.ModMinecraftVersion)
+                || string.IsNullOrEmpty(ModProperties.ModMappingsVersion)
+                || string.IsNullOrEmpty(ModProperties.ModVersion)
+                || string.IsNullOrEmpty(ModProperties.ModName)
+                || string.IsNullOrEmpty(ModProperties.ModAPIVersion))
+                return false;
+
+            // Check Minecraft version
+            if (!supportedMinecraftVersions.Contains(ModProperties.ModMinecraftVersion))
+                return false;
+
+            return true;   
         }
     }
 }

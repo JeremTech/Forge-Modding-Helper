@@ -722,7 +722,7 @@ namespace FMH.Core.UI.Forge
             this.ModVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModVersion;
             this.MinecraftVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModMinecraftVersion;
             this.ForgeVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModAPIVersion;
-            this.MappingsVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModMappingsVersion.Replace("(MCP)", "");
+            this.MappingsVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModMappingsVersion;
 
             // Mod settings section
             this.ModSettingsModNameTextbox.Text = _workspaceManager.ModProperties.ModName;

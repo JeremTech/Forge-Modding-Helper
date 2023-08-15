@@ -37,17 +37,20 @@ namespace FMH.Workspace.WorkspaceManager
         /// <summary>
         /// Read data from mod.toml file
         /// </summary>
-        void ReadModToml();
+        /// <returns><c>true</c> if success, else <c>false</c></returns>
+        bool ReadModToml();
 
         /// <summary>
         /// Read data from build.gradle file
         /// </summary>
-        void ReadBuildGradle();
+        /// <returns><c>true</c> if success, else <c>false</c></returns>
+        bool ReadBuildGradle();
 
         /// <summary>
         /// Read data from gradle.properties file
         /// </summary>
-        void ReadGradleProperties();
+        /// <returns><c>true</c> if success, else <c>false</c></returns>
+        bool ReadGradleProperties();
 
         /// <summary>
         /// Write mod.toml file
@@ -63,5 +66,12 @@ namespace FMH.Workspace.WorkspaceManager
         /// Write gradle.properties file
         /// </summary>
         void WriteGradleProperties();
+
+        /// <summary>
+        /// Check if the workspace is valid for Forge Modding Helper
+        /// </summary>
+        /// <param name="supportedMinecraftVersions">Supported minecraft versions</param>
+        /// <returns><c>true</c> if this is a valid workspace, else <c>false</c></returns>
+        bool CheckWorkspaceValidity(List<string> supportedMinecraftVersions);
     }
 }

@@ -1,0 +1,52 @@
+﻿<Window x:Class="FMH.Core.UI.Dialogs.ImportProjectDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:local="clr-namespace:FMH.Core.UI.Dialogs"
+        mc:Ignorable="d"
+        Title="Import existing project" 
+        Height="240" 
+        Width="395"
+        ResizeMode="NoResize"
+        Icon="/FMH.Resources;component/Pictures/icon.png" 
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource PrimaryBackgroundColor}" >
+
+    <Grid x:Name="mainGrid" Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0, 5" VerticalAlignment="Top">
+            <TextBlock Foreground="{DynamicResource FontColorPrimary}" VerticalAlignment="Center" Text="Project's Minecraft version :" Tag="dialog.import_project.project_mc_version"/>
+            <ComboBox x:Name="comboBoxMcVersion" Margin="10, 0" Width="100" Height="25" SelectionChanged="ComboBoxMcVersion_SelectionChanged"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <TextBlock Foreground="{DynamicResource FontColorPrimary}" VerticalAlignment="Center" Margin="0, 5" Text="Project path :" Tag="dialog.import_project.project_path"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0, 5">
+                <TextBox x:Name="textBoxWorskpacePath" Width="330"/>
+                <Button Content="..." Padding="5, 2" Margin="3, 0, 0, 0" Click="BrowseDirectoyButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <fa:ImageAwesome x:Name="statusImage" Visibility="Hidden" HorizontalAlignment="Left" Icon="None" Width="20" Height="20"/>
+            <TextBlock x:Name="statusTextBlock" Visibility="Hidden" Foreground="{DynamicResource FontColorPrimary}" Margin="10, 0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="importButton" Content="Import" Width="100" Height="25" Margin="5, 0" IsEnabled="False" Click="ImportButton_Click" Tag="dialog.import_project.import"/>
+            <Button Content="Cancel" Width="100" Height="25" Margin="5, 0" Click="CancelButton_Click" Tag="dialog.import_project.cancel"/>
+        </StackPanel>
+        
+    </Grid>
+    
+</Window>
