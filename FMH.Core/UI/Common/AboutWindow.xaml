@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="About"
-        Height="356"
+        Height="375"
         Width="451"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -37,10 +37,10 @@
         </StackPanel>
 
         <!-- External librairies section -->
-        <StackPanel HorizontalAlignment="Left" Height="85" Margin="20,220,0,0" VerticalAlignment="Top" Width="415">
+        <StackPanel HorizontalAlignment="Left" Height="105" Margin="20,220,0,0" VerticalAlignment="Top" Width="415">
             <Label x:Name="librairies_desc_label" Content="Used librairies :" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag="about.label.librairies"/>
             <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
-                <Label Content="• Newtonsoft.Json v13.0.3&#xA;• ConsoleControl.WPF v1.3.0&#xA;• McVersionsLib v1.0.0.1" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
+                <Label Content="• Newtonsoft.Json v13.0.3&#xA;• ConsoleControl.WPF v1.3.0&#xA;• McVersionsLib v1.0.0.1&#xA;• StringExtensions v1.1.1.0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
                 <Label Content="• ConsoleControlAPI v1.3.0&#xA;• Leow.TextEditor v0.4.7541.19769&#xA;• FontAwesome.WPF v4.7.0.9" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
             </DockPanel>
         </StackPanel>

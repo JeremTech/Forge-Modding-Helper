@@ -20,7 +20,7 @@ namespace FMH.Core
         private static bool isStable = false;
 
         // If "isStable" is set to false, then the current version is the pre-release with the number "pre_release_number"
-        private static int pre_release_number = 1;
+        private static int pre_release_number = 2;
 
         // List of Minecraft versions supported by Forge Modding Helper
         private static List<String> supportedMcVersions = new List<string>() { "1.18.1", "1.18.2", "1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4", "1.20", "1.20.1" };
