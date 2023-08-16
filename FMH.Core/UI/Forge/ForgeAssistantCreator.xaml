@@ -57,7 +57,6 @@
                     <!-- Supported minecraft versions -->
                     <StackPanel Orientation="Vertical" Margin="0, 10, 0, 0">
                         <Label x:Name="label_supported_mc_versions" Tag="assistant_creator.label.welcome.supported_mc_versions" Foreground="{DynamicResource FontColorPrimary}" Content="Supported Minecraft versions :" />
-                        <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.17 : 1.17.1"/>
                         <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.18 : 1.18.1 / 1.18.2"/>
                         <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.19 : 1.19 / 1.19.1 / 1.19.2 / 1.19.3 / 1.19.4"/>
                         <Label Foreground="{DynamicResource FontColorPrimary}" Margin="0, -6, 0, 0" Content="●  Minecraft 1.20 : 1.20 / 1.20.1"/>
