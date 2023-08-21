@@ -411,6 +411,9 @@ namespace FMH.Core.UI.Forge
                             }
                         }
 
+                        // Update count on home section
+                        Dispatcher.BeginInvoke(() => { ModelsInfoDisplay.InfoContent = _workspaceManager.AssetsProperties.ModelsFiles.Count.ToString(); });
+
                     }, cancellationToken);
                 }
                 catch (OperationCanceledException)
@@ -487,6 +490,9 @@ namespace FMH.Core.UI.Forge
                                 Application.Current.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() => TexturesFileCountTextblock.Text = int.Parse(TexturesFileCountTextblock.Text) + 1 + ""));
                             }
                         }
+
+                        // Update count on home section
+                        Dispatcher.BeginInvoke(() => { TexturesInfoDisplay.InfoContent = _workspaceManager.AssetsProperties.TexturesFiles.Count.ToString(); });
 
                     }, cancellationToken);
                 }
