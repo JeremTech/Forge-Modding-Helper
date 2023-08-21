@@ -98,7 +98,7 @@ namespace FMH.Core.UI.Forge
             loadingDialog.Show();
 
             // Read data
-            await Task.Run(() =>
+            Task.WaitAll(Task.Run(() =>
             {
                 // Workspace general data
                 _workspaceManager.ReadBuildGradle();
@@ -117,7 +117,7 @@ namespace FMH.Core.UI.Forge
                 _workspaceManager.SourceCodeProperties = new SourceCodeProperties(_workspaceManager.WorkspaceProperties.WorkspacePath);
                 _workspaceManager.SourceCodeProperties.RetrieveAllJavaFiles();
                 _workspaceManager.SourceCodeProperties.CountCodeLines(true);
-            });
+            }));
 
             // Showing main grid and closing loading dialog
             MainGrid.Visibility = Visibility.Visible;
