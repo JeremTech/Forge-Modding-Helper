@@ -7,7 +7,8 @@
 Forge Modding Helper is an utility software to manage Forge's Workspace.
 
 ## Compatibility 
-Forge Modding Helper is available for Windows 10 and 11, and the .Net Framework 4.8 or older is required.
+Forge Modding Helper is available for Windows 10 and 11.
+You also need to have [.Net 6.0 or latest](https://dotnet.microsoft.com/en-us/download) installed to run Forge Modding Helper.
 
 ## Version
 
@@ -32,7 +33,6 @@ Latest version | Latest stable version
 - [x] Minecraft Forge 1.20 : 1.20, 1.20.1
 - [x] Minecraft Forge 1.19 : 1.19, 1.19.1, 1.19.2, 1.19.3, 1.19.4
 - [x] Minecraft Forge 1.18 : 1.18.1, 1.18.2
-- [x] Minecraft Forge 1.17 : 1.17.1
 
 ## Report bug or submit ideas
 
