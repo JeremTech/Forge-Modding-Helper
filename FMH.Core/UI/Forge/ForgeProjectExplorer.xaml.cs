@@ -179,6 +179,11 @@ namespace FMH.Core.UI.Forge
         /// </summary>
         private void ModSettingsTextboxTextChanged(object sender, TextChangedEventArgs e)
         {
+            var textBoxSender = sender as TextBox;
+
+            if (textBoxSender != null && !textBoxSender.IsFocused)
+                return;
+
             this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.unsaved_modifications");
             this.ModSettingsStatusLabel.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
         }
