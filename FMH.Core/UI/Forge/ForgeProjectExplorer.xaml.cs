@@ -719,7 +719,7 @@ namespace FMH.Core.UI.Forge
             }
             else
             {
-                this.ModSettingsModLogoImage.Source = new BitmapImage(new Uri("/FMH.Resources;component/Pictures/icon.png", UriKind.Relative));
+                this.ModSettingsModLogoImage.Source = null;
                 this.HomeModLogoImageBorder.Visibility = Visibility.Collapsed;
             }
 
