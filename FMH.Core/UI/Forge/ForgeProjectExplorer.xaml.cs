@@ -131,7 +131,7 @@ namespace FMH.Core.UI.Forge
         /// </summary>
         private void HomeOpenExplorerButtonClick(object sender, RoutedEventArgs e)
         {
-            Process.Start(_workspaceManager.WorkspaceProperties.WorkspacePath);
+            Process.Start("explorer.exe", _workspaceManager.WorkspaceProperties.WorkspacePath);
         }
 
         /// <summary>
