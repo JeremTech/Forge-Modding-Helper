@@ -1,12 +1,12 @@
 {
-    "name": "English (BETA)",
+  "name": "English (BETA)",
   "entries": {
     "loading.label.loading": "Loading...",
     "loading.retrieving_workspaces": "Retrieving last workspaces list...",
 
     "welcome.title": "Welcome - Forge Modding Helper",
     "welcome.label.recents_workspaces": "Recent workspaces",
-    "welcome.label.no_workspaces": "No recent workspace was found",
+    "welcome.label.no_workspaces": "No recent workspace found",
     "welcome.button.new": "New",
     "welcome.button.open": "Open",
     "welcome.button.delete": "Delete",
