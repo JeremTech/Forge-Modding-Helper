@@ -92,8 +92,7 @@ namespace FMH.Core.UI.Forge
             this.Title = UITextTranslator.getTranslation("assistant_creator.title");
 
             // Adding supported Minecraft versions to the step 4 ComboBox
-            App.GetSupportedMinecraftVersions().Reverse();
-            forge_version_comboBox.ItemsSource = App.GetSupportedMinecraftVersions();
+            forge_version_comboBox.ItemsSource = App.GetSupportedMinecraftVersions().OrderByDescending(v => v);
         }
 
         /// <summary>
