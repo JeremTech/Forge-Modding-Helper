@@ -763,7 +763,7 @@ namespace FMH.Core.UI.Forge
         /// </summary>
         private void finish_button_Click(object sender, RoutedEventArgs e)
         {
-            new ForgeProjectExplorer(_workspaceManager.WorkspaceProperties.WorkspacePath);
+            new ForgeProjectExplorer(_workspaceManager.WorkspaceProperties.WorkspacePath).Show();
             this.Close();
         }
         #endregion
