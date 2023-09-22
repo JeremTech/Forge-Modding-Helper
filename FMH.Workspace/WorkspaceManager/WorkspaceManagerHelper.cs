@@ -26,6 +26,7 @@ namespace FMH.Workspace.WorkspaceManager
             {
                 case "1.20":
                 case "1.20.1":
+                case "1.20.2":
                     workspaceManager = new WorkspaceManagerV2();
                     break;
 
@@ -58,6 +59,7 @@ namespace FMH.Workspace.WorkspaceManager
             {
                 case "1.20":
                 case "1.20.1":
+                case "1.20.2":
                     workspaceManager = new WorkspaceManagerV2();
                     break;
 
