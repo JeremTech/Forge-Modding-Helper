@@ -106,7 +106,7 @@ namespace FMH.Workspace.WorkspaceManager
                 this.ModProperties.ModLicense = fileContent.Between("license=\"", "\"", StringComparison.CurrentCulture);
                 this.ModProperties.ModID = fileContent.Between("modId=\"", "\"", StringComparison.CurrentCulture);
                 this.ModProperties.ModName = fileContent.Between("displayName=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModDescription = fileContent.Between("description='''", "'''", StringComparison.CurrentCulture).Trim();
+                this.ModProperties.ModDescription = fileContent.Between("description='''", "'''", StringComparison.CurrentCulture)?.Trim();
                 this.ModProperties.ModLogo = fileContent.Between("logoFile=\"", "\"", StringComparison.CurrentCulture);
                 this.ModProperties.ModCredits = fileContent.Between("credits=\"", "\"", StringComparison.CurrentCulture);
                 this.ModProperties.ModAuthors = fileContent.Between("authors=\"", "\"", StringComparison.CurrentCulture);
