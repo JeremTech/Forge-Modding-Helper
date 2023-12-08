@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <Copyright>© Jerem'Tech</Copyright>
-    <AssemblyVersion>3.3.0.0</AssemblyVersion>
-    <FileVersion>3.3.0.0</FileVersion>
+    <AssemblyVersion>3.3.1.0</AssemblyVersion>
+    <FileVersion>3.3.1.0</FileVersion>
     <UseWindowsForms>True</UseWindowsForms>
     <StartupObject>FMH.Core.App</StartupObject>
     <Authors>Jerem'Tech</Authors>
