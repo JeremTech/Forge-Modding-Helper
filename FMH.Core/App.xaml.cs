@@ -23,7 +23,7 @@ namespace FMH.Core
         private static int pre_release_number = 0;
 
         // List of Minecraft versions supported by Forge Modding Helper
-        private static List<String> supportedMcVersions = new List<string>() { "1.18.1", "1.18.2", "1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4", "1.20", "1.20.1", "1.20.2" };
+        private static List<String> supportedMcVersions = new List<string>() { "1.18.1", "1.18.2", "1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4", "1.20", "1.20.1", "1.20.2", "1.20.4" };
 
         /// <summary>
         /// Allow to get the current version of the software
