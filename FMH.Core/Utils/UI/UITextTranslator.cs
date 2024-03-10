@@ -127,6 +127,14 @@ namespace FMH.Core.Utils.UI
                     infoDisplay.InfoTitle = getTranslation((String)infoDisplay.Tag);
             }
 
+            // Updating sidebar menu buttons controls
+            IEnumerable<SideBarMenuButton> sideBarMenuButtons = UIUtils.FindVisualChildren<SideBarMenuButton>(window);
+            foreach (SideBarMenuButton sideBarMenuButton in sideBarMenuButtons)
+            {
+                if (!string.IsNullOrWhiteSpace(sideBarMenuButton.TextTranslationKey))
+                    sideBarMenuButton.Text = getTranslation(sideBarMenuButton.TextTranslationKey);
+            }
+
             // Updating context menus items header from listbox
             foreach (var listbox in UIUtils.FindVisualChildren<ListBox>(window))
             {

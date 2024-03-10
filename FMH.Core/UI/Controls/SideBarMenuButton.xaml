@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="FMH.Core.UI.Controls.SideBarMenuButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:fa="http://schemas.fontawesome.io/icons/" 
+             xmlns:local="clr-namespace:FMH.Core.UI.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="200">
+
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Setter Property="Background" 
+                    Value="{DynamicResource SecondaryBackgroundColor}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" 
+                         Value="True">
+                    <Setter Property="Background" 
+                            Value="{DynamicResource PrimaryBackgroundColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+    
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" 
+                Height="Auto" 
+                Background="{DynamicResource BorderColor}" 
+                Visibility="{Binding IsSelected, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
+        
+        <fa:ImageAwesome Grid.Column="1" 
+                         HorizontalAlignment="Center" 
+                         Icon="{Binding Icon}"
+                         Width="30" Height="30"
+                         Margin="0, 5, 0, 0" 
+                         Foreground="{DynamicResource FontColorPrimary}"/>
+        
+        
+
+        <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" Margin="0, 0, 5, 0">
+
+            <TextBlock Grid.Column="2" 
+                       Foreground="{DynamicResource FontColorPrimary}" 
+                       FontWeight="DemiBold" 
+                       FontSize="16" 
+                       VerticalAlignment="Center" 
+                       Text="{Binding Text}" />
+
+            <ProgressBar x:Name="ProgressBar" 
+                         Margin="0, 5, 20, 0" 
+                         Foreground="{DynamicResource BorderColor}" 
+                         Visibility="Collapsed" />
+        
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using FMH.Core.Files.Software;
 using FMH.Core.Objects;
 using FMH.Core.UI.Common;
+using FMH.Core.UI.Controls;
 using FMH.Core.UI.Dialogs;
 using FMH.Core.Utils.UI;
 using FMH.Workspace.Data;
@@ -637,7 +638,9 @@ namespace FMH.Core.UI.Forge
             this.ModExportationConsoleControl.ClearOutput();
             this.ModExportationConsoleControl.StartProcess("cmd.exe", "/k \"cd /d " + _workspaceManager.WorkspaceProperties.WorkspacePath + "\"");
             this.ModExportationConsoleControl.WriteInput("gradlew build --no-daemon & exit", Color.FromRgb(255, 240, 0), true);
-            this.SideBarExportationProgressBar.Visibility = Visibility.Visible;
+
+            this.SideBarMenuButtonExportation.ProgressBar.IsIndeterminate = true;
+            this.SideBarMenuButtonExportation.ProgressBar.Visibility = Visibility.Visible;
 
             // Wait for task's end
             await Task.Run(() =>
@@ -649,7 +652,7 @@ namespace FMH.Core.UI.Forge
             });
 
             // Hide progressBar
-            this.SideBarExportationProgressBar.Visibility = Visibility.Collapsed;
+            this.SideBarMenuButtonExportation.ProgressBar.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -769,47 +772,43 @@ namespace FMH.Core.UI.Forge
         /// </summary>
         private void SideBarButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Grid SelectedButton = sender as Grid;
+            SideBarMenuButton selectedMenuButton = sender as SideBarMenuButton;
 
-            if (SelectedButton != null)
+            if (selectedMenuButton == null)
+                return;
+
+            string buttonTag = selectedMenuButton.Tag.ToString();
+            if (!string.IsNullOrEmpty(buttonTag))
             {
-                if (SelectedButton.Tag != null)
+                // Set selected section tag 
+                currentSectionOpenedTag = buttonTag;
+
+                // Reset all buttons border
+                SideBarMenuButtonHome.IsSelected = false;
+                SideBarMenuButtonModSettings.IsSelected = false;
+                SideBarMenuButtonBlockstates.IsSelected = false;
+                SideBarMenuButtonModels.IsSelected = false;
+                SideBarMenuButtonTextures.IsSelected = false;
+                SideBarMenuButtonTranslations.IsSelected = false;
+                SideBarMenuButtonExportation.IsSelected = false;
+
+                // Hide all grid
+                HomeGrid.Visibility = Visibility.Hidden;
+                ModSettingsGrid.Visibility = Visibility.Hidden;
+                BlockstatesGrid.Visibility = Visibility.Hidden;
+                ModelsGrid.Visibility = Visibility.Hidden;
+                TexturesGrid.Visibility = Visibility.Hidden;
+                TranslationsGrid.Visibility = Visibility.Hidden;
+                ExportationGrid.Visibility = Visibility.Hidden;
+
+                // Set selected menu
+                selectedMenuButton.IsSelected = true;
+                
+                // Display Grid
+                Grid SelectedGrid = (Grid)this.FindName(buttonTag + "Grid");
+                if (SelectedGrid != null)
                 {
-                    // Set selected section tag 
-                    currentSectionOpenedTag = SelectedButton.Tag.ToString();
-
-                    // Reset all buttons border
-                    SideBarHomeButtonBorder.Background = null;
-                    SideBarModSettingsButtonBorder.Background = null;
-                    SideBarBlockstatesButtonBorder.Background = null;
-                    SideBarModelsButtonBorder.Background = null;
-                    SideBarTexturesButtonBorder.Background = null;
-                    SideBarTranslationsButtonBorder.Background = null;
-                    SideBarExportationButtonBorder.Background = null;
-
-                    // Hide all grid
-                    HomeGrid.Visibility = Visibility.Hidden;
-                    ModSettingsGrid.Visibility = Visibility.Hidden;
-                    BlockstatesGrid.Visibility = Visibility.Hidden;
-                    ModelsGrid.Visibility = Visibility.Hidden;
-                    TexturesGrid.Visibility = Visibility.Hidden;
-                    TranslationsGrid.Visibility = Visibility.Hidden;
-                    ExportationGrid.Visibility = Visibility.Hidden;
-
-                    // Set selected border
-                    Border SelectedBorder = (Border)this.FindName("SideBar" + SelectedButton.Tag + "ButtonBorder");
-                    if (SelectedBorder != null)
-                    {
-                        SelectedBorder.Background = (Brush)App.Current.FindResource("BorderColor");
-                    }
-
-                    // Display Grid
-                    Grid SelectedGrid = (Grid)this.FindName(SelectedButton.Tag + "Grid");
-                    if (SelectedGrid != null)
-                    {
-                        SelectedGrid.Visibility = Visibility.Visible;
-                    }
-
+                    SelectedGrid.Visibility = Visibility.Visible;
                 }
             }
         }

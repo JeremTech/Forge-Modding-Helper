@@ -57,91 +57,74 @@
             <StackPanel Grid.Row="0" x:Name="SideBarButtonsStackPanel" VerticalAlignment="Center">
 
                 <!-- Home button -->
-                <Grid x:Name="SideBarHomeButton" Tag="Home" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border x:Name="SideBarHomeButtonBorder" Grid.Column="0" Height="60" Background="{DynamicResource BorderColor}" Tag="home"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Home" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Home" Tag="project_explorer.sidebar.home"/>
-                </Grid>
+                <controls:SideBarMenuButton x:Name="SideBarMenuButtonHome"
+                                            Text="Home" 
+                                            Icon="Home" 
+                                            IsSelected="True"
+                                            TextTranslationKey="project_explorer.sidebar.home"
+                                            Tag="Home"
+                                            Height="60"
+                                            MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown" />
 
                 <!-- Mod settings button -->
-                <Grid x:Name="SideBarModSettingsButton" Tag="ModSettings" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border x:Name="SideBarModSettingsButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="settings"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Cogs" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Mod settings" Tag="project_explorer.sidebar.mod_settings"/>
-                </Grid>
+                <controls:SideBarMenuButton x:Name="SideBarMenuButtonModSettings"
+                                           Text="Mod settings" 
+                                           Icon="Cogs" 
+                                           IsSelected="False"
+                                           TextTranslationKey="project_explorer.sidebar.mod_settings"
+                                           Tag="ModSettings"
+                                           Height="60"
+                                           MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown" />
 
                 <!-- Blockstates button -->
-                <Grid x:Name="SideBarBlockstatesButton" Tag="Blockstates" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border x:Name="SideBarBlockstatesButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="blockstates"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="ListUl" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Blockstates" Tag="project_explorer.sidebar.blockstates"/>
-                </Grid>
+                <controls:SideBarMenuButton x:Name="SideBarMenuButtonBlockstates"
+                                            Text="Blockstates" 
+                                            Icon="ListUl" 
+                                            IsSelected="False"
+                                            TextTranslationKey="project_explorer.sidebar.blockstates"
+                                            Tag="Blockstates"
+                                            Height="60"
+                                            MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown" />
 
                 <!-- Models button -->
-                <Grid x:Name="SideBarModelsButton" Tag="Models" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border x:Name="SideBarModelsButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="models"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Cube" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Models" Tag="project_explorer.sidebar.models"/>
-                </Grid>
+                <controls:SideBarMenuButton x:Name="SideBarMenuButtonModels"
+                                            Text="Models" 
+                                            Icon="Cube" 
+                                            IsSelected="False"
+                                            TextTranslationKey="project_explorer.sidebar.models"
+                                            Tag="Models"
+                                            Height="60"
+                                            MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown" />
 
                 <!-- Textures button -->
-                <Grid x:Name="SideBarTexturesButton" Tag="Textures" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border x:Name="SideBarTexturesButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="textures"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Image" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Textures" Tag="project_explorer.sidebar.textures"/>
-                </Grid>
+                <controls:SideBarMenuButton x:Name="SideBarMenuButtonTextures"
+                                            Text="Textures" 
+                                            Icon="Image" 
+                                            IsSelected="False"
+                                            TextTranslationKey="project_explorer.sidebar.textures"
+                                            Tag="Textures"
+                                            Height="60"
+                                            MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown" />
 
                 <!-- Translations button -->
-                <Grid x:Name="SideBarTranslationsButton" Tag="Translations" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border x:Name="SideBarTranslationsButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="translations"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="Language" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="2" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Translations" Tag="project_explorer.sidebar.translations"/>
-                </Grid>
+                <controls:SideBarMenuButton x:Name="SideBarMenuButtonTranslations"
+                                            Text="Translations" 
+                                            Icon="Language" 
+                                            IsSelected="False"
+                                            TextTranslationKey="project_explorer.sidebar.translations"
+                                            Tag="Translations"
+                                            Height="60"
+                                            MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown" />
 
                 <!-- Exportation button -->
-                <Grid x:Name="SideBarExporationButton" Tag="Exportation" MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="60"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border x:Name="SideBarExportationButtonBorder" Grid.Column="0" Height="60" Background="{x:Null}" Tag="exportation"/>
-                    <fa:ImageAwesome Grid.Column="1" HorizontalAlignment="Center" Icon="File" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
-                    <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" Margin="0, 0, 5, 0">
-                        <TextBlock  Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16"  Text="Export" Tag="project_explorer.sidebar.export"/>
-                        <ProgressBar x:Name="SideBarExportationProgressBar" Margin="0, 5, 20, 0" Foreground="{DynamicResource BorderColor}" Visibility="Collapsed" IsIndeterminate="True"/>
-                    </StackPanel>
-                </Grid>
+                <controls:SideBarMenuButton x:Name="SideBarMenuButtonExportation"
+                                            Text="Export" 
+                                            Icon="File" 
+                                            IsSelected="False"
+                                            TextTranslationKey="project_explorer.sidebar.export"
+                                            Tag="Exportation"
+                                            Height="60"
+                                            MouseLeftButtonDown="SideBarButtonMouseLeftButtonDown" />
 
             </StackPanel>
 
@@ -149,19 +132,16 @@
             <StackPanel Grid.Row="1" x:Name="SideBarButtonsStackPanels" VerticalAlignment="Bottom">
 
                 <!-- Options button -->
-                <Grid x:Name="SideBarOptionsButton" MouseLeftButtonDown="SideBarOptionsButtonMouseLeftButtonDown">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="65"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="60"/>
-                    </Grid.RowDefinitions>
+                <controls:SideBarMenuButton x:Name="SideBarMenuButtonOptions"
+                                            Text="Options" 
+                                            Icon="Wrench" 
+                                            IsSelected="False"
+                                            TextTranslationKey="project_explorer.sidebar.options"
+                                            Height="60"
+                                            MouseLeftButtonDown="SideBarOptionsButtonMouseLeftButtonDown" />    
 
-                    <fa:ImageAwesome Grid.Column="0" HorizontalAlignment="Center" Icon="Wrench" Width="30" Height="30" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
-                    <TextBlock Grid.Column="1" Foreground="{DynamicResource FontColorPrimary}" FontWeight="DemiBold" FontSize="16" VerticalAlignment="Center" Text="Options" Tag="project_explorer.sidebar.options"/>
-                </Grid>
             </StackPanel>
+            
         </Grid>
 
         <!-- Separator between side bar and right grids -->
