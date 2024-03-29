@@ -45,6 +45,11 @@ namespace FMH.Core.UI.Forge
         /// </summary>
         private bool isClosing = false;
 
+        /// <summary>
+        /// Current sideBar width mode
+        /// </summary>
+        private WidthMode currentSideBarWidthMode = WidthMode.Normal;
+
         // Cancellation token sources
         private CancellationTokenSource blockstatesTokenSource;
         private CancellationTokenSource modelsTokenSource;
@@ -765,6 +770,39 @@ namespace FMH.Core.UI.Forge
             // Mod history
             await Task.Run(() => { _workspaceManager.ModVersionsHistory.ReadVersionsHistory(); });
             HomeModVersionsHistoryListView.ItemsSource = _workspaceManager.ModVersionsHistory.VersionHistory.OrderByDescending(v => v.VersionDateTime);
+        }
+
+        /// <summary>
+        /// Function called when mouse left button is pressed on side bar toggle width button
+        /// </summary>
+        private void SideBarToggleWidthLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (currentSideBarWidthMode == WidthMode.Normal)
+            {
+                SideBarMenuButtonHome.WidthMode = WidthMode.Compact;
+                SideBarMenuButtonModSettings.WidthMode = WidthMode.Compact;
+                SideBarMenuButtonBlockstates.WidthMode = WidthMode.Compact;
+                SideBarMenuButtonModels.WidthMode = WidthMode.Compact;
+                SideBarMenuButtonTextures.WidthMode = WidthMode.Compact;
+                SideBarMenuButtonTranslations.WidthMode = WidthMode.Compact;
+                SideBarMenuButtonExportation.WidthMode = WidthMode.Compact;
+                SideBarMenuButtonOptions.WidthMode = WidthMode.Compact;
+
+                currentSideBarWidthMode = WidthMode.Compact;
+            }
+            else
+            {
+                SideBarMenuButtonHome.WidthMode = WidthMode.Normal;
+                SideBarMenuButtonModSettings.WidthMode = WidthMode.Normal;
+                SideBarMenuButtonBlockstates.WidthMode = WidthMode.Normal;
+                SideBarMenuButtonModels.WidthMode = WidthMode.Normal;
+                SideBarMenuButtonTextures.WidthMode = WidthMode.Normal;
+                SideBarMenuButtonTranslations.WidthMode = WidthMode.Normal;
+                SideBarMenuButtonExportation.WidthMode = WidthMode.Normal;
+                SideBarMenuButtonOptions.WidthMode = WidthMode.Normal;
+
+                currentSideBarWidthMode = WidthMode.Normal;
+            }
         }
 
         /// <summary>

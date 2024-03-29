@@ -26,7 +26,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
 
-    <Grid>
+    <Grid x:Name="ContentGrid" Margin="0, 0, 10, 0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="60"/>
@@ -37,31 +37,29 @@
                 Height="Auto" 
                 Background="{DynamicResource BorderColor}" 
                 Visibility="{Binding IsSelected, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
-        
-        <fa:ImageAwesome Grid.Column="1" 
-                         HorizontalAlignment="Center" 
-                         Icon="{Binding Icon}"
-                         Width="30" Height="30"
-                         Margin="0, 5, 0, 0" 
-                         Foreground="{DynamicResource FontColorPrimary}"/>
-        
-        
 
-        <StackPanel Grid.Column="2" Orientation="Vertical" VerticalAlignment="Center" Margin="0, 0, 5, 0">
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+
+            <fa:ImageAwesome HorizontalAlignment="Center" 
+                             Icon="{Binding Icon}"
+                             Width="30" Height="30"
+                             Margin="0, 5, 0, 0" 
+                             Foreground="{DynamicResource FontColorPrimary}"/>
+
+            <ProgressBar x:Name="ProgressBar" 
+                         Margin="15, 10, 15, 0" 
+                         Foreground="{DynamicResource BorderColor}" 
+                         Visibility="Collapsed" />
+
+        </StackPanel>
 
             <TextBlock Grid.Column="2" 
+                       x:Name="TextBlock"
                        Foreground="{DynamicResource FontColorPrimary}" 
                        FontWeight="DemiBold" 
                        FontSize="16" 
                        VerticalAlignment="Center" 
                        Text="{Binding Text}" />
 
-            <ProgressBar x:Name="ProgressBar" 
-                         Margin="0, 5, 20, 0" 
-                         Foreground="{DynamicResource BorderColor}" 
-                         Visibility="Collapsed" />
-        
-        </StackPanel>
-        
     </Grid>
 </UserControl>

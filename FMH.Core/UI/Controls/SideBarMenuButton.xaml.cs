@@ -1,5 +1,7 @@
-﻿using FontAwesome.WPF;
+﻿using FMH.Core.Utils.UI;
+using FontAwesome.WPF;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,6 +14,7 @@ namespace FMH.Core.UI.Controls
         public static readonly DependencyProperty TextProperty;
         public static readonly DependencyProperty TextTranslationKeyProperty;
         public static readonly DependencyProperty IsSelectedProperty;
+        public static readonly DependencyProperty WidthModeProperty;
 
         [Description("Icon"), Category("Common Properties")]
         public FontAwesomeIcon Icon
@@ -69,18 +72,50 @@ namespace FMH.Core.UI.Controls
             }
         }
 
+        [Description("Width mode of the button"), Category("Common Properties")]
+        public WidthMode WidthMode
+        {
+            get
+            {
+                return (WidthMode)GetValue(WidthModeProperty);
+            }
+            set
+            {
+                SetValue(WidthModeProperty, value);
+                OnWidthModeChanged();
+                OnPropertyChanged("WidthMode");
+            }
+        }
+
         static SideBarMenuButton()
         {
             IconProperty = DependencyProperty.Register("IconProperty", typeof(FontAwesomeIcon), typeof(Image));
             TextProperty = DependencyProperty.Register("TextProperty", typeof(string), typeof(UserControl));
             TextTranslationKeyProperty = DependencyProperty.Register("TextTranslationKeyProperty", typeof(string), typeof(UserControl));
             IsSelectedProperty = DependencyProperty.Register("IsSelectedProperty", typeof(bool), typeof(UserControl));
+            WidthModeProperty = DependencyProperty.Register("WidthModeProperty", typeof(WidthMode), typeof(UserControl));
         }
 
         public SideBarMenuButton()
         {
             InitializeComponent();
             this.DataContext = this;
+        }
+
+        private void OnWidthModeChanged()
+        {
+            switch(this.WidthMode)
+            {
+                case WidthMode.Compact:
+                    this.TextBlock.Visibility = Visibility.Collapsed;
+                    this.ContentGrid.Margin = new Thickness(0, 0, 0, 0);
+                    break;
+                default:
+                    this.TextBlock.Visibility = Visibility.Visible;
+                    this.ContentGrid.Margin = new Thickness(0, 0, 10, 0);
+                    break;
+            }
+
         }
 
         #region INotifyPropertyChanged implementation

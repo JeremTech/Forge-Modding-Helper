@@ -40,7 +40,7 @@
     <Grid x:Name="MainGrid" Background="{DynamicResource PrimaryBackgroundColor}" Visibility="Hidden">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="230"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="2"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -49,12 +49,26 @@
         <Grid x:Name="SideBarGrid" Grid.Column="0" Background="{DynamicResource SecondaryBackgroundColor}">
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
 
+            <!-- Header -->
+            <StackPanel Grid.Row="0" VerticalAlignment="Top">
+
+                <!-- Toggle width mode button -->
+                <controls:SideBarMenuButton x:Name="SideBarMenuButtonToggleWidth" 
+                                            Icon="Bars"
+                                            Height="60"
+                                            IsSelected="False"
+                                            WidthMode="Compact"
+                                            MouseLeftButtonDown="SideBarToggleWidthLeftButtonDown" />
+
+            </StackPanel>
+            
             <!-- Navigation buttons -->
-            <StackPanel Grid.Row="0" x:Name="SideBarButtonsStackPanel" VerticalAlignment="Center">
+            <StackPanel Grid.Row="1" x:Name="SideBarButtonsStackPanel" VerticalAlignment="Center">
 
                 <!-- Home button -->
                 <controls:SideBarMenuButton x:Name="SideBarMenuButtonHome"
@@ -129,7 +143,7 @@
             </StackPanel>
 
             <!-- Footer -->
-            <StackPanel Grid.Row="1" x:Name="SideBarButtonsStackPanels" VerticalAlignment="Bottom">
+            <StackPanel Grid.Row="2" x:Name="SideBarButtonsStackPanels" VerticalAlignment="Bottom">
 
                 <!-- Options button -->
                 <controls:SideBarMenuButton x:Name="SideBarMenuButtonOptions"
