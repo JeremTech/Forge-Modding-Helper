@@ -26,7 +26,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
 
-    <Grid x:Name="ContentGrid" Margin="0, 0, 10, 0">
+    <Grid x:Name="ContentGrid" Margin="0, 0, 10, 0" ToolTip="{Binding Text}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="60"/>

@@ -108,7 +108,7 @@ namespace FMH.Core.UI.Controls
             {
                 case WidthMode.Compact:
                     this.TextBlock.Visibility = Visibility.Collapsed;
-                    this.ContentGrid.Margin = new Thickness(0, 0, 0, 0);
+                    this.ContentGrid.Margin = new Thickness(0, 0, 5, 0);
                     break;
                 default:
                     this.TextBlock.Visibility = Visibility.Visible;
