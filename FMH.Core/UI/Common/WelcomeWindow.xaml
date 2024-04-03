@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
-        xmlns:local="clr-namespace:FMH.Core.UI.Common"
+        xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
         mc:Ignorable="d"
         Title="Forge Modding Helper - Welcome" 
         Icon="/FMH.Resources;component/Pictures/icon.png" 
@@ -16,34 +16,69 @@
     
     <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="70*"/>
+        </Grid.ColumnDefinitions>
 
-        <!-- Header -->
-        <Grid x:Name="HeaderGrid" Grid.Row="0" HorizontalAlignment="Center">
+        <!-- SideBar -->
+        <Grid Grid.Column="0" Background="{DynamicResource SecondaryBackgroundColor}">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="70"/>
-                <ColumnDefinition Width="315"/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="55*"/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Header -->
+            <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-            <Image Grid.Column="0" Height="70" Width="70" Source="/FMH.Resources;component/Pictures/icon.png"/>
+                <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5, 0">
+                    <Image Grid.Column="0" Height="55" Width="55" HorizontalAlignment="Center" Source="/FMH.Resources;component/Pictures/icon.png"/>
+                    <Label Content="Forge Modding Helper" HorizontalAlignment="Center" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}" FontSize="16"/>
+                    <Label x:Name="version_label" Content="v0.0.0.0" Margin="0, -7, 0, 0" HorizontalAlignment="Center" Foreground="{DynamicResource FontColorSecondary}" FontSize="14"/>
+                </StackPanel>
 
-            <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10, 15">
-                <Label Content="Forge Modding Helper" Foreground="{DynamicResource FontColorPrimary}" FontSize="28"/>
-                <Label x:Name="version_label" Content="v0.0.0.0" Margin="0, -7, 0, 0" HorizontalAlignment="Right" Foreground="{DynamicResource FontColorPrimary}" FontSize="13"/>
+            </Grid>
+
+            <!-- Buttons -->
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+
+                <controls:SideBarMenuButton Icon="PlusCircle"
+                                            Height="60" 
+                                            Text="New project"
+                                            TextTranslationKey="welcome.button.new"
+                                            MouseLeftButtonDown="SideBarNewProjectButtonMouseLeftButtonDown" />
+
+                <controls:SideBarMenuButton Icon="Download"
+                                            Height="60" 
+                                            Text="Import project"
+                                            TextTranslationKey="welcome.button.import"
+                                            MouseLeftButtonDown="SideBarImportProjectButtonMouseLeftButtonDown" />
+
             </StackPanel>
+
+            <!-- Options button -->
+            <controls:SideBarMenuButton x:Name="SideBarMenuButtonOptions"
+                                        Text="Options" 
+                                        Icon="Wrench" 
+                                        IsSelected="False"
+                                        TextTranslationKey="welcome.button.options"
+                                        Height="60"
+                                        Grid.Row="2"
+                                        MouseLeftButtonDown="SideBarOptionButtonMouseLeftButtonDown"/>
 
         </Grid>
 
+        <!-- Separator between side bar and right grids -->
+        <Border Grid.Column="1" Background="#FF686868"/>
+
         <!-- Workspaces explorer -->
-        <Grid x:Name="WorkspacesExplorerGrid" Grid.Row="1">
+        <Grid x:Name="WorkspacesExplorerGrid" Grid.RowSpan="2" Grid.Column="2">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="220"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -60,10 +95,15 @@
             <Border HorizontalAlignment="Left" Margin="10, 0" Grid.Row="1" Grid.ColumnSpan="2" BorderThickness="1" Width="254" BorderBrush="{DynamicResource FontColorPrimary}"/>
 
             <!-- Recent workspaces list -->
-            <ListBox x:Name="listbox_recent_workspaces" Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 10" Background="{DynamicResource InputsBackgroundColor}" SelectionChanged="listbox_recent_workspaces_SelectionChanged">
+            <ListBox x:Name="listbox_recent_workspaces" 
+                     Grid.Row="2" 
+                     Grid.Column="0" 
+                     Margin="10" 
+                     Background="{DynamicResource InputsBackgroundColor}" 
+                     SelectionChanged="listbox_recent_workspaces_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Cursor="Hand" ForceCursor="True" MouseLeftButtonDown="RecentProjectListMouseLeftButtonDown">
                             <Image Source="{Binding WorkspaceLogoPath}" Width="30" Height="30" Margin="5"/>
                             <StackPanel Orientation="Vertical">
                                 <Label Content="{Binding WorkspaceName}" HorizontalAlignment="Left" Foreground="{DynamicResource FontColorPrimary}"/>
@@ -75,17 +115,7 @@
             </ListBox>
             <Label x:Name="label_no_workspace_found" Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="No recent workspace found" Foreground="{DynamicResource FontColorSecondary}" Tag="welcome.label.no_workspaces"/>
 
-            <!-- Buttons -->
-            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
 
-                <Button x:Name="new_mod_button" Content="New" Width="140" Height="24" Margin="0, 4" Click="new_mod_button_Click" Tag="welcome.button.new"/>
-                <Button x:Name="open_mod_button" Content="Open" Width="140" Height="24" Margin="0, 4" Tag="welcome.button.open" Click="open_mod_button_Click" IsEnabled="False"/>
-                <Button x:Name="delete_mod_button" Content="Delete" Width="140" Height="24" Margin="0, 4" Tag="welcome.button.delete" IsEnabled="False" Click="delete_mod_button_Click"/>
-                <Button x:Name="import_mod_button" Content="Import" Width="140" Height="24" Margin="0, 4" Tag="welcome.button.import" Click="import_mod_button_Click"/>
-                <Button x:Name="refresh_mod_list_button" Content="Refresh list" Width="140" Height="24" Margin="0, 4" Tag="welcome.button.refresh" Click="refresh_mod_list_button_Click"/>
-                <Button x:Name="options_mod_button" Content="Settings" Width="140" Height="24" Margin="0, 4" Tag="welcome.button.options" Click="options_mod_button_Click"/>
-
-            </StackPanel>
 
         </Grid>
 

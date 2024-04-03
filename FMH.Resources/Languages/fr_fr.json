@@ -7,7 +7,7 @@
     "welcome.title": "Bienvenue - Forge Modding Helper",
     "welcome.label.recents_workspaces": "Espaces de travail récents",
     "welcome.label.no_workspaces": "Aucun espace de travail récent n'a été trouvé",
-    "welcome.button.new": "Nouveau",
+    "welcome.button.new": "Nouveau projet",
     "welcome.button.open": "Ouvrir",
     "welcome.button.delete": "Supprimer",
     "welcome.button.refresh": "Actualiser la liste",

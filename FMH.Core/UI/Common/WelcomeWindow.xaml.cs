@@ -53,18 +53,6 @@ namespace FMH.Core.UI.Common
 
         #region Buttons
         /// <summary>
-        /// Function called when the user click on the "new" button
-        /// </summary>
-        private void new_mod_button_Click(object sender, RoutedEventArgs e)
-        {
-            // Display the Assistant Creator
-            ForgeAssistantCreator creator = new ForgeAssistantCreator();
-            creator.Show();
-
-            this.Close();
-        }
-
-        /// <summary>
         /// Function called when the user click on the "open" button
         /// </summary>
         private void open_mod_button_Click(object sender, RoutedEventArgs e)
@@ -114,32 +102,6 @@ namespace FMH.Core.UI.Common
         {
             RefreshLastProjectData();
         }
-
-        private void import_mod_button_Click(object sender, RoutedEventArgs e)
-        {
-            var importProjectDialog = new ImportProjectDialog();
-            importProjectDialog.Owner = this;
-            importProjectDialog.ShowDialog();
-
-            if(importProjectDialog.DialogResult.HasValue && importProjectDialog.DialogResult.Value)
-            {
-                var lastWorkspace = LastWorkspaces.LastWorkspacesData.OrderByDescending(w => w.LastUpdated).FirstOrDefault();
-                if(lastWorkspace != null)
-                {
-                    new ForgeProjectExplorer(lastWorkspace.WorkspacePath).Show();
-                    this.Close();
-                }
-            }
-        }
-
-        private void options_mod_button_Click(object sender, RoutedEventArgs e)
-        {
-            new OptionWindow().ShowDialog();
-
-            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
-            UITextTranslator.UpdateComponentsTranslations(this);
-            this.Title = UITextTranslator.getTranslation("welcome.title");
-        }
         #endregion
 
         /// <summary>
@@ -161,16 +123,17 @@ namespace FMH.Core.UI.Common
             // Update project buttons
             if (_selectedWorkspace != null)
             {
-                open_mod_button.IsEnabled = true;
-                delete_mod_button.IsEnabled = true;
+                //open_mod_button.IsEnabled = true;
+                //delete_mod_button.IsEnabled = true;
             }
             else
             {
-                open_mod_button.IsEnabled = false;
-                delete_mod_button.IsEnabled = false;
+                //open_mod_button.IsEnabled = false;
+                //delete_mod_button.IsEnabled = false;
             }
         }
 
+        #region Events
         /// <summary>
         /// Function called
         /// </summary>
@@ -178,6 +141,74 @@ namespace FMH.Core.UI.Common
         {
             this.listbox_recent_workspaces.ItemsSource = null;
         }
+
+        /// <summary>
+        /// Function called when mouse left button is pressed on side bar's "New project" button
+        /// </summary>
+        private void SideBarNewProjectButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // Display the Assistant Creator
+            ForgeAssistantCreator creator = new ForgeAssistantCreator();
+            creator.Show();
+
+            this.Close();
+        }
+
+        /// <summary>
+        /// Function called when mouse left button is pressed on side bar's "Import project" button
+        /// </summary>
+        private void SideBarImportProjectButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var importProjectDialog = new ImportProjectDialog();
+            importProjectDialog.Owner = this;
+            importProjectDialog.ShowDialog();
+
+            if (importProjectDialog.DialogResult.HasValue && importProjectDialog.DialogResult.Value)
+            {
+                var lastWorkspace = LastWorkspaces.LastWorkspacesData.OrderByDescending(w => w.LastUpdated).FirstOrDefault();
+                if (lastWorkspace != null)
+                {
+                    new ForgeProjectExplorer(lastWorkspace.WorkspacePath).Show();
+                    this.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Function called when mouse left button is pressed on side bar's "Option" button
+        /// </summary>
+        private void SideBarOptionButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            new OptionWindow().ShowDialog();
+
+            // Refreshing UI
+            UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
+            UITextTranslator.UpdateComponentsTranslations(this);
+            this.Title = UITextTranslator.getTranslation("welcome.title");
+        }
+
+        /// <summary>
+        /// Function called when mouse left button is pressed on the recent project list
+        /// </summary>
+        private void RecentProjectListMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var data = sender as StackPanel;
+            var worksapce = data.DataContext as WorkspaceEntry;
+
+            if (worksapce != null)
+            {
+                if (Directory.Exists(worksapce.WorkspacePath))
+                {
+                    new ForgeProjectExplorer(worksapce.WorkspacePath).Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.open.error"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        #endregion
 
         private void RefreshLastProjectData()
         {
