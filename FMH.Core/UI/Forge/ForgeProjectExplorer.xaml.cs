@@ -159,6 +159,9 @@ namespace FMH.Core.UI.Forge
         /// </summary>
         private void HomeContextMenuVersionsHistory_OpenLocation_Click(object sender, RoutedEventArgs e)
         {
+            if (HomeModVersionsHistoryListView.SelectedItems.Count != 1)
+                return;
+
             var selectedVersion = (ModVersionHistoryEntry)HomeModVersionsHistoryListView.SelectedItem;
             var filePath = Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions", selectedVersion.FileName);
 
