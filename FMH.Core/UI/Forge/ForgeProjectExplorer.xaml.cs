@@ -228,6 +228,10 @@ namespace FMH.Core.UI.Forge
         /// </summary>
         private void ModSettingsModLogoDeleteButtonClick(object sender, RoutedEventArgs e)
         {
+            // Check if mod logo exist
+            if (!File.Exists(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, @"src\main\resources\logo.png")))
+                return;
+
             // Create and display confirmation message
             MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.mod_settings.alerte.delete_logo_message"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
