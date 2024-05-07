@@ -165,6 +165,9 @@ namespace FMH.Core.UI.Forge
         /// </summary>
         private void HomeContextMenuVersionsHistory_OpenLocation_Click(object sender, RoutedEventArgs e)
         {
+            if (HomeModVersionsHistoryListView.SelectedItems.Count != 1)
+                return;
+
             var selectedVersion = (ModVersionHistoryEntry)HomeModVersionsHistoryListView.SelectedItem;
             var filePath = Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions", selectedVersion.FileName);
 
@@ -231,6 +234,10 @@ namespace FMH.Core.UI.Forge
         /// </summary>
         private void ModSettingsModLogoDeleteButtonClick(object sender, RoutedEventArgs e)
         {
+            // Check if mod logo exist
+            if (!File.Exists(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, @"src\main\resources\logo.png")))
+                return;
+
             // Create and display confirmation message
             MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.mod_settings.alerte.delete_logo_message"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
