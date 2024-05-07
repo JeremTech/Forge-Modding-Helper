@@ -32,6 +32,10 @@ namespace FMH.Core.Utils.Software
         /// <returns><c>true</c> if preivous version data exist, <c>false</c> else</returns>
         public static bool ExistPreviousVersionData()
         {
+            // Check if data directory exists
+            if (!Directory.Exists(SoftwareDataManager.GetSoftwareDataDirectory()))
+                return false;
+
             // Check old data files created before Forge Modding Helper 3.3.0.0-PRE2
             if (File.Exists(Path.Combine(SoftwareDataManager.GetSoftwareDataDirectory(), "options.json"))
                 || File.Exists(Path.Combine(SoftwareDataManager.GetSoftwareDataDirectory(), "workspaces.json")))
