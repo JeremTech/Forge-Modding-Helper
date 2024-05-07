@@ -111,7 +111,7 @@ namespace FMH.Core.UI.Forge
         /// </summary>
         private void Cancel_button_Click(object sender, RoutedEventArgs e)
         {
-
+            this.DialogResult = false;
             this.Close();
         }
         #endregion
@@ -764,6 +764,7 @@ namespace FMH.Core.UI.Forge
         private void finish_button_Click(object sender, RoutedEventArgs e)
         {
             new ForgeProjectExplorer(_workspaceManager.WorkspaceProperties.WorkspacePath).Show();
+            this.DialogResult = true;
             this.Close();
         }
         #endregion
@@ -785,26 +786,6 @@ namespace FMH.Core.UI.Forge
                 {
                     // We cancel the event / the window closing
                     e.Cancel = true;
-                }
-                else
-                {
-                    WelcomeWindow welcomeWindow = new WelcomeWindow();
-
-                    // Update welcome UI depending on the presence of recent projects or not
-                    LastWorkspaces.ReadData();
-
-                    if (LastWorkspaces.LastWorkspacesData.Count > 0)
-                    {
-                        welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
-                        welcomeWindow.listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
-                    }
-                    else
-                    {
-                        welcomeWindow.label_no_workspace_found.Visibility = Visibility.Visible;
-                    }
-
-                    // Windows management
-                    welcomeWindow.Show();
                 }
             }
         }

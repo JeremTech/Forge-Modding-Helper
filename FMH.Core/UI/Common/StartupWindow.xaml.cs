@@ -15,6 +15,7 @@ using FMH.Core.Files.Software;
 using FMH.Core.UI.Dialogs;
 using FMH.Core.Utils.Software;
 using FMH.Core.Utils.UI;
+using FMH.Core.View;
 
 namespace FMH.Core.UI.Common
 {
@@ -62,14 +63,14 @@ namespace FMH.Core.UI.Common
 
             // Load last workspaces
             updateLoadingStatut(UITextTranslator.getTranslation("loading.retrieving_workspaces"), 40);
-            WelcomeWindow welcomeWindow = new WelcomeWindow();
+            WelcomeView welcomeWindow = new WelcomeView();
 
             // Update welcome UI depending on the presence of recent projects or not
             LastWorkspaces.ReadData();
             if (LastWorkspaces.LastWorkspacesData.Count > 0)
             {
                 welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
-                welcomeWindow.listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
+                //welcomeWindow.listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
             }
             else
             {

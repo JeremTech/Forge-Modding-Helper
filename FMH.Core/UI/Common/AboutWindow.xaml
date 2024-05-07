@@ -41,7 +41,7 @@
             <Label x:Name="librairies_desc_label" Content="Used librairies :" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag="about.label.librairies"/>
             <DockPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
                 <Label Content="• Newtonsoft.Json v13.0.3&#xA;• ConsoleControl.WPF v1.3.0&#xA;• McVersionsLib v1.0.0.1&#xA;• StringExtensions v1.1.1.0" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
-                <Label Content="• ConsoleControlAPI v1.3.0&#xA;• Leow.TextEditor v0.4.7541.19769&#xA;• FontAwesome.WPF v4.7.0.9" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
+                <Label Content="• ConsoleControlAPI v1.3.0&#xA;• Leow.TextEditor v0.4.7541.19769&#xA;• FontAwesome.WPF v4.7.0.9&#xA;• CommunityToolkit.Mvvm v8.2.2" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" Tag=""/>
             </DockPanel>
         </StackPanel>
     </Grid>

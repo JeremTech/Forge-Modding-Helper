@@ -10,8 +10,8 @@
         Height="240" 
         Width="395"
         ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
         Icon="/FMH.Resources;component/Pictures/icon.png" 
-        WindowStartupLocation="CenterOwner"
         Background="{DynamicResource PrimaryBackgroundColor}" >
 
     <Grid x:Name="mainGrid" Margin="10">

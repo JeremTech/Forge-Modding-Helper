@@ -8,13 +8,17 @@ using System.Windows.Input;
 
 namespace FMH.Core.UI.Controls
 {
-    public partial class SideBarMenuButton : UserControl, INotifyPropertyChanged
+    public partial class SideBarMenuButton : UserControl, ICommandSource, INotifyPropertyChanged
     {
-        public static readonly DependencyProperty IconProperty;
-        public static readonly DependencyProperty TextProperty;
-        public static readonly DependencyProperty TextTranslationKeyProperty;
-        public static readonly DependencyProperty IsSelectedProperty;
-        public static readonly DependencyProperty WidthModeProperty;
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(FontAwesomeIcon), typeof(Image));
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(SideBarMenuButton));
+        public static readonly DependencyProperty TextTranslationKeyProperty = DependencyProperty.Register("TextTranslationKey", typeof(string), typeof(SideBarMenuButton));
+        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(SideBarMenuButton));
+        public static readonly DependencyProperty WidthModeProperty = DependencyProperty.Register("WidthMode", typeof(WidthMode), typeof(SideBarMenuButton));
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(SideBarMenuButton));
+        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(SideBarMenuButton));
+        public static readonly DependencyProperty CommandTargetProperty = DependencyProperty.Register("CommandTarget", typeof(IInputElement), typeof(SideBarMenuButton));
+
 
         [Description("Icon"), Category("Common Properties")]
         public FontAwesomeIcon Icon
@@ -87,16 +91,49 @@ namespace FMH.Core.UI.Controls
             }
         }
 
-        static SideBarMenuButton()
+        [Description("Command of the button"), Category("Common Properties")]
+        public ICommand Command
         {
-            IconProperty = DependencyProperty.Register("IconProperty", typeof(FontAwesomeIcon), typeof(Image));
-            TextProperty = DependencyProperty.Register("TextProperty", typeof(string), typeof(UserControl));
-            TextTranslationKeyProperty = DependencyProperty.Register("TextTranslationKeyProperty", typeof(string), typeof(UserControl));
-            IsSelectedProperty = DependencyProperty.Register("IsSelectedProperty", typeof(bool), typeof(UserControl));
-            WidthModeProperty = DependencyProperty.Register("WidthModeProperty", typeof(WidthMode), typeof(UserControl));
+            get
+            {
+                return (ICommand)GetValue(CommandProperty);
+            }
+            set
+            {
+                SetValue(CommandProperty, value);
+                OnPropertyChanged("Command");
+            }
         }
 
-        public SideBarMenuButton()
+        [Description("Command parameter"), Category("Common Properties")]
+        public object CommandParameter
+        {
+            get 
+            {
+                return GetValue(CommandParameterProperty);
+            }
+            set
+            {
+                SetValue(CommandParameterProperty, value);
+                OnPropertyChanged("CommandParameter");
+            }
+        }
+
+        [Description("Command target"), Category("Common Properties")]
+        public IInputElement CommandTarget
+        {
+            get
+            {
+                return (IInputElement)GetValue(CommandTargetProperty);
+            }
+            set
+            {
+                SetValue(CommandTargetProperty, value);
+                OnPropertyChanged("CommandTarget");
+            }
+        }
+
+        public SideBarMenuButton() : base()
         {
             InitializeComponent();
             this.DataContext = this;
