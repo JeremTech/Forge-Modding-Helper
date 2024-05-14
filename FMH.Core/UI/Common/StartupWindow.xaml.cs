@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FMH.Core.Files.Software;
+using FMH.Core.Provider;
 using FMH.Core.UI.Dialogs;
 using FMH.Core.Utils.Software;
 using FMH.Core.Utils.UI;
@@ -61,24 +62,8 @@ namespace FMH.Core.UI.Common
             // Loading theme
             App.LoadThemeFile(OptionsFile.GetCurrentTheme());
 
-            // Load last workspaces
-            updateLoadingStatut(UITextTranslator.getTranslation("loading.retrieving_workspaces"), 40);
-            WelcomeView welcomeWindow = new WelcomeView();
-
-            // Update welcome UI depending on the presence of recent projects or not
-            LastWorkspaces.ReadData();
-            if (LastWorkspaces.LastWorkspacesData.Count > 0)
-            {
-                welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
-                //welcomeWindow.listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
-            }
-            else
-            {
-                welcomeWindow.label_no_workspace_found.Visibility = Visibility.Visible;
-            }
-
-            // Windows management
-            welcomeWindow.Show();
+            // Show welcome window
+            new WelcomeView().Show();
             this.Close();
         }
 

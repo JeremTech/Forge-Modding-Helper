@@ -36,7 +36,7 @@ namespace FMH.Core.Provider
                 if (historyFileDeserialized != null)
                 {
                     CompleteRecentWorkspaceData(historyFileDeserialized);
-                    return historyFileDeserialized?.OrderByDescending(w => w.LastUpdated);
+                    return historyFileDeserialized.OrderByDescending(w => w.LastUpdated);
                 }
 
             }

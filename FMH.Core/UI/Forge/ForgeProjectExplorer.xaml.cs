@@ -20,6 +20,7 @@ using FMH.Core.UI.Common;
 using FMH.Core.UI.Controls;
 using FMH.Core.UI.Dialogs;
 using FMH.Core.Utils.UI;
+using FMH.Core.View;
 using FMH.Workspace.Data;
 using FMH.Workspace.WorkspaceManager;
 using FontAwesome.WPF;
@@ -1345,27 +1346,12 @@ namespace FMH.Core.UI.Forge
                 isClosing = true;
 
                 // Configuring welcome window
-                WelcomeWindow welcomeWindow = new WelcomeWindow();
+                WelcomeView welcomeWindow = new WelcomeView();
 
                 // Write workspacedata
                 WorkspaceManagerHelper.WriteWorkspaceData(_workspaceManager);
                 // Generate project file
                 WorkspaceManagerHelper.WriteProjectFile(_workspaceManager.WorkspaceProperties);
-
-                // Refresh recent project list
-                LastWorkspaces.RefreshData();
-
-                // Update welcome UI depending on the presence of recent projects or not
-                LastWorkspaces.ReadData();
-                if (LastWorkspaces.LastWorkspacesData.Count > 0)
-                {
-                    welcomeWindow.label_no_workspace_found.Visibility = Visibility.Hidden;
-                    welcomeWindow.listbox_recent_workspaces.ItemsSource = LastWorkspaces.LastWorkspacesProjectFile;
-                }
-                else
-                {
-                    welcomeWindow.label_no_workspace_found.Visibility = Visibility.Visible;
-                }
 
                 // Cleaning Project Explorer window
                 this.BlockstatesListView.Items.Clear();

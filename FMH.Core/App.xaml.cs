@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System.Windows.Media;
 using FMH.Core.Files.Software;
 using FMH.Core.UI.Common;
+using System.Diagnostics;
 
 namespace FMH.Core
 {
@@ -24,6 +25,12 @@ namespace FMH.Core
 
         // List of Minecraft versions supported by Forge Modding Helper
         private static List<String> supportedMcVersions = new List<string>() { "1.18.1", "1.18.2", "1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4", "1.20", "1.20.1", "1.20.2", "1.20.4", "1.20.6" };
+
+        /// <summary>
+        /// Formated version string
+        /// </summary>
+        /// <remarks>Used for bindings</remarks>
+        public static string FormatedVersionString => GetApplicationVersionString();
 
         /// <summary>
         /// Allow to get the current version of the software

@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
-        xmlns:local="clr-namespace:FMH.Core.ViewModel"
+        xmlns:viewModels="clr-namespace:FMH.Core.ViewModel"
         mc:Ignorable="d"
         Title="Forge Modding Helper - Welcome" 
         Icon="/FMH.Resources;component/Pictures/icon.png" 
@@ -16,7 +16,7 @@
         WindowStartupLocation="CenterScreen" >
 
     <Window.DataContext>
-        <local:WelcomeViewModel/>
+        <viewModels:WelcomeViewModel/>
     </Window.DataContext>
     
     <Grid x:Name="main_grid" Background="{DynamicResource PrimaryBackgroundColor}">
@@ -42,7 +42,7 @@
                 <StackPanel Orientation="Vertical" Grid.Column="1" Margin="5, 0">
                     <Image Grid.Column="0" Height="55" Width="55" HorizontalAlignment="Center" Source="/FMH.Resources;component/Pictures/icon.png"/>
                     <Label Content="Forge Modding Helper" HorizontalAlignment="Center" Margin="0, 5, 0, 0" Foreground="{DynamicResource FontColorPrimary}" FontSize="16"/>
-                    <Label x:Name="version_label" Content="v0.0.0.0" Margin="0, -7, 0, 0" HorizontalAlignment="Center" Foreground="{DynamicResource FontColorSecondary}" FontSize="14"/>
+                    <Label x:Name="version_label" Content="{Binding FormatedVersionString, Source={x:Static Application.Current}}" Margin="0, -7, 0, 0" HorizontalAlignment="Center" Foreground="{DynamicResource FontColorSecondary}" FontSize="14"/>
                 </StackPanel>
 
             </Grid>
@@ -124,7 +124,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Label x:Name="label_no_workspace_found" Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="No recent workspace found" Foreground="{DynamicResource FontColorSecondary}" Tag="welcome.label.no_workspaces"/>
+            <Label x:Name="label_no_workspace_found" Visibility="{Binding NoWorkspacesLabelVisibility}" Grid.Row="2" Grid.Column="0" Margin="10, 10, 0, 10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="No recent workspace found" Foreground="{DynamicResource FontColorSecondary}" Tag="welcome.label.no_workspaces"/>
 
         </Grid>
     </Grid>

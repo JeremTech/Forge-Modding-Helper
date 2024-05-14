@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Markup;
 using MessageBox = System.Windows.MessageBox;
 
 namespace FMH.Core.ViewModel
@@ -23,10 +24,10 @@ namespace FMH.Core.ViewModel
     public class WelcomeViewModel : ViewModelBase
     {
         #region Properties
-        private ObservableCollection<RecentWorkspace> _recentsWorkspaces;
         /// <summary>
         /// Recents workspaces data
         /// </summary>
+        private ObservableCollection<RecentWorkspace> _recentsWorkspaces;
         public ObservableCollection<RecentWorkspace> RecentsWorkspaces 
         {  
             get {  return _recentsWorkspaces; }
@@ -34,6 +35,17 @@ namespace FMH.Core.ViewModel
             {
                 _recentsWorkspaces = value;
                 OnPropertyChanged(nameof(RecentsWorkspaces));
+            }
+        }
+
+        public Visibility NoWorkspacesLabelVisibility
+        {
+            get
+            {
+                if(RecentsWorkspaces.Any())
+                    return Visibility.Collapsed;
+
+                return Visibility.Visible;
             }
         }
         #endregion

@@ -1,4 +1,5 @@
-﻿using FMH.Core.ViewModel;
+﻿using FMH.Core.Utils.UI;
+using FMH.Core.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,10 @@ namespace FMH.Core.View
             // Define window's actions in the view model
             var viewModel = (WelcomeViewModel)this.DataContext;
             viewModel.CloseParentWindow = () => this.Close();
+
+            // Load translations
+            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            this.Title = UITextTranslator.getTranslation("welcome.title");
         }
     }
 }
