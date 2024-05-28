@@ -17,6 +17,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Markup;
+using Clipboard = System.Windows.Clipboard;
 using MessageBox = System.Windows.MessageBox;
 
 namespace FMH.Core.ViewModel
@@ -46,6 +47,17 @@ namespace FMH.Core.ViewModel
                     return Visibility.Collapsed;
 
                 return Visibility.Visible;
+            }
+        }
+
+        private RecentWorkspace _currentSelectedRecentWorkspace;
+        public RecentWorkspace CurrentSelectedRecentWorkspace 
+        { 
+            get { return _currentSelectedRecentWorkspace; }
+            set 
+            { 
+                _currentSelectedRecentWorkspace = value;
+                OnPropertyChanged(nameof(CurrentSelectedRecentWorkspace));
             }
         }
         #endregion
@@ -118,6 +130,40 @@ namespace FMH.Core.ViewModel
                 OnPropertyChanged(nameof(OpenProjectCommand));
             }
         }
+
+        /// <summary>
+        /// Copy project path command
+        /// </summary>
+        private ICommand _copyProjectPathCommand;
+        public ICommand CopyProjectPathCommand
+        {
+            get
+            {
+                return _copyProjectPathCommand;
+            }
+            set
+            {
+                _copyProjectPathCommand = value;
+                OnPropertyChanged(nameof(CopyProjectPathCommand));
+            }
+        }
+
+        /// <summary>
+        /// Copy project path command
+        /// </summary>
+        private ICommand _deleteProjectFromListCommand;
+        public ICommand DeleteProjectFromListCommand
+        {
+            get
+            {
+                return _deleteProjectFromListCommand;
+            }
+            set
+            {
+                _deleteProjectFromListCommand = value;
+                OnPropertyChanged(nameof(DeleteProjectFromListCommand));
+            }
+        }
         #endregion
 
         #region Actions
@@ -137,7 +183,9 @@ namespace FMH.Core.ViewModel
             this.OpenSettingsCommand = new RelayCommand(OpenSettings);
             this.CreateProjectCommand = new RelayCommand(CreateProject);
             this.ImportProjectCommand = new RelayCommand(ImportProject);
-            this.OpenProjectCommand = new RelayCommand<RecentWorkspace>(OpenProject);
+            this.OpenProjectCommand = new RelayCommand<RecentWorkspace>(OpenProject, (workspace) => CurrentSelectedRecentWorkspace != null);
+            this.CopyProjectPathCommand = new RelayCommand<RecentWorkspace>(CopyProjectPath, (workspace) => CurrentSelectedRecentWorkspace != null);
+            this.DeleteProjectFromListCommand = new RelayCommand<RecentWorkspace>(DeleteProjectFromList, (workspace) => CurrentSelectedRecentWorkspace != null);
         }
 
         #region Data management
@@ -146,7 +194,7 @@ namespace FMH.Core.ViewModel
         /// </summary>
         private void LoadRecentsWorkspacesList()
         {
-            this.RecentsWorkspaces = new ObservableCollection<RecentWorkspace>(RecentsWorkspacesProvider.GetRecentWorkspaces());
+            this.RecentsWorkspaces = new ObservableCollection<RecentWorkspace>(RecentsWorkspacesProvider.GetRecentsWorkspaces());
         }
         #endregion
 
@@ -182,7 +230,7 @@ namespace FMH.Core.ViewModel
 
             if (importProjectDialog.DialogResult.HasValue && importProjectDialog.DialogResult.Value)
             {
-                var lastWorkspace = LastWorkspaces.LastWorkspacesData.OrderByDescending(w => w.LastUpdated).FirstOrDefault();
+                var lastWorkspace = RecentsWorkspacesProvider.GetRecentsWorkspaces().OrderByDescending(w => w.LastUpdated).FirstOrDefault();
                 if (lastWorkspace != null)
                 {
                     new ForgeProjectExplorer(lastWorkspace.WorkspacePath).Show();
@@ -200,11 +248,38 @@ namespace FMH.Core.ViewModel
             {
                 if (Directory.Exists(workspace.WorkspacePath))
                 {
+                    RecentsWorkspacesProvider.UpdateRecentWorkspaceModificationDate(workspace, DateTime.Now);
                     new ForgeProjectExplorer(workspace.WorkspacePath).Show();
                     this.CloseParentWindow();
                 }
                 else
                     MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.open.error"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Copy project path command function
+        /// </summary>
+        private void CopyProjectPath(RecentWorkspace workspace)
+        {
+            if (workspace != null)
+            {
+                Clipboard.SetText(workspace.WorkspacePath);
+            }
+        }
+
+        /// <summary>
+        /// Delete project from list command function
+        /// </summary>
+        private void DeleteProjectFromList(RecentWorkspace workspace)
+        {
+            if (workspace != null)
+            {
+                // Remove the targetted recent workspace
+                RecentsWorkspacesProvider.RemoveRecentWorkspace(workspace);
+
+                // Refresh recents workspaces list
+                RecentsWorkspaces = new ObservableCollection<RecentWorkspace>(RecentsWorkspacesProvider.GetRecentsWorkspaces());
             }
         }
         #endregion

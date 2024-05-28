@@ -26,7 +26,7 @@ namespace FMH.Core.Provider
         /// Get all recents workspaces
         /// </summary>
         /// <returns>List of recents workspaces</returns>
-        public static IEnumerable<RecentWorkspace> GetRecentWorkspaces() 
+        public static IEnumerable<RecentWorkspace> GetRecentsWorkspaces() 
         {
             try
             {
@@ -43,7 +43,6 @@ namespace FMH.Core.Provider
             catch { }
 
             return new List<RecentWorkspace>();
-
         }
 
         /// <summary>
@@ -69,6 +68,64 @@ namespace FMH.Core.Provider
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Add a recent workspace to list
+        /// </summary>
+        /// <param name="recentWorkspace">Recent workspace to add</param>
+        public static void AddRecentWorkspace(RecentWorkspace recentWorkspace)
+        {
+            var currentRecentsWorkspacesList = GetRecentsWorkspaces().ToList();
+            currentRecentsWorkspacesList.Add(recentWorkspace);
+            
+            WriteRecentsWorkspaces(currentRecentsWorkspacesList);
+        }
+
+        /// <summary>
+        /// Delete a recent workspace from list
+        /// </summary>
+        /// <param name="recentWorkspace">Recent workspace to remove</param>
+        public static void RemoveRecentWorkspace(RecentWorkspace recentWorkspace)
+        {
+            var currentRecentsWorkspacesList = GetRecentsWorkspaces().ToList();
+            currentRecentsWorkspacesList.RemoveAll(w => string.Equals(w.WorkspacePath, recentWorkspace.WorkspacePath));
+
+            WriteRecentsWorkspaces(currentRecentsWorkspacesList);
+        }
+
+        /// <summary>
+        /// Update modification date of a recent workspace
+        /// </summary>
+        /// <param name="recentWorkspace">Recent workspace to update</param>
+        /// <param name="newDateTime">New modification date to apply to the recent workspace</param>
+        public static void UpdateRecentWorkspaceModificationDate(RecentWorkspace recentWorkspace, DateTime newDateTime)
+        {
+            var currentRecentsWorkspacesList = GetRecentsWorkspaces().ToList();
+            
+            // Remove current recent workspace's data
+            currentRecentsWorkspacesList.RemoveAll(w => string.Equals(w.WorkspacePath, recentWorkspace.WorkspacePath));
+
+            // Update date
+            recentWorkspace.LastUpdated = newDateTime;
+
+            // Add to list and write new data
+            currentRecentsWorkspacesList.Add(recentWorkspace);
+            WriteRecentsWorkspaces(currentRecentsWorkspacesList);
+        }
+
+        /// <summary>
+        /// Write recents worskpaces list to disk
+        /// </summary>
+        /// <param name="recentWorkspacesList">Recents workspaces list to write</param>
+        private static void WriteRecentsWorkspaces(IEnumerable<RecentWorkspace> recentWorkspacesList)
+        {
+            try
+            {
+                var historyFileSerialized = JsonConvert.SerializeObject(recentWorkspacesList.OrderByDescending(w => w.LastUpdated));
+                File.WriteAllText(_filePath, historyFileSerialized);
+            }
+            catch { }
         }
     }
 }

@@ -25,6 +25,8 @@ using FMH.Core.Files.Software;
 using McVersionsLib.Forge;
 using FMH.Core.Objects;
 using FMH.Core.UI.Common;
+using FMH.Core.Provider;
+using Path = System.IO.Path;
 
 namespace FMH.Core.UI.Forge
 {
@@ -300,9 +302,15 @@ namespace FMH.Core.UI.Forge
                         }
 
                         // Saving in recent workspaces
-                        LastWorkspaces.LastWorkspacesData.Add(new WorkspaceEntry(this.folder, DateTime.Now, _workspaceManager.WorkspaceProperties.ModAPI, _workspaceManager.WorkspaceProperties.MCVersion));
-                        LastWorkspaces.WriteData();
-
+                        var recentWorkspace = new Model.RecentWorkspace()
+                        {
+                            WorkspacePath = _workspaceManager.WorkspaceProperties.WorkspacePath,
+                            LastUpdated = DateTime.Now,
+                            WorkspaceModAPI = _workspaceManager.WorkspaceProperties.ModAPI,
+                            WorkspaceMcVersion = _workspaceManager.WorkspaceProperties.MCVersion,
+                            WorkspaceName = Path.GetFileName(_workspaceManager.WorkspaceProperties.WorkspacePath)
+                        };
+                        RecentsWorkspacesProvider.AddRecentWorkspace(recentWorkspace);
                         break;
                     }
                 case 6:

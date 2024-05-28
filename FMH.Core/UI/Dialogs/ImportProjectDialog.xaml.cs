@@ -15,9 +15,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using FMH.Core.Files.Software;
 using FMH.Core.Objects;
+using FMH.Core.Provider;
 using FMH.Core.Utils.UI;
 using FMH.Workspace.WorkspaceManager;
 using FontAwesome.WPF;
+using Path = System.IO.Path;
 
 namespace FMH.Core.UI.Dialogs
 {
@@ -123,8 +125,16 @@ namespace FMH.Core.UI.Dialogs
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {
             WorkspaceManagerHelper.WriteWorkspaceData(_workspaceManager);
-            LastWorkspaces.ReadData();
-            LastWorkspaces.AddRecentWorkspace(new WorkspaceEntry(_workspaceManager.WorkspaceProperties.WorkspacePath, DateTime.Now, _workspaceManager.WorkspaceProperties.ModAPI, _workspaceManager.WorkspaceProperties.MCVersion));
+
+            var recentWorkspace = new Model.RecentWorkspace() 
+            { 
+                WorkspacePath = _workspaceManager.WorkspaceProperties.WorkspacePath,
+                LastUpdated = DateTime.Now,
+                WorkspaceModAPI = _workspaceManager.WorkspaceProperties.ModAPI,
+                WorkspaceMcVersion = _workspaceManager.WorkspaceProperties.MCVersion
+            };
+
+            RecentsWorkspacesProvider.AddRecentWorkspace(recentWorkspace);
             this.DialogResult = true;
         }
 
