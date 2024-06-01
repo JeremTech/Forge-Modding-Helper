@@ -11,13 +11,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Markup;
-using Clipboard = System.Windows.Clipboard;
 using MessageBox = System.Windows.MessageBox;
 
 namespace FMH.Core.ViewModel
@@ -39,6 +34,9 @@ namespace FMH.Core.ViewModel
             }
         }
 
+        /// <summary>
+        /// No recents workspaces label visibility
+        /// </summary>
         public Visibility NoWorkspacesLabelVisibility
         {
             get
@@ -47,17 +45,6 @@ namespace FMH.Core.ViewModel
                     return Visibility.Collapsed;
 
                 return Visibility.Visible;
-            }
-        }
-
-        private RecentWorkspace _currentSelectedRecentWorkspace;
-        public RecentWorkspace CurrentSelectedRecentWorkspace 
-        { 
-            get { return _currentSelectedRecentWorkspace; }
-            set 
-            { 
-                _currentSelectedRecentWorkspace = value;
-                OnPropertyChanged(nameof(CurrentSelectedRecentWorkspace));
             }
         }
         #endregion
@@ -132,24 +119,7 @@ namespace FMH.Core.ViewModel
         }
 
         /// <summary>
-        /// Copy project path command
-        /// </summary>
-        private ICommand _copyProjectPathCommand;
-        public ICommand CopyProjectPathCommand
-        {
-            get
-            {
-                return _copyProjectPathCommand;
-            }
-            set
-            {
-                _copyProjectPathCommand = value;
-                OnPropertyChanged(nameof(CopyProjectPathCommand));
-            }
-        }
-
-        /// <summary>
-        /// Copy project path command
+        /// Delete project from list command
         /// </summary>
         private ICommand _deleteProjectFromListCommand;
         public ICommand DeleteProjectFromListCommand
@@ -183,9 +153,8 @@ namespace FMH.Core.ViewModel
             this.OpenSettingsCommand = new RelayCommand(OpenSettings);
             this.CreateProjectCommand = new RelayCommand(CreateProject);
             this.ImportProjectCommand = new RelayCommand(ImportProject);
-            this.OpenProjectCommand = new RelayCommand<RecentWorkspace>(OpenProject, (workspace) => CurrentSelectedRecentWorkspace != null);
-            this.CopyProjectPathCommand = new RelayCommand<RecentWorkspace>(CopyProjectPath, (workspace) => CurrentSelectedRecentWorkspace != null);
-            this.DeleteProjectFromListCommand = new RelayCommand<RecentWorkspace>(DeleteProjectFromList, (workspace) => CurrentSelectedRecentWorkspace != null);
+            this.OpenProjectCommand = new RelayCommand<RecentWorkspace>(OpenProject);
+            this.DeleteProjectFromListCommand = new RelayCommand<RecentWorkspace>(DeleteProjectFromList);
         }
 
         #region Data management
@@ -254,17 +223,6 @@ namespace FMH.Core.ViewModel
                 }
                 else
                     MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.open.error"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        /// <summary>
-        /// Copy project path command function
-        /// </summary>
-        private void CopyProjectPath(RecentWorkspace workspace)
-        {
-            if (workspace != null)
-            {
-                Clipboard.SetText(workspace.WorkspacePath);
             }
         }
 
