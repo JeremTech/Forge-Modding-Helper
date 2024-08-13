@@ -6,6 +6,7 @@ using FMH.Core.UI.Common;
 using FMH.Core.UI.Dialogs;
 using FMH.Core.UI.Forge;
 using FMH.Core.Utils.UI;
+using FMH.Core.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,7 +31,7 @@ namespace FMH.Core.ViewModel
             set
             {
                 _recentsWorkspaces = value;
-                OnPropertyChanged(nameof(RecentsWorkspaces));
+                OnPropertyChanged();
             }
         }
 
@@ -63,7 +64,7 @@ namespace FMH.Core.ViewModel
             set
             {
                 _openSettingsCommand = value;
-                OnPropertyChanged(nameof(OpenSettingsCommand));
+                OnPropertyChanged();
             }
         }
 
@@ -80,7 +81,7 @@ namespace FMH.Core.ViewModel
             set
             {
                 _createProjectCommand = value;
-                OnPropertyChanged(nameof(CreateProjectCommand));
+                OnPropertyChanged();
             }
         }
 
@@ -97,7 +98,7 @@ namespace FMH.Core.ViewModel
             set
             {
                 _importProjectCommand = value;
-                OnPropertyChanged(nameof(ImportProjectCommand));
+                OnPropertyChanged();
             }
         }
 
@@ -114,7 +115,7 @@ namespace FMH.Core.ViewModel
             set
             {
                 _openProjectCommand = value;
-                OnPropertyChanged(nameof(OpenProjectCommand));
+                OnPropertyChanged();
             }
         }
 
@@ -131,7 +132,7 @@ namespace FMH.Core.ViewModel
             set
             {
                 _deleteProjectFromListCommand = value;
-                OnPropertyChanged(nameof(DeleteProjectFromListCommand));
+                OnPropertyChanged();
             }
         }
         #endregion
@@ -182,7 +183,7 @@ namespace FMH.Core.ViewModel
         private void CreateProject()
         {
             // Display the Assistant Creator
-            ForgeAssistantCreator assistantCreator = new ForgeAssistantCreator();
+            var assistantCreator = new AssistantCreatorView();
             assistantCreator.ShowDialog();
 
             if (assistantCreator.DialogResult.HasValue && assistantCreator.DialogResult.Value)

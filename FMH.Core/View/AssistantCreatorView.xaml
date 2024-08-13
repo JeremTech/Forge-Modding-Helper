@@ -5,14 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FMH.Core.View"
         xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
+        xmlns:viewModels="clr-namespace:FMH.Core.ViewModel"
         mc:Ignorable="d"
-        Height="548"
+        Height="550"
         Width="650" 
         WindowStartupLocation="CenterScreen" 
         Title="Assistant Creator - Forge Modding Helper" 
         Icon="/FMH.Resources;component/Pictures/icon.png"
         ResizeMode="CanMinimize">
-    
+
+    <Window.DataContext>
+        <viewModels:AssistantCreatorViewModel/>
+    </Window.DataContext>
+
     <Grid Background="{DynamicResource PrimaryBackgroundColor}">
 
         <Grid.RowDefinitions>
@@ -27,11 +32,25 @@
         <Grid Grid.Row="0" 
               Background="{DynamicResource PrimaryBackgroundColor}">
 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Image Grid.Column="0" Height="40" Width="40" HorizontalAlignment="Center" Source="/FMH.Resources;component/Pictures/icon.png"/>
+            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                <TextBlock Text="Forge Modding Helper" FontSize="11" Foreground="{DynamicResource FontColorPrimary}"/>
+                <TextBlock Text="Assistant Creator" FontSize="17" Margin="0, -5, 0, 0" Foreground="{DynamicResource FontColorPrimary}"/>
+            </StackPanel>
+
         </Grid>
 
         <!-- Header's border -->
         <Border Grid.Row="1"
                 Background="{DynamicResource FontColorSecondary}"/>
+
+        <Frame Grid.Row="2"
+               Content="{Binding CurrentAssistantPage, Mode=TwoWay}"/>
 
         <!-- Bottom bar"s border -->
         <Border Grid.Row="3"

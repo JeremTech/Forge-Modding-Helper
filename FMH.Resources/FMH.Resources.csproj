@@ -15,6 +15,7 @@
     <None Remove="Icons\mappings_icon.png" />
     <None Remove="Icons\minecraft_icon.png" />
     <None Remove="Icons\model_icon.png" />
+    <None Remove="Icons\neoforge_icon.png" />
     <None Remove="Icons\picture_icon.png" />
     <None Remove="Icons\version_icon.png" />
     <None Remove="Languages\en_us.json" />
@@ -50,6 +51,7 @@
     <Resource Include="Icons\mappings_icon.png" />
     <Resource Include="Icons\minecraft_icon.png" />
     <Resource Include="Icons\model_icon.png" />
+    <Resource Include="Icons\neoforge_icon.png" />
     <Resource Include="Icons\picture_icon.png" />
     <Resource Include="Icons\version_icon.png" />
     <Resource Include="Pictures\background.png" />

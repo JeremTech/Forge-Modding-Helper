@@ -1,0 +1,81 @@
+﻿<Page x:Class="FMH.Core.View.AssistantCreator.AssistantCreatorFirstPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FMH.Core.View.AssistantCreator"
+      xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
+      xmlns:utils="clr-namespace:FMH.Core.Utils.UI"
+      xmlns:workspace="clr-namespace:FMH.Workspace.Data;assembly=FMH.Workspace"
+      mc:Ignorable="d" 
+      d:DesignHeight="433" d:DesignWidth="650"
+      Title="AssistantCreatorFirstPageView">
+
+    <Page.Resources>
+        <utils:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
+    </Page.Resources>
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header text -->
+        <StackPanel Grid.Row="0" Orientation="Vertical">
+
+            <TextBlock Tag="assistant_creator.label.welcome"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       TextWrapping="WrapWithOverflow"
+                       Text="Welcome to the workspace creation wizard !"/>
+
+            <TextBlock Tag="assistant_creator.label.welcome.description"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       TextWrapping="WrapWithOverflow"
+                       Text="This assistant will help you to create a project in only a few steps !"/>
+
+        </StackPanel>
+
+        
+        <!-- API selection -->
+        <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+
+            <TextBlock Tag="assistant_creator.label.welcome"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       TextWrapping="WrapWithOverflow"
+                       Text="Choose the modding API you want to use"
+                       Margin="0, 0, 0, 10"/>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <controls:ImageRadioButton Image="/FMH.Resources;component/Icons/forge_icon.png" 
+                                           Text="Minecraft Forge" 
+                                           GroupName="ModdingAPI" 
+                                           Height="100" 
+                                           Width="100"
+                                           Cursor="Hand"
+                                           Margin="0, 0, 20, 0"
+                                           IsChecked="{Binding DataContext.NewWorkspaceData.ModAPI,
+                                                               RelativeSource={RelativeSource AncestorType=Page},
+                                                               Converter={StaticResource EnumBooleanConverter},
+                                                               ConverterParameter={x:Static workspace:ModAPIType.Forge}}"/>
+                <controls:ImageRadioButton Image="/FMH.Resources;component/Icons/neoforge_icon.png" 
+                                           Text="NeoForge" 
+                                           GroupName="ModdingAPI" 
+                                           Height="100" 
+                                           Width="100"
+                                           IsEnabled="False"
+                                           Cursor="Hand"
+                                           IsChecked="{Binding DataContext.NewWorkspaceData.ModAPI,
+                                                               RelativeSource={RelativeSource AncestorType=Page},
+                                                               Converter={StaticResource EnumBooleanConverter},
+                                                               ConverterParameter={x:Static workspace:ModAPIType.None}}"/>
+            </StackPanel>
+
+        </StackPanel>
+        
+    </Grid>
+</Page>
