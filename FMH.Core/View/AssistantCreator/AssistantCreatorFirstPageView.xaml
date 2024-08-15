@@ -5,11 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FMH.Core.View.AssistantCreator"
       xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
-      xmlns:utils="clr-namespace:FMH.Core.Utils.UI"
+      xmlns:utils="clr-namespace:FMH.Core.Utils.Converters"
       xmlns:workspace="clr-namespace:FMH.Workspace.Data;assembly=FMH.Workspace"
       mc:Ignorable="d" 
       d:DesignHeight="433" d:DesignWidth="650"
-      Title="AssistantCreatorFirstPageView">
+      Title="Assistant Creator - Step 1">
 
     <Page.Resources>
         <utils:EnumBooleanConverter x:Key="EnumBooleanConverter"/>

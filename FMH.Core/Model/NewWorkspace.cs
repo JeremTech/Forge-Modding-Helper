@@ -31,5 +31,22 @@ namespace FMH.Core.Model
             }
         }
 
+        private APIVersionData _modAPIVersion;
+
+        /// <summary>
+        /// Workspace's mod API version
+        /// </summary>
+        public APIVersionData ModAPIVersion
+        {
+            get
+            {
+                return _modAPIVersion;
+            }
+            set
+            {
+                _modAPIVersion = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

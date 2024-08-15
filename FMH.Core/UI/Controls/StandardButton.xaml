@@ -24,6 +24,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
+    <UserControl.InputBindings>
+        <MouseBinding MouseAction="LeftClick" Command="{Binding Command}" CommandParameter="{Binding CommandParameter}"/>
+    </UserControl.InputBindings>
+
     <Border CornerRadius="5" Style="{DynamicResource StandardButton}">
         <StackPanel Orientation="Horizontal"
                     VerticalAlignment="Center"

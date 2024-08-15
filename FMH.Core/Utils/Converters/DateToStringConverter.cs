@@ -6,18 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace FMH.Core.Utils.UI
+namespace FMH.Core.Utils.Converters
 {
-    public class EnumBooleanConverter : IValueConverter
+    internal class DateToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value.Equals(parameter);
+            return ((DateTime)value).ToString("G");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((bool)value) ? parameter : Binding.DoNothing;
+            throw new NotImplementedException();
         }
     }
 }

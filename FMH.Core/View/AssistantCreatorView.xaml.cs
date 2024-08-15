@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace FMH.Core.View
 {
-    /// <summary>
-    /// Interaction logic for AssistantCreatorView.xaml
-    /// </summary>
     public partial class AssistantCreatorView : Window
     {
         public AssistantCreatorView()

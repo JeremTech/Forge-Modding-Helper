@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace FMH.Core.View
 {
-    /// <summary>
-    /// Logique d'interaction pour WelcomeView.xaml
-    /// </summary>
     public partial class WelcomeView : Window
     {
         public WelcomeView()

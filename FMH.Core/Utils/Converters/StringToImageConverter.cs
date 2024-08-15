@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.IO;
 using FontAwesome.WPF;
 
-namespace FMH.Core.Utils.UI
+namespace FMH.Core.Utils.Converters
 {
     internal class StringToImageConverter : IValueConverter
     {

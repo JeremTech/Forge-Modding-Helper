@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FMH.Core.UI.Forge"
-        xmlns:utils="clr-namespace:FMH.Core.Utils.UI"
+        xmlns:utils="clr-namespace:FMH.Core.Utils.Converters"
         xmlns:TextEditor="clr-namespace:Leow.TextEditor;assembly=Leow.TextEditor" 
         xmlns:fa="http://schemas.fontawesome.io/icons/" 
         xmlns:WPF="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF"

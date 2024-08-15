@@ -50,7 +50,8 @@
                 Background="{DynamicResource FontColorSecondary}"/>
 
         <Frame Grid.Row="2"
-               Content="{Binding CurrentAssistantPage, Mode=TwoWay}"/>
+               Content="{Binding CurrentAssistantPage, Mode=TwoWay}"
+               NavigationUIVisibility="Hidden"/>
 
         <!-- Bottom bar"s border -->
         <Border Grid.Row="3"
@@ -63,8 +64,20 @@
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
                         Margin="0, 0, 5, 0">
-                <controls:StandardButton Width="100" Text="Previous" LeftIcon="ArrowLeft" Height="40"/>
-                <controls:StandardButton Width="100" Text="Next" RightIcon="ArrowRight" Height="40"/>
+                <controls:StandardButton Width="100" 
+                                         Text="Previous" 
+                                         LeftIcon="ArrowLeft" 
+                                         Height="40"
+                                         Command="{Binding DataContext.PreviousCommand, 
+                                                           RelativeSource={RelativeSource AncestorType=Window}}" 
+                                         IsEnabled="{Binding DataContext.PreviousButtonEnabled,
+                                                             RelativeSource={RelativeSource AncestorType=Window}}"/>
+                <controls:StandardButton Width="100" 
+                                         Text="Next"
+                                         RightIcon="ArrowRight"
+                                         Height="40"
+                                         Command="{Binding DataContext.NextCommand, 
+                                                           RelativeSource={RelativeSource AncestorType=Window}}"/>
             </StackPanel>
         </Grid>
 

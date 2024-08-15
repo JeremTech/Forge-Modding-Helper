@@ -16,20 +16,16 @@ using System.Windows.Shapes;
 
 namespace FMH.Core.View.AssistantCreator
 {
-    /// <summary>
-    /// Logique d'interaction pour AssistantCreatorFirstPageView.xaml
-    /// </summary>
     public partial class AssistantCreatorFirstPageView : Page
     {
-        public AssistantCreatorFirstPageView(AssistantCreatorViewModel commonContext)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="commonDataContext">Common Assistant Creator's data context</param>
+        public AssistantCreatorFirstPageView(AssistantCreatorViewModel commonDataContext)
         {
             InitializeComponent();
-            this.DataContext = commonContext;
-        }
-
-        public void SetDataContext(AssistantCreatorViewModel commonContext)
-        {
-            this.DataContext = commonContext;
+            this.DataContext = commonDataContext;
         }
     }
 }
