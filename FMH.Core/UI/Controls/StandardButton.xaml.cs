@@ -133,7 +133,6 @@ namespace FMH.Core.UI.Controls
         public StandardButton() : base()
         {
             InitializeComponent();
-            this.DataContext = this;
         }
 
         #region INotifyPropertyChanged implementation

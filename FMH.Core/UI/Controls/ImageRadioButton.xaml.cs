@@ -17,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace FMH.Core.UI.Controls
 {
-    /// <summary>
-    /// Logique d'interaction pour ImageRadioButton.xaml
-    /// </summary>
     public partial class ImageRadioButton : RadioButton, INotifyPropertyChanged
     {
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("Image", typeof(string), typeof(Image));
@@ -71,7 +68,6 @@ namespace FMH.Core.UI.Controls
         public ImageRadioButton()
         {
             InitializeComponent();
-            this.DataContext = this;
         }
 
         #region INotifyPropertyChanged implementation

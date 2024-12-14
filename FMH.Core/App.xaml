@@ -11,6 +11,7 @@
         <SolidColorBrush x:Key="FontColorPrimary" Color="White"/>
         <SolidColorBrush x:Key="FontColorSecondary" Color="#FFB0B0B0"/>
         <SolidColorBrush x:Key="BorderColor" Color="#FF37ADE7"/>
+        <SolidColorBrush x:Key="BorderErrorColor" Color="Red"/>
     </Application.Resources>
     
 </Application>

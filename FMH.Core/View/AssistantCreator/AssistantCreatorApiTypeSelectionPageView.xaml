@@ -1,4 +1,4 @@
-﻿<Page x:Class="FMH.Core.View.AssistantCreator.AssistantCreatorFirstPageView"
+﻿<UserControl x:Class="FMH.Core.View.AssistantCreator.AssistantCreatorApiTypeSelectionPageView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,12 +8,11 @@
       xmlns:utils="clr-namespace:FMH.Core.Utils.Converters"
       xmlns:workspace="clr-namespace:FMH.Workspace.Data;assembly=FMH.Workspace"
       mc:Ignorable="d" 
-      d:DesignHeight="433" d:DesignWidth="650"
-      Title="Assistant Creator - Step 1">
+      d:DesignHeight="433" d:DesignWidth="650">
 
-    <Page.Resources>
+    <UserControl.Resources>
         <utils:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
-    </Page.Resources>
+    </UserControl.Resources>
 
     <Grid Margin="10">
 
@@ -58,8 +57,7 @@
                                            Width="100"
                                            Cursor="Hand"
                                            Margin="0, 0, 20, 0"
-                                           IsChecked="{Binding DataContext.NewWorkspaceData.ModAPI,
-                                                               RelativeSource={RelativeSource AncestorType=Page},
+                                           IsChecked="{Binding NewWorkspaceData.ModAPI,
                                                                Converter={StaticResource EnumBooleanConverter},
                                                                ConverterParameter={x:Static workspace:ModAPIType.Forge}}"/>
                 <controls:ImageRadioButton Image="/FMH.Resources;component/Icons/neoforge_icon.png" 
@@ -69,8 +67,7 @@
                                            Width="100"
                                            IsEnabled="False"
                                            Cursor="Hand"
-                                           IsChecked="{Binding DataContext.NewWorkspaceData.ModAPI,
-                                                               RelativeSource={RelativeSource AncestorType=Page},
+                                           IsChecked="{Binding NewWorkspaceData.ModAPI,
                                                                Converter={StaticResource EnumBooleanConverter},
                                                                ConverterParameter={x:Static workspace:ModAPIType.None}}"/>
             </StackPanel>
@@ -78,4 +75,4 @@
         </StackPanel>
         
     </Grid>
-</Page>
+</UserControl>

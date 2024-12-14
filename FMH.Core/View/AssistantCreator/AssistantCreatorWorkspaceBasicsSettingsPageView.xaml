@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="FMH.Core.View.AssistantCreator.AssistantCreatorWorkspaceBasicsSettingsPageView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FMH.Core.View.AssistantCreator"
+      xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
+      xmlns:utils="clr-namespace:FMH.Core.Utils.Converters"
+      xmlns:workspace="clr-namespace:FMH.Workspace.Data;assembly=FMH.Workspace"
+      mc:Ignorable="d" 
+      d:DesignHeight="433" d:DesignWidth="650"
+      >
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="50" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="120" />
+
+        </Grid.RowDefinitions>
+
+        <!-- Header text -->
+        <StackPanel Grid.Row="0" 
+                    Orientation="Vertical">
+
+            <TextBlock Tag="assistant_creator.label.basicSettings_page"
+                HorizontalAlignment="Center"
+                Foreground="{DynamicResource FontColorPrimary}"
+                TextWrapping="WrapWithOverflow"
+                Text="Lets start with basics informations about your project !"/>
+
+            <TextBlock Tag="assistant_creator.label.basicSettings_page.description"
+                HorizontalAlignment="Center"
+                Foreground="{DynamicResource FontColorPrimary}"
+                TextWrapping="WrapWithOverflow"
+                Text="You will be able to modify all this data later."/>
+
+        </StackPanel>
+
+        <!-- Mod name -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Vertical">
+
+            <TextBlock Tag="assistant_creator.label.basicSettings_page.mod_name"
+                       HorizontalAlignment="Left"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       Text="Mod name"
+                       Margin="0, 0, 0, 5"/>
+            <controls:InputTextBox x:Name="ModNameTextBox"
+                                   Grid.Row="1" 
+                                   Height="25" 
+                                   PlaceHolderText="My beautiful mod" 
+                                   InputText="{Binding NewWorkspaceData.ModName}"/>
+
+        </StackPanel>
+        
+        <!-- Mod authors -->
+        <StackPanel Grid.Row="2"
+                Orientation="Vertical">
+
+            <TextBlock Tag="assistant_creator.label.basicSettings_page.mod_authors"
+                    HorizontalAlignment="Left"
+                    Foreground="{DynamicResource FontColorPrimary}"
+                    Text="Mod authors"
+                    Margin="0, 0, 0, 5"/>
+            <controls:InputTextBox x:Name="ModAuthorsTextBox"
+                                   Grid.Row="1"
+                                   Height="25"
+                                   PlaceHolderText="Jerem_Tech"
+                                   InputText="{Binding NewWorkspaceData.ModAuthors}"/>
+
+        </StackPanel>
+
+        <!-- Mod credits -->
+        <StackPanel Grid.Row="3"
+                Orientation="Vertical">
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 0, 0, 5">
+                <TextBlock Tag="assistant_creator.label.basicSettings_page.mod_credits"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="Mod credits"/>
+                <TextBlock Tag="assistant_creator.label.optional"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic" 
+                           Text="(optional)"
+                           Margin="3, 0, 0, 0"/>
+            </StackPanel>
+            <controls:InputTextBox Grid.Row="1"
+                                   Height="25" 
+                                   PlaceHolderText="Thanks to all contributors !"
+                                   InputText="{Binding NewWorkspaceData.ModCredits}"/>
+
+        </StackPanel>
+
+        <!-- Mod licence -->
+        <StackPanel Grid.Row="4"
+                    Orientation="Vertical">
+
+            <TextBlock Tag="assistant_creator.label.basicSettings_page.mod_licence"
+                       HorizontalAlignment="Left"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       Text="Mod licence"
+                       Margin="0, 0, 0, 5"/>
+            <controls:InputTextBox x:Name="ModLicenseTextBox"
+                                   Grid.Row="1"
+                                   Height="25"
+                                   PlaceHolderText="MIT License"
+                                   InputText="{Binding NewWorkspaceData.ModLicense}"/>
+
+        </StackPanel>
+
+        <!-- Mod description -->
+        <StackPanel Grid.Row="5"
+                    Orientation="Vertical">
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 0, 0, 5">
+                <TextBlock Tag="assistant_creator.label.basicSettings_page.mod_description"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="Mod description"/>
+                <TextBlock Tag="assistant_creator.label.optional"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic" 
+                           Text="(optional)"
+                           Margin="3, 0, 0, 0"/>
+            </StackPanel>
+            <controls:InputTextBox Grid.Row="1"
+                                   Height="70"
+                                   IsMultiline="True"
+                                   PlaceHolderText="My description"
+                                   InputText="{Binding NewWorkspaceData.ModDescription}"/>
+
+        </StackPanel>
+
+    </Grid>
+    
+</UserControl>

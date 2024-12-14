@@ -29,13 +29,13 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
-                    
-                        <Image Source="{Binding Image}"
+
+                        <Image Source="{Binding Image, RelativeSource={RelativeSource AncestorType=RadioButton}}"
                                Grid.Row="0"
                                Width="60"
                                Height="60"
                                VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding Text}"
+                    <TextBlock Text="{Binding Text, RelativeSource={RelativeSource AncestorType=RadioButton}}"
                                    FontSize="12"
                                    Grid.Row="1"
                                    Foreground="{DynamicResource FontColorPrimary}"

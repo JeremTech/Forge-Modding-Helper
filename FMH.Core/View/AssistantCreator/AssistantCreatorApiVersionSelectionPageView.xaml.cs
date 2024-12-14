@@ -11,7 +11,7 @@ using System.Windows.Controls;
 
 namespace FMH.Core.View.AssistantCreator
 {
-    public partial class AssistantCreatorSecondPageView : Page, IComponentDisplayed
+    public partial class AssistantCreatorApiVersionSelectionPageView : UserControl, IComponentDisplayed
     {
         /// <summary>
         /// Available API versions list
@@ -23,11 +23,9 @@ namespace FMH.Core.View.AssistantCreator
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="commonDataContext">Common Assistant Creator's data context</param>
-        public AssistantCreatorSecondPageView(AssistantCreatorViewModel commonDataContext)
+        public AssistantCreatorApiVersionSelectionPageView()
         {
             InitializeComponent();
-            this.DataContext = commonDataContext;
 
             APIVersionsList = new ObservableCollection<APIVersionData>();
             _APIVersionsListCache = new List<APIVersionData>();
@@ -65,7 +63,7 @@ namespace FMH.Core.View.AssistantCreator
         }
 
         /// <summary>
-        /// APply a filter on the API versions list
+        /// Apply a filter on the API versions list
         /// </summary>
         /// <param name="filter">Filter to apply</param>
         private void FilterAPIVersionsList(string filter)

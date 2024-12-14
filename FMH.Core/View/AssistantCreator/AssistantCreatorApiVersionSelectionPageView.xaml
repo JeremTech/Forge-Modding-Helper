@@ -1,4 +1,4 @@
-﻿<Page x:Class="FMH.Core.View.AssistantCreator.AssistantCreatorSecondPageView"
+﻿<UserControl x:Class="FMH.Core.View.AssistantCreator.AssistantCreatorApiVersionSelectionPageView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,12 +8,11 @@
       xmlns:local="clr-namespace:FMH.Core.View.AssistantCreator" 
       xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
       mc:Ignorable="d" 
-      d:DesignHeight="433" d:DesignWidth="650"
-      Title="Assistant Creator - Step 2">
+      d:DesignHeight="433" d:DesignWidth="650">
 
-    <Page.Resources>
+    <UserControl.Resources>
         <utils:ApiTypeToApiIconConverter x:Key="ApiTypeToApiIconConverter"/>
-    </Page.Resources>
+    </UserControl.Resources>
     
     <Grid Margin="10">
 
@@ -104,11 +103,11 @@
                           Background="{DynamicResource InputsBackgroundColor}"
                           BorderBrush="Transparent"
                           ItemsSource="{Binding}"
-                          SelectedItem="{Binding DataContext.NewWorkspaceData.ModAPIVersion, RelativeSource={RelativeSource AncestorType=Page}}">
+                          SelectedItem="{Binding DataContext.NewWorkspaceData.ModAPIVersion, RelativeSource={RelativeSource AncestorType=UserControl}}">
 
                     <!-- DataContext and sorting -->
                     <ListView.DataContext>
-                        <CollectionViewSource Source="{Binding APIVersionsList, RelativeSource={RelativeSource AncestorType=Page}}">
+                        <CollectionViewSource Source="{Binding APIVersionsList, RelativeSource={RelativeSource AncestorType=UserControl}}">
                             <CollectionViewSource.GroupDescriptions>
                                 <PropertyGroupDescription PropertyName="MinecraftVersion"/>
                             </CollectionViewSource.GroupDescriptions>
@@ -166,7 +165,7 @@
                     <TextBlock Grid.Row="1"
                                VerticalAlignment="Center"
                                Foreground="{DynamicResource FontColorPrimary}"
-                               Text="{Binding DataContext.NewWorkspaceData.ModAPIVersion.APIVersion, RelativeSource={RelativeSource AncestorType=Page}}"/>
+                               Text="{Binding NewWorkspaceData.ModAPIVersion.APIVersion}"/>
 
                 </StackPanel>
                 
@@ -174,4 +173,4 @@
             </Grid>
         </Border>
     </Grid>
-</Page>
+</UserControl>

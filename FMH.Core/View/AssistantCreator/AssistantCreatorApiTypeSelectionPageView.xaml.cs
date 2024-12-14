@@ -16,16 +16,14 @@ using System.Windows.Shapes;
 
 namespace FMH.Core.View.AssistantCreator
 {
-    public partial class AssistantCreatorFirstPageView : Page
+    public partial class AssistantCreatorApiTypeSelectionPageView : UserControl
     {
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="commonDataContext">Common Assistant Creator's data context</param>
-        public AssistantCreatorFirstPageView(AssistantCreatorViewModel commonDataContext)
+        public AssistantCreatorApiTypeSelectionPageView()
         {
             InitializeComponent();
-            this.DataContext = commonDataContext;
         }
     }
 }

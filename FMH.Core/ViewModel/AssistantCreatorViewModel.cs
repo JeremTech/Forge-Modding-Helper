@@ -20,7 +20,7 @@ namespace FMH.Core.ViewModel
 {
     public class AssistantCreatorViewModel : ViewModelBase
     {
-        private List<Page> AssistantPages { get; set; }
+        private List<UserControl> AssistantPages { get; set; }
 
         #region Properties
         private int _currentPageNumber { get; set; }
@@ -58,11 +58,11 @@ namespace FMH.Core.ViewModel
             }
         }
 
-        private Page _currentAssistantPage;
+        private UserControl _currentAssistantPage;
         /// <summary>
         /// Current assistant page
         /// </summary>
-        public Page CurrentAssistantPage
+        public UserControl CurrentAssistantPage
         {
             get
             {
@@ -146,10 +146,11 @@ namespace FMH.Core.ViewModel
                 ModAPI = ModAPIType.Forge
             };
 
-            AssistantPages = new List<Page>()
+            AssistantPages = new List<UserControl>()
             {
-                new AssistantCreatorFirstPageView(this),
-                new AssistantCreatorSecondPageView(this),
+                new AssistantCreatorApiTypeSelectionPageView(),
+                new AssistantCreatorApiVersionSelectionPageView(),
+                new AssistantCreatorWorkspaceBasicsSettingsPageView()
             };
 
             CurrentPageNumber = 0;
@@ -162,14 +163,20 @@ namespace FMH.Core.ViewModel
         /// </summary>
         private void Next()
         {
+            if(CurrentAssistantPage is IComponentValidated currentPage)
+            {
+                if (!currentPage.ValidateData())
+                    return;
+            }
+
             if (CurrentPageNumber + 1 == AssistantPages.Count)
                 return;
 
             CurrentPageNumber++;
             CurrentAssistantPage = AssistantPages.ElementAt(CurrentPageNumber);
 
-            if(CurrentAssistantPage is IComponentDisplayed currentPage)
-                currentPage.OnComponentDisplayed();
+            if(CurrentAssistantPage is IComponentDisplayed newPage)
+                newPage.OnComponentDisplayed();
         }
 
         /// <summary>

@@ -25,7 +25,7 @@
     </UserControl.Resources>
 
     <UserControl.InputBindings>
-        <MouseBinding MouseAction="LeftClick" Command="{Binding Command}" CommandParameter="{Binding CommandParameter}"/>
+        <MouseBinding MouseAction="LeftClick" Command="{Binding Command, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
     </UserControl.InputBindings>
 
     <Border CornerRadius="5" Style="{DynamicResource StandardButton}">
@@ -33,9 +33,9 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center">
 
-            <fa:FontAwesome FontSize="10" Icon="{Binding LeftIcon}" Foreground="{DynamicResource FontColorPrimary}" VerticalAlignment="Center"/>
-            <Label FontSize="12" Content="{Binding Text}" Foreground="{DynamicResource FontColorPrimary}" VerticalAlignment="Center"/>
-            <fa:FontAwesome FontSize="10" Icon="{Binding RightIcon}" Foreground="{DynamicResource FontColorPrimary}" VerticalAlignment="Center"/>
+            <fa:FontAwesome FontSize="10" Icon="{Binding LeftIcon, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{DynamicResource FontColorPrimary}" VerticalAlignment="Center"/>
+            <Label FontSize="12" Content="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{DynamicResource FontColorPrimary}" VerticalAlignment="Center"/>
+            <fa:FontAwesome FontSize="10" Icon="{Binding RightIcon, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{DynamicResource FontColorPrimary}" VerticalAlignment="Center"/>
 
         </StackPanel>
     </Border>
