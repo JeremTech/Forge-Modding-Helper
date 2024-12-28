@@ -29,6 +29,10 @@ namespace FMH.Workspace.WorkspaceManager
                 case "1.20.2":
                 case "1.20.4":
                 case "1.20.6":
+                case "1.21":
+                case "1.21.1":
+                case "1.21.3":
+                case "1.21.4":
                     workspaceManager = new WorkspaceManagerV2();
                     break;
 
@@ -64,6 +68,10 @@ namespace FMH.Workspace.WorkspaceManager
                 case "1.20.2":
                 case "1.20.4":
                 case "1.20.6":
+                case "1.21":
+                case "1.21.1":
+                case "1.21.3":
+                case "1.21.4":
                     workspaceManager = new WorkspaceManagerV2();
                     break;
 
