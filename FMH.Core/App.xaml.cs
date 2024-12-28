@@ -24,7 +24,12 @@ namespace FMH.Core
         private static int pre_release_number = 0;
 
         // List of Minecraft versions supported by Forge Modding Helper
-        private static List<String> supportedMcVersions = new List<string>() { "1.18.1", "1.18.2", "1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4", "1.20", "1.20.1", "1.20.2", "1.20.4", "1.20.6", "1.21", "1.21.1", "1.21.3", "1.21.4" };
+        private static List<string> supportedMcVersions = new List<string>() 
+        { 
+            "1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4",
+            "1.20", "1.20.1", "1.20.2", "1.20.4", "1.20.6", 
+            "1.21", "1.21.1", "1.21.3", "1.21.4" 
+        };
 
         /// <summary>
         /// Formated version string
@@ -36,13 +41,16 @@ namespace FMH.Core
         /// Allow to get the current version of the software
         /// </summary>
         /// <returns>Formatted string with the version and, if needed, the pre-release number</returns>
-        public static String GetApplicationVersionString()
+        public static string GetApplicationVersionString()
         {
+            var assemblyVersion = Assembly.GetEntryAssembly()?.GetName()?.Version;
+            if(assemblyVersion == null) return "Unknown";
+
             // If the version is stable, we display only the version number
-            if (isStable) return "v" + Assembly.GetEntryAssembly().GetName().Version.ToString();
+            if (isStable) return "v" + assemblyVersion.ToString();
 
             // Else we display the version number and the pre-release number
-            return "v" + Assembly.GetEntryAssembly().GetName().Version.ToString() + " - " + "Pre-Release " + pre_release_number;
+            return "v" + assemblyVersion.ToString() + " - " + "Pre-Release " + pre_release_number;
         }
 
         /// <summary>
@@ -51,11 +59,14 @@ namespace FMH.Core
         /// <returns>String with the compacted version</returns>
         public static string GetApplicationVersionCompact()
         {
+            var assemblyVersion = Assembly.GetEntryAssembly()?.GetName()?.Version;
+            if (assemblyVersion == null) return "N/A";
+
             // If the version is stable, we display only the version number
-            if (isStable) return Assembly.GetEntryAssembly().GetName().Version.ToString();
+            if (isStable) return assemblyVersion.ToString();
 
             // Else we display the version number and the pre-release number
-            return Assembly.GetEntryAssembly().GetName().Version.ToString() + "-" + "PRE" + pre_release_number;
+            return assemblyVersion.ToString() + "-" + "PRE" + pre_release_number;
         }
 
         /// <summary>
@@ -64,13 +75,18 @@ namespace FMH.Core
         /// <returns>Application's data directory</returns>
         public static string GetApplicationDataDirectory()
         {
-            // Creating folder if not exist 
-            Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JeremTech", "Forge Modding Helper"));
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JeremTech", "Forge Modding Helper");
 
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JeremTech", "Forge Modding Helper");
+            // Creating folder if not exist 
+            Directory.CreateDirectory(path);
+            return path;
         }
 
-        public static List<String> GetSupportedMinecraftVersions()
+        /// <summary>
+        /// Return all supported Minecraft versions by Forge Modding Helper
+        /// </summary>
+        /// <returns>List of all supported Minecraft versions</returns>
+        public static List<string> GetSupportedMinecraftVersions()
         {
             return supportedMcVersions;
         }
@@ -81,16 +97,33 @@ namespace FMH.Core
         /// <param name="fileName">File name of theme (without extension)</param>
         public static void LoadThemeFile(string fileName)
         {
+            // Get application executing directory
+            var applicationExecutingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            if (string.IsNullOrEmpty(applicationExecutingDirectory))
+                return;
+
+            // Check if the file exists
+            var themeFilePath = Path.Combine(applicationExecutingDirectory, "Themes", fileName + ".json");
+            if(!File.Exists(themeFilePath))
+                return;
+
             // Retrieve file content
-            ThemeFile themeData = JsonConvert.DeserializeObject<ThemeFile>(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Themes", fileName + ".json")));
+            var themeFileContent = File.ReadAllText(themeFilePath);
+            if(string.IsNullOrEmpty(themeFileContent))
+                return;
+
+            // Deserialize theme file
+            ThemeFile? themeData = JsonConvert.DeserializeObject<ThemeFile>(themeFileContent);
+            if(themeData == null)
+                return;
 
             // Load colors
-            Application.Current.Resources["PrimaryBackgroundColor"] = (Brush)new BrushConverter().ConvertFromString(themeData.PrimaryBackgroundColor);
-            Application.Current.Resources["SecondaryBackgroundColor"] = (Brush)new BrushConverter().ConvertFromString(themeData.SecondaryBackgroundColor);
-            Application.Current.Resources["InputsBackgroundColor"] = (Brush)new BrushConverter().ConvertFromString(themeData.InputsBackgroundColor);
-            Application.Current.Resources["FontColorPrimary"] = (Brush)new BrushConverter().ConvertFromString(themeData.FontColorPrimary);
-            Application.Current.Resources["FontColorSecondary"] = (Brush)new BrushConverter().ConvertFromString(themeData.FontColorSecondary);
-            Application.Current.Resources["BorderColor"] = (Brush)new BrushConverter().ConvertFromString(themeData.BorderColor);
+            Application.Current.Resources["PrimaryBackgroundColor"] = new BrushConverter().ConvertFromString(themeData.PrimaryBackgroundColor) as Brush;
+            Application.Current.Resources["SecondaryBackgroundColor"] = new BrushConverter().ConvertFromString(themeData.SecondaryBackgroundColor) as Brush;
+            Application.Current.Resources["InputsBackgroundColor"] = new BrushConverter().ConvertFromString(themeData.InputsBackgroundColor) as Brush;
+            Application.Current.Resources["FontColorPrimary"] = new BrushConverter().ConvertFromString(themeData.FontColorPrimary) as Brush;
+            Application.Current.Resources["FontColorSecondary"] = new BrushConverter().ConvertFromString(themeData.FontColorSecondary) as Brush;
+            Application.Current.Resources["BorderColor"] = new BrushConverter().ConvertFromString(themeData.BorderColor) as Brush;
         }
     }
 }

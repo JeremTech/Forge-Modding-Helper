@@ -33,7 +33,6 @@ Latest version | Latest stable version
 - [x] Minecraft Forge 1.21 : 1.21, 1.21.1, 1.21.3, 1.21.4
 - [x] Minecraft Forge 1.20 : 1.20, 1.20.1, 1.20.2, 1.20.4, 1.20.6
 - [x] Minecraft Forge 1.19 : 1.19, 1.19.1, 1.19.2, 1.19.3, 1.19.4
-- [x] Minecraft Forge 1.18 : 1.18.1, 1.18.2
 
 ## Report bug or submit ideas
 
