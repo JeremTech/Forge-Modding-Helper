@@ -11,6 +11,7 @@ namespace FMH.Core.Utils.UI
         /// <summary>
         /// Code to execute when control is displayed
         /// </summary>
-        void OnComponentDisplayed();
+        /// <param name="args">Arguments</param>
+        void OnComponentDisplayed(params object[] args);
     }
 }

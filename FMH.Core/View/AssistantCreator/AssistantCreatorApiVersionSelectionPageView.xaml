@@ -12,6 +12,16 @@
 
     <UserControl.Resources>
         <utils:ApiTypeToApiIconConverter x:Key="ApiTypeToApiIconConverter"/>
+
+        <CollectionViewSource x:Key="APIVersionsCollectionViewSource" Source="{Binding APIVersionsList, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="MinecraftVersion"/>
+            </CollectionViewSource.GroupDescriptions>
+            <CollectionViewSource.SortDescriptions>
+                <cm:SortDescription PropertyName="MinecraftVersion" Direction="Descending"/>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+
     </UserControl.Resources>
     
     <Grid Margin="10">
@@ -96,26 +106,14 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
-                
+
                 <ListView x:Name="APIVersionsListView"
                           Grid.Row="0" 
                           SelectionMode="Single"
                           Background="{DynamicResource InputsBackgroundColor}"
                           BorderBrush="Transparent"
-                          ItemsSource="{Binding}"
-                          SelectedItem="{Binding DataContext.NewWorkspaceData.ModAPIVersion, RelativeSource={RelativeSource AncestorType=UserControl}}">
-
-                    <!-- DataContext and sorting -->
-                    <ListView.DataContext>
-                        <CollectionViewSource Source="{Binding APIVersionsList, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                            <CollectionViewSource.GroupDescriptions>
-                                <PropertyGroupDescription PropertyName="MinecraftVersion"/>
-                            </CollectionViewSource.GroupDescriptions>
-                            <CollectionViewSource.SortDescriptions>
-                                <cm:SortDescription PropertyName="MinecraftVersion" Direction="Descending"/>
-                            </CollectionViewSource.SortDescriptions>
-                        </CollectionViewSource>
-                    </ListView.DataContext>
+                          ItemsSource="{Binding Source={StaticResource APIVersionsCollectionViewSource}}"
+                          SelectedItem="{Binding NewWorkspaceData.ModAPIVersion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 
                     <!-- Group styling -->
                     <ListView.GroupStyle>

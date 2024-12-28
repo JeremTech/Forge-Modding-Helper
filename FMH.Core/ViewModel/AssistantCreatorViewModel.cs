@@ -176,7 +176,7 @@ namespace FMH.Core.ViewModel
             CurrentAssistantPage = AssistantPages.ElementAt(CurrentPageNumber);
 
             if(CurrentAssistantPage is IComponentDisplayed newPage)
-                newPage.OnComponentDisplayed();
+                newPage.OnComponentDisplayed(this);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace FMH.Core.ViewModel
             CurrentAssistantPage = AssistantPages.ElementAt(CurrentPageNumber);
 
             if (CurrentAssistantPage is IComponentDisplayed currentPage)
-                currentPage.OnComponentDisplayed();
+                currentPage.OnComponentDisplayed(this);
         }
         #endregion
     }

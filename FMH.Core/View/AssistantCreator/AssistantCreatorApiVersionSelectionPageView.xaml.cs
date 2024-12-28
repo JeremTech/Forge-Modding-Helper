@@ -2,6 +2,7 @@
 using FMH.Core.Provider;
 using FMH.Core.Utils.UI;
 using FMH.Core.ViewModel;
+using FMH.Workspace.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Windows.Controls;
 
 namespace FMH.Core.View.AssistantCreator
 {
-    public partial class AssistantCreatorApiVersionSelectionPageView : UserControl, IComponentDisplayed
+    public partial class AssistantCreatorApiVersionSelectionPageView : UserControl, IComponentDisplayed, IComponentValidated
     {
         /// <summary>
         /// Available API versions list
@@ -19,6 +20,8 @@ namespace FMH.Core.View.AssistantCreator
         public ObservableCollection<APIVersionData> APIVersionsList { get; set; }
 
         private List<APIVersionData> _APIVersionsListCache {  get; set; }
+
+        private AssistantCreatorViewModel? _viewModelDataContext;
 
         /// <summary>
         /// Constructor
@@ -32,18 +35,33 @@ namespace FMH.Core.View.AssistantCreator
         }
 
         /// <inheritdoc/>
-        public async void OnComponentDisplayed()
+        public async void OnComponentDisplayed(params object[] args)
         {
-            var selectedItemCache = APIVersionsListView.SelectedItem;
-            FilterTextBox.Text = string.Empty;
-
             LoadingSpinner.Visibility = Visibility.Visible;
-            
-            await Task.Run(() => LoadAPIVersionsList());
 
-            APIVersionsListView.SelectedItem = APIVersionsList.FirstOrDefault(v => v.APIVersion == ((APIVersionData)selectedItemCache)?.APIVersion);
+            // Retrieve parent DataContext from arguments
+            if(args.Any() && args[0] is AssistantCreatorViewModel)
+                _viewModelDataContext = args[0] as AssistantCreatorViewModel;
+
+            // Load API versions list if not already loaded or if the user has changed the mod API type
+            if (!_APIVersionsListCache.Any() || _APIVersionsListCache.FirstOrDefault()?.ModAPIType != _viewModelDataContext?.NewWorkspaceData.ModAPI)
+            {
+                await Task.Run(() => LoadAPIVersionsList());
+            }
 
             LoadingSpinner.Visibility = Visibility.Collapsed;
+        }
+
+        /// <inheritdoc/>
+        public bool ValidateData()
+        {
+            if (APIVersionsListView.SelectedItem == null)
+            {
+                MessageBox.Show("Please select an API version", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -53,7 +71,14 @@ namespace FMH.Core.View.AssistantCreator
         {
             // Filling cache
             _APIVersionsListCache.Clear();
-            _APIVersionsListCache.AddRange(APIVersionsProvider.GetMinecraftForgeVersions());
+            switch (_viewModelDataContext?.NewWorkspaceData.ModAPI)
+            {
+                case ModAPIType.Forge:
+                    _APIVersionsListCache.AddRange(APIVersionsProvider.GetMinecraftForgeVersions());
+                    break;
+                default:
+                    break;
+            }
 
             Dispatcher.Invoke(() =>
             {
@@ -66,7 +91,7 @@ namespace FMH.Core.View.AssistantCreator
         /// Apply a filter on the API versions list
         /// </summary>
         /// <param name="filter">Filter to apply</param>
-        private void FilterAPIVersionsList(string filter)
+        private void FilterAPIVersionsList(string? filter)
         {
             Dispatcher.Invoke(() =>
             {
