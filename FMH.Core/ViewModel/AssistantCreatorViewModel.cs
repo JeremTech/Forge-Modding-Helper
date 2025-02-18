@@ -150,7 +150,8 @@ namespace FMH.Core.ViewModel
             {
                 new AssistantCreatorApiTypeSelectionPageView(),
                 new AssistantCreatorApiVersionSelectionPageView(),
-                new AssistantCreatorWorkspaceBasicsSettingsPageView()
+                new AssistantCreatorWorkspaceBasicsSettingsPageView(),
+                new AssistantCreatorWorkspaceTechnicalSettingsPageView()
             };
 
             CurrentPageNumber = 0;

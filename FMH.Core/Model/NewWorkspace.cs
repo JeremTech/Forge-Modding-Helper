@@ -113,26 +113,6 @@ namespace FMH.Core.Model
         }
         #endregion
 
-        #region Mod version
-        private string _modVersion;
-
-        /// <summary>
-        /// Workspace's mod version
-        /// </summary>
-        public string ModVersion
-        {
-            get
-            {
-                return _modVersion;
-            }
-            set
-            {
-                _modVersion = value;
-                OnPropertyChanged();
-            }
-        }
-        #endregion
-
         #region Mod license
         private string _modLicense;
 
@@ -168,6 +148,86 @@ namespace FMH.Core.Model
             set
             {
                 _modDescription = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Mod id
+        private string _modId;
+
+        /// <summary>
+        /// Workspace's mod id
+        /// </summary>
+        public string ModId
+        {
+            get
+            {
+                return _modId;
+            }
+            set
+            {
+                _modId = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Mod group
+        private string _modGroup;
+
+        /// <summary>
+        /// Workspace's mod group
+        /// </summary>
+        public string ModGroup
+        {
+            get
+            {
+                return _modGroup;
+            }
+            set
+            {
+                _modGroup = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Mod version
+        private string _modVersion;
+
+        /// <summary>
+        /// Workspace's mod version
+        /// </summary>
+        public string ModVersion
+        {
+            get
+            {
+                return _modVersion;
+            }
+            set
+            {
+                _modVersion = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Mod update json file link
+        private string _updateJsonFileLink;
+
+        /// <summary>
+        /// Workspace's mod group
+        /// </summary>
+        public string UpdateJsonFileLink
+        {
+            get
+            {
+                return _updateJsonFileLink;
+            }
+            set
+            {
+                _updateJsonFileLink = value;
                 OnPropertyChanged();
             }
         }

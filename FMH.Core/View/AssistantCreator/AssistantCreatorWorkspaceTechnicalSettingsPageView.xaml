@@ -1,0 +1,122 @@
+﻿<UserControl x:Class="FMH.Core.View.AssistantCreator.AssistantCreatorWorkspaceTechnicalSettingsPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FMH.Core.View.AssistantCreator"
+             xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="433" d:DesignWidth="650">
+    
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="50" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="120" />
+
+        </Grid.RowDefinitions>
+
+        <!-- Header text -->
+        <StackPanel Grid.Row="0" 
+             Orientation="Vertical">
+
+            <TextBlock Tag="assistant_creator.label.technicalSettings_page"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       TextWrapping="WrapWithOverflow"
+                       Text="It's time for technical settings of your workspace !"/>
+
+            <TextBlock Tag="assistant_creator.label.technicalSettings_page.description"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       TextWrapping="WrapWithOverflow"
+                       Text="Be carefull, some of theses settings will couldn't be changed !"/>
+
+        </StackPanel>
+
+        <!-- Mod id -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Vertical">
+
+            <TextBlock Tag="assistant_creator.label.technicalSettings_page.mod_id"
+                       HorizontalAlignment="Left"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       Text="Modid"
+                       Margin="0, 0, 0, 5"/>
+            <controls:InputTextBox x:Name="ModIdTextBox"
+                                   Grid.Row="1" 
+                                   Height="25" 
+                                   PlaceHolderText="mymod" 
+                                   InputText="{Binding NewWorkspaceData.ModId, Mode=TwoWay}"/>
+
+        </StackPanel>
+
+        <!-- Mod group -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Vertical">
+
+            <TextBlock Tag="assistant_creator.label.technicalSettings_page.mod_group"
+               HorizontalAlignment="Left"
+               Foreground="{DynamicResource FontColorPrimary}"
+               Text="Mod group"
+               Margin="0, 0, 0, 5"/>
+            <controls:InputTextBox x:Name="ModGroupTextBox"
+                           Grid.Row="1" 
+                           Height="25" 
+                           PlaceHolderText="net.me.mymod" 
+                           InputText="{Binding NewWorkspaceData.ModGroup, Mode=TwoWay}"/>
+
+        </StackPanel>
+
+        <!-- Mod version -->
+        <StackPanel Grid.Row="3"
+                    Orientation="Vertical">
+
+            <TextBlock Tag="assistant_creator.label.technicalSettings_page.mod_version"
+                       HorizontalAlignment="Left"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       Text="Mod version"
+                       Margin="0, 0, 0, 5"/>
+            <controls:InputTextBox x:Name="ModVersionTextBox"
+                                   Grid.Row="1" 
+                                   Height="25" 
+                                   PlaceHolderText="1.0.0.0" 
+                                   InputText="{Binding NewWorkspaceData.ModVersion, Mode=TwoWay}"/>
+
+        </StackPanel>
+
+        <!-- Mod update JSON link -->
+        <StackPanel Grid.Row="4"
+            Orientation="Vertical">
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 0, 0, 5">
+                <TextBlock Tag="assistant_creator.label.technicalSettings_page.mod_update_json_file_link"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="Update JSON file link"
+                           Margin="0, 0, 0, 5"/>
+                <TextBlock Tag="assistant_creator.label.optional"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic" 
+                           Text="(optional)"
+                           Margin="3, 0, 0, 0"/>
+            </StackPanel>
+
+            <controls:InputTextBox x:Name="ModUpdateJsonFileTextBox"
+                                   Grid.Row="1" 
+                                   Height="25" 
+                                   PlaceHolderText="https://website.net/updates.json" 
+                                   InputText="{Binding NewWorkspaceData.UpdateJsonFileLink, Mode=TwoWay}"/>
+
+        </StackPanel>
+
+    </Grid>
+    
+</UserControl>
