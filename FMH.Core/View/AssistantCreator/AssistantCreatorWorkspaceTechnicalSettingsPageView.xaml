@@ -99,8 +99,7 @@
                 <TextBlock Tag="assistant_creator.label.technicalSettings_page.mod_update_json_file_link"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
-                           Text="Update JSON file link"
-                           Margin="0, 0, 0, 5"/>
+                           Text="Update JSON file link"/>
                 <TextBlock Tag="assistant_creator.label.optional"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorSecondary}"

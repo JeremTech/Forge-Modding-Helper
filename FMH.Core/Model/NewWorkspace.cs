@@ -217,7 +217,7 @@ namespace FMH.Core.Model
         private string _updateJsonFileLink;
 
         /// <summary>
-        /// Workspace's mod group
+        /// Workspace's mod update JSON file link
         /// </summary>
         public string UpdateJsonFileLink
         {
@@ -228,6 +228,66 @@ namespace FMH.Core.Model
             set
             {
                 _updateJsonFileLink = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Mod website
+        private string _modWebsite;
+
+        /// <summary>
+        /// Workspace's mod website
+        /// </summary>
+        public string ModWebsite
+        {
+            get
+            {
+                return _modWebsite;
+            }
+            set
+            {
+                _modWebsite = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Mod issue tracker
+        private string _modIssueTracker;
+
+        /// <summary>
+        /// Workspace's mod website
+        /// </summary>
+        public string ModIssueTracker
+        {
+            get
+            {
+                return _modIssueTracker;
+            }
+            set
+            {
+                _modIssueTracker = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Mod logo
+        private string _modLogoSourcePath;
+
+        /// <summary>
+        /// Workspace's mod logo source path
+        /// </summary>
+        public string ModLogoSourcePath
+        {
+            get
+            {
+                return _modLogoSourcePath;
+            }
+            set
+            {
+                _modLogoSourcePath = value;
                 OnPropertyChanged();
             }
         }

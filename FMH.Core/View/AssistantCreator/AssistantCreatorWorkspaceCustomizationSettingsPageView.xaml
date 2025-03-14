@@ -1,0 +1,158 @@
+﻿<UserControl x:Class="FMH.Core.View.AssistantCreator.AssistantCreatorWorkspaceCustomizationSettingsPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.fontawesome.io/icons/" 
+             xmlns:local="clr-namespace:FMH.Core.View.AssistantCreator"
+             xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="433" d:DesignWidth="650">
+    
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="50" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="55" />
+            <RowDefinition Height="*" />
+
+        </Grid.RowDefinitions>
+
+        <!-- Header text -->
+        <StackPanel Grid.Row="0" 
+                    Orientation="Vertical">
+
+                <TextBlock Tag="assistant_creator.label.customizationSettings_page"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           TextWrapping="WrapWithOverflow"
+                           Text="Lets finish with some optionnal settings !"/>
+
+                <TextBlock Tag="assistant_creator.label.customizationSettings_page.description"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           TextWrapping="WrapWithOverflow"
+                           Text="You will be able to modify all this data later."/>
+
+        </StackPanel>
+
+        <!-- Mod website -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Vertical">
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 0, 0, 5">
+                <TextBlock Tag="assistant_creator.label.customizationSettings_page.mod_website"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="Mod website"/>
+                <TextBlock Tag="assistant_creator.label.optional"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic" 
+                           Text="(optional)"
+                           Margin="3, 0, 0, 0"/>
+            </StackPanel>
+            <controls:InputTextBox x:Name="ModWebsiteTextBox"
+                                   Height="25" 
+                                   PlaceHolderText="https://website.net/" 
+                                   InputText="{Binding NewWorkspaceData.ModWebsite, Mode=TwoWay}"/>
+
+        </StackPanel>
+        
+        <!-- Mod issue tracker -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Vertical">
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 0, 0, 5">
+                <TextBlock Tag="assistant_creator.label.customizationSettings_page.mod_issue_tracker"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="Mod issue tracker"/>
+                <TextBlock Tag="assistant_creator.label.optional"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic" 
+                           Text="(optional)"
+                           Margin="3, 0, 0, 0"/>
+            </StackPanel>
+            <controls:InputTextBox x:Name="ModIssueTrackerTextBox"
+                                   Height="25" 
+                                   PlaceHolderText="https://website.net/issues/" 
+                                   InputText="{Binding NewWorkspaceData.ModIssueTracker, Mode=TwoWay}"/>
+        </StackPanel>
+
+        <!-- Mod logo -->
+        <Grid Grid.Row="3"
+              HorizontalAlignment="Stretch"
+              Height="150">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Grid.Row="0">
+                <TextBlock Tag="assistant_creator.label.customizationSettings_page.mod_logo"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="Mod logo"
+                           Margin="0, 0, 0, 5"/>
+                <TextBlock Tag="assistant_creator.label.optional"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic" 
+                           Text="(optional)"
+                           Margin="3, 0, 0, 0"/>
+            </StackPanel>
+            
+            <Border Grid.Row="1" 
+                    BorderThickness="1"
+                    Width="120"
+                    BorderBrush="{DynamicResource BorderColor}">
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="22"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Mod logo image -->
+                    <Image Grid.Row="0"
+                           Grid.RowSpan="2"
+                           Source="{Binding NewWorkspaceData.ModLogoSourcePath}"/>
+
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom">
+
+                        <!-- Delete mod logo button -->
+                        <Button x:Name="ModLogoDeleteButton" 
+                                Width="25"
+                                Click="ModLogoDeleteButton_Click">
+                            <fa:ImageAwesome Foreground="#FF0000" 
+                                             Icon="Trash"/>
+                        </Button>
+
+                        <!-- Browse mod logo button -->
+                        <Button x:Name="ModLogoBrowseButton"
+                                Content="..." 
+                                Width="30"
+                                Click="ModLogoBrowseButton_Click"/>
+
+                    </StackPanel>
+
+                </Grid>
+
+            </Border>
+
+        </Grid>
+
+
+    </Grid>
+    
+</UserControl>

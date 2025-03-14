@@ -8,8 +8,7 @@
       xmlns:utils="clr-namespace:FMH.Core.Utils.Converters"
       xmlns:workspace="clr-namespace:FMH.Workspace.Data;assembly=FMH.Workspace"
       mc:Ignorable="d" 
-      d:DesignHeight="433" d:DesignWidth="650"
-      >
+      d:DesignHeight="433" d:DesignWidth="650">
 
     <Grid Margin="10">
 
