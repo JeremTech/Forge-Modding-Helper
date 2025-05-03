@@ -80,5 +80,21 @@ namespace FMH.Workspace.Data
             string directoryPath = Path.Combine(_workspacePath, "src\\main\\resources\\assets", _modId, "blockstates");
             BlockstatesFiles = Directory.EnumerateFiles(directoryPath, "*", SearchOption.AllDirectories).ToList();
         }
+
+        /// <summary>
+        /// Generate assets folders
+        /// </summary>
+        public void GenerateAssetsFolders()
+        {
+            Directory.CreateDirectory(_workspacePath + @"\src\main\resources\assets\" + _modId + @"\textures\block");
+            Directory.CreateDirectory(_workspacePath + @"\src\main\resources\assets\" + _modId + @"\textures\item");
+            Directory.CreateDirectory(_workspacePath + @"\src\main\resources\assets\" + _modId + @"\textures\gui");
+            Directory.CreateDirectory(_workspacePath + @"\src\main\resources\assets\" + _modId + @"\textures\entity");
+            Directory.CreateDirectory(_workspacePath + @"\src\main\resources\assets\" + _modId + @"\textures\models");
+            Directory.CreateDirectory(_workspacePath + @"\src\main\resources\assets\" + _modId + @"\models\block");
+            Directory.CreateDirectory(_workspacePath + @"\src\main\resources\assets\" + _modId + @"\models\item");
+            Directory.CreateDirectory(_workspacePath + @"\src\main\resources\assets\" + _modId + @"\blockstates");
+            Directory.CreateDirectory(_workspacePath + @"\src\main\resources\assets\" + _modId + @"\lang");
+        }
     }
 }

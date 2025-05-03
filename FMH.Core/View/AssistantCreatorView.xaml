@@ -73,7 +73,15 @@
                                          Text="Next"
                                          RightIcon="ArrowRight"
                                          Height="40"
-                                         Command="{Binding NextCommand}"/>
+                                         Command="{Binding NextCommand}"
+                                         IsEnabled="{Binding NextButtonEnabled}"
+                                         Visibility="{Binding NextButtonVisibility}"/>
+                <controls:StandardButton Width="100" 
+                                         Text="Finish"
+                                         LeftIcon="Check"
+                                         Height="40"
+                                         Command="{Binding FinishCommand}"
+                                         Visibility="{Binding FinishButtonVisibility}"/>
             </StackPanel>
         </Grid>
 

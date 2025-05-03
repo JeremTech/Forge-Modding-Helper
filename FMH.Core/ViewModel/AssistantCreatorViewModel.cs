@@ -2,6 +2,7 @@
 using FMH.Core.Model;
 using FMH.Core.Provider;
 using FMH.Core.UI.Common;
+using FMH.Core.UI.Forge;
 using FMH.Core.Utils.UI;
 using FMH.Core.View.AssistantCreator;
 using FMH.Workspace.Data;
@@ -11,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -20,9 +22,28 @@ namespace FMH.Core.ViewModel
 {
     public class AssistantCreatorViewModel : ViewModelBase
     {
-        private List<UserControl> AssistantPages { get; set; }
-
         #region Properties
+        private List<UserControl> AssistantPages { get; set; }
+        public Action? CloseWindowAction { get; set; }
+
+
+        public bool _dialogResult { get; set; }
+        /// <summary>
+        /// Dialog result
+        /// </summary>
+        public bool DialogResult
+        {
+            get
+            {
+                return _dialogResult;
+            }
+            set
+            {
+                _dialogResult = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int _currentPageNumber { get; set; }
         /// <summary>
         /// Current page number
@@ -37,7 +58,6 @@ namespace FMH.Core.ViewModel
             {
                 _currentPageNumber = value;
                 OnPropertyChanged();
-                OnPropertyChanged("PreviousButtonEnabled");
             }
         }
 
@@ -72,6 +92,10 @@ namespace FMH.Core.ViewModel
             {
                 _currentAssistantPage = value;
                 OnPropertyChanged();
+                OnPropertyChanged("PreviousButtonEnabled");
+                OnPropertyChanged("NextButtonEnabled");
+                OnPropertyChanged("NextButtonVisibility");
+                OnPropertyChanged("FinishButtonVisibility");
             }
         }
 
@@ -82,10 +106,55 @@ namespace FMH.Core.ViewModel
         {
             get
             {
-                if(CurrentPageNumber == 0)
+                if(CurrentAssistantPage is AssistantCreatorApiTypeSelectionPageView
+                   || CurrentAssistantPage is AssistantCreatorGenerationProcessPageView
+                   || CurrentAssistantPage is AssistantCreatorFinishPageView)
                     return false;
 
                 return true;
+            }
+        }
+
+        /// <summary>
+        /// Next button enable status
+        /// </summary>
+        public bool NextButtonEnabled
+        {
+            get
+            {
+                if (CurrentAssistantPage is AssistantCreatorGenerationProcessPageView
+                    || CurrentAssistantPage is AssistantCreatorFinishPageView)
+                    return false;
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Next button visiblity
+        /// </summary>
+        public Visibility NextButtonVisibility
+        {
+            get
+            {
+                if (CurrentAssistantPage is AssistantCreatorFinishPageView)
+                    return Visibility.Collapsed;
+
+                return Visibility.Visible;
+            }
+        }
+
+        /// <summary>
+        /// Finish button visiblity
+        /// </summary>
+        public Visibility FinishButtonVisibility
+        {
+            get
+            {
+                if (CurrentAssistantPage is AssistantCreatorFinishPageView)
+                    return Visibility.Visible;
+
+                return Visibility.Collapsed;
             }
         }
         #endregion
@@ -124,6 +193,23 @@ namespace FMH.Core.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        /// <summary>
+        /// Finish command
+        /// </summary>
+        private ICommand _finishCommand;
+        public ICommand FinishCommand
+        {
+            get
+            {
+                return _finishCommand;
+            }
+            set
+            {
+                _finishCommand = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         /// <summary>
@@ -134,6 +220,7 @@ namespace FMH.Core.ViewModel
             InitializeDefaultValues();
             this.NextCommand = new RelayCommand(Next);
             this.PreviousCommand = new RelayCommand(Previous);
+            this.FinishCommand = new RelayCommand(Finish);
         }
 
         /// <summary>
@@ -141,6 +228,8 @@ namespace FMH.Core.ViewModel
         /// </summary>
         private void InitializeDefaultValues()
         {
+            DialogResult = false;
+
             NewWorkspaceData = new NewWorkspace()
             {
                 ModAPI = ModAPIType.Forge
@@ -152,7 +241,10 @@ namespace FMH.Core.ViewModel
                 new AssistantCreatorApiVersionSelectionPageView(),
                 new AssistantCreatorWorkspaceBasicsSettingsPageView(),
                 new AssistantCreatorWorkspaceTechnicalSettingsPageView(),
-                new AssistantCreatorWorkspaceCustomizationSettingsPageView()
+                new AssistantCreatorWorkspaceCustomizationSettingsPageView(),
+                new AssistantCreatorGenerationSettingsPageView(),
+                new AssistantCreatorGenerationProcessPageView(),
+                new AssistantCreatorFinishPageView()
             };
 
             CurrentPageNumber = 0;
@@ -163,7 +255,7 @@ namespace FMH.Core.ViewModel
         /// <summary>
         /// Next command function
         /// </summary>
-        private void Next()
+        internal void Next()
         {
             if(CurrentAssistantPage is IComponentValidated currentPage)
             {
@@ -184,7 +276,7 @@ namespace FMH.Core.ViewModel
         /// <summary>
         /// Previous command function
         /// </summary>
-        private void Previous()
+        internal void Previous()
         {
             if (CurrentPageNumber == 0)
                 return;
@@ -194,6 +286,19 @@ namespace FMH.Core.ViewModel
 
             if (CurrentAssistantPage is IComponentDisplayed currentPage)
                 currentPage.OnComponentDisplayed(this);
+        }
+
+        /// <summary>
+        /// Finish command function
+        /// </summary>
+        internal void Finish()
+        {
+            // Open Project Explorer
+            new ForgeProjectExplorer(NewWorkspaceData.WorkspaceFolderPath).Show();
+
+            // Close Assistant Creator
+            DialogResult = true;
+            CloseWindowAction?.Invoke();
         }
         #endregion
     }

@@ -292,5 +292,25 @@ namespace FMH.Core.Model
             }
         }
         #endregion
+
+        #region Workspace folder
+        private string _workspaceFolderPath;
+
+        /// <summary>
+        /// Workspace's folder path
+        /// </summary>
+        public string WorkspaceFolderPath
+        {
+            get
+            {
+                return _workspaceFolderPath;
+            }
+            set
+            {
+                _workspaceFolderPath = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
     }
 }

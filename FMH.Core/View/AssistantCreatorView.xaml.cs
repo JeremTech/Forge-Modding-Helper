@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using FMH.Core.ViewModel;
 
 namespace FMH.Core.View
 {
@@ -19,6 +20,19 @@ namespace FMH.Core.View
         public AssistantCreatorView()
         {
             InitializeComponent();
+
+            // Set window related functions
+            if (DataContext is AssistantCreatorViewModel viewModel)
+            {
+                viewModel.CloseWindowAction = Close;
+                viewModel.PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName == nameof(viewModel.DialogResult))
+                    {
+                        DialogResult = viewModel.DialogResult;
+                    }
+                };
+            }
         }
     }
 }

@@ -1,0 +1,231 @@
+﻿<UserControl x:Class="FMH.Core.View.AssistantCreator.AssistantCreatorGenerationSettingsPageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
+             xmlns:local="clr-namespace:FMH.Core.View.AssistantCreator"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" 
+             d:DesignWidth="800">
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="50" />
+            <RowDefinition Height="250" />
+            <RowDefinition Height="40" />
+
+        </Grid.RowDefinitions>
+
+        <!-- Header text -->
+        <StackPanel Grid.Row="0" 
+                    Orientation="Vertical">
+
+            <TextBlock Tag="assistant_creator.label.generationSettings_page"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           TextWrapping="WrapWithOverflow"
+                           Text="We are ready !"/>
+
+            <TextBlock Tag="assistant_creator.label.customizationSettings_page.description"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           TextWrapping="WrapWithOverflow"
+                           Text="Check your settings and define the output folder."/>
+
+        </StackPanel>
+
+        <!-- Workspace summary -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Vertical">
+
+            <TextBlock Tag="assistant_creator.label.generationSettings_page.recap_label"
+                       HorizontalAlignment="Left"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       FontWeight="Bold"
+                       Text="Summary of your workspace :"
+                       Margin="0, 3"/>
+
+            <!-- Mod name -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 3">
+
+                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_name"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="• Mod name : "/>
+                <TextBlock HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic"
+                           Text="{Binding NewWorkspaceData.ModName}"/>
+
+            </StackPanel>
+
+            <!-- Mod API -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 3">
+
+                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_api"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="• Mod API : "/>
+                <TextBlock HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic"
+                           Text="{Binding NewWorkspaceData.ModAPI}"/>
+
+            </StackPanel>
+
+            <!-- Minecraft version -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 3">
+
+                <TextBlock Tag="assistant_creator.label.generationSettings_page.minecraft_version"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="• Minecraft version : "/>
+                <TextBlock HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic"
+                           Text="{Binding NewWorkspaceData.ModAPIVersion.MinecraftVersion}"/>
+
+            </StackPanel>
+
+            <!-- Mod API version -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 3">
+
+                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_api_version"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="• Mod API version : "/>
+                <TextBlock HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic"
+                           Text="{Binding NewWorkspaceData.ModAPIVersion.APIVersion}"/>
+
+            </StackPanel>
+
+            <!-- Mod authors -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 3">
+
+                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_authors"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="• Mod authors : "/>
+                <TextBlock HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic"
+                           Text="{Binding NewWorkspaceData.ModAuthors}"/>
+
+            </StackPanel>
+
+            <!-- Mod license -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 3">
+
+                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_license"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="• Mod license : "/>
+                <TextBlock HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic"
+                           Text="{Binding NewWorkspaceData.ModLicense}"/>
+
+            </StackPanel>
+
+            <!-- Mod version -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 3">
+
+                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_version"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="• Mod version : "/>
+                <TextBlock HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic"
+                           Text="{Binding NewWorkspaceData.ModVersion}"/>
+
+            </StackPanel>
+
+            <!-- Mod ID -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 3">
+
+                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_id"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="• ModId : "/>
+                <TextBlock HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic"
+                           Text="{Binding NewWorkspaceData.ModId}"/>
+
+            </StackPanel>
+
+            <!-- Mod group -->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0, 3">
+
+                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_group"
+                           HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorPrimary}"
+                           Text="• Mod group : "/>
+                <TextBlock HorizontalAlignment="Left"
+                           Foreground="{DynamicResource FontColorSecondary}"
+                           FontStyle="Italic"
+                           Text="{Binding NewWorkspaceData.ModGroup}"/>
+
+            </StackPanel>
+
+
+        </StackPanel>
+        
+        <!-- Generation path -->
+        <Grid Grid.Row="2"
+              VerticalAlignment="Bottom">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Grid.ColumnSpan="2"
+                       Tag="assistant_creator.label.generationSettings_page.path"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       Text="Generation path :"
+                       Margin="0, 0, 0, 5"/>
+
+            <controls:InputTextBox x:Name="GenerationPathTextBox"
+                                   Grid.Row="1"
+                                   Grid.Column="0"
+                                   IsEnabled="False"
+                                   InputText="{Binding NewWorkspaceData.WorkspaceFolderPath, Mode=TwoWay}"/>
+
+            <controls:StandardButton Grid.Row="1"
+                                     Grid.Column="1"
+                                     VerticalAlignment="Center"
+                                     Height="35"
+                                     Width="40"
+                                     Text="..."
+                                     Command="{Binding BrowseOutputDirectoryCommand, RelativeSource={RelativeSource AncestorType={x:Type local:AssistantCreatorGenerationSettingsPageView}, Mode=FindAncestor}}"/>
+
+        </Grid>
+
+
+    </Grid>
+
+</UserControl>

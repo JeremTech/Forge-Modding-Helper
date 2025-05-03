@@ -74,5 +74,17 @@ namespace FMH.Workspace.Data
 
             this.CodeLinesCount = countResult;
         }
+
+        public void GenerateSourceCodeFolders(string modGroup)
+        {
+            // Delete default folder
+            var defaultSourceCodeFolder = _workspacePath + @"\src\main\java\com";
+            if(Directory.Exists(defaultSourceCodeFolder))
+                Directory.Delete(defaultSourceCodeFolder, true);
+
+            // Create new folders
+            Directory.CreateDirectory(_workspacePath + @"\src\main\java\" +  modGroup.Replace(".", @"\"));
+
+        }
     }
 }
