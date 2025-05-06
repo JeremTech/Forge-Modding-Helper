@@ -20,23 +20,22 @@ using Microsoft.VisualBasic.FileIO;
 
 namespace FMH.Core.View.AssistantCreator
 {
-    /// <summary>
-    /// Logique d'interaction pour AssistantCreatorWorkspaceCustomizationSettingsPageView.xaml
-    /// </summary>
     public partial class AssistantCreatorWorkspaceCustomizationSettingsPageView : UserControl, IComponentDisplayed
     {
         private AssistantCreatorViewModel? _viewModelDataContext;
 
         public AssistantCreatorWorkspaceCustomizationSettingsPageView()
         {
+            // Set control events
+            this.Initialized += AssistantCreatorWorkspaceCustomizationSettingsPageView_Initialized;
+
             InitializeComponent();
         }
 
-        public void OnComponentDisplayed(params object[] args)
+        #region Events
+        private void AssistantCreatorWorkspaceCustomizationSettingsPageView_Initialized(object? sender, EventArgs e)
         {
-            // Retrieve parent DataContext from arguments
-            if (args.Any() && args[0] is AssistantCreatorViewModel)
-                _viewModelDataContext = args[0] as AssistantCreatorViewModel;
+            UITextTranslator.UpdateComponentsTranslations(MainGrid);
         }
 
         private void ModLogoDeleteButton_Click(object sender, RoutedEventArgs e)
@@ -50,9 +49,9 @@ namespace FMH.Core.View.AssistantCreator
             // Create and configure FileDialog
             Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
             fileDialog.RestoreDirectory = true;
-            fileDialog.Title = UITextTranslator.getTranslation("project_explorer.mod_settings.choose_logo_file");
+            fileDialog.Title = UITextTranslator.GetTranslation("project_explorer.mod_settings.choose_logo_file");
             fileDialog.DefaultExt = "png";
-            fileDialog.Filter = UITextTranslator.getTranslation("project_explorer.mod_settings.filter_logo_file") + " (*.png)|*.png";
+            fileDialog.Filter = UITextTranslator.GetTranslation("project_explorer.mod_settings.filter_logo_file") + " (*.png)|*.png";
             fileDialog.CheckFileExists = true;
             fileDialog.CheckPathExists = true;
             fileDialog.Multiselect = false;
@@ -64,5 +63,15 @@ namespace FMH.Core.View.AssistantCreator
                 _viewModelDataContext.NewWorkspaceData.ModLogoSourcePath = fileDialog.FileName;
 
         }
+        #endregion
+
+        #region Interfaces implementations
+        public void OnComponentDisplayed(params object[] args)
+        {
+            // Retrieve parent DataContext from arguments
+            if (args.Any() && args[0] is AssistantCreatorViewModel)
+                _viewModelDataContext = args[0] as AssistantCreatorViewModel;
+        }
+        #endregion
     }
 }

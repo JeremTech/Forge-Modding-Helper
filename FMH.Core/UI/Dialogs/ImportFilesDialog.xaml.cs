@@ -36,7 +36,7 @@ namespace FMH.Core.UI.Dialogs
             // Load translations
             UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
-            this.Title = UITextTranslator.getTranslation("dialog.import.title");
+            this.Title = UITextTranslator.GetTranslation("dialog.import.title");
 
             // Get Subdirectories names
             int i = 0;
@@ -48,7 +48,7 @@ namespace FMH.Core.UI.Dialogs
             }
 
             // Add root choice
-            subfoldersNames[i] = UITextTranslator.getTranslation("dialog.import.root");
+            subfoldersNames[i] = UITextTranslator.GetTranslation("dialog.import.root");
 
             // Creating line for each files
             foreach (string file in filesToImport)
@@ -96,7 +96,7 @@ namespace FMH.Core.UI.Dialogs
                 if (element.ImportStatut == true)
                 {
                     // If selected folder is not root
-                    if (element.SubFolderDestination != UITextTranslator.getTranslation("dialog.import.root"))
+                    if (element.SubFolderDestination != UITextTranslator.GetTranslation("dialog.import.root"))
                     {
                         File.Copy(element.OriginalFilePath, System.IO.Path.Combine(_workspacePath, "src\\main\\resources\\assets", _modId, element.AssetsFolder, element.SubFolderDestination, element.FinalName));
                     }

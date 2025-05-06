@@ -73,8 +73,8 @@ namespace FMH.Core.UI.Forge
             // Load translations
             UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
-            this.Title = UITextTranslator.getTranslation("project_explorer.title");
-            this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.saved_modifications");
+            this.Title = UITextTranslator.GetTranslation("project_explorer.title");
+            this.ModSettingsStatusLabel.Text = UITextTranslator.GetTranslation("project_explorer.mod_settings.saved_modifications");
             this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
 
             // Initialize data
@@ -150,7 +150,7 @@ namespace FMH.Core.UI.Forge
                 return;
 
             var selectedVersion = (ModVersionHistoryEntry)HomeModVersionsHistoryListView.SelectedItem;
-            if (MessageBox.Show(string.Format(UITextTranslator.getTranslation("project_explorer.home.confirm_delete"), selectedVersion.ModVersion), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(string.Format(UITextTranslator.GetTranslation("project_explorer.home.confirm_delete"), selectedVersion.ModVersion), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 File.Delete(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions", selectedVersion.FileName));
 
@@ -178,7 +178,7 @@ namespace FMH.Core.UI.Forge
             }
             else
             {
-                MessageBox.Show(string.Format(UITextTranslator.getTranslation("project_explorer.home.version_not_found"), filePath), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(string.Format(UITextTranslator.GetTranslation("project_explorer.home.version_not_found"), filePath), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
         #endregion
@@ -194,7 +194,7 @@ namespace FMH.Core.UI.Forge
             if (textBoxSender != null && !textBoxSender.IsFocused)
                 return;
 
-            this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.unsaved_modifications");
+            this.ModSettingsStatusLabel.Text = UITextTranslator.GetTranslation("project_explorer.mod_settings.unsaved_modifications");
             this.ModSettingsStatusLabel.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF0000"));
         }
 
@@ -206,9 +206,9 @@ namespace FMH.Core.UI.Forge
             // Create and configure FileDialog
             Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
             fileDialog.RestoreDirectory = true;
-            fileDialog.Title = UITextTranslator.getTranslation("project_explorer.mod_settings.choose_logo_file");
+            fileDialog.Title = UITextTranslator.GetTranslation("project_explorer.mod_settings.choose_logo_file");
             fileDialog.DefaultExt = "png";
-            fileDialog.Filter = UITextTranslator.getTranslation("project_explorer.mod_settings.filter_logo_file") + " (*.png)|*.png";
+            fileDialog.Filter = UITextTranslator.GetTranslation("project_explorer.mod_settings.filter_logo_file") + " (*.png)|*.png";
             fileDialog.CheckFileExists = true;
             fileDialog.CheckPathExists = true;
             fileDialog.Multiselect = false;
@@ -240,7 +240,7 @@ namespace FMH.Core.UI.Forge
                 return;
 
             // Create and display confirmation message
-            MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.mod_settings.alerte.delete_logo_message"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show(UITextTranslator.GetTranslation("project_explorer.mod_settings.alerte.delete_logo_message"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 _workspaceManager.ModProperties.ModLogo = "";
@@ -280,7 +280,7 @@ namespace FMH.Core.UI.Forge
             });
 
             // Update UI
-            this.ModSettingsStatusLabel.Text = UITextTranslator.getTranslation("project_explorer.mod_settings.saved_modifications");
+            this.ModSettingsStatusLabel.Text = UITextTranslator.GetTranslation("project_explorer.mod_settings.saved_modifications");
             this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
             RefreshInterfaceModInfos();
         }
@@ -299,7 +299,7 @@ namespace FMH.Core.UI.Forge
             var cancellationToken = blockstatesTokenSource.Token;
 
             BlockstatesLoadingStackPanel.Visibility = Visibility.Visible;
-            BlockstatesLoadingStatusTextblock.Text = UITextTranslator.getTranslation("project_explorer.blockstates.loading_files");
+            BlockstatesLoadingStatusTextblock.Text = UITextTranslator.GetTranslation("project_explorer.blockstates.loading_files");
 
             // Run it async
             try
@@ -620,7 +620,7 @@ namespace FMH.Core.UI.Forge
 
             if (TranslationsFilesListBox.SelectedItem != null && File.Exists(filePath))
             {
-                MessageBoxResult res = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.translations.alert.delete"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult res = MessageBox.Show(UITextTranslator.GetTranslation("project_explorer.translations.alert.delete"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (res == MessageBoxResult.Yes)
                 {
@@ -642,7 +642,7 @@ namespace FMH.Core.UI.Forge
             // Show warning if the version has been already builded
             if (File.Exists(destinationFilePath))
             {
-                if (MessageBox.Show(UITextTranslator.getTranslation("project_explorer.export.error.file_already_exist"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                if (MessageBox.Show(UITextTranslator.GetTranslation("project_explorer.export.error.file_already_exist"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
                     return;
             }
 
@@ -679,7 +679,7 @@ namespace FMH.Core.UI.Forge
             // If the output file is not found, show error and stop process here
             if (!File.Exists(ouputFilePath))
             {
-                this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.error.output_file_not_found")), Color.FromRgb(255, 0, 0));
+                this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.GetTranslation("project_explorer.export.error.output_file_not_found")), Color.FromRgb(255, 0, 0));
                 return;
             }
 
@@ -689,18 +689,18 @@ namespace FMH.Core.UI.Forge
             // Deleting previous generated build for this mod version if necessary
             if (File.Exists(destinationFilePath))
             {
-                this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.deleting_previous_file")), Color.FromRgb(255, 240, 0));
+                this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.GetTranslation("project_explorer.export.info.deleting_previous_file")), Color.FromRgb(255, 240, 0));
                 File.Delete(destinationFilePath);
                 _workspaceManager.ModVersionsHistory.RemoveVersionFromHistory(_workspaceManager.ModProperties.ModVersion);
             }
 
             // Moving file to fmh/versions folder
-            this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.moving_generated_file")), Color.FromRgb(255, 240, 0));
+            this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.GetTranslation("project_explorer.export.info.moving_generated_file")), Color.FromRgb(255, 240, 0));
             if (!Directory.Exists(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions")))
                 Directory.CreateDirectory(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions"));
             File.Move(ouputFilePath, destinationFilePath);
 
-            this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.updating_versions_history")), Color.FromRgb(255, 240, 0));
+            this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.GetTranslation("project_explorer.export.info.updating_versions_history")), Color.FromRgb(255, 240, 0));
 
             _workspaceManager.ModVersionsHistory.AddVersionToHistory(_workspaceManager.ModProperties.ModVersion, _workspaceManager.ModProperties.ModMinecraftVersion, DateTime.Now, _workspaceManager.ModProperties.ModID + "-" + _workspaceManager.ModProperties.ModVersion + ".jar");
             _workspaceManager.ModVersionsHistory.WriteData();
@@ -708,7 +708,7 @@ namespace FMH.Core.UI.Forge
             // Refresh mod data
             Dispatcher.Invoke(() => RefreshInterfaceModInfos());
 
-            this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.getTranslation("project_explorer.export.info.exportation_success")), Color.FromRgb(0, 255, 0));
+            this.ModExportationConsoleControl.WriteOutput(string.Concat("\n", UITextTranslator.GetTranslation("project_explorer.export.info.exportation_success")), Color.FromRgb(0, 255, 0));
         }
         #endregion
 
@@ -869,7 +869,7 @@ namespace FMH.Core.UI.Forge
             // Reload translations
             UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
-            this.Title = UITextTranslator.getTranslation("project_explorer.title");
+            this.Title = UITextTranslator.GetTranslation("project_explorer.title");
 
             // Reload font color if needed of mod settings statut label
             if (!string.Equals(((SolidColorBrush)ModSettingsStatusLabel.Foreground).Color.ToString(), "#FFFF0000"))
@@ -928,7 +928,7 @@ namespace FMH.Core.UI.Forge
                     if (BlockstatesListView.SelectedItems.Count > 0)
                     {
                         // Display confirmation message
-                        MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.alert.delete").Replace("%N", BlockstatesListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = MessageBox.Show(UITextTranslator.GetTranslation("project_explorer.alert.delete").Replace("%N", BlockstatesListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                         // If user say Yes
                         if (result == MessageBoxResult.Yes)
@@ -953,7 +953,7 @@ namespace FMH.Core.UI.Forge
                     if (ModelsListView.SelectedItems.Count > 0)
                     {
                         // Display confirmation message
-                        MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.alert.delete").Replace("%N", ModelsListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = MessageBox.Show(UITextTranslator.GetTranslation("project_explorer.alert.delete").Replace("%N", ModelsListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                         // If user say Yes
                         if (result == MessageBoxResult.Yes)
@@ -978,7 +978,7 @@ namespace FMH.Core.UI.Forge
                     if (TexturesListView.SelectedItems.Count > 0)
                     {
                         // Display confirmation message
-                        MessageBoxResult result = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.alert.delete").Replace("%N", TexturesListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = MessageBox.Show(UITextTranslator.GetTranslation("project_explorer.alert.delete").Replace("%N", TexturesListView.SelectedItems.Count.ToString()), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                         // If user say Yes
                         if (result == MessageBoxResult.Yes)
@@ -1134,8 +1134,8 @@ namespace FMH.Core.UI.Forge
             {
                 // File dialog
                 OpenFileDialog filesDialog = new OpenFileDialog();
-                filesDialog.Title = UITextTranslator.getTranslation("file_dialog.import.title");
-                filesDialog.Filter = UITextTranslator.getTranslation("file_dialog.import.filter") + " (*.*)|*.*";
+                filesDialog.Title = UITextTranslator.GetTranslation("file_dialog.import.title");
+                filesDialog.Filter = UITextTranslator.GetTranslation("file_dialog.import.filter") + " (*.*)|*.*";
                 filesDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 filesDialog.Multiselect = true;
                 filesDialog.ShowDialog();
@@ -1337,7 +1337,7 @@ namespace FMH.Core.UI.Forge
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Displaying confirmation message
-            MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.getTranslation("project_explorer.alert.close"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.GetTranslation("project_explorer.alert.close"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             // If yes
             if (msgResult == MessageBoxResult.Yes)

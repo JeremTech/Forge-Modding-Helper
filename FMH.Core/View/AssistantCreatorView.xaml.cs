@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using FMH.Core.Files.Software;
+using FMH.Core.Utils.UI;
 using FMH.Core.ViewModel;
 
 namespace FMH.Core.View
@@ -19,6 +21,9 @@ namespace FMH.Core.View
     {
         public AssistantCreatorView()
         {
+            // Set window events
+            this.Initialized += AssistantCreatorView_Initialized;
+
             InitializeComponent();
 
             // Set window related functions
@@ -33,6 +38,13 @@ namespace FMH.Core.View
                     }
                 };
             }
+
+
+        }
+
+        private void AssistantCreatorView_Initialized(object? sender, EventArgs e)
+        {
+            UITextTranslator.UpdateComponentsTranslations(MainGrid);
         }
     }
 }

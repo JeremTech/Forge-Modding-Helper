@@ -96,17 +96,9 @@ namespace FMH.Core.View.AssistantCreator
         public AssistantCreatorGenerationProcessPageView()
         {
             InitializeComponent();
-        }
 
-        /// <inheritdoc/>
-        public void OnComponentDisplayed(params object[] args)
-        {
-            // Retrieve parent DataContext from arguments and start the workspace generation process
-            if (args.Any() && args[0] is AssistantCreatorViewModel viewModelDataContext)
-            {
-                parentViewModel = viewModelDataContext;
-                Task.Run(() => DoWorkspaceGeneration()).Wait();
-            }
+            // Initialize properties
+            StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.initializing");
         }
 
         private async void DoWorkspaceGeneration()
@@ -131,28 +123,25 @@ namespace FMH.Core.View.AssistantCreator
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error occurred : {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(string.Concat(UITextTranslator.GetTranslation("assistant_creator.generation.error.message"), "\n", ex.Message), UITextTranslator.GetTranslation("assistant_creator.generation.error.title"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         #region Download and uncompress MDK
         private async Task DownloadWorkspaceMDK()
         {
-            StatusLabelText = "Downloading Mod Developement Kit";
-            ProgressBarValue = 0;
-            ProgressBarVisibility = Visibility.Visible;
-
             var mdkZipPath = Path.Combine(parentViewModel.NewWorkspaceData.WorkspaceFolderPath, "mdk.zip");
 
             // Download MDK
+            StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.downloading_mdk");
+            ProgressBarValue = 0;
+            ProgressBarVisibility = Visibility.Visible;
             await DownloadFileAsync(McForgeUtils.BuildMinecraftForgeMDKDownloadLink(parentViewModel.NewWorkspaceData.ModAPIVersion.APIVersion), mdkZipPath);
 
-            StatusLabelText = "Unzipping Mod Development Kit";
-            ProgressBarValue = 0;
-
             // Uncompress MDK
+            StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.uncompressing_mdk");
+            ProgressBarValue = 0;
             await UncompressFileAsync(mdkZipPath, parentViewModel.NewWorkspaceData.WorkspaceFolderPath);
-
             ProgressBarVisibility = Visibility.Hidden;
 
             // Delete MDK zip file permanently
@@ -234,7 +223,8 @@ namespace FMH.Core.View.AssistantCreator
         #region Configure workspace
         private async Task ConfigureWorkspaceManager()
         {
-            await Task.Run(() => { 
+            await Task.Run(() => 
+            { 
                 workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(parentViewModel.NewWorkspaceData.ModAPIVersion.MinecraftVersion, parentViewModel.NewWorkspaceData.WorkspaceFolderPath);
                 if (workspaceManager == null)
                     throw new Exception("Unable to create workspace manager for Minecraft Forge " + parentViewModel.NewWorkspaceData.ModAPIVersion.MinecraftVersion);
@@ -278,12 +268,12 @@ namespace FMH.Core.View.AssistantCreator
             await Task.Run(() =>
             {
                 // Generate assets folders
-                StatusLabelText = "Creating assets folders";
+                StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.assets_folders");
                 workspaceManager.AssetsProperties.GenerateAssetsFolders();
                 Thread.Sleep(1000);
 
                 // Generate source code folders
-                StatusLabelText = "Creating source code folders";
+                StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.source_code_folders");
                 workspaceManager.SourceCodeProperties.GenerateSourceCodeFolders(parentViewModel.NewWorkspaceData.ModGroup);
                 Thread.Sleep(1000);
             });
@@ -294,17 +284,17 @@ namespace FMH.Core.View.AssistantCreator
             await Task.Run(() =>
             {
                 // Configuring build.gradle
-                StatusLabelText = "Configuring build.gradle";
+                StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.build_gradle");
                 workspaceManager.WriteBuildGradle();
                 Thread.Sleep(1000);
 
                 // Configuring gradle.properties
-                StatusLabelText = "Configuring gradle.properties";
+                StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.gradle_properties");
                 workspaceManager.WriteGradleProperties();
                 Thread.Sleep(1000);
 
                 // Configuring mod.toml
-                StatusLabelText = "Configuring mod.toml";
+                StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.mod_toml");
                 workspaceManager.WriteModToml();
                 Thread.Sleep(1000);
 
@@ -313,18 +303,18 @@ namespace FMH.Core.View.AssistantCreator
                     && File.Exists(parentViewModel.NewWorkspaceData.ModLogoSourcePath)
                     && !File.Exists(parentViewModel.NewWorkspaceData.WorkspaceFolderPath + @"\src\main\resources\logo.png"))
                 {
-                    StatusLabelText = "Copying mod logo";
+                    StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.mod_logo");
                     File.Copy(parentViewModel.NewWorkspaceData.ModLogoSourcePath, parentViewModel.NewWorkspaceData.WorkspaceFolderPath + @"\src\main\resources\logo.png");
                     Thread.Sleep(1000);
                 }
 
                 // Generate FMH project file
-                StatusLabelText = "Generating project file";
+                StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.project_file");
                 WorkspaceManagerHelper.WriteProjectFile(workspaceManager.WorkspaceProperties);
                 Thread.Sleep(1000);
 
                 // Write workspace data
-                StatusLabelText = "Writing workspace data";
+                StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.workspace_data");
                 WorkspaceManagerHelper.WriteWorkspaceData(workspaceManager);
                 Thread.Sleep(1000);
 
@@ -342,7 +332,18 @@ namespace FMH.Core.View.AssistantCreator
         }
         #endregion
 
-        #region Interface implementation
+        #region Interfaces implementations
+        /// <inheritdoc/>
+        public void OnComponentDisplayed(params object[] args)
+        {
+            // Retrieve parent DataContext from arguments and start the workspace generation process
+            if (args.Any() && args[0] is AssistantCreatorViewModel viewModelDataContext)
+            {
+                parentViewModel = viewModelDataContext;
+                Task.Run(() => DoWorkspaceGeneration()).Wait();
+            }
+        }
+
         public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             if (PropertyChanged != null)

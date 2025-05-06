@@ -223,7 +223,7 @@ namespace FMH.Core.ViewModel
                     this.CloseParentWindow();
                 }
                 else
-                    MessageBox.Show(UITextTranslator.getTranslation("welcome.alert.open.error"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(UITextTranslator.GetTranslation("welcome.alert.open.error"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

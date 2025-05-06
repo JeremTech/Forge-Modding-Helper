@@ -9,7 +9,8 @@
              d:DesignHeight="450" 
              d:DesignWidth="800">
 
-    <Grid Margin="10">
+    <Grid x:Name="MainGrid"
+          Margin="10">
 
         <Grid.RowDefinitions>
 
@@ -23,17 +24,17 @@
         <StackPanel Grid.Row="0" 
                     Orientation="Vertical">
 
-            <TextBlock Tag="assistant_creator.label.generationSettings_page"
-                           HorizontalAlignment="Center"
-                           Foreground="{DynamicResource FontColorPrimary}"
-                           TextWrapping="WrapWithOverflow"
-                           Text="We are ready !"/>
+            <TextBlock Tag="assistant_creator.generation_settings.label.description1"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       TextWrapping="WrapWithOverflow"
+                       Text="We have all the elements to generate your workspace !"/>
 
-            <TextBlock Tag="assistant_creator.label.customizationSettings_page.description"
-                           HorizontalAlignment="Center"
-                           Foreground="{DynamicResource FontColorPrimary}"
-                           TextWrapping="WrapWithOverflow"
-                           Text="Check your settings and define the output folder."/>
+            <TextBlock Tag="assistant_creator.generation_settings.label.description2"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       TextWrapping="WrapWithOverflow"
+                       Text="Check your settings and define the output directory."/>
 
         </StackPanel>
 
@@ -41,18 +42,18 @@
         <StackPanel Grid.Row="1"
                     Orientation="Vertical">
 
-            <TextBlock Tag="assistant_creator.label.generationSettings_page.recap_label"
+            <TextBlock Tag="assistant_creator.generation_settings.label.summary"
                        HorizontalAlignment="Left"
                        Foreground="{DynamicResource FontColorPrimary}"
                        FontWeight="Bold"
-                       Text="Summary of your workspace :"
+                       Text="Settings summary :"
                        Margin="0, 3"/>
 
             <!-- Mod name -->
             <StackPanel Orientation="Horizontal"
                         Margin="0, 3">
 
-                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_name"
+                <TextBlock Tag="assistant_creator.generation_settings.label.mod_name"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
                            Text="• Mod name : "/>
@@ -67,7 +68,7 @@
             <StackPanel Orientation="Horizontal"
                         Margin="0, 3">
 
-                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_api"
+                <TextBlock Tag="assistant_creator.generation_settings.label.modding_api"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
                            Text="• Mod API : "/>
@@ -82,7 +83,7 @@
             <StackPanel Orientation="Horizontal"
                         Margin="0, 3">
 
-                <TextBlock Tag="assistant_creator.label.generationSettings_page.minecraft_version"
+                <TextBlock Tag="assistant_creator.generation_settings.label.minecraft_version"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
                            Text="• Minecraft version : "/>
@@ -97,7 +98,7 @@
             <StackPanel Orientation="Horizontal"
                         Margin="0, 3">
 
-                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_api_version"
+                <TextBlock Tag="assistant_creator.generation_settings.label.modding_api_version"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
                            Text="• Mod API version : "/>
@@ -112,7 +113,7 @@
             <StackPanel Orientation="Horizontal"
                         Margin="0, 3">
 
-                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_authors"
+                <TextBlock Tag="assistant_creator.generation_settings.label.mod_authors"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
                            Text="• Mod authors : "/>
@@ -127,7 +128,7 @@
             <StackPanel Orientation="Horizontal"
                         Margin="0, 3">
 
-                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_license"
+                <TextBlock Tag="assistant_creator.generation_settings.label.mod_license"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
                            Text="• Mod license : "/>
@@ -142,7 +143,7 @@
             <StackPanel Orientation="Horizontal"
                         Margin="0, 3">
 
-                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_version"
+                <TextBlock Tag="assistant_creator.generation_settings.label.mod_version"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
                            Text="• Mod version : "/>
@@ -157,7 +158,7 @@
             <StackPanel Orientation="Horizontal"
                         Margin="0, 3">
 
-                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_id"
+                <TextBlock Tag="assistant_creator.generation_settings.label.mod_id"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
                            Text="• ModId : "/>
@@ -172,10 +173,10 @@
             <StackPanel Orientation="Horizontal"
                         Margin="0, 3">
 
-                <TextBlock Tag="assistant_creator.label.generationSettings_page.mod_group"
+                <TextBlock Tag="assistant_creator.generation_settings.label.mod_group"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
-                           Text="• Mod group : "/>
+                           Text="• ModGroup : "/>
                 <TextBlock HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorSecondary}"
                            FontStyle="Italic"
@@ -202,11 +203,11 @@
 
             <TextBlock Grid.Row="0"
                        Grid.ColumnSpan="2"
-                       Tag="assistant_creator.label.generationSettings_page.path"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Foreground="{DynamicResource FontColorPrimary}"
-                       Text="Generation path :"
+                       Tag="assistant_creator.generation_settings.label.output_directory"
+                       Text="Ouput directory path :"
                        Margin="0, 0, 0, 5"/>
 
             <controls:InputTextBox x:Name="GenerationPathTextBox"

@@ -25,9 +25,20 @@ namespace FMH.Core.View.AssistantCreator
     {
         public AssistantCreatorWorkspaceTechnicalSettingsPageView()
         {
+            // Set control events
+            this.Initialized += AssistantCreatorWorkspaceTechnicalSettingsPageView_Initialized;
+
             InitializeComponent();
         }
 
+        #region Events
+        private void AssistantCreatorWorkspaceTechnicalSettingsPageView_Initialized(object? sender, EventArgs e)
+        {
+            UITextTranslator.UpdateComponentsTranslations(MainGrid);
+        }
+        #endregion
+
+        #region Interfaces implementations
         /// <inheritdoc/>
         public void OnComponentDisplayed(params object[] args)
         {
@@ -72,5 +83,6 @@ namespace FMH.Core.View.AssistantCreator
 
             return result;
         }
+        #endregion
     }
 }

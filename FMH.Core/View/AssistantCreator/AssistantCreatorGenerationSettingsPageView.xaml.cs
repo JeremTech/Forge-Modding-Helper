@@ -40,21 +40,16 @@ namespace FMH.Core.View.AssistantCreator
 
         public AssistantCreatorGenerationSettingsPageView()
         {
+            // Set control events
+            this.Initialized += AssistantCreatorGenerationSettingsPageView_Initialized;
+
             InitializeComponent();
+
+            // Configure commands
             this.BrowseOutputDirectoryCommand = new RelayCommand(BrowseOutputDirectory);
         }
 
-        public bool ValidateData()
-        {
-            if(string.IsNullOrWhiteSpace(GenerationPathTextBox.InputText))
-            {
-                GenerationPathTextBox.UpdateInputStatus(InputStatus.Error);
-                return false;
-            }
-
-            return true;
-        }
-
+        #region Commands functions
         public void BrowseOutputDirectory()
         {
             // Allow user to select workspace output directory
@@ -70,5 +65,26 @@ namespace FMH.Core.View.AssistantCreator
                 }
             }
         }
+        #endregion
+
+        #region Events
+        private void AssistantCreatorGenerationSettingsPageView_Initialized(object? sender, EventArgs e)
+        {
+            UITextTranslator.UpdateComponentsTranslations(MainGrid);
+        }
+        #endregion
+
+        #region Interface implementation
+        public bool ValidateData()
+        {
+            if(string.IsNullOrWhiteSpace(GenerationPathTextBox.InputText))
+            {
+                GenerationPathTextBox.UpdateInputStatus(InputStatus.Error);
+                return false;
+            }
+
+            return true;
+        }
+        #endregion
     }
 }

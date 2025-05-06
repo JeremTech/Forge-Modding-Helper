@@ -66,6 +66,10 @@ namespace FMH.Core.Utils.UI
 
         public static void UpdateComponentsTranslations(DependencyObject window)
         {
+            // Load trnaslation file if this is not already done
+            if (translationFile == null)
+                LoadTranslationFile(OptionsFile.GetCurrentLanguage());
+
             // Updating labels
             IEnumerable<Label> labels = UIUtils.FindVisualChildren<Label>(window);
 
@@ -73,7 +77,7 @@ namespace FMH.Core.Utils.UI
             {
                 if (label.Tag != null && label.Tag is string && !string.IsNullOrWhiteSpace(label.Tag.ToString()))
                 {
-                    label.Content = getTranslation((String)label.Tag).FormateTranslationText();
+                    label.Content = GetTranslation((String)label.Tag).FormateTranslationText();
                 }
             }
 
@@ -84,7 +88,7 @@ namespace FMH.Core.Utils.UI
             {
                 if (textblock.Tag != null && textblock.Tag is string && !string.IsNullOrWhiteSpace(textblock.Tag.ToString()))
                 {
-                    textblock.Text = getTranslation((String)textblock.Tag).FormateTranslationText();
+                    textblock.Text = GetTranslation((String)textblock.Tag).FormateTranslationText();
                 }
             }
 
@@ -94,7 +98,7 @@ namespace FMH.Core.Utils.UI
             foreach (Button button in buttons)
             {
                 if (button.Tag != null && button.Tag is string && !string.IsNullOrWhiteSpace(button.Tag.ToString()))
-                    button.Content = getTranslation((String)button.Tag).FormateTranslationText();
+                    button.Content = GetTranslation((String)button.Tag).FormateTranslationText();
             }
 
             // Updating checkboxes text
@@ -103,7 +107,7 @@ namespace FMH.Core.Utils.UI
             foreach (CheckBox checkbox in checkboxes)
             {
                 if (checkbox.Tag != null && checkbox.Tag is string && !string.IsNullOrWhiteSpace(checkbox.Tag.ToString()))
-                    checkbox.Content = getTranslation((String)checkbox.Tag);
+                    checkbox.Content = GetTranslation((String)checkbox.Tag);
             }
 
             // Updating groups header
@@ -112,7 +116,7 @@ namespace FMH.Core.Utils.UI
             foreach (GroupBox group in groups)
             {
                 if (group.Tag != null && group.Tag is string && !string.IsNullOrWhiteSpace(group.Tag.ToString()))
-                    group.Header = getTranslation((String)group.Tag);
+                    group.Header = GetTranslation((String)group.Tag);
 
                 // Translate inner components
                 UpdateComponentsTranslations(group);
@@ -124,7 +128,7 @@ namespace FMH.Core.Utils.UI
             foreach (DashboardInfoDisplay infoDisplay in infoDisplays)
             {
                 if (infoDisplay.Tag != null && infoDisplay.Tag is string && !string.IsNullOrWhiteSpace(infoDisplay.Tag.ToString()))
-                    infoDisplay.InfoTitle = getTranslation((String)infoDisplay.Tag);
+                    infoDisplay.InfoTitle = GetTranslation((String)infoDisplay.Tag);
             }
 
             // Updating sidebar menu buttons controls
@@ -132,7 +136,23 @@ namespace FMH.Core.Utils.UI
             foreach (SideBarMenuButton sideBarMenuButton in sideBarMenuButtons)
             {
                 if (!string.IsNullOrWhiteSpace(sideBarMenuButton.TextTranslationKey))
-                    sideBarMenuButton.Text = getTranslation(sideBarMenuButton.TextTranslationKey);
+                    sideBarMenuButton.Text = GetTranslation(sideBarMenuButton.TextTranslationKey);
+            }
+
+            // Updating standard buttons
+            IEnumerable<StandardButton> standardButtons = UIUtils.FindVisualChildren<StandardButton>(window);
+            foreach (StandardButton standardButton in standardButtons)
+            {
+                if (!string.IsNullOrWhiteSpace(standardButton.TextTranslationKey))
+                    standardButton.Text = GetTranslation(standardButton.TextTranslationKey);
+            }
+
+            // Updating custom textboxes
+            IEnumerable<InputTextBox> inputTextBoxes = UIUtils.FindVisualChildren<InputTextBox>(window);
+            foreach (InputTextBox inputTextBox in inputTextBoxes)
+            {
+                if (!string.IsNullOrWhiteSpace(inputTextBox.PlaceHolderTextTranslationKey))
+                    inputTextBox.PlaceHolderText = GetTranslation(inputTextBox.PlaceHolderTextTranslationKey);
             }
 
             // Updating context menus items header from listbox
@@ -143,13 +163,13 @@ namespace FMH.Core.Utils.UI
                     foreach (MenuItem contextMenuItem in listbox.ContextMenu.Items)
                     {
                         if (contextMenuItem.Tag != null && contextMenuItem.Tag is string && !string.IsNullOrWhiteSpace(contextMenuItem.Tag.ToString()))
-                            contextMenuItem.Header = getTranslation((String)contextMenuItem.Tag);
+                            contextMenuItem.Header = GetTranslation((String)contextMenuItem.Tag);
                     }
                 }
             }
         }
 
-        public static String getTranslation(string translationKey)
+        public static string GetTranslation(string translationKey)
         {
             try
             {
@@ -164,9 +184,9 @@ namespace FMH.Core.Utils.UI
             }
         }
 
-        public static List<String> getAvailableLanguagesFileNameList()
+        public static List<string> GetAvailableLanguagesFileNameList()
         {
-            List<String> languagesList = new List<string>();
+            List<string> languagesList = new List<string>();
 
             string directoryPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Languages");
 

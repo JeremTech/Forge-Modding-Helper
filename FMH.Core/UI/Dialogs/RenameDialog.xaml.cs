@@ -30,7 +30,7 @@ namespace FMH.Core.UI.Dialogs
             // Loading translations
             UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
-            this.Title = UITextTranslator.getTranslation("dialog.rename.title");
+            this.Title = UITextTranslator.GetTranslation("dialog.rename.title");
 
             this.filePath = filePath;
         }

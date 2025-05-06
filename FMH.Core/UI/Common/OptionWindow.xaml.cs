@@ -41,7 +41,7 @@ namespace FMH.Core.UI.Common
             OptionsFile.ReadDataFile();
 
             // Listing available language files
-            foreach (string fileName in UITextTranslator.getAvailableLanguagesFileNameList())
+            foreach (string fileName in UITextTranslator.GetAvailableLanguagesFileNameList())
             {
                 string jsonContent = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Languages", fileName + ".json"));
                 TranslationFile file = JsonConvert.DeserializeObject<TranslationFile>(jsonContent);
@@ -78,7 +78,7 @@ namespace FMH.Core.UI.Common
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
             UITextTranslator.UpdateComponentsTranslations(this.general_groupbox_grid);
             UITextTranslator.UpdateComponentsTranslations(this.project_scan_groupbox_grid);
-            this.Title = UITextTranslator.getTranslation("options.title");
+            this.Title = UITextTranslator.GetTranslation("options.title");
         }
 
         private void ui_language_comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -88,7 +88,7 @@ namespace FMH.Core.UI.Common
                 OptionsFile.SetCurrentLanguage(((KeyValuePair<string, string>)ui_language_comboBox.SelectedItem).Key);
                 UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
                 UITextTranslator.UpdateComponentsTranslations(this.main_grid);
-                this.Title = UITextTranslator.getTranslation("options.title");
+                this.Title = UITextTranslator.GetTranslation("options.title");
             }
         }
 

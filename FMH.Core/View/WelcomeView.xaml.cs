@@ -28,7 +28,7 @@ namespace FMH.Core.View
 
             // Load translations
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
-            this.Title = UITextTranslator.getTranslation("welcome.title");
+            this.Title = UITextTranslator.GetTranslation("welcome.title");
         }
     }
 }

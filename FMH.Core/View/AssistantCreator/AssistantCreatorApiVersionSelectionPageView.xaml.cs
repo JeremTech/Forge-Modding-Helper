@@ -28,12 +28,38 @@ namespace FMH.Core.View.AssistantCreator
         /// </summary>
         public AssistantCreatorApiVersionSelectionPageView()
         {
+            // Set control events
+            this.Initialized += AssistantCreatorApiVersionSelectionPageView_Initialized;
+
             InitializeComponent();
 
+            // Initialize properties
             APIVersionsList = new ObservableCollection<APIVersionData>();
             _APIVersionsListCache = new List<APIVersionData>();
         }
 
+        #region Events
+        private void AssistantCreatorApiVersionSelectionPageView_Initialized(object? sender, System.EventArgs e)
+        {
+            UITextTranslator.UpdateComponentsTranslations(MainGrid);
+        }
+
+        private async void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var filteringText = (sender as TextBox)?.Text;
+            var selectedItemCache = APIVersionsListView.SelectedItem;
+
+            LoadingSpinner.Visibility = Visibility.Visible;
+
+            await Task.Run(() => FilterAPIVersionsList(filteringText));
+
+            APIVersionsListView.SelectedItem = APIVersionsList.FirstOrDefault(v => v.APIVersion == ((APIVersionData)selectedItemCache)?.APIVersion);
+
+            LoadingSpinner.Visibility = Visibility.Collapsed;
+        }
+        #endregion
+
+        #region Interfaces implementations
         /// <inheritdoc/>
         public async void OnComponentDisplayed(params object[] args)
         {
@@ -63,7 +89,9 @@ namespace FMH.Core.View.AssistantCreator
 
             return true;
         }
+        #endregion
 
+        #region Versions list functions
         /// <summary>
         /// Load available API versions list
         /// </summary>
@@ -106,19 +134,6 @@ namespace FMH.Core.View.AssistantCreator
                 _APIVersionsListCache.Where(v => v.APIVersion.Contains(filter)).ToList().ForEach(APIVersionsList.Add);
             });
         }
-
-        private async void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var filteringText = (sender as TextBox)?.Text;
-            var selectedItemCache = APIVersionsListView.SelectedItem;
-
-            LoadingSpinner.Visibility = Visibility.Visible;
-
-            await Task.Run(() => FilterAPIVersionsList(filteringText));
-
-            APIVersionsListView.SelectedItem = APIVersionsList.FirstOrDefault(v => v.APIVersion == ((APIVersionData)selectedItemCache)?.APIVersion);
-
-            LoadingSpinner.Visibility = Visibility.Collapsed;
-        }
+        #endregion
     }
 }

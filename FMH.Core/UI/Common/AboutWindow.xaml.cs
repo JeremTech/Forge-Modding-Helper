@@ -29,7 +29,7 @@ namespace FMH.Core.UI.Common
             // Loadings translations
             UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
-            this.Title = UITextTranslator.getTranslation("about.title");
+            this.Title = UITextTranslator.GetTranslation("about.title");
 
             // Updating app infos
             version_label.Content = App.GetApplicationVersionString();

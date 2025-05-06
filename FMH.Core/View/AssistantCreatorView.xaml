@@ -18,7 +18,8 @@
         <viewModels:AssistantCreatorViewModel/>
     </Window.DataContext>
 
-    <Grid Background="{DynamicResource PrimaryBackgroundColor}">
+    <Grid x:Name="MainGrid"
+          Background="{DynamicResource PrimaryBackgroundColor}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="65"/>
@@ -67,12 +68,14 @@
                                          Text="Previous" 
                                          LeftIcon="ArrowLeft" 
                                          Height="40"
+                                         TextTranslationKey="assistant_creator.button.previous"
                                          Command="{Binding PreviousCommand}" 
                                          IsEnabled="{Binding PreviousButtonEnabled}"/>
                 <controls:StandardButton Width="100" 
                                          Text="Next"
                                          RightIcon="ArrowRight"
                                          Height="40"
+                                         TextTranslationKey="assistant_creator.button.next"
                                          Command="{Binding NextCommand}"
                                          IsEnabled="{Binding NextButtonEnabled}"
                                          Visibility="{Binding NextButtonVisibility}"/>
@@ -80,6 +83,7 @@
                                          Text="Finish"
                                          LeftIcon="Check"
                                          Height="40"
+                                         TextTranslationKey="assistant_creator.button.finish"
                                          Command="{Binding FinishCommand}"
                                          Visibility="{Binding FinishButtonVisibility}"/>
             </StackPanel>

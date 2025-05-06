@@ -34,11 +34,11 @@ namespace FMH.Core.UI.Common
             // Load translations
             UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
-            this.Title = UITextTranslator.getTranslation("json_editor.title") + " - " + System.IO.Path.GetFileName(_filePath);
-            this.EditMenuSave.Header = UITextTranslator.getTranslation("json_editor.menu.save");
-            this.EditMenuCopy.Header = UITextTranslator.getTranslation("json_editor.menu.copy");
-            this.EditMenuPaste.Header = UITextTranslator.getTranslation("json_editor.menu.paste");
-            this.EditMenuCut.Header = UITextTranslator.getTranslation("json_editor.menu.cut");
+            this.Title = UITextTranslator.GetTranslation("json_editor.title") + " - " + System.IO.Path.GetFileName(_filePath);
+            this.EditMenuSave.Header = UITextTranslator.GetTranslation("json_editor.menu.save");
+            this.EditMenuCopy.Header = UITextTranslator.GetTranslation("json_editor.menu.copy");
+            this.EditMenuPaste.Header = UITextTranslator.GetTranslation("json_editor.menu.paste");
+            this.EditMenuCut.Header = UITextTranslator.GetTranslation("json_editor.menu.cut");
         }
 
         private void Window_Loaded(object sender, EventArgs e)
@@ -59,12 +59,12 @@ namespace FMH.Core.UI.Common
         {
             if (savedStatus == true)
             {
-                StatusLabel.Content = UITextTranslator.getTranslation("json_editor.modifications_saved");
+                StatusLabel.Content = UITextTranslator.GetTranslation("json_editor.modifications_saved");
                 StatusImage.Source = new BitmapImage(new Uri("/FMH.Resources;component/Pictures/check.png", UriKind.Relative));
             }
             else
             {
-                StatusLabel.Content = UITextTranslator.getTranslation("json_editor.modifications_unsaved");
+                StatusLabel.Content = UITextTranslator.GetTranslation("json_editor.modifications_unsaved");
                 StatusImage.Source = new BitmapImage(new Uri("/FMH.Resources;component/Pictures/uncheck.png", UriKind.Relative));
             }
         }
@@ -99,7 +99,7 @@ namespace FMH.Core.UI.Common
             if (savedStatus == false)
             {
                 // Displaying confirmation message
-                MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.getTranslation("json_editor.alert.close"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult msgResult = MessageBox.Show(UITextTranslator.GetTranslation("json_editor.alert.close"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 // If yes
                 if (msgResult == MessageBoxResult.Yes)

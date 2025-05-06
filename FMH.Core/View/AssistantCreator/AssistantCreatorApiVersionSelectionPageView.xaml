@@ -24,7 +24,8 @@
 
     </UserControl.Resources>
     
-    <Grid Margin="10">
+    <Grid x:Name="MainGrid"
+          Margin="10">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -36,17 +37,17 @@
         <StackPanel Grid.Row="0" 
                     Orientation="Vertical">
 
-            <TextBlock Tag="assistant_creator.label.versions_page"
+            <TextBlock Tag="assistant_creator.api_version.label.description1"
                        HorizontalAlignment="Center"
                        Foreground="{DynamicResource FontColorPrimary}"
                        TextWrapping="WrapWithOverflow"
                        Text="Which version of Minecraft do you want to mod ?"/>
 
-            <TextBlock Tag="assistant_creator.label.versions_page.description"
+            <TextBlock Tag="assistant_creator.api_version.label.description2"
                        HorizontalAlignment="Center"
                        Foreground="{DynamicResource FontColorPrimary}"
                        TextWrapping="WrapWithOverflow"
-                       Text="Then, you will able to specify the API version."/>
+                       Text="Choose the version of your choice"/>
 
         </StackPanel>
         
@@ -158,6 +159,7 @@
                     <TextBlock VerticalAlignment="Center"
                                Margin="4, 0"
                                Text="Current selection :"
+                               Tag="assistant_creator.api_version.label.current_selection"
                                Foreground="{DynamicResource FontColorPrimary}"/>
 
                     <TextBlock Grid.Row="1"

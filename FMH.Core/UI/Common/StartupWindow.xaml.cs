@@ -57,7 +57,7 @@ namespace FMH.Core.UI.Common
             // Loadings translations
             UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this);
-            updateLoadingStatut(UITextTranslator.getTranslation("loading.label.loading"), 0);
+            updateLoadingStatut(UITextTranslator.GetTranslation("loading.label.loading"), 0);
 
             // Loading theme
             App.LoadThemeFile(OptionsFile.GetCurrentTheme());

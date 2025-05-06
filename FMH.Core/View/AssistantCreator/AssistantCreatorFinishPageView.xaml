@@ -8,7 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800">
-    <Grid>
+
+    <Grid x:Name="MainGrid"
+          Margin="10">
 
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center"
@@ -25,13 +27,20 @@
                              Foreground="{DynamicResource FontColorPrimary}"/>
 
             <!-- Finish label -->
-            <TextBlock x:Name="StatusLabel"
-                       Margin="0, 20, 0, 0"
+            <TextBlock Margin="0, 20, 0, 0"
                        FontSize="14"
                        HorizontalAlignment="Center"
                        Foreground="{DynamicResource FontColorPrimary}"
                        TextWrapping="WrapWithOverflow"
+                       Tag="assistant_creator.finish.label.generation_finished"
                        Text="Generation finished !"/>
+            <TextBlock Margin="0, 5, 0, 0"
+                       FontSize="12"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       TextWrapping="WrapWithOverflow"
+                       Tag="assistant_creator.finish.label.click_finish"
+                       Text="Click on finish button to close this window"/>
 
         </StackPanel>
 

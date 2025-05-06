@@ -8,7 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" 
              d:DesignWidth="800">
-    <Grid>
+
+    <Grid x:Name="MainGrid"
+          Margin="10">
 
         <StackPanel Orientation="Vertical"
                     HorizontalAlignment="Center"
@@ -48,6 +50,6 @@
                          Foreground="{DynamicResource FontColorPrimary}"/>
 
         </StackPanel>
-        
+
     </Grid>
 </UserControl>

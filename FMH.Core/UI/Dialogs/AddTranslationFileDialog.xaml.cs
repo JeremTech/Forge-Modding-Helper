@@ -31,7 +31,7 @@ namespace FMH.Core.UI.Dialogs
             // Load translations
             UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.MainGrid);
-            this.Title = UITextTranslator.getTranslation("dialog.translation.add.title");
+            this.Title = UITextTranslator.GetTranslation("dialog.translation.add.title");
         }
 
         private void name_textBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -53,7 +53,7 @@ namespace FMH.Core.UI.Dialogs
         {
             if (File.Exists(Path.Combine(this.langPath, this.name_textBox.Text)))
             {
-                MessageBoxResult res = MessageBox.Show(UITextTranslator.getTranslation("dialog.translation.add.alert.error"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult res = MessageBox.Show(UITextTranslator.GetTranslation("dialog.translation.add.alert.error"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (res == MessageBoxResult.Yes)
                 {

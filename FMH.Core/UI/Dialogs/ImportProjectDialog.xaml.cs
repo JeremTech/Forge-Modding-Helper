@@ -49,7 +49,7 @@ namespace FMH.Core.UI.Dialogs
             statusImage.SpinDuration = 5;
             statusImage.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
             statusTextBlock.Visibility = Visibility.Visible;
-            statusTextBlock.Text = UITextTranslator.getTranslation("dialog.import_project.checks_working");
+            statusTextBlock.Text = UITextTranslator.GetTranslation("dialog.import_project.checks_working");
 
             var workspaceValidity = await Task.Run<bool>(() => { return CheckWorkspaceValidity(); });
 
@@ -62,14 +62,14 @@ namespace FMH.Core.UI.Dialogs
             {
                 statusImage.Icon = FontAwesomeIcon.Check;
                 statusImage.Foreground = new SolidColorBrush(Colors.DarkGreen);
-                statusTextBlock.Text = UITextTranslator.getTranslation("dialog.import_project.checks_success");
+                statusTextBlock.Text = UITextTranslator.GetTranslation("dialog.import_project.checks_success");
                 importButton.IsEnabled = true;
             }
             else
             {
                 statusImage.Icon = FontAwesomeIcon.Times;
                 statusImage.Foreground = new SolidColorBrush(Colors.Red);
-                statusTextBlock.Text = UITextTranslator.getTranslation("dialog.import_project.checks_failed");
+                statusTextBlock.Text = UITextTranslator.GetTranslation("dialog.import_project.checks_failed");
                 importButton.IsEnabled = false;
             }
         }
@@ -96,7 +96,7 @@ namespace FMH.Core.UI.Dialogs
         private void ImportProjectDialog_Loaded(object sender, RoutedEventArgs e)
         {
             UITextTranslator.UpdateComponentsTranslations(this.mainGrid);
-            this.Title = UITextTranslator.getTranslation("dialog.import_project.title");
+            this.Title = UITextTranslator.GetTranslation("dialog.import_project.title");
 
             comboBoxMcVersion.ItemsSource = App.GetSupportedMinecraftVersions().OrderByDescending(v => v);
             comboBoxMcVersion.SelectedIndex = 0;

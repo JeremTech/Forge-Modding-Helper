@@ -22,9 +22,20 @@ namespace FMH.Core.View.AssistantCreator
     {
         public AssistantCreatorWorkspaceBasicsSettingsPageView()
         {
+            // Set control events
+            this.Initialized += AssistantCreatorWorkspaceBasicsSettingsPageView_Initialized;
+
             InitializeComponent();
         }
 
+        #region Events
+        private void AssistantCreatorWorkspaceBasicsSettingsPageView_Initialized(object? sender, EventArgs e)
+        {
+            UITextTranslator.UpdateComponentsTranslations(MainGrid);
+        }
+        #endregion
+
+        #region Interfaces implementations
         /// <inheritdoc/>
         public bool ValidateData()
         {
@@ -53,5 +64,6 @@ namespace FMH.Core.View.AssistantCreator
 
             return result;
         }
+        #endregion
     }
 }

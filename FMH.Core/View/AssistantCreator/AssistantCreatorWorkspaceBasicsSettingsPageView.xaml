@@ -8,9 +8,11 @@
       xmlns:utils="clr-namespace:FMH.Core.Utils.Converters"
       xmlns:workspace="clr-namespace:FMH.Workspace.Data;assembly=FMH.Workspace"
       mc:Ignorable="d" 
-      d:DesignHeight="433" d:DesignWidth="650">
+      d:DesignHeight="433"
+      d:DesignWidth="650">
 
-    <Grid Margin="10">
+    <Grid x:Name="MainGrid"
+          Margin="10">
 
         <Grid.RowDefinitions>
 
@@ -27,17 +29,17 @@
         <StackPanel Grid.Row="0" 
                     Orientation="Vertical">
 
-            <TextBlock Tag="assistant_creator.label.basicSettings_page"
-                HorizontalAlignment="Center"
-                Foreground="{DynamicResource FontColorPrimary}"
-                TextWrapping="WrapWithOverflow"
-                Text="Lets start with basics informations about your project !"/>
+            <TextBlock Tag="assistant_creator.basic_settings.label.description1"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       TextWrapping="WrapWithOverflow"
+                       Text="Let's start with basics informations !"/>
 
-            <TextBlock Tag="assistant_creator.label.basicSettings_page.description"
-                HorizontalAlignment="Center"
-                Foreground="{DynamicResource FontColorPrimary}"
-                TextWrapping="WrapWithOverflow"
-                Text="You will be able to modify all this data later."/>
+            <TextBlock Tag="assistant_creator.basic_settings.label.description2"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       TextWrapping="WrapWithOverflow"
+                       Text="You will be able to modify all this settings later."/>
 
         </StackPanel>
 
@@ -45,7 +47,7 @@
         <StackPanel Grid.Row="1"
                     Orientation="Vertical">
 
-            <TextBlock Tag="assistant_creator.label.basicSettings_page.mod_name"
+            <TextBlock Tag="assistant_creator.basic_settings.label.mod_name"
                        HorizontalAlignment="Left"
                        Foreground="{DynamicResource FontColorPrimary}"
                        Text="Mod name"
@@ -53,7 +55,8 @@
             <controls:InputTextBox x:Name="ModNameTextBox"
                                    Grid.Row="1" 
                                    Height="25" 
-                                   PlaceHolderText="My beautiful mod" 
+                                   PlaceHolderText="My beautiful mod"
+                                   PlaceHolderTextTranslationKey="assistant_creator.basic_settings.label.mod_name.placeholder"
                                    InputText="{Binding NewWorkspaceData.ModName, Mode=TwoWay}"/>
 
         </StackPanel>
@@ -62,15 +65,16 @@
         <StackPanel Grid.Row="2"
                 Orientation="Vertical">
 
-            <TextBlock Tag="assistant_creator.label.basicSettings_page.mod_authors"
-                    HorizontalAlignment="Left"
-                    Foreground="{DynamicResource FontColorPrimary}"
-                    Text="Mod authors"
-                    Margin="0, 0, 0, 5"/>
+            <TextBlock Tag="assistant_creator.basic_settings.label.mod_authors"
+                       HorizontalAlignment="Left"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       Text="Mod authors"
+                       Margin="0, 0, 0, 5"/>
             <controls:InputTextBox x:Name="ModAuthorsTextBox"
                                    Grid.Row="1"
                                    Height="25"
                                    PlaceHolderText="Jerem_Tech"
+                                   PlaceHolderTextTranslationKey="assistant_creator.basic_settings.label.mod_authors.placeholder"
                                    InputText="{Binding NewWorkspaceData.ModAuthors, Mode=TwoWay}"/>
 
         </StackPanel>
@@ -81,7 +85,7 @@
 
             <StackPanel Orientation="Horizontal"
                         Margin="0, 0, 0, 5">
-                <TextBlock Tag="assistant_creator.label.basicSettings_page.mod_credits"
+                <TextBlock Tag="assistant_creator.basic_settings.label.mod_credits"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
                            Text="Mod credits"/>
@@ -95,6 +99,7 @@
             <controls:InputTextBox Grid.Row="1"
                                    Height="25" 
                                    PlaceHolderText="Thanks to all contributors !"
+                                   PlaceHolderTextTranslationKey="assistant_creator.basic_settings.label.mod_credits.placeholder"
                                    InputText="{Binding NewWorkspaceData.ModCredits, Mode=TwoWay}"/>
 
         </StackPanel>
@@ -103,7 +108,7 @@
         <StackPanel Grid.Row="4"
                     Orientation="Vertical">
 
-            <TextBlock Tag="assistant_creator.label.basicSettings_page.mod_licence"
+            <TextBlock Tag="assistant_creator.basic_settings.label.mod_license"
                        HorizontalAlignment="Left"
                        Foreground="{DynamicResource FontColorPrimary}"
                        Text="Mod licence"
@@ -112,6 +117,7 @@
                                    Grid.Row="1"
                                    Height="25"
                                    PlaceHolderText="MIT License"
+                                    PlaceHolderTextTranslationKey="assistant_creator.basic_settings.label.mod_license.placeholder"
                                    InputText="{Binding NewWorkspaceData.ModLicense, Mode=TwoWay}"/>
 
         </StackPanel>
@@ -122,7 +128,7 @@
 
             <StackPanel Orientation="Horizontal"
                         Margin="0, 0, 0, 5">
-                <TextBlock Tag="assistant_creator.label.basicSettings_page.mod_description"
+                <TextBlock Tag="assistant_creator.basic_settings.label.mod_description"
                            HorizontalAlignment="Left"
                            Foreground="{DynamicResource FontColorPrimary}"
                            Text="Mod description"/>
@@ -136,7 +142,8 @@
             <controls:InputTextBox Grid.Row="1"
                                    Height="70"
                                    IsMultiline="True"
-                                   PlaceHolderText="My description"
+                                   PlaceHolderText="This is a Minecraft mod wich do incredible things !"
+                                   PlaceHolderTextTranslationKey="assistant_creator.basic_settings.label.mod_description.placeholder"
                                    InputText="{Binding NewWorkspaceData.ModDescription, Mode=TwoWay}"/>
 
         </StackPanel>

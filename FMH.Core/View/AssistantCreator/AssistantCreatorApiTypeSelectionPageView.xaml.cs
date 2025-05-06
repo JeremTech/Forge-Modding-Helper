@@ -1,4 +1,5 @@
-﻿using FMH.Core.ViewModel;
+﻿using FMH.Core.Utils.UI;
+using FMH.Core.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,17 @@ namespace FMH.Core.View.AssistantCreator
         /// </summary>
         public AssistantCreatorApiTypeSelectionPageView()
         {
+            // Set control events
+            this.Initialized += AssistantCreatorApiTypeSelectionPageView_Initialized;
+
             InitializeComponent();
         }
+
+        #region Events
+        private void AssistantCreatorApiTypeSelectionPageView_Initialized(object? sender, EventArgs e)
+        {
+            UITextTranslator.UpdateComponentsTranslations(MainGrid);
+        }
+        #endregion
     }
 }

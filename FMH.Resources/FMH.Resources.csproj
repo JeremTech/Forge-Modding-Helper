@@ -81,4 +81,6 @@
     </None>
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties languages_4fr_3fr_1json__JsonSchema="https://cdn.sdf.com/schemas/sdf-schema-1.3.json" /></VisualStudio></ProjectExtensions>
+
 </Project>

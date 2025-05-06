@@ -90,8 +90,8 @@ namespace FMH.Core.UI.Forge
             // Loadings translations
             UITextTranslator.LoadTranslationFile(OptionsFile.GetCurrentLanguage());
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
-            label_welcome_output_directory.Text = UITextTranslator.getTranslation("assistant_creator.label.welcome.output_directory_message");
-            this.Title = UITextTranslator.getTranslation("assistant_creator.title");
+            label_welcome_output_directory.Text = UITextTranslator.GetTranslation("assistant_creator.label.welcome.output_directory_message");
+            this.Title = UITextTranslator.GetTranslation("assistant_creator.title");
 
             // Adding supported Minecraft versions to the step 4 ComboBox
             forge_version_comboBox.ItemsSource = App.GetSupportedMinecraftVersions().OrderByDescending(v => v);
@@ -104,7 +104,7 @@ namespace FMH.Core.UI.Forge
         public void updateStep(double stepIn)
         {
             step_progressbar.Value = (stepIn / this.total_step) * 100;
-            step_label.Content = UITextTranslator.getTranslation("assistant_creator.step") + " " + stepIn + " / " + this.total_step;
+            step_label.Content = UITextTranslator.GetTranslation("assistant_creator.step") + " " + stepIn + " / " + this.total_step;
         }
 
         #region Cancel button
@@ -215,7 +215,7 @@ namespace FMH.Core.UI.Forge
                             // If no generator have been found, critical error and application exit
                             if (_workspaceManager == null)
                             {
-                                MessageBox.Show(UITextTranslator.getTranslation("assistant_creator.alert.no_generator"));
+                                MessageBox.Show(UITextTranslator.GetTranslation("assistant_creator.alert.no_generator"));
                                 App.Current.Shutdown();
                             }
 
@@ -285,7 +285,7 @@ namespace FMH.Core.UI.Forge
                         this.updateStep(this.step);
 
                         // Forge download
-                        update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.downloading_forge") + this.mod_infos["forge_version"] + "...");
+                        update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.downloading_forge") + this.mod_infos["forge_version"] + "...");
 
                         WebClient client = new WebClient();
                         client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(client_DownloadProgressChanged);
@@ -298,7 +298,7 @@ namespace FMH.Core.UI.Forge
                         }
                         catch (VersionNotFoundException)
                         {
-                            update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.downloading_forge.error") + this.mod_infos["forge_version"] + " !");
+                            update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.downloading_forge.error") + this.mod_infos["forge_version"] + " !");
                         }
 
                         // Saving in recent workspaces
@@ -423,14 +423,14 @@ namespace FMH.Core.UI.Forge
         private void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             // Extract the downloaded archive
-            update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.extract_archive"));
+            update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.extract_archive"));
             ZipFile.ExtractToDirectory(this.folder + @"\mdk.zip", this.folder);
 
             // Check if the mdk.zip is always in the directory
             if (File.Exists(this.folder + @"\mdk.zip"))
             {
                 // Delete mdk.zip file
-                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.delete_archive"));
+                update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.delete_archive"));
                 File.Delete(this.folder + @"\mdk.zip");
             }
 
@@ -441,7 +441,7 @@ namespace FMH.Core.UI.Forge
             generate_files();
 
             // End actions
-            update_progress(100, UITextTranslator.getTranslation("assistant_creator.progress.finish"));
+            update_progress(100, UITextTranslator.GetTranslation("assistant_creator.progress.finish"));
             this.next_button.IsEnabled = true;
         }
 
@@ -453,31 +453,31 @@ namespace FMH.Core.UI.Forge
             // Generate code directories
             if (code_packages_checkBox.IsChecked == true)
             {
-                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.deleting_example") + " \"" + this.folder + @"\src\main\java" + "\"...");
+                update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.deleting_example") + " \"" + this.folder + @"\src\main\java" + "\"...");
                 Directory.Delete(this.folder + @"\src\main\java\com", true);
 
-                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_code_package") + " \"" + this.folder + @"\src\main\java" + "\"...");
+                update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.creating_code_package") + " \"" + this.folder + @"\src\main\java" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\java\" + this.mod_infos["mod_group"].Replace(".", @"\"));
             }
 
             // Generate assets directories
             if (assets_packages_checkBox.IsChecked == true)
             {
-                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_textures_folders") + " \"" + this.folder + @"\src\main\assets" + "\"...");
+                update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.creating_textures_folders") + " \"" + this.folder + @"\src\main\assets" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\textures\block");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\textures\item");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\textures\gui");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\textures\entity");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\textures\models");
 
-                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_models_folders") + " \"" + this.folder + @"\src\main\assets" + "\"...");
+                update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.creating_models_folders") + " \"" + this.folder + @"\src\main\assets" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\models\block");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\models\item");
 
-                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_blockstates_folder") + " \"" + this.folder + @"\src\main\assets" + "\"...");
+                update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.creating_blockstates_folder") + " \"" + this.folder + @"\src\main\assets" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\blockstates");
 
-                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.creating_lang_folder") + " \"" + this.folder + @"\src\main\assets" + "\"...");
+                update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.creating_lang_folder") + " \"" + this.folder + @"\src\main\assets" + "\"...");
                 Directory.CreateDirectory(this.folder + @"\src\main\resources\assets\" + this.mod_infos["mod_id"] + @"\lang");
             }
         }
@@ -490,7 +490,7 @@ namespace FMH.Core.UI.Forge
             // Generate build.gradle file
             if (build_gradle_checkBox.IsChecked == true)
             {
-                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.configurate_build_gradle_file") + " \"" + this.folder + "\"...");
+                update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.configurate_build_gradle_file") + " \"" + this.folder + "\"...");
                 _workspaceManager.WriteBuildGradle();
                 _workspaceManager.WriteGradleProperties();
             }
@@ -498,7 +498,7 @@ namespace FMH.Core.UI.Forge
             // Generate mod.toml file
             if (mod_toml_checkBox.IsChecked == true)
             {
-                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.configurate_toml_file") + " \"" + this.folder + @"\src\main\resources\META-INF\""...");
+                update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.configurate_toml_file") + " \"" + this.folder + @"\src\main\resources\META-INF\""...");
                 _workspaceManager.WriteModToml();
             }
 
@@ -508,7 +508,7 @@ namespace FMH.Core.UI.Forge
             // Copy mod logo (if gave by the user)
             if (!string.IsNullOrEmpty(this.mod_infos["mod_logo"]))
             {
-                update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.copy_mod_logo"));
+                update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.copy_mod_logo"));
 
                 if (File.Exists(this.mod_infos["mod_logo"]))
                 {
@@ -516,7 +516,7 @@ namespace FMH.Core.UI.Forge
                 }
                 else
                 {
-                    update_progress(0, UITextTranslator.getTranslation("assistant_creator.progress.copy_mod_logo_error"));
+                    update_progress(0, UITextTranslator.GetTranslation("assistant_creator.progress.copy_mod_logo_error"));
                 }
             }
 
@@ -661,12 +661,12 @@ namespace FMH.Core.UI.Forge
                 }
                 catch (VersionNotFoundException)
                 {
-                    MessageBox.Show(UITextTranslator.getTranslation("assistant_creator.alert.no_forge_version"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(UITextTranslator.GetTranslation("assistant_creator.alert.no_forge_version"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (WebException)
                 {
                     // If we can't retrieve remote informations 
-                    MessageBox.Show(UITextTranslator.getTranslation("assistant_creator.alert.no_connection"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(UITextTranslator.GetTranslation("assistant_creator.alert.no_connection"), "Forge Modding Helper", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
         }
@@ -787,7 +787,7 @@ namespace FMH.Core.UI.Forge
             if (step < total_step)
             {
                 // Display a closing confirmation
-                MessageBoxResult action = MessageBox.Show(this, UITextTranslator.getTranslation("assistant_creator.close_message"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult action = MessageBox.Show(this, UITextTranslator.GetTranslation("assistant_creator.close_message"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 // If the user refuse
                 if (action == MessageBoxResult.No)

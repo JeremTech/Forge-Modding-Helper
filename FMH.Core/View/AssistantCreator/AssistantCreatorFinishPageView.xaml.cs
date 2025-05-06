@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using FMH.Core.Utils.UI;
 
 namespace FMH.Core.View.AssistantCreator
 {
@@ -22,7 +23,17 @@ namespace FMH.Core.View.AssistantCreator
     {
         public AssistantCreatorFinishPageView()
         {
+            // Set control events
+            this.Initialized += AssistantCreatorFinishPageView_Initialized;
+
             InitializeComponent();
         }
+
+        #region Events
+        private void AssistantCreatorFinishPageView_Initialized(object? sender, EventArgs e)
+        {
+            UITextTranslator.UpdateComponentsTranslations(MainGrid);
+        }
+        #endregion
     }
 }

@@ -14,7 +14,8 @@
         <utils:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
     </UserControl.Resources>
 
-    <Grid Margin="10">
+    <Grid x:Name="MainGrid"
+          Margin="10">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -24,13 +25,13 @@
         <!-- Header text -->
         <StackPanel Grid.Row="0" Orientation="Vertical">
 
-            <TextBlock Tag="assistant_creator.label.welcome"
+            <TextBlock Tag="assistant_creator.api_selection.label.description1"
                        HorizontalAlignment="Center"
                        Foreground="{DynamicResource FontColorPrimary}"
                        TextWrapping="WrapWithOverflow"
                        Text="Welcome to the workspace creation wizard !"/>
 
-            <TextBlock Tag="assistant_creator.label.welcome.description"
+            <TextBlock Tag="assistant_creator.api_selection.label.description2"
                        HorizontalAlignment="Center"
                        Foreground="{DynamicResource FontColorPrimary}"
                        TextWrapping="WrapWithOverflow"
@@ -42,7 +43,7 @@
         <!-- API selection -->
         <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch">
 
-            <TextBlock Tag="assistant_creator.label.welcome"
+            <TextBlock Tag="assistant_creator.api_selection.label.choose_api"
                        HorizontalAlignment="Center"
                        Foreground="{DynamicResource FontColorPrimary}"
                        TextWrapping="WrapWithOverflow"
