@@ -15,5 +15,8 @@ namespace FMH.Core.Files.Software
         public string FontColorPrimary { get; set; }
         public string FontColorSecondary { get; set; }
         public string BorderColor { get; set; }
+        public string BorderErrorColor { get; set; }
+        public string StandardButtonColor { get; set; }
+        public string StandardButtonHoveredColor { get; set; }
     }
 }

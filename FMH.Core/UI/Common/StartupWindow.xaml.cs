@@ -60,7 +60,7 @@ namespace FMH.Core.UI.Common
             updateLoadingStatut(UITextTranslator.GetTranslation("loading.label.loading"), 0);
 
             // Loading theme
-            App.LoadThemeFile(OptionsFile.GetCurrentTheme());
+            SoftwareThemeManager.LoadThemeFile(OptionsFile.GetCurrentTheme());
 
             // Show welcome window
             new WelcomeView().Show();

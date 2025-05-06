@@ -13,11 +13,11 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <Style x:Key="StandardButton" TargetType="{x:Type Border}">
-                <Setter Property="Background" Value="#003A55"/>
+                <Setter Property="Background" Value="{DynamicResource StandardButtonColor}"/>
                 <Setter Property="Cursor" Value="Hand"/>
                 <Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#006494"/>
+                        <Setter Property="Background" Value="{DynamicResource StandardButtonHoveredColor}"/>
                     </Trigger>
                     <Trigger Property="IsEnabled" Value="False">
                         <Setter Property="Opacity" Value="0.5"/>

@@ -5,13 +5,23 @@
              StartupUri="/UI/Common/StartupWindow.xaml">
     
     <Application.Resources>
+        <!-- Background colors -->
         <SolidColorBrush x:Key="PrimaryBackgroundColor" Color="#FF2D2D30"/>
         <SolidColorBrush x:Key="SecondaryBackgroundColor" Color="#FF252526"/>
         <SolidColorBrush x:Key="InputsBackgroundColor" Color="#FF333337"/>
+        
+        <!-- Font colors -->
         <SolidColorBrush x:Key="FontColorPrimary" Color="White"/>
         <SolidColorBrush x:Key="FontColorSecondary" Color="#FFB0B0B0"/>
+        
+        <!-- Border colors -->
         <SolidColorBrush x:Key="BorderColor" Color="#FF37ADE7"/>
-        <SolidColorBrush x:Key="BorderErrorColor" Color="Red"/>
+        <SolidColorBrush x:Key="BorderErrorColor" Color="#FF0000"/>
+
+        <!-- Button colors -->
+        <SolidColorBrush x:Key="StandardButtonColor" Color="#003A55"/>
+        <SolidColorBrush x:Key="StandardButtonHoveredColor" Color="#006494"/>
+
     </Application.Resources>
     
 </Application>

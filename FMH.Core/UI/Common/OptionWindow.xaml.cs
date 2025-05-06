@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using FMH.Core.Files.Software;
+using FMH.Core.Utils.Software;
 using FMH.Core.Utils.UI;
 using Newtonsoft.Json;
 
@@ -97,7 +98,7 @@ namespace FMH.Core.UI.Common
             if (ui_theme_comboBox.SelectedItem != null)
             {
                 OptionsFile.SetCurrentTheme(((KeyValuePair<string, string>)ui_theme_comboBox.SelectedItem).Key);
-                App.LoadThemeFile(OptionsFile.GetCurrentTheme());
+                SoftwareThemeManager.LoadThemeFile(OptionsFile.GetCurrentTheme());
             }
         }
 

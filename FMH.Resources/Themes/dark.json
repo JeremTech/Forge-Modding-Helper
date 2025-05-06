@@ -5,5 +5,8 @@
     "InputsBackgroundColor": "#FF333337",
     "FontColorPrimary": "White",
     "FontColorSecondary": "#FFB0B0B0",
-    "BorderColor": "#FF37ADE7"
+    "BorderColor": "#FF37ADE7",
+    "BorderErrorColor": "#FF0000",
+    "StandardButtonColor": "#003A55",
+    "StandardButtonHoveredColor": "#006494"
 }
