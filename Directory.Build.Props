@@ -1,0 +1,20 @@
+<Project>
+	
+	<!-- Project properties -->
+	<PropertyGroup>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<AssemblyVersion>3.4.0.0</AssemblyVersion>
+		<FileVersion>3.4.0.0</FileVersion>
+	</PropertyGroup>
+	
+	<!-- Dependencies versions -->
+	<PropertyGroup>
+		<CommunityToolkitMvvmVersion>8.4.0</CommunityToolkitMvvmVersion>
+		<FontAwesomeVersion>4.7.0.9</FontAwesomeVersion>
+		<ConsoleControlVersion>1.3.0</ConsoleControlVersion>
+		<McVersionLibVersion>1.1.0</McVersionLibVersion>
+		<NewtonsoftJsonVersion>13.0.3</NewtonsoftJsonVersion>
+		<StringExtensionsVersion>1.1.1</StringExtensionsVersion>
+	</PropertyGroup>
+
+</Project>

@@ -1,17 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <AssemblyVersion>3.3.2.0</AssemblyVersion>
-    <FileVersion>3.3.2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="StringExtensions" Version="1.1.1">
-      <GeneratePathProperty></GeneratePathProperty>
-    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
+    <PackageReference Include="StringExtensions" Version="$(StringExtensionsVersion)"/>
   </ItemGroup>
-
+	
 </Project>
