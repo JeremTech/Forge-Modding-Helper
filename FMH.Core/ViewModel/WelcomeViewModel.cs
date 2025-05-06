@@ -143,6 +143,12 @@ namespace FMH.Core.ViewModel
         /// </summary>
         /// <remarks>This action must be defined in the parent window constructor</remarks>
         public Action CloseParentWindow;
+
+        /// <summary>
+        /// Reload translations action
+        /// </summary>
+        /// <remarks>This action must be defined in the parent window constructor</remarks>
+        public Action? ReloadTranslationsAction { get; set; }
         #endregion
 
         /// <summary>
@@ -175,6 +181,9 @@ namespace FMH.Core.ViewModel
         private void OpenSettings()
         {
             new OptionWindow().ShowDialog();
+
+            // Reload translations
+            ReloadTranslationsAction?.Invoke();
         }
 
         /// <summary>

@@ -22,11 +22,19 @@ namespace FMH.Core.View
         {
             InitializeComponent();
 
-            // Define window's actions in the view model
-            var viewModel = (WelcomeViewModel)this.DataContext;
-            viewModel.CloseParentWindow = () => this.Close();
+            // Set window related functions
+            if (DataContext is WelcomeViewModel viewModel)
+            {
+                viewModel.CloseParentWindow = Close;
+                viewModel.ReloadTranslationsAction = UpdateTranslations;
+            }
 
-            // Load translations
+            // Load translation
+            UpdateTranslations();
+        }
+
+        internal void UpdateTranslations()
+        {
             UITextTranslator.UpdateComponentsTranslations(this.main_grid);
             this.Title = UITextTranslator.GetTranslation("welcome.title");
         }
