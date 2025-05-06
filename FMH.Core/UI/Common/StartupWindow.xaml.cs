@@ -36,7 +36,7 @@ namespace FMH.Core.UI.Common
 
         private void StartupWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            version_label.Content = App.GetApplicationVersionString();
+            version_label.Content = SoftwareVersionUtils.GetApplicationVersionString();
 
             // Previous version settings importations
             if (SoftwareVersionUpgrader.ExistPreviousVersionData()

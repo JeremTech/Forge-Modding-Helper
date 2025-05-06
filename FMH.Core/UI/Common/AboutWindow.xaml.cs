@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using FMH.Core.Files.Software;
+using FMH.Core.Utils.Software;
 using FMH.Core.Utils.UI;
 
 namespace FMH.Core.UI.Common
@@ -32,7 +33,7 @@ namespace FMH.Core.UI.Common
             this.Title = UITextTranslator.GetTranslation("about.title");
 
             // Updating app infos
-            version_label.Content = App.GetApplicationVersionString();
+            version_label.Content = SoftwareVersionUtils.GetApplicationVersionString();
         }
     }
 }

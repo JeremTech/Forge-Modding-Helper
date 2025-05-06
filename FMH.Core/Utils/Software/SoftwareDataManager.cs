@@ -25,7 +25,7 @@ namespace FMH.Core.Utils.Software
         /// <returns>Current version data directory path</returns>
         public static string GetCurrentVersionDataDirectory()
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JeremTech", "Forge Modding Helper", App.GetApplicationVersionCompact());
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JeremTech", "Forge Modding Helper", SoftwareVersionUtils.GetApplicationVersionCompact());
         }
     }
 }

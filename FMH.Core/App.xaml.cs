@@ -12,17 +12,12 @@ using System.Windows.Media;
 using FMH.Core.Files.Software;
 using FMH.Core.UI.Common;
 using System.Diagnostics;
+using FMH.Core.Utils.Software;
 
 namespace FMH.Core
 {
     public partial class App : Application
     {
-        // Define if the current version is stable or notS
-        private static bool isStable = false;
-
-        // If "isStable" is set to false, then the current version is the pre-release with the number "pre_release_number"
-        private static int pre_release_number = 1;
-
         // List of Minecraft versions supported by Forge Modding Helper
         private static List<string> supportedMcVersions = new List<string>() 
         { 
@@ -35,52 +30,7 @@ namespace FMH.Core
         /// Formated version string
         /// </summary>
         /// <remarks>Used for bindings</remarks>
-        public static string FormatedVersionString => GetApplicationVersionString();
-
-        /// <summary>
-        /// Allow to get the current version of the software
-        /// </summary>
-        /// <returns>Formatted string with the version and, if needed, the pre-release number</returns>
-        public static string GetApplicationVersionString()
-        {
-            var assemblyVersion = Assembly.GetEntryAssembly()?.GetName()?.Version;
-            if(assemblyVersion == null) return "Unknown";
-
-            // If the version is stable, we display only the version number
-            if (isStable) return "v" + assemblyVersion.ToString();
-
-            // Else we display the version number and the pre-release number
-            return "v" + assemblyVersion.ToString() + " - " + "Pre-Release " + pre_release_number;
-        }
-
-        /// <summary>
-        /// Allow to get the current version of the software
-        /// </summary>
-        /// <returns>String with the compacted version</returns>
-        public static string GetApplicationVersionCompact()
-        {
-            var assemblyVersion = Assembly.GetEntryAssembly()?.GetName()?.Version;
-            if (assemblyVersion == null) return "N/A";
-
-            // If the version is stable, we display only the version number
-            if (isStable) return assemblyVersion.ToString();
-
-            // Else we display the version number and the pre-release number
-            return assemblyVersion.ToString() + "-" + "PRE" + pre_release_number;
-        }
-
-        /// <summary>
-        /// Allow to get the application's data directory in the user's APPDATA
-        /// </summary>
-        /// <returns>Application's data directory</returns>
-        public static string GetApplicationDataDirectory()
-        {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "JeremTech", "Forge Modding Helper");
-
-            // Creating folder if not exist 
-            Directory.CreateDirectory(path);
-            return path;
-        }
+        public static string FormatedVersionString => SoftwareVersionUtils.GetApplicationVersionString();
 
         /// <summary>
         /// Return all supported Minecraft versions by Forge Modding Helper
