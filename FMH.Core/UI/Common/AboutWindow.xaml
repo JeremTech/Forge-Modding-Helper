@@ -17,7 +17,7 @@
         <!-- Header -->
         <Image x:Name="image" HorizontalAlignment="Left" Height="90" Margin="20,20,0,0" VerticalAlignment="Top" Width="90" Source="/FMH.Resources;component/Pictures/icon.png" Stretch="Fill"/>
         <Label Content="Forge Modding Helper" HorizontalAlignment="Left" Margin="120,15,0,0" VerticalAlignment="Top" Foreground="{DynamicResource FontColorPrimary}" FontSize="28" Width="300"/>
-        <Label Content="© 2017 - 2024 Jerem'Tech" HorizontalAlignment="Left" Margin="120,58,0,0" VerticalAlignment="Top" Width="149" Foreground="{DynamicResource FontColorPrimary}"/>
+        <Label Content="© 2017 - 2025 Jerem'Tech" HorizontalAlignment="Left" Margin="120,58,0,0" VerticalAlignment="Top" Width="149" Foreground="{DynamicResource FontColorPrimary}"/>
 
         <!-- General informations section -->
         <StackPanel HorizontalAlignment="Left" Height="89" Margin="20,128,0,0" VerticalAlignment="Top" Width="415">
