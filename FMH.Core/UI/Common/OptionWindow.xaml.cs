@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +15,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CommunityToolkit.Mvvm.Input;
 using FMH.Core.Files.Software;
 using FMH.Core.Utils.Software;
 using FMH.Core.Utils.UI;
@@ -23,7 +26,7 @@ namespace FMH.Core.UI.Common
     /// <summary>
     /// Logique d'interaction pour OptionWindow.xaml
     /// </summary>
-    public partial class OptionWindow : Window
+    public partial class OptionWindow : Window, INotifyPropertyChanged
     {
         // Language files
         Dictionary<string, string> languagesFilesList = new Dictionary<string, string>();
@@ -31,8 +34,51 @@ namespace FMH.Core.UI.Common
         // Themes files
         Dictionary<string, string> themesFilesList = new Dictionary<string, string>();
 
+        // Events
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        #region Commands
+        /// <summary>
+        /// Open about window command
+        /// </summary>
+        private ICommand _openAboutWindowCommand;
+        public ICommand OpenAboutWindowCommand
+        {
+            get
+            {
+                return _openAboutWindowCommand;
+            }
+            set
+            {
+                _openAboutWindowCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Open issue tracker command
+        /// </summary>
+        private ICommand _openIssueTrackerCommand;
+        public ICommand OpenIssueTrackerCommand
+        {
+            get
+            {
+                return _openIssueTrackerCommand;
+            }
+            set
+            {
+                _openIssueTrackerCommand = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         public OptionWindow()
         {
+            // Initialize commands
+            OpenAboutWindowCommand = new RelayCommand(OpenAboutWindow);
+            OpenIssueTrackerCommand = new RelayCommand(OpenIssueTracker);
+
             InitializeComponent();
         }
 
@@ -109,14 +155,26 @@ namespace FMH.Core.UI.Common
             OptionsFile.WriteDataFile();
         }
 
-        private void about_button_Click(object sender, RoutedEventArgs e)
+        #region Commands functions
+        public void OpenAboutWindow()
         {
             new AboutWindow().ShowDialog();
         }
 
-        private void report_bug_button_Click(object sender, RoutedEventArgs e)
+        public void OpenIssueTracker()
         {
-           Process.Start(new ProcessStartInfo("https://github.com/JeremTech/Forge-Modding-Helper/issues/new?assignees=&labels=&template=bug_report.md&title=") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("https://github.com/JeremTech/Forge-Modding-Helper/issues/new?assignees=&labels=&template=bug_report.md&title=") { UseShellExecute = true });
         }
+        #endregion
+
+        #region Interfaces implementations
+        public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
     }
 }

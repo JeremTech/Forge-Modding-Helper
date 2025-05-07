@@ -189,9 +189,11 @@
                     <DockPanel HorizontalAlignment="Stretch" DockPanel.Dock="Left">
                         <TextBlock x:Name="HomeModNameTextblock" Grid.Row="0" FontSize="20" Foreground="{DynamicResource FontColorPrimary}" Padding="5" DockPanel.Dock="Top"/>
                         <TextBlock x:Name="HomeWorkspaceFolderTextblock" Grid.Row="1" FontSize="14" Foreground="{DynamicResource FontColorPrimary}" Padding="5" DockPanel.Dock="Top"/>
-                        <UniformGrid HorizontalAlignment="Stretch" DockPanel.Dock="Bottom" Rows="1" Height="30">
-                            <Button Content="Open project folder" Background="#FFFFD14E" FontWeight="Bold" Click="HomeOpenExplorerButtonClick" Tag="project_explorer.home.open_project_folder"/>
-                            <Button Content="Available soon" Margin="10, 0, 0, 0" FontWeight="Bold" Visibility="Collapsed"/>
+                        <UniformGrid HorizontalAlignment="Stretch" DockPanel.Dock="Bottom" Rows="1" Height="50">
+                            <controls:StandardButton Text="Open project folder" 
+                                                     TextTranslationKey="project_explorer.home.open_project_folder"
+                                                     Command="{Binding OpenWorkspaceDirectoryInExplorerCommand,
+                                                               RelativeSource={RelativeSource AncestorType={x:Type local:ForgeProjectExplorer}, Mode=FindAncestor}}"/>
                         </UniformGrid>
                     </DockPanel>
                 </DockPanel>
@@ -425,7 +427,17 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock x:Name="ModSettingsStatusLabel" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="0" Foreground="{DynamicResource FontColorPrimary}" FontSize="13" Margin="0, 0, 20, 0" Text="All modifications have been saved."/>
-                <Button x:Name="ModSettingsSaveButton" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Content="Save modifications" Padding="5" Margin="20, 0, 0, 0" Width="300" FontSize="14" Click="ModSettingsSaveButtonClick" Tag="project_explorer.mod_settings.save_modifications"/>
+                <controls:StandardButton x:Name="ModSettingsSaveButton"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Center"
+                                         Grid.Column="1" 
+                                         Text="Save modifications" 
+                                         Padding="5" 
+                                         Margin="20, 0, 0, 0"
+                                         Width="300" 
+                                         Command="{Binding SaveModSettingsCommand,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type local:ForgeProjectExplorer}, Mode=FindAncestor}}" 
+                                         TextTranslationKey="project_explorer.mod_settings.save_modifications"/>
             </Grid>
 
         </Grid>
@@ -880,7 +892,14 @@
                 <Border BorderThickness="1" Grid.Row="8" BorderBrush="{DynamicResource FontColorPrimary}"/>
 
                 <!-- Exportation button -->
-                <Button x:Name="ExportationButton" Content="Export mod" Height="30" Grid.Row="9" Margin="30, 0" Click="ExportationButtonClick" Tag="project_explorer.export.export"/>
+                <controls:StandardButton x:Name="ExportationButton"
+                                         Text="Export mod"
+                                         Height="40"
+                                         Grid.Row="9"
+                                         Margin="30, 0" 
+                                         Command="{Binding ExportModCommand,
+                                                   RelativeSource={RelativeSource AncestorType={x:Type local:ForgeProjectExplorer}, Mode=FindAncestor}}" 
+                                         TextTranslationKey="project_explorer.export.export"/>
 
             </Grid>
 

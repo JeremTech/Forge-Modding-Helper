@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:FMH.Core.UI.Common"
+        xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
         mc:Ignorable="d"
         Title="Settings - Forge Modding Helper"
         Icon="/FMH.Resources;component/Pictures/icon.png" 
@@ -91,8 +92,26 @@
         <Border Grid.Row="5" BorderBrush="{DynamicResource FontColorPrimary}" BorderThickness="1" Grid.ColumnSpan="2"/>
 
         <!-- Buttons -->
-        <Button x:Name="about_button" Grid.Row="6" Margin="10,15,10,0" Content="About" VerticalAlignment="Top" Height="28" Tag="options.button.about" Click="about_button_Click" Grid.ColumnSpan="2"/>
-        <Button x:Name="report_bug_button" Grid.Row="7" Margin="10,10,10,0" Content="Report bug" VerticalAlignment="Top" Height="28" Tag="options.button.report_bug" Click="report_bug_button_Click" Grid.ColumnSpan="2"/>
+        <controls:StandardButton x:Name="about_button" 
+                                 Grid.Row="6" 
+                                 Margin="5, 10, 5, 0" 
+                                 Text="About" 
+                                 VerticalAlignment="Top" 
+                                 Height="40" 
+                                 TextTranslationKey="options.button.about" 
+                                 Grid.ColumnSpan="2"
+                                 Command="{Binding OpenAboutWindowCommand,
+                                           RelativeSource={RelativeSource AncestorType={x:Type local:OptionWindow}, Mode=FindAncestor}}"/>
+        <controls:StandardButton x:Name="report_bug_button" 
+                                 Grid.Row="7" 
+                                 Margin="5,0" 
+                                 Text="Report bug" 
+                                 VerticalAlignment="Top" 
+                                 Height="40" 
+                                 TextTranslationKey="options.button.report_bug"
+                                 Grid.ColumnSpan="2"
+                                 Command="{Binding OpenIssueTrackerCommand,
+                                           RelativeSource={RelativeSource AncestorType={x:Type local:OptionWindow}, Mode=FindAncestor}}"/>
 
     </Grid>
 

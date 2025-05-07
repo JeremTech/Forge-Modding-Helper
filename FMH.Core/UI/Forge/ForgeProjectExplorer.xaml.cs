@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CommunityToolkit.Mvvm.Input;
 using FMH.Core.Files.Software;
 using FMH.Core.Objects;
 using FMH.Core.UI.Common;
@@ -39,7 +42,7 @@ namespace FMH.Core.UI.Forge
     /// <summary>
     /// Logique d'interaction pour ForgeProjectExplorer.xaml
     /// </summary>
-    public partial class ForgeProjectExplorer : Window
+    public partial class ForgeProjectExplorer : Window, INotifyPropertyChanged
     {
         /// <summary>
         /// Allow to know if window is closing or not
@@ -62,11 +65,81 @@ namespace FMH.Core.UI.Forge
         // Current section opened
         private string currentSectionOpenedTag;
 
+        // Events
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        #region Commands
+        /// <summary>
+        /// Open workspace directory in explorer  command
+        /// </summary>
+        private ICommand _openWorkspaceDirectoryInExplorerCommand;
+        public ICommand OpenWorkspaceDirectoryInExplorerCommand
+        {
+            get
+            {
+                return _openWorkspaceDirectoryInExplorerCommand;
+            }
+            set
+            {
+                _openWorkspaceDirectoryInExplorerCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Save mod settings command
+        /// </summary>
+        private ICommand _saveModSettingsCommand;
+        public ICommand SaveModSettingsCommand
+        {
+            get
+            {
+                return _saveModSettingsCommand;
+            }
+            set
+            {
+                _saveModSettingsCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Export mod command
+        /// </summary>
+        private ICommand _exportModCommand;
+        public ICommand ExportModCommand
+        {
+            get
+            {
+                return _exportModCommand;
+            }
+            set
+            {
+                _exportModCommand = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         /// <summary>
         /// Constructor
         /// </summary>
         public ForgeProjectExplorer(string projectPath)
         {
+            // Initialize data
+            currentSectionOpenedTag = "Home";
+
+            // Initialize workspace manager
+            _workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(projectPath);
+
+            // Initialize commands
+            OpenWorkspaceDirectoryInExplorerCommand = new RelayCommand(OpenWorkspaceDirectoryInExplorer);
+            SaveModSettingsCommand = new RelayCommand(SaveModSettings);
+            ExportModCommand = new RelayCommand(ExportMod);
+
+            // Initialize events
+            this.Loaded += ProjectExplorer_Loaded;
+
             // Initialize UI
             InitializeComponent();
 
@@ -76,14 +149,6 @@ namespace FMH.Core.UI.Forge
             this.Title = UITextTranslator.GetTranslation("project_explorer.title");
             this.ModSettingsStatusLabel.Text = UITextTranslator.GetTranslation("project_explorer.mod_settings.saved_modifications");
             this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
-
-            // Initialize data
-            currentSectionOpenedTag = "Home";
-
-            // Initialize workspace manager
-            _workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(projectPath);
-
-            this.Loaded += ProjectExplorer_Loaded;
         }
 
         #region Loading project
@@ -247,42 +312,6 @@ namespace FMH.Core.UI.Forge
                 FileSystem.DeleteFile(Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, @"src\main\resources\logo.png"), UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
                 RefreshInterfaceModInfos();
             }
-        }
-
-        /// <summary>
-        /// Function called when save button mod settings is clicked
-        /// </summary>
-        private async void ModSettingsSaveButtonClick(object sender, RoutedEventArgs e)
-        {
-            // Save changes in ModData object
-            _workspaceManager.ModProperties.ModName = this.ModSettingsModNameTextbox.Text;
-            _workspaceManager.ModProperties.ModDescription = this.ModSettingsModDescriptionTextbox.Text;
-            _workspaceManager.ModProperties.ModAuthors = this.ModSettingsModAuthorsTextbox.Text;
-            _workspaceManager.ModProperties.ModLicense = this.ModSettingsModLicenseTextbox.Text;
-            _workspaceManager.ModProperties.ModCredits = this.ModSettingsModCreditsTextbox.Text;
-            _workspaceManager.ModProperties.ModWebsite = this.ModSettingsModWebsiteTextbox.Text;
-            _workspaceManager.ModProperties.ModIssueTracker = this.ModSettingsModBugTrackerURLTextbox.Text;
-            _workspaceManager.ModProperties.ModUpdateJSONURL = this.ModSettingsModUpdateJsonURLTextbox.Text;
-            _workspaceManager.ModProperties.ModVersion = this.ModSettingsModVersionTextbox.Text;
-            _workspaceManager.ModProperties.ModMinecraftVersion = this.ModSettingsMinecraftVersionTextbox.Text;
-            _workspaceManager.ModProperties.ModAPIVersion = this.ModSettingsForgeVersionTextbox.Text;
-            _workspaceManager.ModProperties.ModMappingsVersion = this.ModSettingsMappingsVersionTextbox.Text;
-            _workspaceManager.ModProperties.ModID = this.ModSettingsModidTextbox.Text;
-            _workspaceManager.ModProperties.ModGroup = this.ModSettingsModgroupTextbox.Text;
-
-            // Update workspace's files
-            await Task.Run(() =>
-            {
-                _workspaceManager.WriteBuildGradle();
-                _workspaceManager.WriteModToml();
-                _workspaceManager.WriteGradleProperties();
-                WorkspaceManagerHelper.WriteWorkspaceData(_workspaceManager);
-            });
-
-            // Update UI
-            this.ModSettingsStatusLabel.Text = UITextTranslator.GetTranslation("project_explorer.mod_settings.saved_modifications");
-            this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
-            RefreshInterfaceModInfos();
         }
         #endregion
 
@@ -632,42 +661,6 @@ namespace FMH.Core.UI.Forge
         #endregion
 
         #region Exportation section
-        /// <summary>
-        /// Event called when "Export" button is clicked
-        /// </summary>
-        private async void ExportationButtonClick(object sender, RoutedEventArgs e)
-        {
-            string destinationFilePath = Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions", _workspaceManager.ModProperties.ModID + "-" + _workspaceManager.ModProperties.ModVersion + ".jar");
-
-            // Show warning if the version has been already builded
-            if (File.Exists(destinationFilePath))
-            {
-                if (MessageBox.Show(UITextTranslator.GetTranslation("project_explorer.export.error.file_already_exist"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
-                    return;
-            }
-
-            // Configure console and run build task
-            this.ModExportationConsoleControl.FontSize = 10;
-            this.ModExportationConsoleControl.ClearOutput();
-            this.ModExportationConsoleControl.StartProcess("cmd.exe", "/k \"cd /d " + _workspaceManager.WorkspaceProperties.WorkspacePath + "\"");
-            this.ModExportationConsoleControl.WriteInput("gradlew build --no-daemon & exit", Color.FromRgb(255, 240, 0), true);
-
-            this.SideBarMenuButtonExportation.ProgressBar.IsIndeterminate = true;
-            this.SideBarMenuButtonExportation.ProgressBar.Visibility = Visibility.Visible;
-
-            // Wait for task's end
-            await Task.Run(() =>
-            {
-                while (this.ModExportationConsoleControl.ProcessInterface.IsProcessRunning) { }
-
-                // Manage versions history
-                ManageVersionHistoryAfterExportation();
-            });
-
-            // Hide progressBar
-            this.SideBarMenuButtonExportation.ProgressBar.Visibility = Visibility.Collapsed;
-        }
-
         /// <summary>
         /// Manage version history after exportation
         /// </summary>
@@ -1368,6 +1361,89 @@ namespace FMH.Core.UI.Forge
             {
                 // Cancel closing
                 e.Cancel = true;
+            }
+        }
+        #endregion
+
+        #region Commands functions
+        public void OpenWorkspaceDirectoryInExplorer()
+        {
+            Process.Start("explorer.exe", _workspaceManager.WorkspaceProperties.WorkspacePath);
+        }
+
+        public async void SaveModSettings()
+        {
+            // Save changes in ModData object
+            _workspaceManager.ModProperties.ModName = this.ModSettingsModNameTextbox.Text;
+            _workspaceManager.ModProperties.ModDescription = this.ModSettingsModDescriptionTextbox.Text;
+            _workspaceManager.ModProperties.ModAuthors = this.ModSettingsModAuthorsTextbox.Text;
+            _workspaceManager.ModProperties.ModLicense = this.ModSettingsModLicenseTextbox.Text;
+            _workspaceManager.ModProperties.ModCredits = this.ModSettingsModCreditsTextbox.Text;
+            _workspaceManager.ModProperties.ModWebsite = this.ModSettingsModWebsiteTextbox.Text;
+            _workspaceManager.ModProperties.ModIssueTracker = this.ModSettingsModBugTrackerURLTextbox.Text;
+            _workspaceManager.ModProperties.ModUpdateJSONURL = this.ModSettingsModUpdateJsonURLTextbox.Text;
+            _workspaceManager.ModProperties.ModVersion = this.ModSettingsModVersionTextbox.Text;
+            _workspaceManager.ModProperties.ModMinecraftVersion = this.ModSettingsMinecraftVersionTextbox.Text;
+            _workspaceManager.ModProperties.ModAPIVersion = this.ModSettingsForgeVersionTextbox.Text;
+            _workspaceManager.ModProperties.ModMappingsVersion = this.ModSettingsMappingsVersionTextbox.Text;
+            _workspaceManager.ModProperties.ModID = this.ModSettingsModidTextbox.Text;
+            _workspaceManager.ModProperties.ModGroup = this.ModSettingsModgroupTextbox.Text;
+
+            // Update workspace's files
+            await Task.Run(() =>
+            {
+                _workspaceManager.WriteBuildGradle();
+                _workspaceManager.WriteModToml();
+                _workspaceManager.WriteGradleProperties();
+                WorkspaceManagerHelper.WriteWorkspaceData(_workspaceManager);
+            });
+
+            // Update UI
+            this.ModSettingsStatusLabel.Text = UITextTranslator.GetTranslation("project_explorer.mod_settings.saved_modifications");
+            this.ModSettingsStatusLabel.Foreground = (Brush)App.Current.FindResource("FontColorPrimary");
+            RefreshInterfaceModInfos();
+        }
+
+        public async void ExportMod()
+        {
+            string destinationFilePath = Path.Combine(_workspaceManager.WorkspaceProperties.WorkspacePath, "fmh", "versions", _workspaceManager.ModProperties.ModID + "-" + _workspaceManager.ModProperties.ModVersion + ".jar");
+
+            // Show warning if the version has been already builded
+            if (File.Exists(destinationFilePath))
+            {
+                if (MessageBox.Show(UITextTranslator.GetTranslation("project_explorer.export.error.file_already_exist"), "Forge Modding Helper", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+                    return;
+            }
+
+            // Configure console and run build task
+            this.ModExportationConsoleControl.FontSize = 10;
+            this.ModExportationConsoleControl.ClearOutput();
+            this.ModExportationConsoleControl.StartProcess("cmd.exe", "/k \"cd /d " + _workspaceManager.WorkspaceProperties.WorkspacePath + "\"");
+            this.ModExportationConsoleControl.WriteInput("gradlew build --no-daemon & exit", Color.FromRgb(255, 240, 0), true);
+
+            this.SideBarMenuButtonExportation.ProgressBar.IsIndeterminate = true;
+            this.SideBarMenuButtonExportation.ProgressBar.Visibility = Visibility.Visible;
+
+            // Wait for task's end
+            await Task.Run(() =>
+            {
+                while (this.ModExportationConsoleControl.ProcessInterface.IsProcessRunning) { }
+
+                // Manage versions history
+                ManageVersionHistoryAfterExportation();
+            });
+
+            // Hide progressBar
+            this.SideBarMenuButtonExportation.ProgressBar.Visibility = Visibility.Collapsed;
+        }
+        #endregion
+
+        #region Interfaces implementations
+        public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
         #endregion
