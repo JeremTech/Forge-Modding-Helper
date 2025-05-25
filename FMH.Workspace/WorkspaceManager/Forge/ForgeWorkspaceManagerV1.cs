@@ -5,12 +5,12 @@ using System.Text;
 using FMH.Workspace.Data;
 using StringExtensions;
 
-namespace FMH.Workspace.WorkspaceManager
+namespace FMH.Workspace.WorkspaceManager.Forge
 {
     /// <summary>
     /// Workspace manager for mod developed for Minecraft before 1.20 version
     /// </summary>
-    public class WorkspaceManagerV1 : IWorkspaceManager
+    public class ForgeWorkspaceManagerV1 : IWorkspaceManager
     {
         /// <summary>
         /// Workspace properties
@@ -48,31 +48,31 @@ namespace FMH.Workspace.WorkspaceManager
 
             try
             {
-                this.ModProperties.ModVersion = fileContent.Between("version = '", "'", StringComparison.CurrentCulture);
-                this.ModProperties.ModGroup = fileContent.Between("group = '", "'", StringComparison.CurrentCulture);
-                this.ModProperties.ModAPIVersion = fileContent.Between("minecraft 'net.minecraftforge:forge:", "'", StringComparison.CurrentCulture);
-                this.WorkspaceProperties.MCVersion = this.ModProperties.ModAPIVersion;
-                this.ModProperties.ModMinecraftVersion = this.ModProperties.ModAPIVersion.Between("", "-", StringComparison.CurrentCulture);
-                this.WorkspaceProperties.MCVersion = this.ModProperties.ModMinecraftVersion;
+                ModProperties.ModVersion = fileContent.Between("version = '", "'", StringComparison.CurrentCulture);
+                ModProperties.ModGroup = fileContent.Between("group = '", "'", StringComparison.CurrentCulture);
+                ModProperties.ModAPIVersion = fileContent.Between("minecraft 'net.minecraftforge:forge:", "'", StringComparison.CurrentCulture);
+                WorkspaceProperties.MCVersion = ModProperties.ModAPIVersion;
+                ModProperties.ModMinecraftVersion = ModProperties.ModAPIVersion.Between("", "-", StringComparison.CurrentCulture);
+                WorkspaceProperties.MCVersion = ModProperties.ModMinecraftVersion;
 
                 // Mappings
                 switch (fileContent.Between("mappings channel: '", "'", StringComparison.CurrentCulture))
                 {
                     // Case 'snapshot' or 'stable', this is MCP mappings
                     case "snapshot":
-                        this.ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'snapshot', version: '", "'", StringComparison.CurrentCulture) + " (MCP)";
+                        ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'snapshot', version: '", "'", StringComparison.CurrentCulture) + " (MCP)";
                         break;
                     case "stable":
-                        this.ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'stable', version: '", "'", StringComparison.CurrentCulture) + " (MCP)";
+                        ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'stable', version: '", "'", StringComparison.CurrentCulture) + " (MCP)";
                         break;
 
                     // Case official, this is mojang mappings
                     case "official":
-                        this.ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'official', version: '", "'", StringComparison.CurrentCulture) + " (Mojang)";
+                        ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'official', version: '", "'", StringComparison.CurrentCulture) + " (Mojang)";
                         break;
                 }
 
-                this.WorkspaceProperties.ModAPI = ModAPIType.Forge;
+                WorkspaceProperties.ModAPI = ModAPIType.Forge;
 
                 return true;
             }
@@ -103,16 +103,16 @@ namespace FMH.Workspace.WorkspaceManager
 
             try
             {
-                this.ModProperties.ModLicense = fileContent.Between("license=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModID = fileContent.Between("modId=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModName = fileContent.Between("displayName=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModDescription = fileContent.Between("description='''", "'''", StringComparison.CurrentCulture)?.Trim();
-                this.ModProperties.ModLogo = fileContent.Between("logoFile=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModCredits = fileContent.Between("credits=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModAuthors = fileContent.Between("authors=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModWebsite = fileContent.Between("displayURL=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModUpdateJSONURL = fileContent.Between("updateJSONURL=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModIssueTracker = fileContent.Between("issueTrackerURL=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModLicense = fileContent.Between("license=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModID = fileContent.Between("modId=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModName = fileContent.Between("displayName=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModDescription = fileContent.Between("description='''", "'''", StringComparison.CurrentCulture)?.Trim();
+                ModProperties.ModLogo = fileContent.Between("logoFile=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModCredits = fileContent.Between("credits=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModAuthors = fileContent.Between("authors=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModWebsite = fileContent.Between("displayURL=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModUpdateJSONURL = fileContent.Between("updateJSONURL=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModIssueTracker = fileContent.Between("issueTrackerURL=\"", "\"", StringComparison.CurrentCulture);
 
                 return true;
             }

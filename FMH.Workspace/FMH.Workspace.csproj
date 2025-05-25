@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
-    <PackageReference Include="StringExtensions" Version="$(StringExtensionsVersion)"/>
+    <PackageReference Include="StringExtensions" Version="$(StringExtensionsVersion)" />
   </ItemGroup>
 	
 </Project>

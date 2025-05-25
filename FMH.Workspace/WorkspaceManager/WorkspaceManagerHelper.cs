@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FMH.Workspace.Data;
+using FMH.Workspace.WorkspaceManager.Forge;
 using Newtonsoft.Json;
 
 namespace FMH.Workspace.WorkspaceManager
@@ -34,11 +35,11 @@ namespace FMH.Workspace.WorkspaceManager
                 case "1.21.3":
                 case "1.21.4":
                 case "1.21.5":
-                    workspaceManager = new WorkspaceManagerV2();
+                    workspaceManager = new ForgeWorkspaceManagerV2();
                     break;
 
                 default:
-                    workspaceManager = new WorkspaceManagerV1();
+                    workspaceManager = new ForgeWorkspaceManagerV1();
                     break;
             }
 
@@ -74,11 +75,11 @@ namespace FMH.Workspace.WorkspaceManager
                 case "1.21.3":
                 case "1.21.4":
                 case "1.21.5":
-                    workspaceManager = new WorkspaceManagerV2();
+                    workspaceManager = new ForgeWorkspaceManagerV2();
                     break;
 
                 default:
-                    workspaceManager = new WorkspaceManagerV1();
+                    workspaceManager = new ForgeWorkspaceManagerV1();
                     break;
             }
 

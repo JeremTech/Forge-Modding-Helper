@@ -5,12 +5,12 @@ using System.Text;
 using FMH.Workspace.Data;
 using StringExtensions;
 
-namespace FMH.Workspace.WorkspaceManager
+namespace FMH.Workspace.WorkspaceManager.Forge
 {
     /// <summary>
     /// Workspace manager for mod developed for Minecraft 1.20 and older
     /// </summary>
-    public class WorkspaceManagerV2 : IWorkspaceManager
+    public class ForgeWorkspaceManagerV2 : IWorkspaceManager
     {
         /// <summary>
         /// Workspace properties
@@ -64,53 +64,53 @@ namespace FMH.Workspace.WorkspaceManager
 
                     if (string.Equals(infoLine[0], "minecraft_version"))
                     {
-                        this.ModProperties.ModMinecraftVersion = line.Split('=')[1]
+                        ModProperties.ModMinecraftVersion = line.Split('=')[1]
                                                                      .Replace("[", string.Empty)
                                                                      .Replace("]", string.Empty)
                                                                      .Replace("(", string.Empty)
                                                                      .Replace(")", string.Empty)
                                                                      .Replace(",", string.Empty);
-                        this.WorkspaceProperties.MCVersion = this.ModProperties.ModMinecraftVersion;
+                        WorkspaceProperties.MCVersion = ModProperties.ModMinecraftVersion;
                     }
 
                     if (string.Equals(infoLine[0], "forge_version"))
                     {
-                        this.ModProperties.ModAPIVersion = line.Split('=')[1]
+                        ModProperties.ModAPIVersion = line.Split('=')[1]
                                                                .Replace("[", string.Empty)
                                                                .Replace("]", string.Empty)
                                                                .Replace("(", string.Empty)
                                                                .Replace(")", string.Empty)
                                                                .Replace(",", string.Empty);
 
-                        this.WorkspaceProperties.APIVersion = this.ModProperties.ModAPIVersion;
+                        WorkspaceProperties.APIVersion = ModProperties.ModAPIVersion;
                     }
 
                     if (string.Equals(infoLine[0], "mapping_version"))
-                        this.ModProperties.ModMappingsVersion = line.Split('=')[1];
+                        ModProperties.ModMappingsVersion = line.Split('=')[1];
 
                     if (string.Equals(infoLine[0], "mod_id"))
-                        this.ModProperties.ModID = line.Split('=')[1];
+                        ModProperties.ModID = line.Split('=')[1];
 
                     if (string.Equals(infoLine[0], "mod_name"))
-                        this.ModProperties.ModName = line.Split('=')[1];
+                        ModProperties.ModName = line.Split('=')[1];
 
                     if (string.Equals(infoLine[0], "mod_license"))
-                        this.ModProperties.ModLicense = line.Split('=')[1];
+                        ModProperties.ModLicense = line.Split('=')[1];
 
                     if (string.Equals(infoLine[0], "mod_version"))
-                        this.ModProperties.ModVersion = line.Split('=')[1];
+                        ModProperties.ModVersion = line.Split('=')[1];
 
                     if (string.Equals(infoLine[0], "mod_group_id"))
-                        this.ModProperties.ModGroup = line.Split('=')[1];
+                        ModProperties.ModGroup = line.Split('=')[1];
 
                     if (string.Equals(infoLine[0], "mod_authors"))
-                        this.ModProperties.ModAuthors = line.Split('=')[1];
+                        ModProperties.ModAuthors = line.Split('=')[1];
 
                     if (string.Equals(infoLine[0], "mod_description"))
-                        this.ModProperties.ModDescription = line.Split('=')[1];
+                        ModProperties.ModDescription = line.Split('=')[1];
                 }
 
-                this.WorkspaceProperties.ModAPI = ModAPIType.Forge;
+                WorkspaceProperties.ModAPI = ModAPIType.Forge;
 
                 return true;
             }
@@ -131,12 +131,12 @@ namespace FMH.Workspace.WorkspaceManager
 
             try
             {
-                this.ModProperties.ModIssueTracker = fileContent.Between("issueTrackerURL=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModUpdateJSONURL = fileContent.Between("updateJSONURL=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModWebsite = fileContent.Between("displayURL=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModLogo = fileContent.Between("logoFile=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModCredits = fileContent.Between("credits=\"", "\"", StringComparison.CurrentCulture);
-                this.ModProperties.ModAuthors = fileContent.Between("authors=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModIssueTracker = fileContent.Between("issueTrackerURL=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModUpdateJSONURL = fileContent.Between("updateJSONURL=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModWebsite = fileContent.Between("displayURL=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModLogo = fileContent.Between("logoFile=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModCredits = fileContent.Between("credits=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModAuthors = fileContent.Between("authors=\"", "\"", StringComparison.CurrentCulture);
 
                 return true;
             }
