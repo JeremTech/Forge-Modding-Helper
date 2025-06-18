@@ -66,11 +66,10 @@
                                            GroupName="ModdingAPI" 
                                            Height="100" 
                                            Width="100"
-                                           IsEnabled="False"
                                            Cursor="Hand"
                                            IsChecked="{Binding NewWorkspaceData.ModAPI,
                                                                Converter={StaticResource EnumBooleanConverter},
-                                                               ConverterParameter={x:Static workspace:ModAPIType.None}}"/>
+                                                               ConverterParameter={x:Static workspace:ModAPIType.NeoForge}}"/>
             </StackPanel>
 
         </StackPanel>

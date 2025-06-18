@@ -10,6 +10,7 @@ namespace FMH.Workspace.Data
     public enum ModAPIType
     {
         None = 0,
-        Forge = 1
+        Forge = 1,
+        NeoForge = 2
     }
 }

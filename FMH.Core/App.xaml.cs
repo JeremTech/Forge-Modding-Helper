@@ -19,11 +19,18 @@ namespace FMH.Core
     public partial class App : Application
     {
         // List of Forge Minecraft versions supported by Forge Modding Helper
-        private static List<string> supportedForgeMcVersions = new List<string>() 
+        private static List<string> _supportedForgeMcVersions = new List<string>() 
         { 
             "1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4",
             "1.20", "1.20.1", "1.20.2", "1.20.4", "1.20.6", 
             "1.21", "1.21.1", "1.21.3", "1.21.4", "1.21.5"
+        };
+
+        // List of NeoForge Minecraft versions supported by Forge Modding Helper
+        private static List<string> _supportedNeoForgeMcVersions = new List<string>()
+        {
+            "1.20.2", "1.20.4", "1.20.6",
+            "1.21", "1.21.1", "1.21.3", "1.21.4", "1.21.5", "1.21.6"
         };
 
         /// <summary>
@@ -38,7 +45,16 @@ namespace FMH.Core
         /// <returns>List of all supported Forge Minecraft versions</returns>
         public static List<string> GetSupportedForgeMinecraftVersions()
         {
-            return supportedForgeMcVersions;
+            return _supportedForgeMcVersions;
+        }
+
+        /// <summary>
+        /// Return all supported NeoForge Minecraft version by Forge Modding Helper
+        /// </summary>
+        /// <returns>List of all supported FNeoForge Minecraft versions</returns>
+        public static List<string> GetSupportedNeoForgeMinecraftVersions()
+        {
+            return _supportedNeoForgeMcVersions;
         }
     }
 }

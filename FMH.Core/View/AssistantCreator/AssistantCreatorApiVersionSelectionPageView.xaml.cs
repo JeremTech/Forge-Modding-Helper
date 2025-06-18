@@ -104,6 +104,9 @@ namespace FMH.Core.View.AssistantCreator
                 case ModAPIType.Forge:
                     _APIVersionsListCache.AddRange(APIVersionsProvider.GetMinecraftForgeVersions());
                     break;
+                case ModAPIType.NeoForge:
+                    _APIVersionsListCache.AddRange(APIVersionsProvider.GetMinecraftNeoForgeVersions());
+                    break;
                 default:
                     break;
             }

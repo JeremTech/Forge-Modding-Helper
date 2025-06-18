@@ -21,6 +21,8 @@ namespace FMH.Core.Utils.Converters
             {
                 case ModAPIType.Forge:
                     return new BitmapImage(new Uri("pack://application:,,,/FMH.Resources;component/Icons/forge_icon.png"));
+                case ModAPIType.NeoForge:
+                    return new BitmapImage(new Uri("pack://application:,,,/FMH.Resources;component/Icons/neoforge_icon.png"));
                 default:
                     return null;
             }
