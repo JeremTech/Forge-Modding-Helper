@@ -38,6 +38,19 @@ namespace FMH.Workspace.WorkspaceManager.Forge
         public SourceCodeProperties SourceCodeProperties { get; set; }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="workspacePath">Worskpace path</param>
+        public ForgeWorkspaceManagerV1(string workspacePath)
+        {
+            WorkspaceProperties = new WorkspaceProperties();
+            ModProperties = new ModProperties();
+            ModVersionsHistory = new ModVersionsHistory(workspacePath);
+            AssetsProperties = new AssetsProperties(workspacePath);
+            SourceCodeProperties = new SourceCodeProperties(workspacePath);
+        }
+
+        /// <summary>
         /// Read data from build.gralde file
         /// </summary>
         /// <returns><c>true</c> if success, else <c>false</c></returns>
@@ -240,9 +253,10 @@ namespace FMH.Workspace.WorkspaceManager.Forge
             if (!string.IsNullOrEmpty(ModProperties.ModAuthors))
                 outputText.AppendLine(string.Format("authors=\"{0}\"", ModProperties.ModAuthors));
 
-            outputText.AppendLine("description='''")
-                      .AppendLine(ModProperties.ModDescription.Trim())
-                      .AppendLine("'''");
+            if(!string.IsNullOrEmpty(ModProperties.ModDescription))
+                outputText.AppendLine("description='''")
+                          .AppendLine(ModProperties.ModDescription.Trim())
+                          .AppendLine("'''");
 
             // Dependencies section
             outputText.AppendLine();

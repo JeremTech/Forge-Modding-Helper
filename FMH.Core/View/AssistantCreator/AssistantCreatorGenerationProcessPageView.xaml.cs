@@ -225,7 +225,7 @@ namespace FMH.Core.View.AssistantCreator
         {
             await Task.Run(() => 
             { 
-                workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(parentViewModel.NewWorkspaceData.ModAPIVersion.MinecraftVersion, parentViewModel.NewWorkspaceData.WorkspaceFolderPath);
+                workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(parentViewModel.NewWorkspaceData.WorkspaceFolderPath, parentViewModel.NewWorkspaceData.ModAPIVersion.MinecraftVersion, parentViewModel.NewWorkspaceData.ModAPI);
                 if (workspaceManager == null)
                     throw new Exception("Unable to create workspace manager for Minecraft Forge " + parentViewModel.NewWorkspaceData.ModAPIVersion.MinecraftVersion);
 

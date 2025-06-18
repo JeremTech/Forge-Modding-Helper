@@ -18,8 +18,8 @@ namespace FMH.Core
 {
     public partial class App : Application
     {
-        // List of Minecraft versions supported by Forge Modding Helper
-        private static List<string> supportedMcVersions = new List<string>() 
+        // List of Forge Minecraft versions supported by Forge Modding Helper
+        private static List<string> supportedForgeMcVersions = new List<string>() 
         { 
             "1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4",
             "1.20", "1.20.1", "1.20.2", "1.20.4", "1.20.6", 
@@ -33,12 +33,12 @@ namespace FMH.Core
         public static string FormatedVersionString => SoftwareVersionUtils.GetApplicationVersionString();
 
         /// <summary>
-        /// Return all supported Minecraft versions by Forge Modding Helper
+        /// Return all supported Forge Minecraft versions by Forge Modding Helper
         /// </summary>
-        /// <returns>List of all supported Minecraft versions</returns>
-        public static List<string> GetSupportedMinecraftVersions()
+        /// <returns>List of all supported Forge Minecraft versions</returns>
+        public static List<string> GetSupportedForgeMinecraftVersions()
         {
-            return supportedMcVersions;
+            return supportedForgeMcVersions;
         }
     }
 }

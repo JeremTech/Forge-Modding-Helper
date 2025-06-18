@@ -294,7 +294,7 @@ namespace FMH.Core.ViewModel
         internal void Finish()
         {
             // Open Project Explorer
-            new ForgeProjectExplorer(NewWorkspaceData.WorkspaceFolderPath).Show();
+            new ForgeProjectExplorer(NewWorkspaceData.WorkspaceFolderPath, NewWorkspaceData.ModAPIVersion.MinecraftVersion, NewWorkspaceData.ModAPI).Show();
 
             // Close Assistant Creator
             DialogResult = true;

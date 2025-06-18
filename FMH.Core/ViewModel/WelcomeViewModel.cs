@@ -212,7 +212,7 @@ namespace FMH.Core.ViewModel
                 var lastWorkspace = RecentsWorkspacesProvider.GetRecentsWorkspaces().OrderByDescending(w => w.LastUpdated).FirstOrDefault();
                 if (lastWorkspace != null)
                 {
-                    new ForgeProjectExplorer(lastWorkspace.WorkspacePath).Show();
+                    new ForgeProjectExplorer(lastWorkspace.WorkspacePath, lastWorkspace.WorkspaceMcVersion, lastWorkspace.WorkspaceModAPI).Show();
                     this.CloseParentWindow();
                 }
             }
@@ -228,7 +228,7 @@ namespace FMH.Core.ViewModel
                 if (Directory.Exists(workspace.WorkspacePath))
                 {
                     RecentsWorkspacesProvider.UpdateRecentWorkspaceModificationDate(workspace, DateTime.Now);
-                    new ForgeProjectExplorer(workspace.WorkspacePath).Show();
+                    new ForgeProjectExplorer(workspace.WorkspacePath, workspace.WorkspaceMcVersion, workspace.WorkspaceModAPI).Show();
                     this.CloseParentWindow();
                 }
                 else

@@ -19,7 +19,7 @@ namespace FMH.Core.Provider
         {
             var outputList = new List<APIVersionData>();
 
-            foreach (var version in App.GetSupportedMinecraftVersions())
+            foreach (var version in App.GetSupportedForgeMinecraftVersions())
             {
                 try
                 {

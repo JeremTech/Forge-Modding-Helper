@@ -16,53 +16,39 @@ namespace FMH.Workspace.WorkspaceManager
         /// Return the corresponding workspace manager
         /// </summary>
         /// <param name="workspacePath">Workspace path</param>
-        /// <returns>Corresponding workspace manager, <c>null</c> if not found</returns>
-        public static IWorkspaceManager GetWorkspaceManager(string workspacePath)
+        /// <param name="mcVersion">Workspace Minecraft version</param>
+        /// <param name="modAPI">Workspace modding API</param>
+        /// <returns>Corresponding workspace manager</returns>
+        /// <exception cref="NotSupportedException">No workspace manager founded for specified settings</exception>
+        public static IWorkspaceManager GetWorkspaceManager(string workspacePath, string mcVersion, ModAPIType modAPI)
         {
             IWorkspaceManager workspaceManager;
-            WorkspaceProperties workspaceProperties = ReadProjectFile(workspacePath);
-            workspaceProperties.WorkspacePath = workspacePath;
 
-            switch (workspaceProperties.MCVersion)
+            switch(modAPI)
             {
-                case "1.20":
-                case "1.20.1":
-                case "1.20.2":
-                case "1.20.4":
-                case "1.20.6":
-                case "1.21":
-                case "1.21.1":
-                case "1.21.3":
-                case "1.21.4":
-                case "1.21.5":
-                    workspaceManager = new ForgeWorkspaceManagerV2();
+                case ModAPIType.Forge:
+                    workspaceManager = GetForgeWorkspaceManager(workspacePath, mcVersion);
                     break;
-
                 default:
-                    workspaceManager = new ForgeWorkspaceManagerV1();
-                    break;
+                    throw new NotSupportedException($"Mod API '{modAPI}' is not supported.");
             }
 
-            // Set default values
-            workspaceManager.WorkspaceProperties = workspaceProperties;
-            workspaceManager.ModProperties = new ModProperties();
-            workspaceManager.SourceCodeProperties = new SourceCodeProperties(workspacePath);
-            workspaceManager.AssetsProperties = new AssetsProperties(workspacePath);
-            workspaceManager.ModVersionsHistory = new ModVersionsHistory(workspacePath);
+            // Defined knowed workspace properties
+            workspaceManager.WorkspaceProperties.WorkspacePath = workspacePath;
+            workspaceManager.WorkspaceProperties.MCVersion = mcVersion;
+            workspaceManager.WorkspaceProperties.ModAPI = modAPI;
 
             return workspaceManager;
         }
 
         /// <summary>
-        /// Return the corresponding workspace manager for the specified Minecraft version
+        /// Return the corresponding workspace manager for a Forge workspace
         /// </summary>
-        /// <param name="mcVersion">Targeted minecraft version</param>
+        /// <param name="mcVersion">Workspace Minecraft version</param>
         /// <param name="workspacePath">Workspace path</param>
-        /// <returns>Corresponding workspace manager, <c>null</c> if not found</returns>
-        public static IWorkspaceManager GetWorkspaceManager(string mcVersion, string workspacePath)
+        /// <returns>Corresponding Forge workspace manager</returns>
+        private static IWorkspaceManager GetForgeWorkspaceManager(string workspacePath, string mcVersion)
         {
-            IWorkspaceManager workspaceManager;
-
             switch (mcVersion)
             {
                 case "1.20":
@@ -75,26 +61,10 @@ namespace FMH.Workspace.WorkspaceManager
                 case "1.21.3":
                 case "1.21.4":
                 case "1.21.5":
-                    workspaceManager = new ForgeWorkspaceManagerV2();
-                    break;
-
+                    return new ForgeWorkspaceManagerV2(workspacePath);
                 default:
-                    workspaceManager = new ForgeWorkspaceManagerV1();
-                    break;
+                    return new ForgeWorkspaceManagerV1(workspacePath);
             }
-
-            // Set default values
-            workspaceManager.WorkspaceProperties = new WorkspaceProperties()
-            {
-                WorkspacePath = workspacePath,
-                MCVersion = mcVersion
-            };
-            workspaceManager.ModProperties = new ModProperties();
-            workspaceManager.SourceCodeProperties = new SourceCodeProperties(workspacePath);
-            workspaceManager.AssetsProperties = new AssetsProperties(workspacePath);
-            workspaceManager.ModVersionsHistory = new ModVersionsHistory(workspacePath);
-
-            return workspaceManager;
         }
 
         /// <summary>

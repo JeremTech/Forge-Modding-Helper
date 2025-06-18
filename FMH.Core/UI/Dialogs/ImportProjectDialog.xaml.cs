@@ -17,6 +17,7 @@ using FMH.Core.Files.Software;
 using FMH.Core.Objects;
 using FMH.Core.Provider;
 using FMH.Core.Utils.UI;
+using FMH.Workspace.Data;
 using FMH.Workspace.WorkspaceManager;
 using FontAwesome.WPF;
 using Path = System.IO.Path;
@@ -83,12 +84,12 @@ namespace FMH.Core.UI.Dialogs
                     || !Directory.Exists(textBoxWorskpacePath.Text))
                     return false;
 
-                _workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(comboBoxMcVersion.Text, textBoxWorskpacePath.Text);
+                _workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(textBoxWorskpacePath.Text, comboBoxMcVersion.Text, ModAPIType.Forge);
 
                 if (_workspaceManager == null)
                     return false;
 
-                return _workspaceManager.CheckWorkspaceValidity(App.GetSupportedMinecraftVersions());
+                return _workspaceManager.CheckWorkspaceValidity(App.GetSupportedForgeMinecraftVersions());
             });
         }
 
@@ -98,7 +99,7 @@ namespace FMH.Core.UI.Dialogs
             UITextTranslator.UpdateComponentsTranslations(this.mainGrid);
             this.Title = UITextTranslator.GetTranslation("dialog.import_project.title");
 
-            comboBoxMcVersion.ItemsSource = App.GetSupportedMinecraftVersions().OrderByDescending(v => v);
+            comboBoxMcVersion.ItemsSource = App.GetSupportedForgeMinecraftVersions().OrderByDescending(v => v);
             comboBoxMcVersion.SelectedIndex = 0;
         }
 

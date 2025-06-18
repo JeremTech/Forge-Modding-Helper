@@ -124,13 +124,13 @@ namespace FMH.Core.UI.Forge
         /// <summary>
         /// Constructor
         /// </summary>
-        public ForgeProjectExplorer(string projectPath)
+        public ForgeProjectExplorer(string projectPath, string projectMinecraftVersion, ModAPIType projectModAPI)
         {
             // Initialize data
             currentSectionOpenedTag = "Home";
 
             // Initialize workspace manager
-            _workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(projectPath);
+            _workspaceManager = WorkspaceManagerHelper.GetWorkspaceManager(projectPath, projectMinecraftVersion, projectModAPI);
 
             // Initialize commands
             OpenWorkspaceDirectoryInExplorerCommand = new RelayCommand(OpenWorkspaceDirectoryInExplorer);
