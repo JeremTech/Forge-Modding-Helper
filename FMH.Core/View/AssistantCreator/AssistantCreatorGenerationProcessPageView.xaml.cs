@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.IO.Compression;
 using System.IO.Pipes;
@@ -130,93 +131,20 @@ namespace FMH.Core.View.AssistantCreator
         #region Download and uncompress MDK
         private async Task DownloadWorkspaceMDK()
         {
-            var mdkZipPath = Path.Combine(parentViewModel.NewWorkspaceData.WorkspaceFolderPath, "mdk.zip");
+            var progressObject = new Progress<double>(value => ProgressBarValue = value);
 
             // Download MDK
             StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.downloading_mdk");
             ProgressBarValue = 0;
             ProgressBarVisibility = Visibility.Visible;
-            await DownloadFileAsync(McForgeUtils.BuildMinecraftForgeMDKDownloadLink(parentViewModel.NewWorkspaceData.ModAPIVersion.APIVersion), mdkZipPath);
+            await workspaceManager.DownloadMDK(progressObject);
 
             // Uncompress MDK
             StatusLabelText = UITextTranslator.GetTranslation("assistant_creator.generation.label.status.uncompressing_mdk");
             ProgressBarValue = 0;
-            await UncompressFileAsync(mdkZipPath, parentViewModel.NewWorkspaceData.WorkspaceFolderPath);
+            await workspaceManager.ExtractMDK(progressObject);
+            
             ProgressBarVisibility = Visibility.Hidden;
-
-            // Delete MDK zip file permanently
-            FileSystem.DeleteFile(mdkZipPath, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently);
-        }
-
-        private async Task UncompressFileAsync(string archiveFile, string destinationPath)
-        {
-            using (var archive = ZipFile.OpenRead(archiveFile))
-            {
-                int totalEntries = archive.Entries.Count; // Total number of entries in the zip file
-                int processedEntries = 0;
-
-                foreach (var entry in archive.Entries)
-                {
-                    // Skip directories
-                    if (string.IsNullOrEmpty(entry.Name))
-                    {
-                        continue;
-                    }
-
-                    string fileDestinationPath = Path.Combine(destinationPath, entry.FullName);
-
-                    // Ensure the directory exists
-                    Directory.CreateDirectory(Path.GetDirectoryName(fileDestinationPath)!);
-
-                    await Task.Run(() => entry.ExtractToFile(fileDestinationPath, true));
-
-                    // Update progress
-                    processedEntries++;
-                    ProgressBarValue = (double)processedEntries / totalEntries * 100;
-                }
-            }
-        }
-
-        private async Task DownloadFileAsync(string fileUrl, string destinationPath)
-        {
-            using (var client = new HttpClient())
-            {
-                // Send the request and get the response
-                var response = await client.GetAsync(fileUrl, HttpCompletionOption.ResponseHeadersRead);
-
-                response.EnsureSuccessStatusCode();
-
-                // Get the total file size from the response headers
-                var totalBytes = response.Content.Headers.ContentLength ?? -1L;
-
-                // Open the response stream and a file stream to write the file
-                using (var contentStream = await response.Content.ReadAsStreamAsync())
-                using (var fileStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
-                {
-                    var buffer = new byte[8192];
-                    long totalRead = 0;
-                    int bytesRead;
-
-                    // Progress reporting
-                    var progress = new Progress<double>(value =>
-                    {
-                        ProgressBarValue = value;
-                    });
-
-                    // Read the content in chunks
-                    while ((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
-                    {
-                        await fileStream.WriteAsync(buffer, 0, bytesRead);
-                        totalRead += bytesRead;
-
-                        if (totalBytes > 0)
-                        {
-                            double percentage = (double)totalRead / totalBytes * 100;
-                            ((IProgress<double>)progress).Report(percentage);
-                        }
-                    }
-                }
-            }
         }
         #endregion
 

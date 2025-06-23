@@ -7,14 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace FMH.Workspace.WorkspaceManager.Forge
+namespace FMH.Workspace.WorkspaceManager.NeoForge
 {
     /// <summary>
     /// Workspace manager for mod developed for Minecraft before 1.20 version
     /// </summary>
-    public class ForgeWorkspaceManagerV1 : IWorkspaceManager
+    public class NeoForgeWorkspaceManagerV1 : IWorkspaceManager
     {
         /// <summary>
         /// Workspace properties
@@ -45,7 +44,7 @@ namespace FMH.Workspace.WorkspaceManager.Forge
         /// Constructor
         /// </summary>
         /// <param name="workspacePath">Worskpace path</param>
-        public ForgeWorkspaceManagerV1(string workspacePath)
+        public NeoForgeWorkspaceManagerV1(string workspacePath)
         {
             WorkspaceProperties = new WorkspaceProperties();
             ModProperties = new ModProperties();
@@ -89,7 +88,7 @@ namespace FMH.Workspace.WorkspaceManager.Forge
                         break;
                 }
 
-                WorkspaceProperties.ModAPI = ModAPIType.Forge;
+                WorkspaceProperties.ModAPI = ModAPIType.NeoForge;
 
                 return true;
             }
@@ -257,7 +256,7 @@ namespace FMH.Workspace.WorkspaceManager.Forge
             if (!string.IsNullOrEmpty(ModProperties.ModAuthors))
                 outputText.AppendLine(string.Format("authors=\"{0}\"", ModProperties.ModAuthors));
 
-            if (!string.IsNullOrEmpty(ModProperties.ModDescription))
+            if(!string.IsNullOrEmpty(ModProperties.ModDescription))
                 outputText.AppendLine("description='''")
                           .AppendLine(ModProperties.ModDescription.Trim())
                           .AppendLine("'''");
@@ -313,13 +312,13 @@ namespace FMH.Workspace.WorkspaceManager.Forge
             if (!supportedMinecraftVersions.Contains(ModProperties.ModMinecraftVersion))
                 return false;
 
-            return true;
+            return true;   
         }
 
         /// <inheritdoc/>
         public async Task DownloadMDK(IProgress<double> progressReportingObject)
         {
-            var mdkLink = MDKProvider.GetMinecraftForgeMDKLink(WorkspaceProperties.APIVersion);
+            var mdkLink = MDKProvider.GetNeoForgeMDKLink(WorkspaceProperties.MCVersion);
             var outputFilePath = Path.Combine(WorkspaceProperties.WorkspacePath, "mdk.zip");
 
             await FileUtils.DownloadFileAsync(mdkLink, outputFilePath, progressReportingObject);
@@ -332,7 +331,7 @@ namespace FMH.Workspace.WorkspaceManager.Forge
             var mdkExtractPath = WorkspaceProperties.WorkspacePath;
 
             // Uncompress the MDK zip file
-            await FileUtils.UncompressFileAsync(mdkZipPath, mdkExtractPath, progressReportingObject);
+            await FileUtils.UncompressSubFolderInFileAsync(mdkZipPath, mdkExtractPath, string.Format("MDK-{0}-NeoGradle-main", WorkspaceProperties.MCVersion), progressReportingObject);
 
             // Delete MDK zip file permanently
             FileSystem.DeleteFile(mdkZipPath, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently);

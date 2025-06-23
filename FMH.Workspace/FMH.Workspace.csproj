@@ -1,12 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Nullable>enable</Nullable>
+	<TargetFramework>net8.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\FMH.Utils\FMH.Utils.csproj" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
     <PackageReference Include="StringExtensions" Version="$(StringExtensionsVersion)" />
+	<PackageReference Include="McVersionsLib" Version="$(McVersionLibVersion)" />
   </ItemGroup>
 	
 </Project>

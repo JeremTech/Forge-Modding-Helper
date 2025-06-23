@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+	<TargetFramework>net8.0-windows</TargetFramework>
+	<OutputType>WinExe</OutputType>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <Copyright>© Jerem'Tech</Copyright>
@@ -18,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FMH.Resources\FMH.Resources.csproj" />
     <ProjectReference Include="..\FMH.Workspace\FMH.Workspace.csproj" />
+	<ProjectReference Include="..\FMH.Utils\FMH.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>

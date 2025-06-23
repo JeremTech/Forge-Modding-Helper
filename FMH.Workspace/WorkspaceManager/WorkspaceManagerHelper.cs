@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FMH.Workspace.Data;
 using FMH.Workspace.WorkspaceManager.Forge;
+using FMH.Workspace.WorkspaceManager.NeoForge;
 using Newtonsoft.Json;
 
 namespace FMH.Workspace.WorkspaceManager
@@ -29,6 +30,9 @@ namespace FMH.Workspace.WorkspaceManager
                 case ModAPIType.Forge:
                     workspaceManager = GetForgeWorkspaceManager(workspacePath, mcVersion);
                     break;
+                case ModAPIType.NeoForge:
+                    workspaceManager = GetNeoForgeWorkspaceManager(workspacePath, mcVersion);
+                    break;    
                 default:
                     throw new NotSupportedException($"Mod API '{modAPI}' is not supported.");
             }
@@ -64,6 +68,21 @@ namespace FMH.Workspace.WorkspaceManager
                     return new ForgeWorkspaceManagerV2(workspacePath);
                 default:
                     return new ForgeWorkspaceManagerV1(workspacePath);
+            }
+        }
+
+        /// <summary>
+        /// Return the corresponding workspace manager for a NeoForge workspace
+        /// </summary>
+        /// <param name="mcVersion">Workspace Minecraft version</param>
+        /// <param name="workspacePath">Workspace path</param>
+        /// <returns>Corresponding NeoForge workspace manager</returns>
+        private static IWorkspaceManager GetNeoForgeWorkspaceManager(string workspacePath, string mcVersion)
+        {
+            switch (mcVersion)
+            {
+                default:
+                    return new NeoForgeWorkspaceManagerV1(workspacePath);
             }
         }
 

@@ -73,5 +73,17 @@ namespace FMH.Workspace.WorkspaceManager
         /// <param name="supportedMinecraftVersions">Supported minecraft versions</param>
         /// <returns><c>true</c> if this is a valid workspace, else <c>false</c></returns>
         bool CheckWorkspaceValidity(List<string> supportedMinecraftVersions);
+
+        /// <summary>
+        /// Download the Minecraft Development Kit (MDK) in function of workspace properties
+        /// </summary>
+        /// <param name="progressReportingObject">Progress reporting object</param>
+        Task DownloadMDK(IProgress<double> progressReportingObject);
+
+        /// <summary>
+        /// Extract the Minecraft Development Kit (MDK) in function of workspace properties
+        /// </summary>
+        /// <param name="progressReportingObject">Progress reporting object</param>
+        Task ExtractMDK(IProgress<double> progressReportingObject);
     }
 }

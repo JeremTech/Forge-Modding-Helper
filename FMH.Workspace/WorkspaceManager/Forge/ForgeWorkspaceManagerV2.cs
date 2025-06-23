@@ -1,9 +1,12 @@
-﻿using System;
+﻿using FMH.Utils.Files;
+using FMH.Workspace.Data;
+using FMH.Workspace.Provider;
+using Microsoft.VisualBasic.FileIO;
+using StringExtensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using FMH.Workspace.Data;
-using StringExtensions;
 
 namespace FMH.Workspace.WorkspaceManager.Forge
 {
@@ -296,6 +299,28 @@ namespace FMH.Workspace.WorkspaceManager.Forge
                 return false;
 
             return true;
+        }
+
+        /// <inheritdoc/>
+        public async Task DownloadMDK(IProgress<double> progressReportingObject)
+        {
+            var mdkLink = MDKProvider.GetMinecraftForgeMDKLink(WorkspaceProperties.APIVersion);
+            var outputFilePath = Path.Combine(WorkspaceProperties.WorkspacePath, "mdk.zip");
+
+            await FileUtils.DownloadFileAsync(mdkLink, outputFilePath, progressReportingObject);
+        }
+
+        /// <inheritdoc/>
+        public async Task ExtractMDK(IProgress<double> progressReportingObject)
+        {
+            var mdkZipPath = Path.Combine(WorkspaceProperties.WorkspacePath, "mdk.zip");
+            var mdkExtractPath = WorkspaceProperties.WorkspacePath;
+
+            // Uncompress the MDK zip file
+            await FileUtils.UncompressFileAsync(mdkZipPath, mdkExtractPath, progressReportingObject);
+
+            // Delete MDK zip file permanently
+            FileSystem.DeleteFile(mdkZipPath, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently);
         }
     }
 }

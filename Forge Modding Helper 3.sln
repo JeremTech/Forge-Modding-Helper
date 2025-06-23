@@ -8,6 +8,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMH.Core", "FMH.Core\FMH.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FMH.Resources", "FMH.Resources\FMH.Resources.csproj", "{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FMH.Utils", "FMH.Utils\FMH.Utils.csproj", "{7FB08B12-F99C-4787-B22A-516B9F09BEF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,14 @@ Global
 		{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}.Release|x64.ActiveCfg = Release|Any CPU
 		{879BD9A7-C5FB-4362-BC7E-15B5D81CB43C}.Release|x64.Build.0 = Release|Any CPU
+		{7FB08B12-F99C-4787-B22A-516B9F09BEF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FB08B12-F99C-4787-B22A-516B9F09BEF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FB08B12-F99C-4787-B22A-516B9F09BEF0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7FB08B12-F99C-4787-B22A-516B9F09BEF0}.Debug|x64.Build.0 = Debug|Any CPU
+		{7FB08B12-F99C-4787-B22A-516B9F09BEF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FB08B12-F99C-4787-B22A-516B9F09BEF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FB08B12-F99C-4787-B22A-516B9F09BEF0}.Release|x64.ActiveCfg = Release|Any CPU
+		{7FB08B12-F99C-4787-B22A-516B9F09BEF0}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
