@@ -59,36 +59,69 @@ namespace FMH.Workspace.WorkspaceManager.NeoForge
         /// <returns><c>true</c> if success, else <c>false</c></returns>
         public bool ReadBuildGradle()
         {
-            string filePath = Path.Combine(WorkspaceProperties.WorkspacePath, "build.gradle");
-            string fileContent = File.ReadAllText(filePath);
+            // No data to read for this file
+            return true;
+        }
+
+        /// <summary>
+        /// Read data from gradle.properties file
+        /// </summly>
+        /// <returns><c>true</c> if success, else <c>false</c></returns>
+        public bool ReadGradleProperties()
+        {
+            string filePath = Path.Combine(WorkspaceProperties.WorkspacePath, "gradle.properties");
+            string[] fileLines = File.ReadAllLines(filePath);
 
             try
             {
-                ModProperties.ModVersion = fileContent.Between("version = '", "'", StringComparison.CurrentCulture);
-                ModProperties.ModGroup = fileContent.Between("group = '", "'", StringComparison.CurrentCulture);
-                ModProperties.ModAPIVersion = fileContent.Between("minecraft 'net.minecraftforge:forge:", "'", StringComparison.CurrentCulture);
-                WorkspaceProperties.MCVersion = ModProperties.ModAPIVersion;
-                ModProperties.ModMinecraftVersion = ModProperties.ModAPIVersion.Between("", "-", StringComparison.CurrentCulture);
-                WorkspaceProperties.MCVersion = ModProperties.ModMinecraftVersion;
-
-                // Mappings
-                switch (fileContent.Between("mappings channel: '", "'", StringComparison.CurrentCulture))
+                foreach (var line in fileLines)
                 {
-                    // Case 'snapshot' or 'stable', this is MCP mappings
-                    case "snapshot":
-                        ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'snapshot', version: '", "'", StringComparison.CurrentCulture) + " (MCP)";
-                        break;
-                    case "stable":
-                        ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'stable', version: '", "'", StringComparison.CurrentCulture) + " (MCP)";
-                        break;
+                    var infoLine = line.Split("=");
 
-                    // Case official, this is mojang mappings
-                    case "official":
-                        ModProperties.ModMappingsVersion = fileContent.Between("mappings channel: 'official', version: '", "'", StringComparison.CurrentCulture) + " (Mojang)";
-                        break;
+                    if (string.Equals(infoLine[0], "minecraft_version"))
+                    {
+                        ModProperties.ModMinecraftVersion = line.Split('=')[1];
+                        WorkspaceProperties.MCVersion = ModProperties.ModMinecraftVersion;
+                    }
+
+                    if (string.Equals(infoLine[0], "neo_version"))
+                    {
+                        ModProperties.ModAPIVersion = line.Split('=')[1]
+                                                          .Replace("[", string.Empty)
+                                                          .Replace("]", string.Empty)
+                                                          .Replace("(", string.Empty)
+                                                          .Replace(")", string.Empty)
+                                                          .Replace(",", string.Empty);
+
+                        WorkspaceProperties.APIVersion = ModProperties.ModAPIVersion;
+                    }
+
+                    if (string.Equals(infoLine[0], "neogradle.subsystems.parchment.mappingsVersion"))
+                        ModProperties.ModMappingsVersion = line.Split('=')[1];
+
+                    if (string.Equals(infoLine[0], "mod_id"))
+                        ModProperties.ModID = line.Split('=')[1];
+
+                    if (string.Equals(infoLine[0], "mod_name"))
+                        ModProperties.ModName = line.Split('=')[1];
+
+                    if (string.Equals(infoLine[0], "mod_license"))
+                        ModProperties.ModLicense = line.Split('=')[1];
+
+                    if (string.Equals(infoLine[0], "mod_version"))
+                        ModProperties.ModVersion = line.Split('=')[1];
+
+                    if (string.Equals(infoLine[0], "mod_group_id"))
+                        ModProperties.ModGroup = line.Split('=')[1];
+
+                    if (string.Equals(infoLine[0], "mod_authors"))
+                        ModProperties.ModAuthors = line.Split('=')[1];
+
+                    if (string.Equals(infoLine[0], "mod_description"))
+                        ModProperties.ModDescription = line.Split('=')[1];
                 }
 
-                WorkspaceProperties.ModAPI = ModAPIType.NeoForge;
+                WorkspaceProperties.ModAPI = ModAPIType.Forge;
 
                 return true;
             }
@@ -99,36 +132,22 @@ namespace FMH.Workspace.WorkspaceManager.NeoForge
         }
 
         /// <summary>
-        /// Read data from gradle.properties file
-        /// </summly>
-        /// <returns><c>true</c> if success, else <c>false</c></returns>
-        public bool ReadGradleProperties()
-        {
-            // No data to read for this file
-            return true;
-        }
-
-        /// <summary>
         /// Read data from mod.toml file
         /// </summary>
         /// <returns><c>true</c> if success, else <c>false</c></returns>
         public bool ReadModToml()
         {
-            string filePath = Path.Combine(WorkspaceProperties.WorkspacePath, @"src\main\resources\META-INF\mods.toml");
+            string filePath = Path.Combine(WorkspaceProperties.WorkspacePath, @"src\main\resources\META-INF\neoforge.mods.toml");
             string fileContent = File.ReadAllText(filePath);
 
             try
             {
-                ModProperties.ModLicense = fileContent.Between("license=\"", "\"", StringComparison.CurrentCulture);
-                ModProperties.ModID = fileContent.Between("modId=\"", "\"", StringComparison.CurrentCulture);
-                ModProperties.ModName = fileContent.Between("displayName=\"", "\"", StringComparison.CurrentCulture);
-                ModProperties.ModDescription = fileContent.Between("description='''", "'''", StringComparison.CurrentCulture)?.Trim();
+                ModProperties.ModIssueTracker = fileContent.Between("issueTrackerURL=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModUpdateJSONURL = fileContent.Between("updateJSONURL=\"", "\"", StringComparison.CurrentCulture);
+                ModProperties.ModWebsite = fileContent.Between("displayURL=\"", "\"", StringComparison.CurrentCulture);
                 ModProperties.ModLogo = fileContent.Between("logoFile=\"", "\"", StringComparison.CurrentCulture);
                 ModProperties.ModCredits = fileContent.Between("credits=\"", "\"", StringComparison.CurrentCulture);
                 ModProperties.ModAuthors = fileContent.Between("authors=\"", "\"", StringComparison.CurrentCulture);
-                ModProperties.ModWebsite = fileContent.Between("displayURL=\"", "\"", StringComparison.CurrentCulture);
-                ModProperties.ModUpdateJSONURL = fileContent.Between("updateJSONURL=\"", "\"", StringComparison.CurrentCulture);
-                ModProperties.ModIssueTracker = fileContent.Between("issueTrackerURL=\"", "\"", StringComparison.CurrentCulture);
 
                 return true;
             }
@@ -143,65 +162,8 @@ namespace FMH.Workspace.WorkspaceManager.NeoForge
         /// </summary>
         public void WriteBuildGradle()
         {
-            string filePath = Path.Combine(WorkspaceProperties.WorkspacePath, "build.gradle");
-            string[] lines = File.ReadAllLines(filePath);
-            string[] output = new string[lines.Length];
-            bool isDataSectionReaded = false;
-
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i];
-
-                if (line.Contains("version ="))
-                {
-                    string str = line.Between("version = '", "'", StringComparison.CurrentCulture);
-                    output[i] = line.Replace(str, ModProperties.ModVersion);
-                }
-                else if (line.Contains("group ="))
-                {
-                    string str = line.Between("group = '", "'", StringComparison.CurrentCulture);
-                    output[i] = line.Replace(str, ModProperties.ModGroup);
-                }
-                else if (line.Contains("archivesBaseName ="))
-                {
-                    string str = line.Between("archivesBaseName = '", "'", StringComparison.CurrentCulture);
-                    output[i] = line.Replace(str, ModProperties.ModID);
-                }
-                else if (line.Contains("Specification-Title"))
-                {
-                    string str = line.Replace(" ", "");
-                    str = str.Between("Specification-Title\":\"", "\"", StringComparison.CurrentCulture);
-                    output[i] = "                " + line.Replace(" ", "").Replace(":", " : ").Replace(str, ModProperties.ModID);
-                }
-                else if (line.Contains("Specification-Vendor"))
-                {
-                    string str = line.Replace(" ", "");
-                    str = str.Between("Specification-Vendor\":\"", "\"", StringComparison.CurrentCulture);
-                    output[i] = "                " + line.Replace(" ", "").Replace(":", " : ").Replace(str, ModProperties.ModAuthors);
-                }
-                else if (line.Contains("Implementation-Vendor"))
-                {
-                    string str = line.Replace(" ", "");
-                    str = str.Between("Implementation-Vendor\":\"", "\"", StringComparison.CurrentCulture);
-                    output[i] = "                " + line.Replace(" ", "").Replace(":", " : ").Replace(str, ModProperties.ModAuthors);
-                }
-                else if (line.Contains("data {"))
-                {
-                    isDataSectionReaded = true;
-                    output[i] = line;
-                }
-                else if (line.Contains("examplemod {") && isDataSectionReaded)
-                {
-                    output[i] = line.Replace("examplemod", ModProperties.ModID);
-                }
-                else
-                {
-                    output[i] = line;
-                }
-            }
-
-            // Replace build.gradle file
-            File.WriteAllLines(filePath, output);
+            // No data to write for this file
+            return;
         }
 
         /// <summary>
@@ -209,8 +171,35 @@ namespace FMH.Workspace.WorkspaceManager.NeoForge
         /// </summary>
         public void WriteGradleProperties()
         {
-            // No data to write for this file
-            return;
+            StringBuilder outputText = new StringBuilder();
+            string filePath = Path.Combine(WorkspaceProperties.WorkspacePath, "gradle.properties");
+            string forgeVersionShort = ModProperties.ModAPIVersion;
+            string forgeVersionRange = forgeVersionShort.Split('.')[0];
+
+            // Default configuration for gradle
+            outputText.AppendLine("org.gradle.jvmargs=-Xmx1G");
+            outputText.AppendLine("org.gradle.daemon=true");
+            outputText.AppendLine("org.gradle.parallel=true");
+            outputText.AppendLine("org.gradle.caching=true");
+            outputText.AppendLine("org.gradle.configuration-cache=true");
+            outputText.AppendLine();
+
+            // Environment Properties
+            outputText.AppendLine(string.Format("neogradle.subsystems.parchment.minecraftVersion={0}", ModProperties.ModMinecraftVersion));
+            outputText.AppendLine(string.Format("neogradle.subsystems.parchment.mappingsVersion={0}", MappingsProvider.GetParchmentMappingsVersion(ModProperties.ModMinecraftVersion)));
+            outputText.AppendLine(string.Format("minecraft_version={0}", ModProperties.ModMinecraftVersion));
+            outputText.AppendLine(string.Format("minecraft_version_range=[{0}]", ModProperties.ModMinecraftVersion));
+            outputText.AppendLine(string.Format("neo_version={0}", forgeVersionShort));
+            outputText.AppendLine(string.Format("mod_id={0}", ModProperties.ModID));
+            outputText.AppendLine(string.Format("mod_name={0}", ModProperties.ModName));
+            outputText.AppendLine(string.Format("mod_license={0}", ModProperties.ModLicense));
+            outputText.AppendLine(string.Format("mod_version={0}", ModProperties.ModVersion));
+            outputText.AppendLine(string.Format("mod_group_id={0}", ModProperties.ModGroup));
+            outputText.AppendLine(string.Format("mod_authors={0}", ModProperties.ModAuthors));
+            outputText.AppendLine(string.Format("mod_description={0}", ModProperties.ModDescription));
+
+            // Replace gradle.properties file
+            File.WriteAllText(filePath, outputText.ToString());
         }
 
         /// <summary>
@@ -219,27 +208,20 @@ namespace FMH.Workspace.WorkspaceManager.NeoForge
         public void WriteModToml()
         {
             StringBuilder outputText = new StringBuilder();
-            string filePath = Path.Combine(WorkspaceProperties.WorkspacePath, @"src\main\resources\META-INF\mods.toml");
-            string forgeVersionShort = ModProperties.ModAPIVersion.Split('-')[1];
-            string forgeVersionRange = forgeVersionShort.Split('.')[0];
+            string filePath = Path.Combine(WorkspaceProperties.WorkspacePath, @"src\main\resources\META-INF\neoforge.mods.toml");
 
             // General section
-            outputText.AppendLine("modLoader=\"javafml\"");
-            outputText.AppendLine(string.Format("loaderVersion=\"[{0},)\"", forgeVersionRange));
-            outputText.AppendLine(string.Format("license=\"{0}\"", ModProperties.ModLicense));
+            outputText.AppendLine("license=\"${mod_license}\"");
 
             if (!string.IsNullOrEmpty(ModProperties.ModIssueTracker))
                 outputText.AppendLine(string.Format("issueTrackerURL=\"{0}\"", ModProperties.ModIssueTracker));
 
-            if (!string.IsNullOrEmpty(ModProperties.ModLogo))
-                outputText.AppendLine("logoFile=\"logo.png\"");
-
             // Mod section
             outputText.AppendLine();
             outputText.AppendLine("[[mods]]");
-            outputText.AppendLine(string.Format("modId=\"{0}\"", ModProperties.ModID));
-            outputText.AppendLine("version=\"${file.jarVersion}\"");
-            outputText.AppendLine(string.Format("displayName=\"{0}\"", ModProperties.ModName));
+            outputText.AppendLine("modId=\"${mod_id}\"");
+            outputText.AppendLine("version=\"${mod_version}\"");
+            outputText.AppendLine("displayName=\"${mod_name}\"");
 
             if (!string.IsNullOrEmpty(ModProperties.ModUpdateJSONURL))
                 outputText.AppendLine(string.Format("updateJSONURL=\"{0}\"", ModProperties.ModUpdateJSONURL));
@@ -256,26 +238,23 @@ namespace FMH.Workspace.WorkspaceManager.NeoForge
             if (!string.IsNullOrEmpty(ModProperties.ModAuthors))
                 outputText.AppendLine(string.Format("authors=\"{0}\"", ModProperties.ModAuthors));
 
-            if(!string.IsNullOrEmpty(ModProperties.ModDescription))
-                outputText.AppendLine("description='''")
-                          .AppendLine(ModProperties.ModDescription.Trim())
-                          .AppendLine("'''");
+            outputText.AppendLine("description='''${mod_description}'''");
 
             // Dependencies section
             outputText.AppendLine();
-            outputText.AppendLine(string.Format("[[dependencies.{0}]]", ModProperties.ModID));
-            outputText.AppendLine("\tmodId=\"forge\"");
-            outputText.AppendLine("\tmandatory=true");
-            outputText.AppendLine(string.Format("\tversionRange=\"[{0},)\"", forgeVersionRange));
-            outputText.AppendLine("\tordering=\"NONE\"");
-            outputText.AppendLine("\tside=\"BOTH\"");
+            outputText.AppendLine("[[dependencies.${mod_id}]]");
+            outputText.AppendLine("modId=\"neoforge\"");
+            outputText.AppendLine("ype=required");
+            outputText.AppendLine("versionRange=\"[${neo_version},)\"");
+            outputText.AppendLine("ordering=\"NONE\"");
+            outputText.AppendLine("side=\"BOTH\"");
             outputText.AppendLine();
-            outputText.AppendLine(string.Format("[[dependencies.{0}]]", ModProperties.ModID));
-            outputText.AppendLine("\tmodId=\"minecraft\"");
-            outputText.AppendLine("\tmandatory=true");
-            outputText.AppendLine(string.Format("\tversionRange=\"[{0}]\"", ModProperties.ModMinecraftVersion));
-            outputText.AppendLine("\tordering=\"NONE\"");
-            outputText.AppendLine("\tside=\"BOTH\"");
+            outputText.AppendLine("[[dependencies.${mod_id}]]");
+            outputText.AppendLine("tmodId=\"minecraft\"");
+            outputText.AppendLine("type=required");
+            outputText.AppendLine("versionRange=\"${minecraft_version_range}\"");
+            outputText.AppendLine("ordering=\"NONE\"");
+            outputText.AppendLine("side=\"BOTH\"");
 
             // Replace mod.toml file
             File.WriteAllText(filePath, outputText.ToString());
@@ -289,8 +268,9 @@ namespace FMH.Workspace.WorkspaceManager.NeoForge
         public bool CheckWorkspaceValidity(List<string> supportedMinecraftVersions)
         {
             // Check configs files
-            if (!File.Exists(Path.Combine(WorkspaceProperties.WorkspacePath, @"src\main\resources\META-INF\mods.toml"))
-                || !File.Exists(Path.Combine(WorkspaceProperties.WorkspacePath, "build.gradle")))
+            if (!File.Exists(Path.Combine(WorkspaceProperties.WorkspacePath, @"src\main\resources\META-INF\neoforge.mods.toml"))
+                || !File.Exists(Path.Combine(WorkspaceProperties.WorkspacePath, "build.gradle"))
+                || !File.Exists(Path.Combine(WorkspaceProperties.WorkspacePath, "gradle.properties")))
                 return false;
 
             // Read files
