@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,12 +17,14 @@ using System.Windows.Shapes;
 
 namespace FMH.Core.UI.Controls
 {
-    public partial class DashboardInfoDisplay : UserControl
+    public partial class DashboardInfoDisplay : UserControl, INotifyPropertyChanged
     {
         public static readonly DependencyProperty InfoColorProperty;
         public static readonly DependencyProperty InfoTitleProperty;
         public static readonly DependencyProperty InfoContentProperty;
         public static readonly DependencyProperty InfoImageSourceProperty;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         [Description("The text displayed at the top of the control"), Category("Common Properties")]
         public string InfoTitle
@@ -33,6 +36,7 @@ namespace FMH.Core.UI.Controls
             set
             {
                 SetValue(InfoTitleProperty, value);
+                OnPropertyChanged();
             }
         }
 
@@ -46,6 +50,7 @@ namespace FMH.Core.UI.Controls
             set
             {
                 SetValue(InfoContentProperty, value);
+                OnPropertyChanged();
             }
         }
 
@@ -59,6 +64,7 @@ namespace FMH.Core.UI.Controls
             set
             {
                 SetValue(InfoColorProperty, value);
+                OnPropertyChanged();
             }
         }
 
@@ -72,6 +78,7 @@ namespace FMH.Core.UI.Controls
             set
             {
                 SetValue(InfoImageSourceProperty, value);
+                OnPropertyChanged();
             }
         }
 
@@ -88,6 +95,14 @@ namespace FMH.Core.UI.Controls
             InitializeComponent();
             this.DataContext = this;
             this.InfoColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#000000"));
+        }
+
+        public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

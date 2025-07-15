@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:utils="clr-namespace:FMH.Core.Utils.Converters"
         xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
         xmlns:viewModels="clr-namespace:FMH.Core.ViewModel"
         mc:Ignorable="d"
@@ -148,6 +149,10 @@
                      ItemsSource="{Binding RecentsWorkspaces}"
                      HorizontalContentAlignment="Stretch">
 
+                <ListBox.Resources>
+                    <utils:ApiTypeToApiIconConverter x:Key="ApiTypeToApiIconConverter"/>
+                </ListBox.Resources>
+
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Cursor="Hand" ForceCursor="True" HorizontalAlignment="Stretch">
@@ -161,7 +166,7 @@
                                 <MouseBinding MouseAction="LeftClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenProjectCommand}" CommandParameter="{Binding}"/>
                             </Grid.InputBindings>
 
-                            <Image Source="{Binding WorkspaceLogoPath}" Grid.Column="0" Width="30" Height="30" HorizontalAlignment="Center"/>
+                            <Image Source="{Binding WorkspaceModAPI, Converter={StaticResource ApiTypeToApiIconConverter}}" Grid.Column="0" Width="30" Height="30" HorizontalAlignment="Center"/>
                             <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Stretch">
                                 <Label Content="{Binding WorkspaceName}" HorizontalContentAlignment="Left" Foreground="{DynamicResource FontColorPrimary}"/>
                                 <Label Content="{Binding WorkspacePath}" HorizontalContentAlignment="Left" FontStyle="Italic" Foreground="{DynamicResource FontColorPrimary}" Margin="0, -10, 0, 0"/>

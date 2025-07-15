@@ -121,7 +121,7 @@ namespace FMH.Workspace.WorkspaceManager.NeoForge
                         ModProperties.ModDescription = line.Split('=')[1];
                 }
 
-                WorkspaceProperties.ModAPI = ModAPIType.Forge;
+                WorkspaceProperties.ModAPI = ModAPIType.NeoForge;
 
                 return true;
             }

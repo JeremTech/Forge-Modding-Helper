@@ -219,7 +219,7 @@
                     <UniformGrid Grid.Column="2" Rows="4">
                         <controls:DashboardInfoDisplay x:Name="ModVersionInfoDisplay" InfoTitle="Mod version" InfoContent="---" InfoColor="#0063B1" Height="105" InfoImageSource="/FMH.Resources;component/Icons/version_icon.png" Tag="project_explorer.home.mod_version"/>
                         <controls:DashboardInfoDisplay x:Name="MinecraftVersionInfoDisplay" InfoTitle="Minecraft version" InfoContent="---"  InfoColor="DarkOliveGreen" Height="105" InfoImageSource="/FMH.Resources;component/Icons/minecraft_icon.png" Tag="project_explorer.home.minecraft_version"/>
-                        <controls:DashboardInfoDisplay x:Name="ForgeVersionInfoDisplay" InfoTitle="Forge version" InfoContent="---"  InfoColor="DarkRed" Height="105" InfoImageSource="/FMH.Resources;component/Icons/forge_icon.png" Tag="project_explorer.home.forge_version"/>
+                        <controls:DashboardInfoDisplay x:Name="APIVersionInfoDisplay" InfoTitle="API version" InfoContent="---"  InfoColor="DarkRed" Height="105" InfoImageSource="/FMH.Resources;component/Icons/forge_icon.png" Tag="project_explorer.home.api_version"/>
                         <controls:DashboardInfoDisplay x:Name="MappingsVersionInfoDisplay" InfoTitle="Mappings version" InfoContent="---" InfoColor="DarkSalmon" Height="105" InfoImageSource="/FMH.Resources;component/Icons/mappings_icon.png" Tag="project_explorer.home.mappings_version"/>
                     </UniformGrid>
 
@@ -389,10 +389,10 @@
                     <TextBox x:Name="ModSettingsMinecraftVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{DynamicResource PrimaryBackgroundColor}" Foreground="{DynamicResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
-                <!-- Forge version -->
+                <!-- API version -->
                 <StackPanel Orientation="Vertical" Grid.Row="2">
-                    <TextBlock x:Name="ModSettingsForgeVersionTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="Forge version" Tag="project_explorer.mod_settings.forge_version"/>
-                    <TextBox x:Name="ModSettingsForgeVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{DynamicResource PrimaryBackgroundColor}" Foreground="{DynamicResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
+                    <TextBlock x:Name="ModSettingsAPIVersionTextBlock" Foreground="{DynamicResource FontColorPrimary}" FontSize="14" Text="API version" Tag="project_explorer.mod_settings.api_version"/>
+                    <TextBox x:Name="ModSettingsAPIVersionTextbox" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Background="{DynamicResource PrimaryBackgroundColor}" Foreground="{DynamicResource FontColorSecondary}" Padding="5" Margin="0, 7, 0, 0" TextChanged="ModSettingsTextboxTextChanged"/>
                 </StackPanel>
 
                 <!-- Mappings version -->
@@ -877,10 +877,10 @@
                     <TextBlock x:Name="MinecraftVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource FontColorPrimary}"/>
                 </StackPanel>
 
-                <!-- Forge version -->
+                <!-- API version -->
                 <StackPanel HorizontalAlignment="Center" Grid.Row="5">
-                    <TextBlock x:Name="ForgeVersionExportationRecapLabelTextBlock" Text="Forge version" HorizontalAlignment="Center" FontSize="14" Foreground="{DynamicResource FontColorSecondary}" Tag="project_explorer.export.forge_version"/>
-                    <TextBlock x:Name="ForgeVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource FontColorPrimary}"/>
+                    <TextBlock x:Name="APIVersionExportationRecapLabelTextBlock" Text="API version" HorizontalAlignment="Center" FontSize="14" Foreground="{DynamicResource FontColorSecondary}" Tag="project_explorer.export.api_version"/>
+                    <TextBlock x:Name="APIVersionExportationRecapTextBlock" Text="---" HorizontalAlignment="Center" FontSize="16" Foreground="{DynamicResource FontColorPrimary}"/>
                 </StackPanel>
 
                 <!-- Mappings version -->

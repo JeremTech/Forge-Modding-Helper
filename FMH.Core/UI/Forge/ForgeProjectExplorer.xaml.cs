@@ -741,8 +741,18 @@ namespace FMH.Core.UI.Forge
             this.LinesCountInfoDisplay.InfoContent = _workspaceManager.SourceCodeProperties.CodeLinesCount.ToString();
             this.ModVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModVersion;
             this.MinecraftVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModMinecraftVersion;
-            this.ForgeVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModAPIVersion;
+            this.APIVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModAPIVersion;
             this.MappingsVersionInfoDisplay.InfoContent = _workspaceManager.ModProperties.ModMappingsVersion;
+
+            switch (_workspaceManager.WorkspaceProperties.ModAPI)
+            {
+                case ModAPIType.NeoForge:
+                    this.APIVersionInfoDisplay.InfoImageSource = new BitmapImage(new Uri("/FMH.Resources;component/Icons/neoforge_icon.png", UriKind.Relative));
+                    break;
+                default:
+                    this.APIVersionInfoDisplay.InfoImageSource = new BitmapImage(new Uri("/FMH.Resources;component/Icons/forge_icon.png", UriKind.Relative));
+                    break;
+            }
 
             // Mod settings section
             this.ModSettingsModNameTextbox.Text = _workspaceManager.ModProperties.ModName;
@@ -755,7 +765,7 @@ namespace FMH.Core.UI.Forge
             this.ModSettingsModUpdateJsonURLTextbox.Text = _workspaceManager.ModProperties.ModUpdateJSONURL;
             this.ModSettingsModVersionTextbox.Text = _workspaceManager.ModProperties.ModVersion;
             this.ModSettingsMinecraftVersionTextbox.Text = _workspaceManager.ModProperties.ModMinecraftVersion;
-            this.ModSettingsForgeVersionTextbox.Text = _workspaceManager.ModProperties.ModAPIVersion;
+            this.ModSettingsAPIVersionTextbox.Text = _workspaceManager.ModProperties.ModAPIVersion;
             this.ModSettingsMappingsVersionTextbox.Text = _workspaceManager.ModProperties.ModMappingsVersion;
             this.ModSettingsModidTextbox.Text = _workspaceManager.ModProperties.ModID;
             this.ModSettingsModgroupTextbox.Text = _workspaceManager.ModProperties.ModGroup;
@@ -764,7 +774,7 @@ namespace FMH.Core.UI.Forge
             this.ModNameExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModName;
             this.ModVersionExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModVersion;
             this.ModAuthorsExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModAuthors;
-            this.ForgeVersionExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModAPIVersion;
+            this.APIVersionExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModAPIVersion;
             this.MinecraftVersionExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModMinecraftVersion;
             this.MappingsVersionExportationRecapTextBlock.Text = _workspaceManager.ModProperties.ModMappingsVersion;
 
@@ -1384,7 +1394,7 @@ namespace FMH.Core.UI.Forge
             _workspaceManager.ModProperties.ModUpdateJSONURL = this.ModSettingsModUpdateJsonURLTextbox.Text;
             _workspaceManager.ModProperties.ModVersion = this.ModSettingsModVersionTextbox.Text;
             _workspaceManager.ModProperties.ModMinecraftVersion = this.ModSettingsMinecraftVersionTextbox.Text;
-            _workspaceManager.ModProperties.ModAPIVersion = this.ModSettingsForgeVersionTextbox.Text;
+            _workspaceManager.ModProperties.ModAPIVersion = this.ModSettingsAPIVersionTextbox.Text;
             _workspaceManager.ModProperties.ModMappingsVersion = this.ModSettingsMappingsVersionTextbox.Text;
             _workspaceManager.ModProperties.ModID = this.ModSettingsModidTextbox.Text;
             _workspaceManager.ModProperties.ModGroup = this.ModSettingsModgroupTextbox.Text;
