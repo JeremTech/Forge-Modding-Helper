@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FMH.Core.Utils.UI;
+using FMH.Core.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,23 +13,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using FMH.Core.Files.Software;
-using FMH.Core.Utils.UI;
-using FMH.Core.ViewModel;
 
 namespace FMH.Core.View
 {
-    public partial class AssistantCreatorView : Window
+    /// <summary>
+    /// Interaction logic for ImportProjectView.xaml
+    /// </summary>
+    public partial class ImportProjectView : Window
     {
-        public AssistantCreatorView()
+        public ImportProjectView()
         {
-            // Set window events
-            this.Initialized += AssistantCreatorView_Initialized;
-
             InitializeComponent();
 
+            // Load translation
+            UpdateTranslations();
+
             // Set window related functions
-            if (DataContext is AssistantCreatorViewModel viewModel)
+            if (DataContext is ImportProjectViewModel viewModel)
             {
                 viewModel.CloseWindowAction = Close;
                 viewModel.PropertyChanged += (s, e) =>
@@ -40,9 +42,10 @@ namespace FMH.Core.View
             }
         }
 
-        private void AssistantCreatorView_Initialized(object? sender, EventArgs e)
+        internal void UpdateTranslations()
         {
-            UITextTranslator.UpdateComponentsTranslations(MainGrid);
+            UITextTranslator.UpdateComponentsTranslations(this.main_grid);
+            this.Title = UITextTranslator.GetTranslation("project_importation.title");
         }
     }
 }

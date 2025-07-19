@@ -204,10 +204,7 @@ namespace FMH.Core.ViewModel
         /// </summary>
         private void ImportProject()
         {
-            var importProjectDialog = new ImportProjectDialog();
-            importProjectDialog.ShowDialog();
-
-            if (importProjectDialog.DialogResult.HasValue && importProjectDialog.DialogResult.Value)
+            if(new ImportProjectView().ShowDialog().GetValueOrDefault())
             {
                 var lastWorkspace = RecentsWorkspacesProvider.GetRecentsWorkspaces().OrderByDescending(w => w.LastUpdated).FirstOrDefault();
                 if (lastWorkspace != null)

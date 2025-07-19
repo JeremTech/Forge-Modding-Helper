@@ -275,7 +275,7 @@ namespace FMH.Workspace.WorkspaceManager.NeoForge
 
             // Read files
             if (!ReadModToml()
-                || !ReadBuildGradle())
+                || !ReadGradleProperties())
                 return false;
 
             // Check mandatory data

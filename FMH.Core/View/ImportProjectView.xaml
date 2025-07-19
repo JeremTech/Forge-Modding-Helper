@@ -1,0 +1,137 @@
+﻿<Window x:Class="FMH.Core.View.ImportProjectView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FMH.Core.View"
+        xmlns:utils="clr-namespace:FMH.Core.Utils.Converters"
+        xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
+        xmlns:viewModels="clr-namespace:FMH.Core.ViewModel"
+        xmlns:workspace="clr-namespace:FMH.Workspace.Data;assembly=FMH.Workspace"
+        mc:Ignorable="d"
+        Title="Import existing project" 
+        Icon="/FMH.Resources;component/Pictures/icon.png" 
+        Height="400" 
+        Width="350" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource PrimaryBackgroundColor}">
+
+    <Window.Resources>
+        <utils:EnumBooleanConverter x:Key="EnumBooleanConverter"/>
+    </Window.Resources>
+
+    <Window.DataContext>
+        <viewModels:ImportProjectViewModel/>
+    </Window.DataContext>
+
+    <Grid x:Name="main_grid">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+
+        <!-- Project directory path selection -->
+        <StackPanel Grid.Row="0"
+             Orientation="Vertical"
+             VerticalAlignment="Center">
+
+            <TextBlock Text="Where is the project ?"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       Margin="0, 0, 0, 5"
+                       Tag="project_importation.label.project_directory"/>
+
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
+
+                <controls:InputTextBox x:Name="ProjectDirectoryPathTextBox"
+                                       IsEnabled="False"
+                                       Width="250"
+                                       Height="25"
+                                       InputText="{Binding ProjectDirectoryPath, Mode=TwoWay}"/>
+
+                <controls:StandardButton VerticalAlignment="Center"
+                                         Height="35"
+                                         Width="40"
+                                         Text="..."
+                                         Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.BrowseProjectDirectoryCommand}" />
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <!-- API type selection -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Vertical"
+                    VerticalAlignment="Center">
+
+            <TextBlock Text="What is the project's API ?"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       Margin="0, 0, 0, 10"
+                       Tag="project_importation.label.project_api"/>
+
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Center">
+            
+                <controls:ImageRadioButton Image="/FMH.Resources;component/Icons/forge_icon.png" 
+                                           Text="Minecraft Forge" 
+                                           GroupName="ModdingAPI" 
+                                           Height="100" 
+                                           Width="100"
+                                           Cursor="Hand"
+                                           Margin="0, 0, 20, 0"
+                                           IsChecked="{Binding ModAPIType,
+                                                               Converter={StaticResource EnumBooleanConverter},
+                                                               ConverterParameter={x:Static workspace:ModAPIType.Forge}}"/>
+                <controls:ImageRadioButton Image="/FMH.Resources;component/Icons/neoforge_icon.png" 
+                                           Text="NeoForge" 
+                                           GroupName="ModdingAPI" 
+                                           Height="100" 
+                                           Width="100"
+                                           Cursor="Hand"
+                                           IsChecked="{Binding ModAPIType,
+                                                               Converter={StaticResource EnumBooleanConverter},
+                                                               ConverterParameter={x:Static workspace:ModAPIType.NeoForge}}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Minecraft version selection -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Vertical"
+                    VerticalAlignment="Center">
+
+            <TextBlock Text="What is the project's Minecraft version ?"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="{DynamicResource FontColorPrimary}"
+                       Margin="0, 0, 0, 10"
+                       Tag="project_importation.label.project_minecraft_version"/>
+
+            <ComboBox Width="100"
+                      VerticalAlignment="Center"
+                      ItemsSource="{Binding AvailableMinecraftVersions}"
+                      SelectedItem="{Binding ProjectMinecraftVersion}"
+                      IsEnabled="{Binding IsMinecraftVersionsComboBoxEnabled}"/>
+
+        </StackPanel>
+
+        <!-- Import button -->
+        <controls:StandardButton Grid.Row="3"
+                                 VerticalAlignment="Center"
+                                 Height="45"
+                                 Width="180"
+                                 LeftIcon="{Binding ImportButtonIcon}"
+                                 Text="{Binding ImportButtonText}"
+                                 IsEnabled="{Binding IsImportButtonEnabled}"
+                                 Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ImportProjectCommand}"/>
+
+    </Grid>
+</Window>

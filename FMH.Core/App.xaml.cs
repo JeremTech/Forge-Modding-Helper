@@ -13,6 +13,7 @@ using FMH.Core.Files.Software;
 using FMH.Core.UI.Common;
 using System.Diagnostics;
 using FMH.Core.Utils.Software;
+using FMH.Workspace.Data;
 
 namespace FMH.Core
 {
@@ -51,10 +52,25 @@ namespace FMH.Core
         /// <summary>
         /// Return all supported NeoForge Minecraft version by Forge Modding Helper
         /// </summary>
-        /// <returns>List of all supported FNeoForge Minecraft versions</returns>
+        /// <returns>List of all supported NeoForge Minecraft versions</returns>
         public static List<string> GetSupportedNeoForgeMinecraftVersions()
         {
             return _supportedNeoForgeMcVersions;
+        }
+
+        /// <summary>
+        /// Return all supported Minecraft versions by Forge Modding Helper for a specific ModAPI type
+        /// </summary>
+        /// <param name="modAPIType">ModAPI type</param>
+        /// <returns>List of all supported Minecraft versions for the specified modding API</returns>
+        public static List<string> GetSupportedMinecraftVersions(ModAPIType modAPIType)
+        {
+            return modAPIType switch
+            {
+                ModAPIType.Forge => GetSupportedForgeMinecraftVersions(),
+                ModAPIType.NeoForge => GetSupportedNeoForgeMinecraftVersions(),
+                _ => new List<string>()
+            };
         }
     }
 }

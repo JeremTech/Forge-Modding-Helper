@@ -22,8 +22,8 @@ namespace FMH.Core.UI.Controls
     /// </summary>
     public partial class StandardButton : UserControl, ICommandSource, INotifyPropertyChanged
     {
-        public static readonly DependencyProperty LeftIconProperty = DependencyProperty.Register("LeftIcon", typeof(FontAwesomeIcon), typeof(Image), new PropertyMetadata(FontAwesomeIcon.None));
-        public static readonly DependencyProperty RightIconProperty = DependencyProperty.Register("RightIcon", typeof(FontAwesomeIcon), typeof(Image), new PropertyMetadata(FontAwesomeIcon.None));
+        public static readonly DependencyProperty LeftIconProperty = DependencyProperty.Register("LeftIcon", typeof(FontAwesomeIcon), typeof(StandardButton), new PropertyMetadata(FontAwesomeIcon.None));
+        public static readonly DependencyProperty RightIconProperty = DependencyProperty.Register("RightIcon", typeof(FontAwesomeIcon), typeof(StandardButton), new PropertyMetadata(FontAwesomeIcon.None));
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(StandardButton));
         public static readonly DependencyProperty TextTranslationKeyProperty = DependencyProperty.Register("TextTranslationKey", typeof(string), typeof(StandardButton));
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(StandardButton));
