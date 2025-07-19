@@ -45,7 +45,7 @@
     "assistant_creator.technical_settings.label.mod_json_update_link": "JSON file update link",
     "assistant_creator.technical_settings.label.mod_json_update_link.placeholder": "https://website.net/updates.json",
     "assistant_creator.customization_settings.label.description1": "Let's finish with some optionals informations !",
-    "assistant_creator.customization_settings.label.description2": "You will able to change this informations later",
+    "assistant_creator.customization_settings.label.description2": "You will be able to change this informations later",
     "assistant_creator.customization_settings.label.mod_website": "Mod website",
     "assistant_creator.customization_settings.label.mod_website.placeholder": "https://website.net/",
     "assistant_creator.customization_settings.label.mod_issuetracker": "Mod issue tracker",

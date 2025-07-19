@@ -129,7 +129,7 @@
     "project_explorer.mod_settings.updatejson": "Lien vers le json de mise à jour",
     "project_explorer.mod_settings.mod_version": "Version du mod",
     "project_explorer.mod_settings.minecraft_version": "Version de Minecraft",
-    "project_explorer.mod_settings.api_version": "Version de l'API'",
+    "project_explorer.mod_settings.api_version": "Version de l'API",
     "project_explorer.mod_settings.mappings_version": "Version des mappings",
     "project_explorer.mod_settings.modid": "Modid",
     "project_explorer.mod_settings.mod_group": "Mod group",
