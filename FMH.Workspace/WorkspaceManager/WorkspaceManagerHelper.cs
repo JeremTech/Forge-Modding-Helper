@@ -55,20 +55,8 @@ namespace FMH.Workspace.WorkspaceManager
         {
             switch (mcVersion)
             {
-                case "1.20":
-                case "1.20.1":
-                case "1.20.2":
-                case "1.20.4":
-                case "1.20.6":
-                case "1.21":
-                case "1.21.1":
-                case "1.21.3":
-                case "1.21.4":
-                case "1.21.5":
-                case "1.21.8":
-                    return new ForgeWorkspaceManagerV2(workspacePath);
                 default:
-                    return new ForgeWorkspaceManagerV1(workspacePath);
+                    return new ForgeWorkspaceManagerV2(workspacePath);
             }
         }
 
