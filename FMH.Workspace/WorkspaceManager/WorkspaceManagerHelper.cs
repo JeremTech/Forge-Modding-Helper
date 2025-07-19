@@ -65,6 +65,7 @@ namespace FMH.Workspace.WorkspaceManager
                 case "1.21.3":
                 case "1.21.4":
                 case "1.21.5":
+                case "1.21.8":
                     return new ForgeWorkspaceManagerV2(workspacePath);
                 default:
                     return new ForgeWorkspaceManagerV1(workspacePath);
