@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
         xmlns:local="clr-namespace:FMH.Core.UI.Dialogs"
         mc:Ignorable="d"
         Title="Import settings from a previous version" 
-        Height="175" 
+        Height="185" 
         Width="400"
         ResizeMode="NoResize"
         Icon="/FMH.Resources;component/Pictures/icon.png" 
@@ -18,7 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height ="25"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
@@ -33,7 +34,13 @@
 
         <RadioButton x:Name="radioButtonOptionNone" Grid.Row="1" Foreground="{DynamicResource FontColorPrimary}" GroupName="ImportationOption" Content="Do not import settings"/>
         
-        <Button x:Name="OkButton" Grid.Row="2" Content="Ok" Height="25" Width="70"/>
+        <controls:StandardButton x:Name="OkButton"
+                                 Grid.Row="2"
+                                 Text="Ok"
+                                 Height="40"
+                                 Width="150"
+                                 Command="{Binding OkCommand,
+                                           RelativeSource={RelativeSource AncestorType={x:Type local:UpgradeSettingsDialog}, Mode=FindAncestor}}" />
 
     </Grid>
 </Window>

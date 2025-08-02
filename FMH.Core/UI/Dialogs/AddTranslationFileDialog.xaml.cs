@@ -1,7 +1,12 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using FMH.Core.Files.Software;
+using FMH.Core.Utils.UI;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,20 +16,61 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using FMH.Core.Files.Software;
-using FMH.Core.Utils.UI;
 
 namespace FMH.Core.UI.Dialogs
 {
     /// <summary>
     /// Logique d'interaction pour AddTranslationFileDialog.xaml
     /// </summary>
-    public partial class AddTranslationFileDialog : Window
+    public partial class AddTranslationFileDialog : Window, INotifyPropertyChanged
     {
         private string langPath = "";
 
+        // Events
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        #region Commands
+        /// <summary>
+        /// Cancel command
+        /// </summary>
+        private ICommand _cancelCommand;
+        public ICommand CancelCommand
+        {
+            get
+            {
+                return _cancelCommand;
+            }
+            set
+            {
+                _cancelCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Add command
+        /// </summary>
+        private ICommand _addCommand;
+        public ICommand AddCommand
+        {
+            get
+            {
+                return _addCommand;
+            }
+            set
+            {
+                _addCommand = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         public AddTranslationFileDialog(string langFolderPath)
         {
+            // Initialize commands
+            this.CancelCommand = new RelayCommand(Cancel);
+            this.AddCommand = new RelayCommand(Add);
+
             InitializeComponent();
             this.langPath = langFolderPath;
 
@@ -49,7 +95,13 @@ namespace FMH.Core.UI.Dialogs
             }
         }
 
-        private void add_button_Click(object sender, RoutedEventArgs e)
+        #region Commands functions
+        public void Cancel()
+        {
+            this.Close();
+        }
+
+        public void Add()
         {
             if (File.Exists(Path.Combine(this.langPath, this.name_textBox.Text)))
             {
@@ -67,10 +119,16 @@ namespace FMH.Core.UI.Dialogs
                 this.Close();
             }
         }
+        #endregion
 
-        private void cancel_button_Click(object sender, RoutedEventArgs e)
+        #region Interfaces implementations
+        public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            this.Close();
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
+        #endregion
     }
 }

@@ -1,7 +1,13 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using FMH.Core.Files.Software;
+using FMH.Core.Utils.Software;
+using FMH.Core.Utils.UI;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,21 +17,43 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using FMH.Core.Files.Software;
-using FMH.Core.Utils.Software;
-using FMH.Core.Utils.UI;
 
 namespace FMH.Core.UI.Dialogs
 {
     /// <summary>
     /// Logique d'interaction pour UpgradeSettingsDialog.xaml
     /// </summary>
-    public partial class UpgradeSettingsDialog : Window
+    public partial class UpgradeSettingsDialog : Window, INotifyPropertyChanged
     {
         private List<string> _previousVersionsOptions;
 
+        // Events
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        #region Commands
+        /// <summary>
+        /// Ok command
+        /// </summary>
+        private ICommand _okCommand;
+        public ICommand OkCommand
+        {
+            get
+            {
+                return _okCommand;
+            }
+            set
+            {
+                _okCommand = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         public UpgradeSettingsDialog()
         {
+            // Initialize commands
+            OkCommand = new RelayCommand(Ok);
+
             InitializeComponent();
 
             // Data
@@ -33,7 +61,6 @@ namespace FMH.Core.UI.Dialogs
 
             // Events
             Loaded += UpgradeSettingsDialog_Loaded;
-            OkButton.Click += OkButton_Click;
         }
 
         #region Events
@@ -57,8 +84,10 @@ namespace FMH.Core.UI.Dialogs
             this.previousVersionComboBox.ItemsSource = _previousVersionsOptions;
             this.previousVersionComboBox.SelectedIndex = 0;
         }
+        #endregion
 
-        private void OkButton_Click(object sender, RoutedEventArgs e)
+        #region Commands functions
+        public void Ok()
         {
             // No importation
             if (radioButtonOptionNone.IsChecked.HasValue && radioButtonOptionNone.IsChecked.Value)
@@ -81,6 +110,16 @@ namespace FMH.Core.UI.Dialogs
             // Import settings
             SoftwareVersionUpgrader.ImportOldSettings(previousDirectoryPath);
             this.Close();
+        }
+        #endregion
+
+        #region Interfaces implementations
+        public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
         #endregion
     }

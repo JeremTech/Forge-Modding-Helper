@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:local="clr-namespace:FMH.Core.UI.Dialogs"
         mc:Ignorable="d"
@@ -98,8 +99,29 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="24" Margin="5, 0" Click="CancelButton_Click" Grid.Column="0" Tag="dialog.import.cancel"/>
-            <Button x:Name="ImportButton" Content="Import" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Height="24" Margin="5, 0" Click="ImportButton_Click" Grid.Column="1" Tag="dialog.import.import"/>
+            <controls:StandardButton x:Name="CancelButton"
+                                     Text="Cancel"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Center"
+                                     Width="150"
+                                     Height="40"
+                                     Margin="5, 0"
+                                     Grid.Column="0"
+                                     TextTranslationKey="dialog.import.cancel"
+                                     Command="{Binding CancelCommand,
+                                               RelativeSource={RelativeSource AncestorType={x:Type local:ImportFilesDialog}, Mode=FindAncestor}}" />
+            
+            <controls:StandardButton x:Name="ImportButton"
+                                     Text="Import"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Center"
+                                     Width="150"
+                                     Height="40"
+                                     Margin="5, 0"
+                                     Grid.Column="1"
+                                     TextTranslationKey="dialog.import.import"
+                                     Command="{Binding ImportCommand,
+                                               RelativeSource={RelativeSource AncestorType={x:Type local:ImportFilesDialog}, Mode=FindAncestor}}" />
 
         </Grid>
 

@@ -1,7 +1,12 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using FMH.Core.Files.Software;
+using FMH.Core.Utils.UI;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,20 +16,61 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using FMH.Core.Files.Software;
-using FMH.Core.Utils.UI;
 
 namespace FMH.Core.UI.Dialogs
 {
     /// <summary>
     /// Logique d'interaction pour RenameDialog.xaml
     /// </summary>
-    public partial class RenameDialog : Window
+    public partial class RenameDialog : Window, INotifyPropertyChanged
     {
         private string filePath;
 
+        // Events
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        #region Commands
+        /// <summary>
+        /// Cancel command
+        /// </summary>
+        private ICommand _cancelCommand;
+        public ICommand CancelCommand
+        {
+            get
+            {
+                return _cancelCommand;
+            }
+            set
+            {
+                _cancelCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Rename command
+        /// </summary>
+        private ICommand _renameCommand;
+        public ICommand RenameCommand
+        {
+            get
+            {
+                return _renameCommand;
+            }
+            set
+            {
+                _renameCommand = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         public RenameDialog(string filePath)
         {
+            // Initializing commands
+            this.CancelCommand = new RelayCommand(Cancel);
+            this.RenameCommand = new RelayCommand(Rename);
+
             InitializeComponent();
 
             // Loading translations
@@ -51,15 +97,27 @@ namespace FMH.Core.UI.Dialogs
             }
         }
 
-        private void cancel_button_Click(object sender, RoutedEventArgs e)
+        #region Commands functions
+        public void Cancel()
         {
             this.Close();
         }
 
-        private void rename_button_Click(object sender, RoutedEventArgs e)
+        public void Rename()
         {
             File.Move(this.filePath, Path.Combine(this.filePath.Replace(Path.GetFileName(filePath), ""), this.new_name_textBox.Text));
             this.Close();
         }
+        #endregion
+
+        #region Interfaces implementations
+        public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
     }
 }

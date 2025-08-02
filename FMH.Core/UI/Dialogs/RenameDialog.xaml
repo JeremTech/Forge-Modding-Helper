@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:FMH.Core.UI.Controls"
         xmlns:local="clr-namespace:FMH.Core.UI.Dialogs"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
@@ -50,8 +51,30 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="24" Margin="5, 0" Click="cancel_button_Click" Grid.Column="0" Tag="dialog.rename.cancel"/>
-            <Button x:Name="RenameButton" Content="Rename" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Height="24" Margin="5, 0" IsEnabled="False" Click="rename_button_Click" Grid.Column="1" Tag="dialog.rename.rename"/>
+            <controls:StandardButton x:Name="CancelButton" 
+                                     Text="Cancel" 
+                                     HorizontalAlignment="Right" 
+                                     VerticalAlignment="Center" 
+                                     Width="150" 
+                                     Height="40" 
+                                     Margin="5, 0" 
+                                     Grid.Column="0" 
+                                     TextTranslationKey="dialog.rename.cancel"
+                                     Command="{Binding CancelCommand,
+                                               RelativeSource={RelativeSource AncestorType={x:Type local:RenameDialog}, Mode=FindAncestor}}" />
+            
+            <controls:StandardButton x:Name="RenameButton"
+                                     Text="Rename"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Center"
+                                     Width="150"
+                                     Height="40"
+                                     Margin="5, 0"
+                                     IsEnabled="False"
+                                     Grid.Column="1"
+                                     TextTranslationKey="dialog.rename.rename"
+                                     Command="{Binding RenameCommand,
+                                               RelativeSource={RelativeSource AncestorType={x:Type local:RenameDialog}, Mode=FindAncestor}}" />
 
         </Grid>
     </Grid>

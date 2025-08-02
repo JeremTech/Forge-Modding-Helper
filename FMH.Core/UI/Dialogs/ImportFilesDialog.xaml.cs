@@ -1,7 +1,12 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using FMH.Core.Files.Software;
+using FMH.Core.Utils.UI;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,21 +17,62 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using FMH.Core.Files.Software;
-using FMH.Core.Utils.UI;
 
 namespace FMH.Core.UI.Dialogs
 {
     /// <summary>
     /// Logique d'interaction pour ImportFilesDialog.xaml
     /// </summary>
-    public partial class ImportFilesDialog : Window
+    public partial class ImportFilesDialog : Window, INotifyPropertyChanged
     {
         private string _workspacePath;
         private string _modId;
 
+        // Events
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        #region Commands
+        /// <summary>
+        /// Cancel command
+        /// </summary>
+        private ICommand _cancelCommand;
+        public ICommand CancelCommand
+        {
+            get
+            {
+                return _cancelCommand;
+            }
+            set
+            {
+                _cancelCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Import command
+        /// </summary>
+        private ICommand _importCommand;
+        public ICommand ImportCommand
+        {
+            get
+            {
+                return _importCommand;
+            }
+            set
+            {
+                _importCommand = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         public ImportFilesDialog(string[] filesToImport, string assetsFolder, string workspacePath, string modId)
         {
+            // Initialize commands
+            CancelCommand = new RelayCommand(Cancel);
+            ImportCommand = new RelayCommand(Import);
+
             InitializeComponent();
 
             // Set properties
@@ -82,12 +128,13 @@ namespace FMH.Core.UI.Dialogs
             }
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        #region Commands functions
+        public void Cancel()
         {
             this.Close();
         }
 
-        private void ImportButton_Click(object sender, RoutedEventArgs e)
+        public void Import()
         {
             // For each entry
             foreach (FileEntry element in FilesListView.Items)
@@ -109,5 +156,16 @@ namespace FMH.Core.UI.Dialogs
 
             this.Close();
         }
+        #endregion
+
+        #region Interfaces implementations
+        public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        #endregion
     }
 }
