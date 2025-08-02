@@ -147,7 +147,7 @@
     "project_explorer.textures.files": "textures",
     "project_explorer.translations.files": "Fichiers",
     "project_explorer.translations.loading_files": "Chargement de la liste des fichiers de traductions...",
-    "project_explorer.translations.delete": "Etes-vous sûr de vouloir déplacer ce fichier vers la corbeille ?",
+    "project_explorer.translations.alert.delete": "Etes-vous sûr de vouloir déplacer ce fichier vers la corbeille ?",
     "project_explorer.export.summary": "Récapitulatif",
     "project_explorer.export.name": "Nom",
     "project_explorer.export.mod_version": "Version du mod",
