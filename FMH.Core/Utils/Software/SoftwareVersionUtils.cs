@@ -13,7 +13,7 @@ namespace FMH.Core.Utils.Software
         private static bool IsPreview = true;
 
         // If "IsPreview" is set to true, then the current version is the preview with this number
-        private static int PreviewNumber = 1;
+        private static int PreviewNumber = 2;
 
         /// <summary>
         /// Allow to get the current version of the software
