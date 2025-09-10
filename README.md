@@ -4,7 +4,7 @@
 [![GitHub All Releases](https://img.shields.io/github/downloads/jeremtech/Forge-Modding-Helper/total?color=green&style=flat-square)](https://github.com/JeremTech/Forge-Modding-Helper/releases)
 [![License](https://img.shields.io/github/license/jeremtech/Forge-Modding-Helper?style=flat-square)](https://github.com/JeremTech/Forge-Modding-Helper/blob/master/LICENSE)
 
-Forge Modding Helper is an utility software to manage Forge's Workspace.
+Forge Modding Helper is a utility software to manage Forge and NeoForge workspaces.
 
 ## Compatibility 
 Forge Modding Helper is available for Windows 10 and 11.
@@ -20,12 +20,12 @@ Latest version | Latest stable version
 
 - [x] Workspace creation wizard
 - [x] Existing workspace importation
-- [x] Show workspace's statistics
+- [x] Show workspace statistics
 - [x] Easy mod settings edition
 - [x] Explore and manage assets (models, textures, blockstates)
-- [x] Easy language file editing 
+- [x] Easy language file edition 
 - [x] Easy mod publication
-- [x] English and french translation
+- [x] English and French translations
 - [x] UI Themes
 
 ## Supported Minecraft versions
@@ -38,7 +38,6 @@ NeoForge|1.20.2, 1.20.4, 1.20.6, 1.21, 1.21.1, 1.21.3, 1.21.4, 1.21.5, 1.21.8
 ## Report bug or submit ideas
 
 You can report bugs or submit ideas in the [issues section](https://github.com/JeremTech/Forge-Modding-Helper/issues). Please check if your bug or idea have not already posted.
-You can also see in real-time the progression of the next update on the [Forge Modding Helper Trello](https://trello.com/b/4C7TwCta/forge-modding-helper) (in french).
 
 ## Screenshots
 

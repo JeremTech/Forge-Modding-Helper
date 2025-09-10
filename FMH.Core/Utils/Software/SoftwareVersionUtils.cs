@@ -10,10 +10,10 @@ namespace FMH.Core.Utils.Software
     public static class SoftwareVersionUtils
     {
         // Define if the current version is a preview
-        private static bool IsPreview = true;
+        private static bool IsPreview = false;
 
         // If "IsPreview" is set to true, then the current version is the preview with this number
-        private static int PreviewNumber = 2;
+        private static int PreviewNumber = 0;
 
         /// <summary>
         /// Allow to get the current version of the software
