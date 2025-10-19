@@ -18,7 +18,7 @@
                 <PropertyGroupDescription PropertyName="MinecraftVersion"/>
             </CollectionViewSource.GroupDescriptions>
             <CollectionViewSource.SortDescriptions>
-                <cm:SortDescription PropertyName="MinecraftVersion" Direction="Descending"/>
+                <cm:SortDescription PropertyName="MinecraftVersionParsed" Direction="Descending"/>
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
