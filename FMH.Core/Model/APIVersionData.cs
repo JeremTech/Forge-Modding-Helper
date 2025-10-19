@@ -20,6 +20,12 @@ namespace FMH.Core.Model
         public string MinecraftVersion { get; set; }
 
         /// <summary>
+        /// Minecraft version parsed<br/>
+        /// Used for comparisons
+        /// </summary>
+        public Version MinecraftVersionParsed { get; set; }
+
+        /// <summary>
         /// API version
         /// </summary>
         public string APIVersion { get; set; }

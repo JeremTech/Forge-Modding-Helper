@@ -33,6 +33,7 @@ namespace FMH.Core.Provider
                         {
                             ModAPIType = ModAPIType.Forge,
                             MinecraftVersion = version,
+                            MinecraftVersionParsed = Version.Parse(version),
                             APIVersion = forgeVersion
                         });
                     }
@@ -66,6 +67,7 @@ namespace FMH.Core.Provider
                         {
                             ModAPIType = ModAPIType.NeoForge,
                             MinecraftVersion = version,
+                            MinecraftVersionParsed = Version.Parse(version),
                             APIVersion = neoForgeVersion
                         });
                     }
