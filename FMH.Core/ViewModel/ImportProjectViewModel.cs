@@ -240,10 +240,10 @@ namespace FMH.Core.ViewModel
             switch (ModAPIType)
             {
                 case ModAPIType.NeoForge:
-                    AvailableMinecraftVersions = new ObservableCollection<string>(App.GetSupportedNeoForgeMinecraftVersions());
+                    AvailableMinecraftVersions = new ObservableCollection<string>(App.GetSupportedNeoForgeMinecraftVersions().OrderByDescending(v => Version.Parse(v)));
                     break;
                 case ModAPIType.Forge:
-                    AvailableMinecraftVersions = new ObservableCollection<string>(App.GetSupportedForgeMinecraftVersions());
+                    AvailableMinecraftVersions = new ObservableCollection<string>(App.GetSupportedForgeMinecraftVersions().OrderByDescending(v => Version.Parse(v)));
                     break;
             }
         }
