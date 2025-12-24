@@ -3,8 +3,8 @@
 	<!-- Project properties -->
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows</TargetFramework>
-		<AssemblyVersion>3.4.1.0</AssemblyVersion>
-		<FileVersion>3.4.1.0</FileVersion>
+		<AssemblyVersion>3.4.2.0</AssemblyVersion>
+		<FileVersion>3.4.2.0</FileVersion>
 	</PropertyGroup>
 	
 	<!-- Dependencies versions -->
