@@ -23,14 +23,14 @@ namespace FMH.Core
         private static List<string> _supportedForgeMcVersions = new List<string>() 
         { 
             "1.20", "1.20.1", "1.20.2", "1.20.4", "1.20.6", 
-            "1.21", "1.21.1", "1.21.3", "1.21.4", "1.21.5", "1.21.8", "1.21.10"
+            "1.21", "1.21.1", "1.21.3", "1.21.4", "1.21.5", "1.21.8", "1.21.10", "1.21.11"
         };
 
         // List of NeoForge Minecraft versions supported by Forge Modding Helper
         private static List<string> _supportedNeoForgeMcVersions = new List<string>()
         {
             "1.20.2", "1.20.4", "1.20.6",
-            "1.21", "1.21.1", "1.21.3", "1.21.4", "1.21.5", "1.21.8", "1.21.10"
+            "1.21", "1.21.1", "1.21.3", "1.21.4", "1.21.5", "1.21.8", "1.21.10", "1.21.11"
         };
 
         /// <summary>
